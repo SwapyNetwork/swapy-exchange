@@ -25,3 +25,6 @@ $RECYCLE.BIN/
 .alm
 Thumbs.db
 UserInterfaceState.xcuserstate
+
+*/app/*.js
+*/app/*.map
