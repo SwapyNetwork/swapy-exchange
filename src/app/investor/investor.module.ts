@@ -10,7 +10,7 @@ import { VerificationPhoneComponent } from './verification-phone/verification-ph
 import { VerificationMainComponent } from './verification-main/verification-main.component';
 import { VerificationIdentityComponent } from './verification-identity/verification-identity.component';
 import { VerificationAddressComponent } from './verification-address/verification-address.component';
-import { NavComponent } from './nav/nav.component';
+import { NavComponent } from '../common/nav/nav.component';
 import { OfferComponent } from './offers/offer/offer.component';
 
 @NgModule({
