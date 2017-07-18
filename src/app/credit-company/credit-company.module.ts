@@ -4,7 +4,7 @@ import { HttpModule, JsonpModule } from '@angular/http';
 
 import { CreditCompanyRoutingModule } from './credit-company-routing.module';
 import { CreditCompanyComponent } from './credit-company.component';
-import { NavComponent } from '../common/nav/nav.component';
+import { NavModule } from '../common/nav/nav.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
@@ -12,9 +12,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     CommonModule,
     CreditCompanyRoutingModule,
     HttpModule,
-    JsonpModule
+    JsonpModule,
+    NavModule
   ],
-  declarations: [CreditCompanyComponent, NavComponent, DashboardComponent],
+  declarations: [CreditCompanyComponent, DashboardComponent],
   providers: [],
   bootstrap: [CreditCompanyComponent]
 })

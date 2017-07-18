@@ -10,7 +10,7 @@ import { VerificationPhoneComponent } from './verification-phone/verification-ph
 import { VerificationMainComponent } from './verification-main/verification-main.component';
 import { VerificationIdentityComponent } from './verification-identity/verification-identity.component';
 import { VerificationAddressComponent } from './verification-address/verification-address.component';
-import { NavComponent } from '../common/nav/nav.component';
+import { NavModule } from '../common/nav/nav.module';
 import { OfferComponent } from './offers/offer/offer.component';
 
 @NgModule({
@@ -18,9 +18,10 @@ import { OfferComponent } from './offers/offer/offer.component';
     CommonModule,
     InvestorRoutingModule,
     HttpModule,
-    JsonpModule
+    JsonpModule,
+    NavModule
   ],
-  declarations: [InvestorComponent, OffersComponent, DashboardComponent, VerificationPhoneComponent, VerificationMainComponent, VerificationIdentityComponent, VerificationAddressComponent, NavComponent, OfferComponent],
+  declarations: [InvestorComponent, OffersComponent, DashboardComponent, VerificationPhoneComponent, VerificationMainComponent, VerificationIdentityComponent, VerificationAddressComponent, OfferComponent],
   providers: [],
   bootstrap: [InvestorComponent]
 })
