@@ -12,6 +12,7 @@ import { VerificationIdentityComponent } from './verification-identity/verificat
 import { VerificationAddressComponent } from './verification-address/verification-address.component';
 import { NavModule } from '../common/nav/nav.module';
 import { OfferComponent } from './offers/offer/offer.component';
+import { OfferDetailsComponent } from './offer-details/offer-details.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import { OfferComponent } from './offers/offer/offer.component';
     JsonpModule,
     NavModule
   ],
-  declarations: [InvestorComponent, OffersComponent, DashboardComponent, VerificationPhoneComponent, VerificationMainComponent, VerificationIdentityComponent, VerificationAddressComponent, OfferComponent],
+  declarations: [InvestorComponent, OffersComponent, DashboardComponent, VerificationPhoneComponent, VerificationMainComponent, VerificationIdentityComponent, VerificationAddressComponent, OfferComponent, OfferDetailsComponent],
   providers: [],
   bootstrap: [InvestorComponent]
 })
