@@ -1,0 +1,692 @@
+nav {
+  padding-right: 10px;
+  font-family: 'Roboto', sans-serif, helvetica;
+} 
+body {
+  padding-top: 0px;
+  font-family: 'Roboto', sans-serif, helvetica;
+  background-color: #f2f2f2;
+}
+
+/* ////////////////////////////////  NAVBAR ////////////////////////////////*/
+.navbar-inverse {
+    background-color: #393939;
+    border: none;
+}
+.navbar {
+	min-height: 35px !important;
+	height: 35px !important;
+}
+.navbar-toggle {
+    padding: 0px 0px;
+}
+.navbar-collapse {
+    background-color: #393939;
+    padding: 0px 0px 10px 50px;  
+    max-height: 640px !important;
+}
+.navbar-inverse .navbar-nav>.open>a:focus {
+    background-color: #3f3f3f;
+} 
+.sw-badge {
+    background-color: #f7601d;
+    font-weight: 100;
+}
+.dropdown-menu {
+    top: 34px;
+    border-top: 5px solid #f5c03a;
+    min-width: 350px !important;
+}
+.sw-profile-name {
+    font-weight: 400;
+    font-size: 16px;
+    padding: 5px 0px 0px 20px;
+}
+.sw-profile-email {
+    font-weight: 300;
+    font-size: 12px;
+    padding: 0px 0px 0px 20px;
+}
+
+@media only screen and (max-width: 767px){ .container-fluid>.navbar-collapse { margin-right: -25px; border-bottom: 15px solid #4f4f4f;} }
+@media only screen and (min-width: 768px){ .sw-add-name-menu { display: none !important;} }
+@media only screen and (max-width: 768px){ .navbar-inverse .navbar-nav>li>a:hover { background-color: #4a4a4a;} }
+@media only screen and (max-width: 768px){ .navbar-inverse .navbar-nav .open .dropdown-menu>li>a:hover { background-color: #4a4a4a;} }
+@media only screen and (min-width: 768px){ .navbar-nav>li>a { padding-top: 7px;} }
+@media only screen and (min-width: 768px){ .navbar-inverse .navbar-collapse { height: 35px !important;} }
+@media only screen and (max-width: 767px){ .navbar-nav .open .dropdown-menu { background-color: #2f2f2f;} }
+@media only screen and (max-width: 767px){ .sw-profile-name { color: #a5a5a5;} }
+@media only screen and (max-width: 767px){ .sw-profile-email { color: #a5a5a5;} }
+
+/* //////////////////////////////// END NAVBAR ////////////////////////////////*/
+/* //////////////////////////////// TOP WHITE BAR ////////////////////////////////*/
+.sw-top {
+	background-color: #fff;
+	height: 115px;
+	padding: 35px 0px 0px 0px;
+	text-align: center;
+}
+.sw-swapy-logo {
+	padding: 8px 0px 0px 0px;
+	margin-left: -150px;
+}
+.sw-swapy-logo2 {
+    padding: 8px 0px 0px 0px;
+    margin-left: -80px;
+}
+.sw-roi-lable {
+    font-weight: 300;
+    font-size: 14px;
+    padding: 15px 0px 0px 0px;
+    margin: 0;
+}
+.sw-roi-value {
+	font-weight: 400;
+    font-size: 21px;
+    margin: -2px 0px 0px 0px;
+}
+.sw-funds {
+    text-align: right;
+    padding: 0px 0px 0px 0px;
+    
+}
+.sw-funds-value {
+    font-weight: 400;
+    font-size: 24px;
+    margin: 13px 0px 0px 0px;
+    padding: 0px 50px 0px 0px;
+    border-right: 1px solid #888;
+}
+.sw-funds-add {
+    font-weight: 400;
+    font-size: 14px;
+    color: #61af04;
+    margin: -2px 0px 0px 0px;
+    padding: 0px 50px 0px 0px;
+    border-right: 1px solid #888;
+}
+.sw-funds a:link {
+    text-decoration: none;
+}
+.sw-available-lable {
+	font-weight: 300;
+    font-size: 14px;
+    text-align: right;
+    padding: 30px 10px 0px 0px;
+}
+
+@media only screen and (max-width: 1115px){ .sw-swapy-logo { display: none;} }
+@media only screen and (max-width: 830px){ .sw-available-lable { display: none;} }
+@media only screen and (min-width: 1115px){ .sw-swapy-logo2 { display: none;} }
+@media only screen and (max-width: 1115px){ .sw-swapy-logo2 { display: 1 !important;} }
+@media only screen and (max-width: 565px){ .sw-funds-value { font-size: 18px; padding: 0 5px 0 0;} }
+@media only screen and (max-width: 565px){ .sw-funds-add { padding: 0 5px 0 0;} }
+@media only screen and (max-width: 565px){ .sw-roi-value { font-size: 18px;} }
+
+/* //////////////////////////////// END TOP WHITE BAR ////////////////////////////////*/
+/* //////////////////////////////// SIDEBAR ////////////////////////////////*/
+.sw-sidebar {
+	background-color: #393939;
+	text-align: left;
+    padding: 50px 0px 0px 0px;
+	color: #FFF;
+	height: 100%;
+	position: absolute;
+}
+.sw-top-sidebar {
+    margin: 0px;
+    padding: 0px;
+}
+.sw-top-lable {
+    font-weight: 300;
+    font-size: 14px;
+    padding: 15px 0px 0px 0px;
+    margin: 0px;
+    text-align: center;
+    color: #f5c13a;
+}
+.sw-top-value {
+    font-weight: 400;
+    font-size: 21px;
+    padding: 0px 0px 0px 0px;
+    margin: 0px;
+    text-align: center;
+    color: #f5c13a;
+}
+.sw-top-bottom {
+    padding-bottom: 35px;
+}
+.sw-stripes {
+    background: repeating-linear-gradient(90deg,#4a4a4a,#4a4a4a 5px,#393939 5px,#393939 10px);
+    padding: 35px 0px 0px 0px;
+    max-height: 5px !important;
+} 
+.sw-sidebar-notifications {
+    background-color: #4a4a4a;
+    text-align: left;
+    padding: 10px 15px 0px 15px;
+    color: #bebebe;
+    border-bottom: 1px solid #646464;
+}
+.sw-scrollbar :hover {
+    background-color: #3e3e3e;
+    color: #fff;
+}
+.sw-notfication-message {
+    font-weight: 300;
+    font-size: 14px;
+    margin-bottom: 0px;
+}
+.sw-notfication-time {
+    font-weight: 300;
+    font-size: 10px;
+    font-style: italic;
+}
+.sw-scrollbar {
+    height: calc(100vh - 277px) !important; /*Height value is defined by 100% of screen height size minus 277px*/
+    overflow-y:auto;
+}
+.sw-sidebar-bottom {
+    text-align: center;
+}
+
+@media only screen and (max-width: 767px){ .sw-sidebar { position: relative; padding: 15px 0px !important;} }
+@media only screen and (max-width: 1140px){ .sw-sidebar-notifications { padding: 10px 10px 0px 10px;} }
+
+/* //////////////////////////////// END SIDEBAR ////////////////////////////////*/
+/* /::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/*/
+/* //////////////////////////////// MAIN CONTENT ////////////////////////////////*/
+/* ////////////////////// Page name, Search Bar ///////////*/
+.sw-page-name {
+    font-weight: 100;
+    font-size: 30px;
+    padding: 15px 20px;
+    color: #CCC;
+}
+.sw-search-bar {
+    margin: 10px 0px;
+    border-radius: 30px;
+    font-weight: 300;
+    border: none !important;
+    box-shadow: none !important;
+}
+.sw-search-bar-icon {
+    padding: 7px 20px;
+    margin-top: 10px;
+    border-radius: 30px;
+    border: none !important;
+    color: #676767;
+}
+.sw-search-button {
+    margin: 17px 0px;
+}
+@media only screen and (max-width: 655px){ .sw-btn1 { display: none;} }
+@media only screen and (min-width: 655px){ .sw-btn2 { display: none;} }
+@media only screen and (max-width: 655px){ .sw-btn2 { display: 1 !important;} }
+@media only screen and (max-width: 565px){ .sw-search-button { display: none;} }
+
+/* //////////////////////// SW Box ////////////////////*/
+.sw-box {
+    background-color: #FFF;
+    border: 1px solid #d8d8d8;
+    border-radius: 3px;
+    padding: 15px 20px;
+    margin: 0 0 15px 0;
+    text-align: left;
+    box-shadow: rgba(0,0,0,0.2) 0 5px 0px 0;
+    -webkit-box-shadow: rgba(0,0,0,0.2) 0 5px 5px 0;
+    -moz-box-shadow: rgba(0,0,0,0.2) 0 5px 5px 0;
+}
+.sw-box p {
+    margin: 0 0 1px;
+}
+
+/* //////////////////////// General ////////////////////*/
+.sw-perannum {
+    font-weight: 400;
+    font-size: 14px;
+    font-style: italic;
+}
+.sw-blue1 {
+    color: #00adef;
+}
+.sw-scrollbar2 {
+    height: calc(100vh - 115px) !important; /*Height value is defined by 100% of screen height size minus 235px*/
+    overflow-y:auto;
+}
+
+/* ////////////////////// Titles /////////////// */
+.sw-box-title {            
+    font-weight: 500;
+    font-size: 21px;
+    padding-top: 0px;
+}
+.sw-box-title-slim {
+    font-weight: 300;
+    font-size: 18px;
+    padding-top: 0px;
+}
+.sw-title-blue-right {
+    text-align: right;
+    padding: 0 0 10px 0;
+    font-weight: 400;
+    font-size: 18px;
+    color: #00adef;
+}
+.panel-title a:focus, a:hover {
+    text-decoration: none !important;
+}
+/* ////////////////////// Text styles /////////////// */
+.sw-box-text {              
+    font-weight: 300 !important;
+    font-size: 14px;
+}
+.sw-box-text a {
+    color: #333;
+    text-decoration: none;
+}
+.sw-box-text a:focus, a:hover {
+    color: #00adef;
+}
+/* ////////////////////// STAR full & empty /////////////////////// */
+.sw-star-full {              
+    color: #fcd233;
+}
+.sw-star-empty {
+    color: #8e8e8e;
+}
+/* ////////////////////// Performance: High, Medium, Low - COLORS /////////////// */
+.sw-high {                   
+    color: #00adef;
+    font-weight: 500;
+}
+.sw-medium {
+    color: #f76b1e;
+    font-weight: 500;
+}
+.sw-low {
+    color: #fb0505;
+    font-weight: 500;
+}
+/* ////////////////////// Since date /////////////// */
+.sw-box-since {              
+    font-weight: 300;
+    font-size: 14px;
+    padding: 5px 20px;
+}
+/* ////////////////////// Box Space ///////////////// */
+.sw-box-space {
+    padding: 5px 0 0 30px;
+}
+.sw-box-space :hover {
+    text-decoration: none;
+}
+/* ////////////////////// Company logo ///////////////// */
+.sw-company-logo-right {
+    margin: 0 0 0 -30px;
+    border: 1px solid #CCC;
+    padding: 5px 0; 
+    text-align: center;
+}
+.sw-company-logo-right img { 
+    height: 49px;/* //// Limit the size of logo images uploaded //// */
+}
+.sw-company-logo-left {
+    margin: 0 0 0 15px;
+    border: 1px solid #CCC;
+    padding: 5px 0; 
+    text-align: center;
+}
+.sw-company-logo-left img { 
+    height: 49px;/* //// Limit the size of logo images uploaded //// */
+}
+@media only screen and (max-width: 765px){ .sw-company-logo-right { display: none;} }
+@media only screen and (max-width: 993px){ .sw-logoxs-menus { display: none;} }
+/* ///////////////////////////////   END MAIN CONTENT   /////////////////////////////////////////// */
+
+/* ///////////////////////////////   BUTTONS   /////////////////////////////////////////// */
+.sw-button {
+    border-radius: 300px;
+    padding: 5px 5px;
+    margin: 15px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+}
+.sw-btn-ghost1 {  
+    background-color: #00adef;
+    border: 1px solid #00adef;
+    color: #FFF;
+    padding: 10px 10px; 
+
+}
+.sw-btn-ghost1:hover {  
+    background-color: #00baef;
+    border: 1px solid #00baef;
+    color: #FFF;
+    padding: 10px 10px;
+
+    text-decoration: none;
+}
+.sw-btn-ghost1:focus {
+    color: #FFF;
+}
+.sw-btn-ghost2 {  
+    background-color: #FFF;
+    border: 1px solid #8d8d8d;
+    color: #8d8d8d;
+    padding: 10px 10px; 
+
+}
+.sw-btn-ghost2:hover {  
+    background-color: #FFF;
+    border: 1px solid #333;
+    color: #333;
+    padding: 10px 10px;
+
+    text-decoration: none;
+}
+.sw-btn-ghost2:focus {
+    color: #333;
+}
+
+/* ///////////////////////////////  END BUTTONS   //////////////////////////////////////// */
+/* ////////////////////// START SWITCH Toggle Button //////////////////////////////// */
+.cmn-toggle {
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden;
+}
+.cmn-toggle + label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+input.cmn-toggle-round + label {
+  padding: 2px;
+  width: 60px;
+  height: 30px;
+  background-color: #dddddd;
+  -webkit-border-radius: 60px;
+  -moz-border-radius: 60px;
+  -ms-border-radius: 60px;
+  -o-border-radius: 60px;
+  border-radius: 60px;
+}
+input.cmn-toggle-round + label:before, input.cmn-toggle-round + label:after {
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+  content: "";
+}
+input.cmn-toggle-round + label:before {
+  right: 1px;
+  background-color: #f1f1f1;
+  -webkit-border-radius: 60px;
+  -moz-border-radius: 60px;
+  -ms-border-radius: 60px;
+  -o-border-radius: 60px;
+  border-radius: 60px;
+  -webkit-transition: background 0.4s;
+  -moz-transition: background 0.4s;
+  -o-transition: background 0.4s;
+  transition: background 0.4s;
+}
+input.cmn-toggle-round + label:after {
+  width: 28px;
+  background-color: #fff;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  -ms-border-radius: 100%;
+  -o-border-radius: 100%;
+  border-radius: 100%;
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  -webkit-transition: margin 0.4s;
+  -moz-transition: margin 0.4s;
+  -o-transition: margin 0.4s;
+  transition: margin 0.4s;
+}
+input.cmn-toggle-round:checked + label:before {
+  background-color: #00baef;
+}
+input.cmn-toggle-round:checked + label:after {
+  margin-left: 30px;
+}
+/* ////////////////////// END SWITCH Toggle Button //////////////////////////////// */
+/* ////////////////////// START Progress Bar //////////////////////////////// */
+.sw-prog-bar {
+    position:relative;
+    display:block;
+    margin-bottom:5px;
+    width:100%;
+    background:#eee;
+    height:35px;
+}
+.sw-prog-bar-title {
+    position:absolute;
+    top:0;
+    left:0;
+    font-weight:300;
+    font-size:14px;
+    color:#fff;
+    background:#f8f8f8;
+}
+.sw-prog-bar-title span {
+    display:block;
+    padding:0 20px;
+    height:35px;
+    line-height:35px;
+}
+.sw-bar-1 {
+    background: #00baef !important;
+}
+.sw-bar-2 {
+    background: #88cd2a !important;
+}
+.sw-prog-bar-bar {
+    height:35px;
+    width:0px;
+    background:#f8f8f8;
+}
+.sw-prog-bar-percent {
+    position:absolute;
+    right:10px;
+    top:0;
+    font-size: 14px;
+    font-weight: 400;
+    height:35px;
+    line-height:35px;
+    color:rgba(0, 0, 0, 0.4);
+}
+/* ////////////////////// END Progress Bar //////////////////////////////// */
+/* ////////////////////// START Circular CHART //////////////////////////////// */
+.sw-progress-circle {
+   font-size: 20px;
+   margin: 20px;
+   position: relative; /* so that children can be absolutely positioned */
+   padding: 0;
+   width: 5em;
+   height: 5em;
+   background-color: #CCC; 
+   border-radius: 50%;
+   line-height: 5em;
+}
+
+.sw-progress-circle:after{
+    border: none;
+    position: absolute;
+    top: 0.35em;
+    left: 0.35em;
+    text-align: center;
+    display: block;
+    border-radius: 50%;
+    width: 4.3em;
+    height: 4.3em;
+    background-color: white;
+    content: " ";
+}
+/* Text inside the control */
+.sw-progress-circle span {
+    position: absolute;
+    line-height: 5em;
+    width: 5em;
+    text-align: center;
+    display: block;
+    color: #ffa200;
+    z-index: 2;
+}
+.sw-left-half-clipper { 
+   /* a round circle */
+   border-radius: 50%;
+   width: 5em;
+   height: 5em;
+   position: absolute; /* needed for clipping */
+   clip: rect(0, 5em, 5em, 2.5em); /* clips the whole left half*/ 
+}
+/* when p>50, don't clip left half*/
+.sw-progress-circle.sw-over50 .sw-left-half-clipper {
+   clip: rect(auto,auto,auto,auto);
+}
+.sw-value-bar {
+   /*This is an overlayed square, that is made round with the border radius,
+   then it is cut to display only the left half, then rotated clockwise
+   to escape the outer clipping path.*/ 
+   position: absolute; /*needed for clipping*/
+   clip: rect(0, 2.5em, 5em, 0);
+   width: 5em;
+   height: 5em;
+   border-radius: 50%;
+   border: 0.45em solid #ffa200; /*The border is 0.35 but making it larger removes visual artifacts */
+   /*background-color: #4D642D;*/ /* for debug */
+   box-sizing: border-box;
+  
+}
+/* Progress bar filling the whole right half for values above 50% */
+.sw-progress-circle.sw-over50 .sw-first50-bar {
+   /*Progress bar for the first 50%, filling the whole right half*/
+   position: absolute; /*needed for clipping*/
+   clip: rect(0, 5em, 5em, 2.5em);
+   background-color: #ffa200;
+   border-radius: 50%;
+   width: 5em;
+   height: 5em;
+}
+.sw-progress-circle:not(.sw-over50) .sw-first50-bar{ display: none; }
+
+
+/* Progress bar rotation position */
+.sw-progress-circle.p0 .sw-value-bar { display: none; }
+.sw-progress-circle.p1 .sw-value-bar { transform: rotate(4deg); }
+.sw-progress-circle.p2 .sw-value-bar { transform: rotate(7deg); }
+.sw-progress-circle.p3 .sw-value-bar { transform: rotate(11deg); }
+.sw-progress-circle.p4 .sw-value-bar { transform: rotate(14deg); }
+.sw-progress-circle.p5 .sw-value-bar { transform: rotate(18deg); }
+.sw-progress-circle.p6 .sw-value-bar { transform: rotate(22deg); }
+.sw-progress-circle.p7 .sw-value-bar { transform: rotate(25deg); }
+.sw-progress-circle.p8 .sw-value-bar { transform: rotate(29deg); }
+.sw-progress-circle.p9 .sw-value-bar { transform: rotate(32deg); }
+.sw-progress-circle.p10 .sw-value-bar { transform: rotate(36deg); }
+.sw-progress-circle.p11 .sw-value-bar { transform: rotate(40deg); }
+.sw-progress-circle.p12 .sw-value-bar { transform: rotate(43deg); }
+.sw-progress-circle.p13 .sw-value-bar { transform: rotate(47deg); }
+.sw-progress-circle.p14 .sw-value-bar { transform: rotate(50deg); }
+.sw-progress-circle.p15 .sw-value-bar { transform: rotate(54deg); }
+.sw-progress-circle.p16 .sw-value-bar { transform: rotate(58deg); }
+.sw-progress-circle.p17 .sw-value-bar { transform: rotate(61deg); }
+.sw-progress-circle.p18 .sw-value-bar { transform: rotate(65deg); }
+.sw-progress-circle.p19 .sw-value-bar { transform: rotate(68deg); }
+.sw-progress-circle.p20 .sw-value-bar { transform: rotate(72deg); }
+.sw-progress-circle.p21 .sw-value-bar { transform: rotate(76deg); }
+.sw-progress-circle.p22 .sw-value-bar { transform: rotate(79deg); }
+.sw-progress-circle.p23 .sw-value-bar { transform: rotate(83deg); }
+.sw-progress-circle.p24 .sw-value-bar { transform: rotate(86deg); }
+.sw-progress-circle.p25 .sw-value-bar { transform: rotate(90deg); }
+.sw-progress-circle.p26 .sw-value-bar { transform: rotate(94deg); }
+.sw-progress-circle.p27 .sw-value-bar { transform: rotate(97deg); }
+.sw-progress-circle.p28 .sw-value-bar { transform: rotate(101deg); }
+.sw-progress-circle.p29 .sw-value-bar { transform: rotate(104deg); }
+.sw-progress-circle.p30 .sw-value-bar { transform: rotate(108deg); }
+.sw-progress-circle.p31 .sw-value-bar { transform: rotate(112deg); }
+.sw-progress-circle.p32 .sw-value-bar { transform: rotate(115deg); }
+.sw-progress-circle.p33 .sw-value-bar { transform: rotate(119deg); }
+.sw-progress-circle.p34 .sw-value-bar { transform: rotate(122deg); }
+.sw-progress-circle.p35 .sw-value-bar { transform: rotate(126deg); }
+.sw-progress-circle.p36 .sw-value-bar { transform: rotate(130deg); }
+.sw-progress-circle.p37 .sw-value-bar { transform: rotate(133deg); }
+.sw-progress-circle.p38 .sw-value-bar { transform: rotate(137deg); }
+.sw-progress-circle.p39 .sw-value-bar { transform: rotate(140deg); }
+.sw-progress-circle.p40 .sw-value-bar { transform: rotate(144deg); }
+.sw-progress-circle.p41 .sw-value-bar { transform: rotate(148deg); }
+.sw-progress-circle.p42 .sw-value-bar { transform: rotate(151deg); }
+.sw-progress-circle.p43 .sw-value-bar { transform: rotate(155deg); }
+.sw-progress-circle.p44 .sw-value-bar { transform: rotate(158deg); }
+.sw-progress-circle.p45 .sw-value-bar { transform: rotate(162deg); }
+.sw-progress-circle.p46 .sw-value-bar { transform: rotate(166deg); }
+.sw-progress-circle.p47 .sw-value-bar { transform: rotate(169deg); }
+.sw-progress-circle.p48 .sw-value-bar { transform: rotate(173deg); }
+.sw-progress-circle.p49 .sw-value-bar { transform: rotate(176deg); }
+.sw-progress-circle.p50 .sw-value-bar { transform: rotate(180deg); }
+.sw-progress-circle.p51 .sw-value-bar { transform: rotate(184deg); }
+.sw-progress-circle.p52 .sw-value-bar { transform: rotate(187deg); }
+.sw-progress-circle.p53 .sw-value-bar { transform: rotate(191deg); }
+.sw-progress-circle.p54 .sw-value-bar { transform: rotate(194deg); }
+.sw-progress-circle.p55 .sw-value-bar { transform: rotate(198deg); }
+.sw-progress-circle.p56 .sw-value-bar { transform: rotate(202deg); }
+.sw-progress-circle.p57 .sw-value-bar { transform: rotate(205deg); }
+.sw-progress-circle.p58 .sw-value-bar { transform: rotate(209deg); }
+.sw-progress-circle.p59 .sw-value-bar { transform: rotate(212deg); }
+.sw-progress-circle.p60 .sw-value-bar { transform: rotate(216deg); }
+.sw-progress-circle.p61 .sw-value-bar { transform: rotate(220deg); }
+.sw-progress-circle.p62 .sw-value-bar { transform: rotate(223deg); }
+.sw-progress-circle.p63 .sw-value-bar { transform: rotate(227deg); }
+.sw-progress-circle.p64 .sw-value-bar { transform: rotate(230deg); }
+.sw-progress-circle.p65 .sw-value-bar { transform: rotate(234deg); }
+.sw-progress-circle.p66 .sw-value-bar { transform: rotate(238deg); }
+.sw-progress-circle.p67 .sw-value-bar { transform: rotate(241deg); }
+.sw-progress-circle.p68 .sw-value-bar { transform: rotate(245deg); }
+.sw-progress-circle.p69 .sw-value-bar { transform: rotate(248deg); }
+.sw-progress-circle.p70 .sw-value-bar { transform: rotate(252deg); }
+.sw-progress-circle.p71 .sw-value-bar { transform: rotate(256deg); }
+.sw-progress-circle.p72 .sw-value-bar { transform: rotate(259deg); }
+.sw-progress-circle.p73 .sw-value-bar { transform: rotate(263deg); }
+.sw-progress-circle.p74 .sw-value-bar { transform: rotate(266deg); }
+.sw-progress-circle.p75 .sw-value-bar { transform: rotate(270deg); }
+.sw-progress-circle.p76 .sw-value-bar { transform: rotate(274deg); }
+.sw-progress-circle.p77 .sw-value-bar { transform: rotate(277deg); }
+.sw-progress-circle.p78 .sw-value-bar { transform: rotate(281deg); }
+.sw-progress-circle.p79 .sw-value-bar { transform: rotate(284deg); }
+.sw-progress-circle.p80 .sw-value-bar { transform: rotate(288deg); }
+.sw-progress-circle.p81 .sw-value-bar { transform: rotate(292deg); }
+.sw-progress-circle.p82 .sw-value-bar { transform: rotate(295deg); }
+.sw-progress-circle.p83 .sw-value-bar { transform: rotate(299deg); }
+.sw-progress-circle.p84 .sw-value-bar { transform: rotate(302deg); }
+.sw-progress-circle.p85 .sw-value-bar { transform: rotate(306deg); }
+.sw-progress-circle.p86 .sw-value-bar { transform: rotate(310deg); }
+.sw-progress-circle.p87 .sw-value-bar { transform: rotate(313deg); }
+.sw-progress-circle.p88 .sw-value-bar { transform: rotate(317deg); }
+.sw-progress-circle.p89 .sw-value-bar { transform: rotate(320deg); }
+.sw-progress-circle.p90 .sw-value-bar { transform: rotate(324deg); }
+.sw-progress-circle.p91 .sw-value-bar { transform: rotate(328deg); }
+.sw-progress-circle.p92 .sw-value-bar { transform: rotate(331deg); }
+.sw-progress-circle.p93 .sw-value-bar { transform: rotate(335deg); }
+.sw-progress-circle.p94 .sw-value-bar { transform: rotate(338deg); }
+.sw-progress-circle.p95 .sw-value-bar { transform: rotate(342deg); }
+.sw-progress-circle.p96 .sw-value-bar { transform: rotate(346deg); }
+.sw-progress-circle.p97 .sw-value-bar { transform: rotate(349deg); }
+.sw-progress-circle.p98 .sw-value-bar { transform: rotate(353deg); }
+.sw-progress-circle.p99 .sw-value-bar { transform: rotate(356deg); }
+.sw-progress-circle.p100 .sw-value-bar { transform: rotate(360deg); }
+
+/* ////////////////////// START Circular CHART //////////////////////////////// */
