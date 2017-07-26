@@ -1,31 +1,33 @@
 <img src="assets/img/swapy-logo.jpg" alt="swapy logo">
 <h1 class="sw-sign-title">Sign up</h1>
-<input type="text" class="form-control sw-round" placeholder="Full name | Company name"><br>
-<input type="text" class="form-control sw-round" placeholder="Email"><br>
-<input type="text" class="form-control sw-round" placeholder="Password"><br>
-<input type="text" class="form-control sw-round" placeholder="Confirm password"><br>
+<form (submit)="signUp()">
+<input type="text" class="form-control sw-round" placeholder="Full name | Company name" name="name" [(ngModel)]="name" required><br>
+<input type="text" class="form-control sw-round" placeholder="Email" name="email" [(ngModel)]="email" required><br>
+<input type="password" class="form-control sw-round" placeholder="Password" name="password" [(ngModel)]="password" required><br>
+<input type="password" class="form-control sw-round" placeholder="Confirm password" name="confirm_password" [(ngModel)]="confirm_password" required><br>
 <div class="row sw-check-type">  
   <div class="checkbox">
     <label>  
-      <input type="checkbox"> I am an Investor
+      <input type="radio" name="type" [value]="1" [(ngModel)]="type" [checked]="type==1"/> I am an Investor
     </label> 
   </div>
   <div class="checkbox">   
     <label>
-      <input type="checkbox"/> I am a Credit Company
+      <input type="radio" name="type" [value]="2" [(ngModel)]="type" [checked]="type==2"/> I am a Credit Company
     </label>
   </div>
 </div>
 
-<a class="sw-button sw-btn-ghost1 key2" routerLink="/2fa/question">Sign up</a><br/>
+<button type="submit" class="sw-button sw-btn-ghost1 key2">Sign up</button><br/>
 
 <div class="checkbox">
     <label>
-      <input type="checkbox" />I agree to Swapy's<a href="#"> Terms of Service</a> and<a href="#"> Privacy Policy.</a>
+      <input type="checkbox" name="terms" required [(ngModel)]="terms"/>I agree to Swapy's<a href="#"> Terms of Service</a> and<a href="#"> Privacy Policy.</a>
     </label>
 </div>
+</form>
 
-<div id="sw-activate" class="hide">
+<!-- <div id="sw-activate" class="hide">
   <p class="sw-return return2"><a href="javascript:void(0)"><i class="fa fa-arrow-left"></i> return</a></p>
   <img src="img/swapy-logo.jpg" alt="swapy logo">
   
@@ -40,6 +42,6 @@
   <a class="sw-button sw-btn-ghost1" href="#">Send</a>
   </div>
   </div>
-</div>
+</div> -->
 
     
