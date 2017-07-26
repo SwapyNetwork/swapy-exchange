@@ -6,6 +6,7 @@ import { CreditCompanyRoutingModule } from './credit-company-routing.module';
 import { CreditCompanyComponent } from './credit-company.component';
 import { NavModule } from '../common/nav/nav.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import {LogoutService} from '../common/services/logout.service';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     NavModule
   ],
   declarations: [CreditCompanyComponent, DashboardComponent],
-  providers: [],
+  providers: [LogoutService],
   bootstrap: [CreditCompanyComponent]
 })
 export class CreditCompanyModule { }

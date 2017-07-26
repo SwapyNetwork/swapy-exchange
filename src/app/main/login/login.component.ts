@@ -16,10 +16,11 @@ export class LoginComponent implements OnInit {
 
   constructor(private loginService: LoginService, private router: Router) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   login() {
+    /** @todo frontend validations */
+
   	let body = {
   		email: this.email,
   		password: this.password

@@ -14,7 +14,8 @@ export class NavComponent implements OnInit {
   public user: UserResponseModel;
 
   constructor(public logoutService: LogoutService, private storageService: StorageService, private router: Router) {
-    this.user = this.storageService.getItem('user');
+    let user = this.storageService.getItem('user');
+    this.user = user ? user : {};
   }
 
   ngOnInit() { }
@@ -24,14 +25,14 @@ export class NavComponent implements OnInit {
   isSettingsOpen = false;
 
 	// click handler
-  public toggleState() { 
+  public toggleState() {
     let bool = this.isIn;
-    this.isIn = bool === false ? true : false; 
+    this.isIn = bool === false ? true : false;
   }
 
-	public toggleSettingsDropdown() { 
+	public toggleSettingsDropdown() {
     let bool = this.isSettingsOpen;
-    this.isSettingsOpen = bool === false ? true : false; 
+    this.isSettingsOpen = bool === false ? true : false;
   }
 
   public logout() {
