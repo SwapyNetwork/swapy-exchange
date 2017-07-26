@@ -1,0 +1,46 @@
+/* ///////////////////////////////   BUTTONS   /////////////////////////////////////////// */
+.sw-button {
+    border-radius: 300px;
+    padding: 5px 5px;
+    margin: 15px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+    width: 100%;
+}    
+.sw-btn-ghost1 {  
+    background-color: #00adef;
+    border: 1px solid #00adef;
+    color: #FFF;
+    padding: 10px 10px; 
+
+}
+.sw-btn-ghost1:hover {  
+    background-color: #00baef;
+    border: 1px solid #00baef;
+    color: #FFF;
+    padding: 10px 10px;
+    text-decoration: none;
+}
+.sw-btn-ghost1:focus {
+    color: #FFF;
+}
+.sw-btn-ghost2 {  
+    background-color: #FFF;
+    border: 1px solid #00adef;
+    color: #00adef;
+    padding: 10px 10px; 
+}
+.sw-btn-ghost2:hover {  
+    background-color: #00adef;
+    border: 1px solid #00adef;
+    color: #FFF;
+    padding: 10px 10px;
+    text-decoration: none;
+}
+.sw-btn-ghost2:focus {
+    color: #FFF;
+}
+/* /////////////////////////////// END BUTTONS   /////////////////////////////////////////// */
