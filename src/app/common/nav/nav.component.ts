@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {LogoutService} from '../services/logout.service';
+import {StorageService} from '../services/storage.service';
+import {UserResponseModel} from '../models/user-response.model';
 
 @Component({
   selector: 'app-nav',
@@ -9,7 +11,11 @@ import {LogoutService} from '../services/logout.service';
 })
 export class NavComponent implements OnInit {
 
-  constructor(public logoutService: LogoutService, private router: Router) { }
+  public user: UserResponseModel;
+
+  constructor(public logoutService: LogoutService, private storageService: StorageService, private router: Router) {
+    this.user = this.storageService.getItem('user');
+  }
 
   ngOnInit() { }
 

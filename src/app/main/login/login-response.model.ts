@@ -1,17 +1,10 @@
-class UserResponse {
-  constructor(
-    public email: string,
-    public firstName: string,
-    public lastName: string,
-    public type: number
-  ) {  }
-}
+import {UserResponseModel} from '../../common/models/user-response.model';
 
 export class LoginResponseModel {
   constructor(
   	public code: string,
   	public message: string,
-    public user: UserResponse
+    public user: UserResponseModel
   ) {  }
 }
 
