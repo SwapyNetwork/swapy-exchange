@@ -14,6 +14,7 @@ import { NavModule } from '../common/nav/nav.module';
 import { OfferComponent } from './offers/offer/offer.component';
 import { OfferDetailsComponent } from './offer-details/offer-details.component';
 import { CreditCompanyComponent } from './credit-company/credit-company.component';
+import {LogoutService} from '../common/services/logout.service';
 
 @NgModule({
   imports: [
@@ -24,7 +25,7 @@ import { CreditCompanyComponent } from './credit-company/credit-company.componen
     NavModule
   ],
   declarations: [InvestorComponent, OffersComponent, DashboardComponent, VerificationPhoneComponent, VerificationMainComponent, VerificationIdentityComponent, VerificationAddressComponent, OfferComponent, OfferDetailsComponent, CreditCompanyComponent],
-  providers: [],
+  providers: [LogoutService],
   bootstrap: [InvestorComponent]
 })
 export class InvestorModule { }

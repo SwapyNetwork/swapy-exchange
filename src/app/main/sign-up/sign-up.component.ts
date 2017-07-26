@@ -43,6 +43,7 @@ export class SignUpComponent implements OnInit {
 	    },
 	    // Errors will call this callback instead:
 	    err => {
+	    	/** @todo show error messages */
 	      console.log(err);
 	    }
 		);

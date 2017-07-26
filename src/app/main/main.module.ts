@@ -10,6 +10,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { TfaQuestionComponent } from './tfa-question/tfa-question.component';
 import { TfaValidationComponent } from './tfa-validation/tfa-validation.component';
 import { TfaSetupComponent } from './tfa-setup/tfa-setup.component';
+import { LoginService } from './login/login.service';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { TfaSetupComponent } from './tfa-setup/tfa-setup.component';
     FormsModule
   ],
   declarations: [MainComponent, LoginComponent, SignUpComponent, ForgotPasswordComponent, TfaQuestionComponent, TfaValidationComponent, TfaSetupComponent],
-  providers: [],
+  providers: [LoginService],
   bootstrap: [MainComponent]
 })
 export class MainModule { }
