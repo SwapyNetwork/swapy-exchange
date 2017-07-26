@@ -19,7 +19,7 @@ export class OffersComponent implements OnInit {
 
   ngOnInit() { 
     this.offerService.getOffers().then(
-    	offers => this.offers = offers,
+    	(data:any) => {this.offers = data.offers},
     	error =>  this.errorMessage = <any>error
   	);
   }

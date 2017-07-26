@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import 'rxjs/add/operator/map';
-
 import { StorageService } from './storage.service';
 import { environment } from '../../../environments/environment';
 

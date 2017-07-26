@@ -6,6 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StorageService } from './common/services/storage.service';
+import { HttpService } from './common/services/http.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { StorageService } from './common/services/storage.service';
     FormsModule,
     HttpClientModule
   ],
-  providers: [StorageService],
+  providers: [StorageService, HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
