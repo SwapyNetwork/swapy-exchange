@@ -5,11 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { TextMaskModule } from 'angular2-text-mask';
 
 import { CreditCompanyRoutingModule } from './credit-company-routing.module';
-import { CreditCompanyComponent } from './credit-company.component';
 import { NavModule } from '../common/nav/nav.module';
+
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { LogoutService } from '../common/services/logout.service';
 import { AddOfferComponent } from './add-offer/add-offer.component';
+import { CreditCompanyComponent } from './credit-company.component';
+
+import { LogoutService } from '../common/services/logout.service';
+import { AddOfferService } from './add-offer/add-offer.service';
+import { ConfirmOfferComponent } from './confirm-offer/confirm-offer.component';
 
 @NgModule({
   imports: [
@@ -21,8 +25,8 @@ import { AddOfferComponent } from './add-offer/add-offer.component';
     FormsModule,
     TextMaskModule
   ],
-  declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent],
-  providers: [LogoutService],
+  declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent, ConfirmOfferComponent],
+  providers: [LogoutService, AddOfferService],
   bootstrap: [CreditCompanyComponent]
 })
 export class CreditCompanyModule { }

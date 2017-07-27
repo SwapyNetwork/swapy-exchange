@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import createNumberMask from 'text-mask-addons/src/createNumberMask';
+
+import { AddOfferService } from './add-offer.service';
 
 @Component({
   selector: 'app-add-offer',
@@ -8,9 +11,9 @@ import createNumberMask from 'text-mask-addons/src/createNumberMask';
 })
 export class AddOfferComponent implements OnInit {
 
-  public amount: String;
-  public paybackMonths: String;
-  public roi: String;
+  public amount: string;
+  public paybackMonths: string;
+  public roi: string;
 
   public paybackMonthsMask = [/\d/, /\d/];
 
@@ -34,18 +37,20 @@ export class AddOfferComponent implements OnInit {
     decimalLimit: 2,
   });
 
-  constructor() {}
+  constructor(private addOfferService: AddOfferService, private router: Router) {}
 
   ngOnInit() {}
 
   addOffer() {
     /** todo text-mask maintains the mask on the model value. When it got fixed, remove the replacing */
     let offer = {
-      amount: parseFloat(this.amount.replace(/[^0-9.]/g, '')),
+      raisingAmount: parseFloat(this.amount.replace(/[^0-9.]/g, '')),
       roi: parseFloat(this.roi.replace(/[^0-9.]/g, ''))/100,
-      paybackMonths: this.paybackMonths
+      paybackMonths: parseInt(this.paybackMonths)
     }
-    console.log(offer);
+
+    this.addOfferService.cacheOffer(offer);
+    this.router.navigate(["credit-company/raise/confirm"]);
   }
 
 }
