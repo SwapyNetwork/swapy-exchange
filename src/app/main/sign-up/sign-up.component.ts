@@ -17,7 +17,7 @@ export class SignUpComponent implements OnInit {
 	public password: string = '';
 	public confirmPassword: string = '';
 	public type: number = 1;
-	public terms: boolean = false;
+	public agreedToTerms: boolean = false;
 
   constructor(private signUpService: SignUpService, private router: Router) { }
 
@@ -37,7 +37,7 @@ export class SignUpComponent implements OnInit {
   		password: this.password,
       confirmPassword: this.confirmPassword,
   		type: this.type,
-      terms: this.terms
+      agreedToTerms: this.agreedToTerms
   	};
 
     this.signUpService.signUp(body).then(
