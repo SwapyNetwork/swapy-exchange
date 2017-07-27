@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { SignUpService } from './sign-up.service';
-import { LoginResponseModel, INVESTOR, CREDIT_COMPANY } from '../login/login-response.model';
+import { LoginResponseModel } from '../login/login-response.model';
+import { INVESTOR, CREDIT_COMPANY } from '../../common/models/user-response.model';
 
 @Component({
   selector: 'app-sign-up',

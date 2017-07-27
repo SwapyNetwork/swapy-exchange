@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {LoginService} from './login.service';
 import {Router} from '@angular/router';
-import { LoginResponseModel, INVESTOR, CREDIT_COMPANY } from './login-response.model';
+import { LoginResponseModel } from './login-response.model';
+import { INVESTOR, CREDIT_COMPANY } from '../../common/models/user-response.model';
 
 @Component({
   selector: 'app-login',
