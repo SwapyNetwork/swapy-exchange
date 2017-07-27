@@ -4,6 +4,7 @@ import {LoginService} from './login.service';
 import {Router} from '@angular/router';
 import { LoginResponseModel } from './login-response.model';
 import { INVESTOR, CREDIT_COMPANY } from '../../common/models/user-response.model';
+import { I18nService } from '../../common/services/i18n.service';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +15,9 @@ export class LoginComponent implements OnInit {
 
 	public email: string = '';
 	public password: string = '';
+  public errorMessages:string[] = [];
 
-  constructor(private loginService: LoginService, private router: Router) { }
+  constructor(private loginService: LoginService, private i18nService: I18nService, private router: Router) { }
 
   ngOnInit() {}
 
@@ -35,7 +37,14 @@ export class LoginComponent implements OnInit {
 	    // Errors will call this callback instead:
 	    err => {
 	    	/** @todo show error messages */
-	      console.log(err);
+        let namespace = "login";
+
+        // i18nService read language files and translate message by code
+        // in case message not exists under the namespace file + language
+        // uses the default message
+        this.i18nService.doTranslateList(namespace, err.error).then( res => {
+          this.errorMessages = res; // errorMessages is a list of error strings
+        });
 	    }
 		);
   }
