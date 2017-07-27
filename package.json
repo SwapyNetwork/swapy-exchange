@@ -21,10 +21,12 @@
     "@angular/platform-browser": "^4.3.0",
     "@angular/platform-browser-dynamic": "^4.3.0",
     "@angular/router": "^4.3.0",
+    "angular2-text-mask": "^8.0.2",
     "bootstrap": "^3.3.5",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
     "rxjs": "^5.1.0",
+    "text-mask-addons": "^3.6.0",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {

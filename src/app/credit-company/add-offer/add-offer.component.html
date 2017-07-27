@@ -1,0 +1,85 @@
+<div class="sw-scrollbar2">
+  <div class="row"> <!--  Page name -->
+    <div class="col-xs-4 col-sm-4 col-md-4">
+      <p class="sw-page-name">Raise</p>
+    </div>
+  </div> <!-- END Page name  -->
+
+  <div class="row"> <!-- //////////// MAIN Content //////////// -->
+    <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
+
+        <div class=" col-md-12"> <!-- Start  -->
+          <div class="sw-box">
+          <div class="row sw-box-space">
+
+            <div class="col-sm-12 col-md-12">
+              <form (submit)="addOffer()">
+              `<div class="row">
+                <div class="col-sm-10 col-md-10">
+                   <p class="sw-box-title">Add Fundraising Offer</p>
+                   <p class="sw-box-text sw-blue1"><a href="javascript:void()">+ Add Contract &nbsp; <i class="fa fa-file-text-o" aria-hidden="true"></i></a></p>
+
+                   <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"> </i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i>
+                </div>
+
+                <div class="col-sm-2 col-md-2 sw-company-logo-right">
+                   <a href="javascript:void()"><img src="/assets/img/meucreditoapp-logo2.jpg" alt="meu credito app logo"></a>
+                </div>
+
+              </div>
+              <hr>
+
+            <div class="row">
+            <div class="col-sm-4 col-md-4">
+
+               <div class="form-group">
+                  <label for="inputFundraising"><span class="sw-box-text">Fundraising</span></label>
+                  <input type="tel" class="form-control" placeholder="Add raising value (US$)" value="10" name="amount" [(ngModel)]="amount" [textMask]="{mask: amountMask}">
+               </div>
+
+               <div class="form-group">
+                  <label for="inputRoi"><span class="sw-box-text">ROI</span></label>
+                  <input type="text" class="form-control" placeholder="Add ROI per annum (%)" name="roi" [(ngModel)]="roi" [textMask]="{mask: percentMask}">
+               </div>
+
+            </div>
+
+            <div class="col-sm-4 col-md-4">
+               <div class="form-group">
+                  <label for="inputPayback"><span class="sw-box-text">Payback</span></label>
+                  <input type="tel" class="form-control" placeholder="x months"  name="paybackMonths" [(ngModel)]="paybackMonths" maxlength="2">
+               </div>
+
+               <!-- <div class="form-group">
+                  <label for="inputEmail3"><span class="sw-box-text">Installments</span></label>
+                  <input type="text" class="form-control" placeholder="x" name="installments" [(ngModel)]="installments">
+               </div> -->
+            </div>
+
+            <div class="col-sm-4 col-md-4">
+            </div>
+
+          </div>
+
+
+            <div class="row">
+              <div class=" col-sm-8 col-md-8">
+              </div>
+              <div class=" col-sm-4 col-md-4">
+                <button type="submit" class="sw-button sw-btn-ghost1">Add Offer</button>
+              </div>
+            </div>
+          </form>
+         </div>
+        </div>
+
+      </div>
+      </div> <!-- END  -->
+
+    </div>
+  </div><!-- END MAIN Content  -->
+
+</div> <!-- END col 10  -->
+<!-- ///////////////////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////  END MAIN Content  /////////////////////////////////// -->
+<!-- ///////////////////////////////////////////////////////////////////////////////// -->

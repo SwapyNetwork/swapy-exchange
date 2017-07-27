@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule, JsonpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
+import { TextMaskModule } from 'angular2-text-mask';
 
 import { InvestorRoutingModule } from './investor-routing.module';
 import { InvestorComponent } from './investor.component';
@@ -22,7 +24,9 @@ import {LogoutService} from '../common/services/logout.service';
     InvestorRoutingModule,
     HttpModule,
     JsonpModule,
-    NavModule
+    NavModule,
+    FormsModule,
+    TextMaskModule
   ],
   declarations: [InvestorComponent, OffersComponent, DashboardComponent, VerificationPhoneComponent, VerificationMainComponent, VerificationIdentityComponent, VerificationAddressComponent, OfferComponent, OfferDetailsComponent, CreditCompanyComponent],
   providers: [LogoutService],

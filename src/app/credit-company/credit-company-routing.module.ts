@@ -3,13 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { CreditCompanyComponent } from './credit-company.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AddOfferComponent } from './add-offer/add-offer.component';
 
 const routes: Routes = [
 	{
 		path: '',
 		component: CreditCompanyComponent,
 		children: [
-			{ path: '', component: DashboardComponent }
+			{ path: '', component: DashboardComponent },
+			{ path: 'raise', component: AddOfferComponent }
 		]
 	}
 ];
