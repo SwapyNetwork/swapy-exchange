@@ -31,7 +31,7 @@ export class HttpService {
 	    // We're using Angular HTTP provider to request services
 	    this.http.get(this.url(endpoint), this.options).subscribe(
 	    	data => resolve(data),
-	      error => this.handleError(reject, error.error)
+	      error => this.handleError(reject, error)
       );
   	});
 
@@ -43,14 +43,17 @@ export class HttpService {
 	    // We're using Angular HTTP provider to request services
 	    this.http.post(this.url(endpoint), body, this.options).subscribe(
 	    	data => resolve(data),
-	      error => this.handleError(reject, error.error)
+	      error => this.handleError(reject, error)
       );
   	});
 
 	}
 
-	private handleError(reject, error) {
-  	if (error.unauthenticated === true) {
+	private handleError(reject, err) {
+		let error = err.error;
+		if (!err.error) {
+			reject({code: "UNK-E01", message: err.status+" "+err.statusText, error: error});
+		} else if (error.unauthenticated === true) {
   		/** @todo Find a way to communicate the user he is being redirected */
   		this.router.navigate(["/"]);
   	} else {

@@ -2,7 +2,7 @@
 <h1 class="sw-sign-title">Sign in</h1>
 
 <form (submit)="login()">
-	<input type="text" class="form-control sw-round" placeholder="Email" [(ngModel)]="email" name="email" required><br>
+	<input type="email" class="form-control sw-round" placeholder="Email" [(ngModel)]="email" name="email" required><br>
 	<input type="password" class="form-control sw-round" placeholder="Password" [(ngModel)]="password" name="password" required><br>
     <p class="sw-forget-pass"><a [routerLink]="['/forgot-password']"> I Forgot my password &nbsp;&nbsp;<i class="fa fa-key"></i></a><br><br></p>
 	<button type="submit" class="sw-button sw-btn-ghost1">Sign in</button>

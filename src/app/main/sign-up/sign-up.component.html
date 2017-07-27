@@ -2,7 +2,7 @@
 <h1 class="sw-sign-title">Sign up</h1>
 <form (submit)="signUp()">
 <input type="text" class="form-control sw-round" placeholder="Full name | Company name" name="name" [(ngModel)]="name" required><br>
-<input type="text" class="form-control sw-round" placeholder="Email" name="email" [(ngModel)]="email" required><br>
+<input type="email" class="form-control sw-round" placeholder="Email" name="email" [(ngModel)]="email" required><br>
 <input type="password" class="form-control sw-round" placeholder="Password" name="password" [(ngModel)]="password" required><br>
 <input type="password" class="form-control sw-round" placeholder="Confirm password" name="confirmPassword" [(ngModel)]="confirmPassword" required><br>
 <div class="row sw-check-type">
