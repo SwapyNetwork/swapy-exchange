@@ -3,7 +3,7 @@
 
 
 <div class="container-fluid"> <!-- Container that enbrace all the rows -->
-	<div class="row">  
+	<div class="row">
     <div class="col-sm-10 col-md-10"> <!-- col 10  -->
 
       <div class="row sw-top"> <!-- Top White Bar with  Swapy logo -->
@@ -12,82 +12,50 @@
           <img class="sw-swapy-logo2" src="assets/img/swapy-logo2.jpg" alt="Swapy logo">
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 sw-funds">
-          <p class="sw-funds-value"><span class="sw-available-lable">Available</span> $ 1.000.000,00</p>
-          <a href="#"><p class="sw-funds-add">Add Funds +</p></a>
+          <p class="sw-funds-value"><span class="sw-available-lable">Available</span> $ 0.00</p>
+          <a href="#"><p class="sw-funds-add">Transfer Funds +</p></a>
         </div>
         <div class="col-xs-2 col-sm-2 col-md-2">
-          <p class="sw-roi-lable" title="Total ROI">ROI</p>
-          <p class="sw-roi-value">55%</p>
-        </div>  
+          <p class="sw-roi-lable" title="Total ROI">Offers</p>
+          <p class="sw-roi-value">0</p>
+        </div>
       </div> <!-- END Top White Bar with  Swapy logo -->
 
 			<router-outlet></router-outlet>
 
   	</div>
-          
+
 
       <div class="col-sm-2 col-sm-offset-10 col-md-2 col-md-offset-10 sw-sidebar"> <!-- SIDEBAR  -->
          <div class="row sw-top-sidebar">
-          <div class="col-xs-6 col-sm-12 col-md-12"> 
-              <p class="sw-top-lable">Total Spent</p>
-              <p class="sw-top-value">$ 500.000</p>
-          </div>    
-          <div class="col-xs-6 col-sm-12 col-md-12 sw-top-bottom">    
-              <p class="sw-top-lable">Return</p>
-              <p class="sw-top-value">$ 1.000.000</p>
-              
-          </div> 
+          <div class="col-xs-6 col-sm-12 col-md-12">
+              <p class="sw-top-lable">Total Requested</p>
+              <p class="sw-top-value">$ 0.00</p>
+          </div>
+          <div class="col-xs-6 col-sm-12 col-md-12 sw-top-bottom">
+              <p class="sw-top-lable">Total Raised</p>
+              <p class="sw-top-value">$ 0.00</p>
+
+          </div>
          </div>
 
-          <div class="sw-stripes"> 
+          <div class="sw-stripes">
           </div>
-      
-        <div class="sw-scrollbar">  
-          <a href="notifications.html"><div class="sw-sidebar-notifications"> <!-- Notification 1  -->
-            <p class="sw-notfication-message">Payment received: $500 from contract 22, John...</p><!-- max 48 caracteres  -->
-            <p class="sw-notfication-time">a few seconds ago</p>
-          </div></a> 
-          <a href="notifications.html"><div class="sw-sidebar-notifications"> <!-- Notification 2  -->
-            <p class="sw-notfication-message">Payment received: $500 from contract 22, John...</p><!-- max 48 caracteres  -->
-            <p class="sw-notfication-time">a few seconds ago</p>
-          </div></a>
-          <a href="notifications.html"><div class="sw-sidebar-notifications"> <!-- Notification 3  -->
-            <p class="sw-notfication-message">Payment received: $500 from contract 22, John...</p><!-- max 48 caracteres  -->
-            <p class="sw-notfication-time">a few seconds ago</p>
-          </div></a>
-          <a href="notifications.html"><div class="sw-sidebar-notifications"> <!-- Notification 4  -->
-            <p class="sw-notfication-message">Payment received: $500 from contract 22, John...</p><!-- max 48 caracteres  -->
-            <p class="sw-notfication-time">a few seconds ago</p>
-          </div></a>
-          <a href="notifications.html"><div class="sw-sidebar-notifications"> <!-- Notification 5  -->
-            <p class="sw-notfication-message">Payment received: $500 from contract 22, John...</p><!-- max 48 caracteres  -->
-            <p class="sw-notfication-time">a few seconds ago</p>
-          </div></a>
-          <a href="notifications.html"><div class="sw-sidebar-notifications"> <!-- Notification 6  -->
-            <p class="sw-notfication-message">Payment received: $500 from contract 22, John...</p><!-- max 48 caracteres  -->
-            <p class="sw-notfication-time">a few seconds ago</p>
-          </div></a>
-          <a href="notifications.html"><div class="sw-sidebar-notifications"> <!-- Notification 7  -->
-            <p class="sw-notfication-message">Payment received: $500 from contract 22, John...</p><!-- max 48 caracteres  -->
-            <p class="sw-notfication-time">a few seconds ago</p>
-          </div></a>
-          <a href="notifications.html"><div class="sw-sidebar-notifications"> <!-- Notification 8  -->
-            <p class="sw-notfication-message">Payment received: $500 from contract 22, John...</p><!-- max 48 caracteres  -->
-            <p class="sw-notfication-time">a few seconds ago</p>
-          </div></a>
-          <a href="notifications.html"><div class="sw-sidebar-notifications"> <!-- Notification 9  -->
-            <p class="sw-notfication-message">Payment received: $500 from contract 22, John...</p><!-- max 48 caracteres  -->
-            <p class="sw-notfication-time">a few seconds ago</p>
-          </div></a>
-          <a href="notifications.html"><div class="sw-sidebar-notifications"> <!-- Notification 10  -->
-            <p class="sw-notfication-message">Payment received: $500 from contract 22, John...</p><!-- max 48 caracteres  -->
+
+        <div class="sw-scrollbar">
+					<a href="javascript:void(0)"><div class="sw-sidebar-notifications"> <!-- Notification 1  -->
+						<p class="sw-notfication-message">IMPORTANT! This beta release works in a Ethereum testnet and the transactions are not valid in the Ethereum public blockchain. Please, do not transfer funds from your wallets.</p><!-- max 48 caracteres  -->
+						<p class="sw-notfication-time">a few seconds ago</p>
+					</div></a>
+          <a href="javascript:void(0)"><div class="sw-sidebar-notifications"> <!-- Notification 1  -->
+            <p class="sw-notfication-message">Welcome to Swapy! Notifications regarding your operations in our platform will appear righ here.</p><!-- max 48 caracteres  -->
             <p class="sw-notfication-time">a few seconds ago</p>
           </div></a>
         </div>
 
             <div class="sw-sidebar-bottom">
               <i class="fa fa-lg fa-angle-up" aria-hidden="true"></i>
-            </div>  
+            </div>
 
       </div> <!-- END SIDEBAR  -->
    </div>
