@@ -22,7 +22,10 @@ export class ConfirmOfferComponent implements OnInit {
   confirmOffer() {
     this.addOfferService.addOffer(this.offer).then(
       data => {
-        console.log(data);
+        this.offer.uuid = data.offer.uuid;
+        this.offer.address = data.offer.address;
+        this.addOfferService.cacheOffer(this.offer);
+        this.router.navigate(["/credit-company/raise/success"])
       },
       error => {
         console.log(error);

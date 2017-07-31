@@ -14,6 +14,7 @@ import { CreditCompanyComponent } from './credit-company.component';
 import { LogoutService } from '../common/services/logout.service';
 import { AddOfferService } from './add-offer/add-offer.service';
 import { ConfirmOfferComponent } from './confirm-offer/confirm-offer.component';
+import { SuccessfulOfferComponent } from './successful-offer/successful-offer.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,7 @@ import { ConfirmOfferComponent } from './confirm-offer/confirm-offer.component';
     FormsModule,
     TextMaskModule
   ],
-  declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent, ConfirmOfferComponent],
+  declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent, ConfirmOfferComponent, SuccessfulOfferComponent],
   providers: [LogoutService, AddOfferService],
   bootstrap: [CreditCompanyComponent]
 })

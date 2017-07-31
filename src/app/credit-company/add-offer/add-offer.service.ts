@@ -15,7 +15,7 @@ export class AddOfferService {
 	constructor(public httpService: HttpService) {}
 
 	addOffer(offer): Promise<any> {
-		return this.httpService.post("offer/add", offer);
+		return this.httpService.post("offers/add", offer);
 	}
 
   cacheOffer(offer) {
