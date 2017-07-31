@@ -15,6 +15,8 @@ export class NavComponent implements OnInit {
   public menu:any[];
   public profileUrl:string = '';
   public helpUrl:string = '';
+  public termsUrl:string = '';
+  public privacyUrl:string = '';
 
   constructor(public logoutService: LogoutService, private storageService: StorageService, private router: Router) {
     let user = this.storageService.getItem('user');
@@ -28,6 +30,8 @@ export class NavComponent implements OnInit {
         ];
         this.profileUrl = '/investor/profile';
         this.helpUrl = '/investor/help';
+        this.termsUrl = '/investor/terms-of-service';
+        this.privacyUrl = '/investor/privacy-policy';
         break;
       case CREDIT_COMPANY:
         this.menu = [
@@ -36,6 +40,8 @@ export class NavComponent implements OnInit {
         ];
         this.profileUrl = '/credit-company/profile';
         this.helpUrl = '/credit-company/help';
+        this.termsUrl = '/credit-company/terms-of-service';
+        this.privacyUrl = '/credit-company/privacy-policy';
         break;
     }
 

@@ -17,6 +17,8 @@ import { OfferComponent } from './offers/offer/offer.component';
 import { OfferDetailsComponent } from './offer-details/offer-details.component';
 import { CreditCompanyComponent } from './credit-company/credit-company.component';
 import {LogoutService} from '../common/services/logout.service';
+import { TermsPageComponent } from './terms-page/terms-page.component';
+import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 
 @NgModule({
   imports: [
@@ -28,7 +30,7 @@ import {LogoutService} from '../common/services/logout.service';
     FormsModule,
     TextMaskModule
   ],
-  declarations: [InvestorComponent, OffersComponent, DashboardComponent, VerificationPhoneComponent, VerificationMainComponent, VerificationIdentityComponent, VerificationAddressComponent, OfferComponent, OfferDetailsComponent, CreditCompanyComponent],
+  declarations: [InvestorComponent, OffersComponent, DashboardComponent, VerificationPhoneComponent, VerificationMainComponent, VerificationIdentityComponent, VerificationAddressComponent, OfferComponent, OfferDetailsComponent, CreditCompanyComponent, TermsPageComponent, PrivacyPageComponent],
   providers: [LogoutService],
   bootstrap: [InvestorComponent]
 })

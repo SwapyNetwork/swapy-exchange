@@ -8,6 +8,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { TfaQuestionComponent } from './tfa-question/tfa-question.component';
 import { TfaSetupComponent } from './tfa-setup/tfa-setup.component';
 import { TfaValidationComponent } from './tfa-validation/tfa-validation.component';
+import { TermsPageComponent } from './terms-page/terms-page.component';
+import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 
 const routes: Routes = [
 	{
@@ -19,7 +21,9 @@ const routes: Routes = [
 			{ path: 'forgot-password', component: ForgotPasswordComponent },
 			{ path: '2fa/question', component: TfaQuestionComponent },
 			{ path: '2fa/setup', component: TfaSetupComponent },
-			{ path: '2fa/validation', component: TfaValidationComponent }
+			{ path: '2fa/validation', component: TfaValidationComponent },
+			{ path: 'terms-of-service', component: TermsPageComponent },
+			{ path: 'privacy-policy', component: PrivacyPageComponent },
 		]
 	}
 ];
