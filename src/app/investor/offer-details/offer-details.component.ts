@@ -10,7 +10,7 @@ import { Offer } from '../offers/offer/offer.interface';
 })
 export class OfferDetailsComponent implements OnInit {
 
-  private offer: Offer;
+  public offer: Offer;
 
   constructor(private offerService: OfferService, private activatedRoute: ActivatedRoute) {}
 

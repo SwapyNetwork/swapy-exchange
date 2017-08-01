@@ -10,7 +10,7 @@ import { AddOfferService } from '../add-offer/add-offer.service';
 })
 export class ConfirmOfferComponent implements OnInit {
 
-  private offer;
+  public offer:any;
 
   constructor(private addOfferService: AddOfferService, private router: Router) { }
 
