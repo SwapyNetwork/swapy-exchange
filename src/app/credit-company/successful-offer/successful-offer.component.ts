@@ -10,7 +10,7 @@ import { AddOfferService } from '../add-offer/add-offer.service';
 })
 export class SuccessfulOfferComponent implements OnInit {
 
-  private offer;
+  public offer;
 
   constructor(private addOfferService: AddOfferService, private router: Router) { }
 
