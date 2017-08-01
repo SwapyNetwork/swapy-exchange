@@ -1,8 +1,8 @@
 export interface Offer {
     uuid: string;
-    raisingAmount: Number;
-    paybackMonths: Number;
-    roi: Number;
+    raisingAmount: number;
+    paybackMonths: number;
+    roi: number;
     walletAddress: string;
     companyName: string;
     companyLogo: string;
