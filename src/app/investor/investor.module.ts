@@ -16,10 +16,12 @@ import { NavModule } from '../common/nav/nav.module';
 import { OfferComponent } from './offers/offer/offer.component';
 import { OfferDetailsComponent } from './offer-details/offer-details.component';
 import { CreditCompanyComponent } from './credit-company/credit-company.component';
-import {LogoutService} from '../common/services/logout.service';
+import { LogoutService } from '../common/services/logout.service';
 import { TermsPageComponent } from './terms-page/terms-page.component';
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 import { ProfileComponent } from './profile/profile.component';
+
+import { OfferService } from './offers/offer.service';
 
 @NgModule({
   imports: [
@@ -32,7 +34,7 @@ import { ProfileComponent } from './profile/profile.component';
     TextMaskModule
   ],
   declarations: [InvestorComponent, OffersComponent, DashboardComponent, VerificationPhoneComponent, VerificationMainComponent, VerificationIdentityComponent, VerificationAddressComponent, OfferComponent, OfferDetailsComponent, CreditCompanyComponent, TermsPageComponent, PrivacyPageComponent, ProfileComponent],
-  providers: [LogoutService],
+  providers: [LogoutService, OfferService],
   bootstrap: [InvestorComponent]
 })
 export class InvestorModule { }

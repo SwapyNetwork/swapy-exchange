@@ -15,7 +15,6 @@ import { LogoutService } from '../common/services/logout.service';
 import { AddOfferService } from './add-offer/add-offer.service';
 import { ConfirmOfferComponent } from './confirm-offer/confirm-offer.component';
 import { SuccessfulOfferComponent } from './successful-offer/successful-offer.component';
-import { ManageComponent } from './manage/manage.component';
 import { ProfileComponent } from './profile/profile.component';
 
 import { TermsPageComponent } from './terms-page/terms-page.component';
@@ -31,7 +30,7 @@ import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
     FormsModule,
     TextMaskModule
   ],
-  declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent, ConfirmOfferComponent, SuccessfulOfferComponent, ManageComponent, ProfileComponent, TermsPageComponent, PrivacyPageComponent],
+  declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent, ConfirmOfferComponent, SuccessfulOfferComponent, ProfileComponent, TermsPageComponent, PrivacyPageComponent],
   providers: [LogoutService, AddOfferService],
   bootstrap: [CreditCompanyComponent]
 })

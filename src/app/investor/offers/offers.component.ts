@@ -6,20 +6,35 @@ import { OfferService } from './offer.service';
 @Component({
   selector: 'app-offers',
   templateUrl: './offers.component.html',
-  styleUrls: ['./offers.component.css'],
-  providers: [ OfferService ]
+  styleUrls: ['./offers.component.css']
 })
 export class OffersComponent implements OnInit {
 
-	public offers: Offer[];
+	public offers: Offer[] = [];
 	public errorMessage;
 	mode = 'Observable';
 
   constructor(private offerService: OfferService) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.offerService.getOffers().then(
-    	(data:any) => {this.offers = data.offers},
+    	(data:any) => {
+
+        for (var o of data.offers) {
+          this.offers.push({
+            roi: o.offerRoi,
+            paybackMonths: o.offerPaybackMonths,
+            raisingAmount: o.offerRaisingAmount,
+            walletAddress: o.offerWalletAddress,
+            uuid: o.offerUuid,
+            companyName: o.firstName + " " + o.lastName,
+            companyLogo: o.picture
+          });
+        }
+
+        this.offerService.cacheOffers(this.offers);
+
+      },
     	error =>  this.errorMessage = <any>error
   	);
   }

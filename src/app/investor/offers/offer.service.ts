@@ -16,32 +16,20 @@ import { HttpService } from '../../common/services/http.service';
 @Injectable()
 export class OfferService {
 
+	private cachedOffers: Offer[];
+
 	constructor(public http: HttpClient, public httpService: HttpService) {}
 
-	getOffers(): Promise<Offer[]> {
+	public getOffers(): Promise<Offer[]> {
 		return this.httpService.get("offers");
+	}
 
-		// let url:string = environment.api + "offers";
+	public cacheOffers(offers: Offer[]) {
+		this.cachedOffers = offers;
+	}
 
-	 //  // don't have the data yet
-	 //  return new Promise( (resolve, reject) => {
-  //   	let headers = new HttpHeaders();
-  //   	headers.set('Content-Type', 'application/json');
-
-		// 	let options = {
-		// 		headers: headers
-		// 	};
-
-		// 	// send http request
-	 //    this.http.get(url, options)
-	 //      .subscribe( (data:any) => {
-	      	
-	 //        resolve(data.offers)
-	 //      },
-	 //      error => {
-	 //      	reject(error);
-	 //      });
-  // 	});
+	public getCachedOffers(): Offer[] {
+		return this.cachedOffers;
 	}
 
 }

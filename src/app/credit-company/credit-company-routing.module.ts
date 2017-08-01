@@ -8,6 +8,7 @@ import { ConfirmOfferComponent } from './confirm-offer/confirm-offer.component';
 import { SuccessfulOfferComponent } from './successful-offer/successful-offer.component';
 import { TermsPageComponent } from './terms-page/terms-page.component';
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
 	{
@@ -20,6 +21,7 @@ const routes: Routes = [
 			{ path: 'raise/success', component: SuccessfulOfferComponent },
 			{ path: 'terms-of-service', component: TermsPageComponent },
 			{ path: 'privacy-policy', component: PrivacyPageComponent },
+			{ path: 'profile', component: ProfileComponent },
 		]
 	}
 ];

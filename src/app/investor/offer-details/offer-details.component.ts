@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { OfferService } from '../offers/offer.service';
+import { Offer } from '../offers/offer/offer.interface';
 
 @Component({
   selector: 'app-offer-details',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OfferDetailsComponent implements OnInit {
 
-  constructor() { }
+  private offer: Offer;
+
+  constructor(private offerService: OfferService, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
+    let offers = this.offerService.getCachedOffers();
+    // subscribe to router event
+    this.activatedRoute.params.subscribe((params: Params) => {
+      let offerIndex = params['id'];
+      this.offer = offers[offerIndex];
+    });
   }
 
 }
