@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { SignUpService } from './sign-up.service';
 import { LoginResponseModel } from '../login/login-response.model';
 import { INVESTOR, CREDIT_COMPANY } from '../../common/models/user-response.model';
+import { I18nService } from '../../common/services/i18n.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -21,7 +22,7 @@ export class SignUpComponent implements OnInit {
   public agreedToTerms: boolean = false;
   public errorMessages:string[] = [];
 
-  constructor(private signUpService: SignUpService, private router: Router) { }
+  constructor(private signUpService: SignUpService, private i18nService: I18nService, private router: Router) { }
 
   ngOnInit() {}
 
@@ -53,7 +54,11 @@ export class SignUpComponent implements OnInit {
         // Errors will call this callback instead:
         err => {
           /** @todo show error messages */
-          console.log(err);
+          let namespace = "sign-up";
+
+          this.i18nService.doTranslateList(namespace, err.error).then( res => {
+            this.errorMessages = res; // errorMessages is a list of error strings
+          });
         }
       );
 
