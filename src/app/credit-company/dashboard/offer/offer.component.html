@@ -3,7 +3,7 @@
    <div class="row">
       <div class="col-sm-8 col-md-8">
          <h4 class="panel-title">
-         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">$25.000,00 <span class="sw-box-text">- Contract N.143 - Meu Crédito</span></a>
+         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">{{offer.raisingAmount | currency}} <span class="sw-box-text">{{offer.companyName}} -- {{offer.uuid}}</span></a>
          </h4>
       </div>
       <div class="col-sm-4 col-md-4">
@@ -12,26 +12,26 @@
    </div>
   </div>
 
-  <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+  <div id="collapseOne" class="panel-collapse collapse" [ngClass]="{'in': isFirst}" role="tabpanel" aria-labelledby="headingOne">
     <div class="panel-body">
       <div class="col-sm-3 col-md-3">
-          <p class="sw-box-text">Fundraising: $ 25.000</p>
-          <p class="sw-box-text">Payback: 4 months</p>
-          <p class="sw-box-text">6 installments</p>
-          <p class="sw-box-text">ROI: 20%</p><hr>
-          <p class="sw-box-text"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Launch: 12 sep 15</p>
+          <p class="sw-box-text">Fundraising: {{offer.raisingAmount | currency:'USD':true:'.2'}}</p>
+          <p class="sw-box-text">Payback: {{offer.paybackMonths}} months</p>
+          <!-- <p class="sw-box-text">6 installments</p> -->
+          <p class="sw-box-text">ROI: {{offer.roi | percent}}</p><hr>
+          <p class="sw-box-text"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Launch: {{offer.createdOn | date: 'yyyy-MM-dd'}}</p>
 
       </div>
       <div class="col-sm-3 col-md-3">
-          <p class="sw-box-text">5 Assets of: $ 5.000</p>
-          <p class="sw-box-text">Debt: 5x $ 6.000</p>
+          <p class="sw-box-text">5 Assets of: {{offer.raisingAmount/5 | currency:'USD':true:'.2'}}</p>
+          <p class="sw-box-text">Debt: {{offer.paybackMonths}}x {{(offer.raisingAmount*(1+offer.roi))/offer.paybackMonths | currency:'USD':true:'.2'}}</p>
           <p class="sw-box-text">Performance: <span class="sw-high">High / No Delay</span></p>
           <p><i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i></p>
       </div>
       <div class="col-sm-3 col-md-3">
           <p class="sw-box-text sw-chart-installs">Payback (months)</p>
           <div class="sw-progress-circle p66 sw-over50"> <!-- Start Circular chart-->
-            <span>4/6</span>
+            <span>4/{{offer.paybackMonths}}</span>
             <div class="sw-left-half-clipper">
                <div class="sw-first50-bar"></div>
                <div class="sw-value-bar"></div>
@@ -41,7 +41,7 @@
       <div class="col-sm-3 col-md-3">
           <p class="sw-box-text sw-chart-roi">ROI</p>
           <div class="sw-progress-circle p20"> <!-- Start Circular chart-->
-            <span>20%</span>
+            <span>{{offer.roi | percent}}</span>
             <div class="sw-left-half-clipper">
                <div class="sw-first50-bar"></div>
                <div class="sw-value-bar"></div>

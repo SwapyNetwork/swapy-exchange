@@ -1,9 +1,13 @@
 export interface Offer {
-    uuid: string;
+    companyId: string; // UserModel._id
+    companyName: string; // UserModel.firstName + // UserModel.lastName
+    companyPicture: string;
+    companyCreatedAt: Date;
     raisingAmount: number;
-    paybackMonths: number;
     roi: number;
+    paybackMonths: number;
+    createdOn: Date;
+    active: boolean;
+    uuid: string;
     walletAddress: string;
-    companyName: string;
-    companyLogo: string;
 }

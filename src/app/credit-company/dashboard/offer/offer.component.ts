@@ -9,6 +9,7 @@ import { Offer } from './offer.interface';
 export class OfferComponent implements OnInit {
 
 	@Input() public offer: Offer;
+  @Input() public isFirst: boolean;
 
   constructor() { }
 
