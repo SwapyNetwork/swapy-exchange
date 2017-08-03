@@ -1,5 +1,10 @@
 <img src="assets/img/swapy-logo.jpg" alt="swapy logo">
 <h1 class="sw-sign-title">Sign in</h1>
+<div *ngIf="errorMessages.length > 0">
+	<div *ngFor="let message of errorMessages" class="alert alert-danger">
+		{{message}}
+	</div>	
+</div>
 
 <form #loginForm="ngForm" (submit)="login()">
 	<input type="email" class="form-control sw-round" placeholder="Email" [(ngModel)]="email" #emailInput="ngModel" name="email" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" required><br>
