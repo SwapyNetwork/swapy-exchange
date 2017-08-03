@@ -38,10 +38,11 @@
               <div class="row">
                 <div class="col-sm-12 col-md-12">
                   <p class="sw-title-blue-right">Fundraising Offers</p>
-                  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"> <!-- Accordion-->
-                    <dashboard-offer *ngFor="let offer of offers; let isFirst = first" [offer]="offer" [isFirst]="isFirst"></dashboard-offer>
 
+                  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"> <!-- Accordion-->
+                    <dashboard-offer *ngFor="let offer of offers; let collapsed = first" [offer]="offer" [collapsed]="collapsed"></dashboard-offer>
                   </div>
+
                 </div>
               </div>
             </div><!-- END Accordion-->

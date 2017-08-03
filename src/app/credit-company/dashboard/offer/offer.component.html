@@ -3,7 +3,7 @@
    <div class="row">
       <div class="col-sm-8 col-md-8">
          <h4 class="panel-title">
-         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">{{offer.raisingAmount | currency}} <span class="sw-box-text">{{offer.companyName}} -- {{offer.uuid}}</span></a>
+         <a role="button" data-toggle="collapse" data-parent="#accordion" (click)="toggleCollapse()" aria-expanded="true" aria-controls="collapseOne">{{offer.raisingAmount | currency}} <span class="sw-box-text">{{offer.companyName}} -- {{offer.uuid}}</span></a>
          </h4>
       </div>
       <div class="col-sm-4 col-md-4">
@@ -12,7 +12,7 @@
    </div>
   </div>
 
-  <div id="collapseOne" class="panel-collapse collapse" [ngClass]="{'in': isFirst}" role="tabpanel" aria-labelledby="headingOne">
+  <div id="collapseOne" class="panel-collapse collapse" [ngClass]="{'in': collapsed}" role="tabpanel" aria-labelledby="headingOne">
     <div class="panel-body">
       <div class="col-sm-3 col-md-3">
           <p class="sw-box-text">Fundraising: {{offer.raisingAmount | currency:'USD':true:'.2'}}</p>
@@ -30,8 +30,8 @@
       </div>
       <div class="col-sm-3 col-md-3">
           <p class="sw-box-text sw-chart-installs">Payback (months)</p>
-          <div class="sw-progress-circle p66 sw-over50"> <!-- Start Circular chart-->
-            <span>4/{{offer.paybackMonths}}</span>
+          <div class="sw-progress-circle p0"> <!-- Start Circular chart-->
+            <span>0/{{offer.paybackMonths}}</span>
             <div class="sw-left-half-clipper">
                <div class="sw-first50-bar"></div>
                <div class="sw-value-bar"></div>
@@ -40,7 +40,7 @@
       </div>
       <div class="col-sm-3 col-md-3">
           <p class="sw-box-text sw-chart-roi">ROI</p>
-          <div class="sw-progress-circle p20"> <!-- Start Circular chart-->
+          <div class="sw-progress-circle p{{offer.roi*100}}"> <!-- Start Circular chart-->
             <span>{{offer.roi | percent}}</span>
             <div class="sw-left-half-clipper">
                <div class="sw-first50-bar"></div>
@@ -55,30 +55,30 @@
            <tr class="active">
               <th>Asset</th>
               <th>Investor</th>
-              <th>First Installment</th>
-              <th>Last Installment</th>
-              <th>6x</th>
+              <th>First Payback</th>
+              <th>Last Payback</th>
+              <th>{{offer.paybackMonths}}x</th>
            </tr>
            <tr>
               <td>1</td>
-              <td>John R. Capital</td>
-              <td>02 jan 16</td>
-              <td>02 jun 16</td>
-              <td>$1.000</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
            </tr>
            <tr>
               <td>2</td>
-              <td>Investo Associates</td>
-              <td>14 ago 17</td>
-              <td>14 dez 17</td>
-              <td>$1.000</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
            </tr>
            <tr>
               <td>3</td>
-              <td>Investo Associates</td>
-              <td>14 ago 17</td>
-              <td>14 dez 17</td>
-              <td>$1.000</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
            </tr>
            <tr>
               <td>4</td>

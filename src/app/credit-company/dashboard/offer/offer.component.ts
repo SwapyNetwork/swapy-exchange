@@ -9,11 +9,15 @@ import { Offer } from './offer.interface';
 export class OfferComponent implements OnInit {
 
 	@Input() public offer: Offer;
-  @Input() public isFirst: boolean;
+  @Input() public collapsed: boolean;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public toggleCollapse() {
+    this.collapsed = !this.collapsed;
   }
 
 }
