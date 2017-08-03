@@ -8,7 +8,7 @@
 
 <form #loginForm="ngForm" (submit)="login()">
 	<input type="email" class="form-control sw-round" placeholder="Email" [(ngModel)]="email" #emailInput="ngModel" name="email" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" required><br>
-	<div *ngIf="emailInput.errors && emailInput.touched" class="alert alert-danger">
+	<div *ngIf="emailInput.errors && (emailInput.touched || emailInput.dirty)" class="alert alert-danger">
         <div [hidden]="!emailInput.errors.required">
 			Email is required.
         </div>
@@ -17,7 +17,7 @@
         </div>
 	</div>	
 	<input type="password" class="form-control sw-round" placeholder="Password" [(ngModel)]="password" #passwordInput="ngModel" name="password" required minlength="6"><br>
-	<div *ngIf="passwordInput.errors && passwordInput.touched" class="alert alert-danger">
+	<div *ngIf="passwordInput.errors && (passwordInput.touched || passwordInput.dirty)" class="alert alert-danger">
         <div [hidden]="!passwordInput.errors.required">
 			Password is required.
         </div>

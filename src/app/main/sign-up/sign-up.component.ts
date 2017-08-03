@@ -53,7 +53,6 @@ export class SignUpComponent implements OnInit {
         },
         // Errors will call this callback instead:
         err => {
-          /** @todo show error messages */
           let namespace = "sign-up";
 
           this.i18nService.doTranslateList(namespace, err.error).then( res => {

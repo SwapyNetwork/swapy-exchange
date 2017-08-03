@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
 	    },
 	    // Errors will call this callback instead:
 	    err => {
-	    	/** @todo show error messages */
         let namespace = "login";
 
         // i18nService read language files and translate message by code

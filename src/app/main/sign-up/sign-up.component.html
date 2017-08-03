@@ -9,13 +9,13 @@
 
 <form #signupForm="ngForm" (submit)="signUp()">
 	<input type="text" class="form-control sw-round" placeholder="Full name | Company name" name="name" [(ngModel)]="name" #nameInput="ngModel" required><br>
-	<div *ngIf="nameInput.errors && nameInput.touched" class="alert alert-danger">
+	<div *ngIf="nameInput.errors && (nameInput.touched || nameInput.dirty)" class="alert alert-danger">
 		<div [hidden]="!nameInput.errors.required">
 			Full name or company name is required.
 		</div>
 	</div>
 	<input type="email" class="form-control sw-round" placeholder="Email" name="email" [(ngModel)]="email" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" #emailInput="ngModel" required><br>
-	<div *ngIf="emailInput.errors && emailInput.touched" class="alert alert-danger">
+	<div *ngIf="emailInput.errors && (emailInput.touched || emailInput.dirty)" class="alert alert-danger">
 		<div [hidden]="!emailInput.errors.required">
 			Email is required.
 		</div>
@@ -24,7 +24,7 @@
 		</div>
 	</div>
 	<input type="password" class="form-control sw-round" placeholder="Password" name="password" [(ngModel)]="password" #passwordInput="ngModel" minlength="6" required><br>
-	<div *ngIf="passwordInput.errors && passwordInput.touched" class="alert alert-danger">
+	<div *ngIf="passwordInput.errors && (passwordInput.touched || passwordInput.dirty)" class="alert alert-danger">
 		<div [hidden]="!passwordInput.errors.required">
 			Password is required.
 		</div>
@@ -33,7 +33,7 @@
 		</div>
 	</div>
 	<input type="password" class="form-control sw-round" placeholder="Confirm password" name="confirmPassword" [(ngModel)]="confirmPassword" #confirmPasswordInput="ngModel" minlength="6" required><br>
-	<div *ngIf="confirmPasswordInput.errors && confirmPasswordInput.touched" class="alert alert-danger">
+	<div *ngIf="confirmPasswordInput.errors && (confirmPasswordInput.touched || confirmPasswordInput.dirty)" class="alert alert-danger">
 		<div [hidden]="!confirmPasswordInput.errors.required">
 			Password confirmation is required.
 		</div>
