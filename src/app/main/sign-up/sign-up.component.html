@@ -1,30 +1,65 @@
 <img src="assets/img/swapy-logo.jpg" alt="swapy logo">
 <h1 class="sw-sign-title">Sign up</h1>
-<form (submit)="signUp()">
-<input type="text" class="form-control sw-round" placeholder="Full name | Company name" name="name" [(ngModel)]="name" required><br>
-<input type="email" class="form-control sw-round" placeholder="Email" name="email" [(ngModel)]="email" required><br>
-<input type="password" class="form-control sw-round" placeholder="Password" name="password" [(ngModel)]="password" required><br>
-<input type="password" class="form-control sw-round" placeholder="Confirm password" name="confirmPassword" [(ngModel)]="confirmPassword" required><br>
-<div class="row sw-check-type">
-  <div class="checkbox">
-    <label>
-      <input type="radio" name="type" [value]="1" [(ngModel)]="type" [checked]="type==1"/> I am an Investor
-    </label>
-  </div>
-  <div class="checkbox">
-    <label>
-      <input type="radio" name="type" [value]="2" [(ngModel)]="type" [checked]="type==2"/> I am a Credit Company
-    </label>
-  </div>
+
+<div *ngIf="errorMessages.length > 0">
+	<div *ngFor="let message of errorMessages" class="alert alert-danger">
+		{{message}}
+	</div>	
 </div>
 
-<button type="submit" class="sw-button sw-btn-ghost1 key2">Sign up</button><br/>
+<form #signupForm="ngForm" (submit)="signUp()">
+	<input type="text" class="form-control sw-round" placeholder="Full name | Company name" name="name" [(ngModel)]="name" #nameInput="ngModel" required><br>
+	<div *ngIf="nameInput.errors && nameInput.touched" class="alert alert-danger">
+		<div [hidden]="!nameInput.errors.required">
+			Full name or company name is required.
+		</div>
+	</div>
+	<input type="email" class="form-control sw-round" placeholder="Email" name="email" [(ngModel)]="email" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" #emailInput="ngModel" required><br>
+	<div *ngIf="emailInput.errors && emailInput.touched" class="alert alert-danger">
+		<div [hidden]="!emailInput.errors.required">
+			Email is required.
+		</div>
+		<div [hidden]="!emailInput.errors.pattern">
+			Email format is invalid.
+		</div>
+	</div>
+	<input type="password" class="form-control sw-round" placeholder="Password" name="password" [(ngModel)]="password" #passwordInput="ngModel" minlength="6" required><br>
+	<div *ngIf="passwordInput.errors && passwordInput.touched" class="alert alert-danger">
+		<div [hidden]="!passwordInput.errors.required">
+			Password is required.
+		</div>
+		<div [hidden]="!passwordInput.errors.minlength">
+			Password must have at least 6 characters.
+		</div>
+	</div>
+	<input type="password" class="form-control sw-round" placeholder="Confirm password" name="confirmPassword" [(ngModel)]="confirmPassword" #confirmPasswordInput="ngModel" minlength="6" required><br>
+	<div *ngIf="confirmPasswordInput.errors && confirmPasswordInput.touched" class="alert alert-danger">
+		<div [hidden]="!confirmPasswordInput.errors.required">
+			Password confirmation is required.
+		</div>
+		<div [hidden]="!confirmPasswordInput.errors.minlength">
+			Password confirmation must have at least 6 characters.
+		</div>
+	</div>
+	<div class="row sw-check-type">
+	  <div class="checkbox">
+	    <label>
+	      <input type="radio" name="type" [value]="1" [(ngModel)]="type" [checked]="type==1"/> I am an Investor
+	    </label>
+	  </div>
+	  <div class="checkbox">
+	    <label>
+	      <input type="radio" name="type" [value]="2" [(ngModel)]="type" [checked]="type==2"/> I am a Credit Company
+	    </label>
+	  </div>
+	</div>
+	<button type="submit" class="sw-button sw-btn-ghost1 key2" [disabled]="!signupForm.form.valid">Sign up</button><br/>
 
-<div class="checkbox">
-    <label>
-      <input type="checkbox" name="agreedToTerms" required [(ngModel)]="agreedToTerms"/>I agree to Swapy's<a routerLink="/terms-of-service"> Terms of Service</a> and<a routerLink="/privacy-policy"> Privacy Policy.</a>
-    </label>
-</div>
+	<div class="checkbox">
+	    <label>
+	      <input type="checkbox" name="agreedToTerms" [(ngModel)]="agreedToTerms"/>I agree to Swapy's<a routerLink="/terms-of-service"> Terms of Service</a> and<a routerLink="/privacy-policy"> Privacy Policy.</a>
+	    </label>
+	</div>
 </form>
 
 <!-- <div id="sw-activate" class="hide">
