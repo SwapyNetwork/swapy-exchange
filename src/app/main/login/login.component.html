@@ -10,19 +10,19 @@
 	<input type="email" class="form-control sw-round" placeholder="Email" [(ngModel)]="email" #emailInput="ngModel" name="email" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" required><br>
 	<div *ngIf="emailInput.errors && emailInput.touched" class="alert alert-danger">
         <div [hidden]="!emailInput.errors.required">
-          Email is required.
+			Email is required.
         </div>
         <div [hidden]="!emailInput.errors.pattern">
-          Email format is invalid.
+			Email format is invalid.
         </div>
 	</div>	
 	<input type="password" class="form-control sw-round" placeholder="Password" [(ngModel)]="password" #passwordInput="ngModel" name="password" required minlength="6"><br>
 	<div *ngIf="passwordInput.errors && passwordInput.touched" class="alert alert-danger">
         <div [hidden]="!passwordInput.errors.required">
-          Password is required.
+			Password is required.
         </div>
         <div [hidden]="!passwordInput.errors.minlength">
-          Password must have at least 6 characters.
+			Password must have at least 6 characters.
         </div>
 	</div>
     <p class="sw-forget-pass"><a [routerLink]="['/forgot-password']"> I Forgot my password &nbsp;&nbsp;<i class="fa fa-key"></i></a><br><br></p>

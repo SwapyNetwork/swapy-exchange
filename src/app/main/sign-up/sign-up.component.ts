@@ -18,7 +18,8 @@ export class SignUpComponent implements OnInit {
 	public password: string = '';
 	public confirmPassword: string = '';
 	public type: number = 1;
-	public agreedToTerms: boolean = false;
+  public agreedToTerms: boolean = false;
+  public errorMessages:string[] = [];
 
   constructor(private signUpService: SignUpService, private router: Router) { }
 
@@ -26,6 +27,7 @@ export class SignUpComponent implements OnInit {
 
   signUp() {
     /** @todo frontend validations */
+    this.errorMessages = [];
 
 		var nameParts = this.name.split(/\s(.+)?/);
 		var firstName = nameParts[0];
@@ -41,18 +43,32 @@ export class SignUpComponent implements OnInit {
       agreedToTerms: this.agreedToTerms
   	};
 
-    this.signUpService.signUp(body).then(
-      // Successful responses call the first callback.
-      (data: LoginResponseModel) => {
-        this.router.navigate([this.solveRoute(data.user.type)]);
-      },
-      // Errors will call this callback instead:
-      err => {
-        /** @todo show error messages */
-        console.log(err);
-      }
-    );
+    if(this.validateForm()){
 
+      this.signUpService.signUp(body).then(
+        // Successful responses call the first callback.
+        (data: LoginResponseModel) => {
+          this.router.navigate([this.solveRoute(data.user.type)]);
+        },
+        // Errors will call this callback instead:
+        err => {
+          /** @todo show error messages */
+          console.log(err);
+        }
+      );
+
+    }
+
+  }
+
+  private validateForm(){
+    if(this.password != this.confirmPassword)
+      this.errorMessages.push('Passwords must match.');
+
+    if(this.agreedToTerms == false)
+      this.errorMessages.push('You must agree to our terms of services and privacy policy.');
+
+    return this.errorMessages.length == 0;
   }
 
   private solveRoute(userType: number) {
