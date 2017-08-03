@@ -28,7 +28,8 @@ export class SignUpService {
     	headers.set('Content-Type', 'application/json');
 
 			let options = {
-				headers: headers
+				headers: headers,
+				withCredentials: true
 			};
 
 	    // We're using Angular HTTP provider to request the data,
