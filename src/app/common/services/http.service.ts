@@ -22,7 +22,8 @@ export class HttpService {
     this.headers.set('Accept', 'application/json');
 
     this.options = {
-    	headers: this.headers
+    	headers: this.headers,
+			withCredentials: true
     };
 	}
 
