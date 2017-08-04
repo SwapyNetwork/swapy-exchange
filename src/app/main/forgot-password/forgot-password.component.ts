@@ -26,7 +26,7 @@ export class ForgotPasswordComponent implements OnInit {
       err => {
           let namespace = "forgot-password";
 
-          this.i18nService.doTranslateList(namespace, err).then( res => {
+          this.i18nService.doTranslateList(namespace, err.error).then( res => {
             this.errorMessages = res; // errorMessages is a list of error strings
           });
       }
