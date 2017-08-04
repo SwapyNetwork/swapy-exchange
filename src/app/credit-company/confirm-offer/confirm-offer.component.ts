@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { I18nService } from '../../common/services/i18n.service';
 
 import { AddOfferService } from '../add-offer/add-offer.service';
 
@@ -11,8 +12,9 @@ import { AddOfferService } from '../add-offer/add-offer.service';
 export class ConfirmOfferComponent implements OnInit {
 
   public offer:any;
+  public errorMessages:string[] = [];
 
-  constructor(private addOfferService: AddOfferService, private router: Router) { }
+  constructor(private addOfferService: AddOfferService, private router: Router, private i18nService: I18nService) { }
 
   ngOnInit() {
     this.offer = this.addOfferService.getCachedOffer();
@@ -29,6 +31,11 @@ export class ConfirmOfferComponent implements OnInit {
       },
       error => {
         console.log(error);
+        let namespace = "confirm-offer";
+
+        this.i18nService.doTranslateList(namespace, error).then( res => {
+          this.errorMessages = res; // errorMessages is a list of error strings
+        });
       }
     );
   }

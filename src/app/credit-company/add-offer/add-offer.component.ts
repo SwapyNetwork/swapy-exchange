@@ -45,9 +45,10 @@ export class AddOfferComponent implements OnInit {
     /** todo text-mask maintains the mask on the model value. When it got fixed, remove the replacing */
     let offer = {
       raisingAmount: parseFloat(this.amount.replace(/[^0-9.]/g, '')),
-      roi: parseFloat(this.roi.replace(/[^0-9.]/g, ''))/100,
+      roi: (parseFloat(this.roi.replace(/[^0-9.]/g, ''))/100).toFixed(4),
       paybackMonths: parseInt(this.paybackMonths)
     }
+    /** @todo In the HTML months input, add a mask to only accept input from numbers*/
 
     this.addOfferService.cacheOffer(offer);
     this.router.navigate(["credit-company/raise/confirm"]);
