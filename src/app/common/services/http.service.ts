@@ -53,8 +53,8 @@ export class HttpService {
 	private handleError(reject, err) {
 		let error = err.error;
 		if (error.length === 0) {
-			reject();
 			err.error = [{code: "UNK-E01", message: err.status+" "+err.statusText, error: error}];
+			reject(err);
 		} else if (error[0].unauthenticated === true) {
   		/** @todo Find a way to communicate the user he is being redirected */
   		this.router.navigate(["/"]);
