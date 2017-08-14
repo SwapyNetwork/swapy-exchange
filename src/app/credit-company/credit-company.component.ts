@@ -11,7 +11,7 @@ import {CreditCompanyService} from './credit-company.service';
 export class CreditCompanyComponent implements OnInit{
   title = 'credit-company';
 
-  public amountRaised = '';
+  public amountRequested = '';
   public offersLength = '';
 
   constructor(private creditCompanyService: CreditCompanyService){};
@@ -19,14 +19,12 @@ export class CreditCompanyComponent implements OnInit{
 	ngOnInit(){
 		this.creditCompanyService.getMyOffersInfos().then(
 			(data:any) => {
-				console.log(data);
-				this.amountRaised = data.amountRaised;
+				this.amountRequested = data.amountRequested;
 				this.offersLength = data.offersLength;
 			},
 			(error:any) => {
 				console.log(error);
 			}
-		);
-	
+		);	
 	};
 }
