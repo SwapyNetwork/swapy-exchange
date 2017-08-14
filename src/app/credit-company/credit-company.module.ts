@@ -13,6 +13,7 @@ import { CreditCompanyComponent } from './credit-company.component';
 
 import { LogoutService } from '../common/services/logout.service';
 import { AddOfferService } from './add-offer/add-offer.service';
+import { CreditCompanyService } from './credit-company.service';
 import { OfferService } from './dashboard/offer/offer.service';
 import { ConfirmOfferComponent } from './confirm-offer/confirm-offer.component';
 import { SuccessfulOfferComponent } from './successful-offer/successful-offer.component';
@@ -33,7 +34,7 @@ import { OfferComponent } from './dashboard/offer/offer.component';
     TextMaskModule
   ],
   declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent, ConfirmOfferComponent, SuccessfulOfferComponent, ProfileComponent, TermsPageComponent, PrivacyPageComponent, OfferComponent],
-  providers: [LogoutService, AddOfferService, OfferService],
+  providers: [LogoutService, AddOfferService, OfferService, CreditCompanyService],
   bootstrap: [CreditCompanyComponent]
 })
 export class CreditCompanyModule { }

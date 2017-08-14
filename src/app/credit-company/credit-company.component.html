@@ -17,7 +17,7 @@
         </div>
         <div class="col-xs-2 col-sm-2 col-md-2">
           <p class="sw-roi-lable" title="Total ROI">Offers</p>
-          <p class="sw-roi-value">0</p>
+          <p class="sw-roi-value">{{offersLength}}</p>
         </div>
       </div> <!-- END Top White Bar with  Swapy logo -->
 
@@ -34,7 +34,7 @@
           </div>
           <div class="col-xs-6 col-sm-12 col-md-12 sw-top-bottom">
               <p class="sw-top-lable">Total Raised</p>
-              <p class="sw-top-value">$ 0.00</p>
+              <p class="sw-top-value">{{amountRaised | currency:'USD':true:'.2'}}</p>
 
           </div>
          </div>
