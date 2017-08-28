@@ -11,6 +11,11 @@ import { Offer } from '../offers/offer/offer.interface';
 export class OfferDetailsComponent implements OnInit {
 
   public offer: Offer;
+  public asset1: boolean = false;
+  public asset2: boolean = false;
+  public asset3: boolean = false;
+  public asset4: boolean = false;
+  public asset5: boolean = false;
 
   constructor(private offerService: OfferService, private activatedRoute: ActivatedRoute) {}
 
@@ -23,4 +28,8 @@ export class OfferDetailsComponent implements OnInit {
     });
   }
 
+  invest(){
+    let assets = [this.asset1, this.asset2, this.asset3, this.asset4, this.asset5];
+    console.log(assets);
+  }
 }
