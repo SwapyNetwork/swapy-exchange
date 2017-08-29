@@ -17,6 +17,8 @@ export class OfferDetailsComponent implements OnInit {
   public asset4: boolean = false;
   public asset5: boolean = false;
 
+  public assets: boolean[] = [];
+
   constructor(private offerService: OfferService, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
@@ -29,7 +31,10 @@ export class OfferDetailsComponent implements OnInit {
   }
 
   invest(){
-    let assets = [this.asset1, this.asset2, this.asset3, this.asset4, this.asset5];
-    console.log(assets);
+    console.log(this.assets);
+
+    for(let asset in this.assets){
+      console.log(asset);
+    }
   }
 }

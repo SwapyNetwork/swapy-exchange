@@ -30,9 +30,9 @@
 
                 <div class="row">
                  <div class="col-sm-6 col-md-6 sw-assets">
-                    <div *ngFor = "let asset of offer.assets, let i = index" class="checkbox">
+                    <div *ngFor="let asset of offer.assets, let i = index" class="checkbox">
                      <label>
-                      <input type="checkbox" name="asset" > <!-- Asset SOLD -->
+                      <input type="checkbox" name="assets" [(ngModel)] = "assets[i]"> <!-- Asset SOLD -->
                       <p class="sw-box-text">Asset {{i + 1}} - <span class="sw-box-title sw-asset-sold-line">{{asset.value | currency}}</span></p>
                      </label>                      
                     </div>
