@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ViewEncapsulation} from '@angular/core';  
+import {ViewEncapsulation} from '@angular/core';
 import {CreditCompanyService} from './credit-company.service';
 
 @Component({
@@ -16,8 +16,8 @@ export class CreditCompanyComponent implements OnInit{
 
   constructor(private creditCompanyService: CreditCompanyService){};
 
-	ngOnInit(){
-		this.creditCompanyService.getMyOffersInfos().then(
+	ngOnInit(){ /**@todo Not only on ngOnInit - Refresh everytime that a raise is done*/
+    this.creditCompanyService.getMyOffersInfos().then(
 			(data:any) => {
 				this.amountRequested = data.amountRequested;
 				this.offersLength = data.offersLength;
@@ -25,6 +25,6 @@ export class CreditCompanyComponent implements OnInit{
 			(error:any) => {
 				console.log(error);
 			}
-		);	
+		);
 	};
 }
