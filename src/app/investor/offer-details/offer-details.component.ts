@@ -11,13 +11,10 @@ import { Offer } from '../offers/offer/offer.interface';
 export class OfferDetailsComponent implements OnInit {
 
   public offer: Offer;
-  public asset1: boolean = false;
-  public asset2: boolean = false;
-  public asset3: boolean = false;
-  public asset4: boolean = false;
-  public asset5: boolean = false;
 
   public assets: boolean[] = [];
+
+  public totalAssetsValue: number = 0;
 
   constructor(private offerService: OfferService, private activatedRoute: ActivatedRoute) {}
 
@@ -30,11 +27,19 @@ export class OfferDetailsComponent implements OnInit {
     });
   }
 
-  invest(){
-    console.log(this.assets);
+  getSelectedAssets(){
+    return this.offer.assets.filter((asset, index) => this.assets[index] == true);
+  }
 
-    for(let asset in this.assets){
-      console.log(asset);
-    }
+  setTotalAssetsValue(){
+    let selectedAssets = this.getSelectedAssets();
+    this.totalAssetsValue = selectedAssets.map(asset => asset.value)
+                                .reduce((total, current) => (total + current), 0);
+  }
+
+  invest(){
+
+    let offerAssets = this.getSelectedAssets();
+
   }
 }

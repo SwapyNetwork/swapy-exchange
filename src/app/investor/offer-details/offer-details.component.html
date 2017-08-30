@@ -32,7 +32,7 @@
                  <div class="col-sm-6 col-md-6 sw-assets">
                     <div *ngFor="let asset of offer.assets, let i = index" class="checkbox">
                      <label>
-                      <input type="checkbox" name="assets" [(ngModel)] = "assets[i]"> <!-- Asset SOLD -->
+                      <input type="checkbox" name="assets" [(ngModel)] = "assets[i]" (change) = "setTotalAssetsValue()"> <!-- Asset SOLD -->
                       <p class="sw-box-text">Asset {{i + 1}} - <span class="sw-box-title sw-asset-sold-line">{{asset.value | currency}}</span></p>
                      </label>                      
                     </div>
@@ -52,7 +52,7 @@
 
                 <div class="row">
                   <div class=" col-sm-8 col-md-8">
-                    <p class="sw-assets-total">TOTAL $ 0.00</p> <!-- Total = n. of Assets selected above -->
+                    <p class="sw-assets-total">TOTAL {{totalAssetsValue | currency}}</p> <!-- Total = n. of Assets selected above -->
                   </div>
                   <div class=" col-sm-4 col-md-4">
                     <!-- <a class="sw-button sw-btn-ghost1" href="javascript:void(0)">Invest</a> -->
