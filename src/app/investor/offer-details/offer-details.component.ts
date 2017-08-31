@@ -17,6 +17,7 @@ export class OfferDetailsComponent implements OnInit {
   public assets: boolean[] = [];
 
   public totalAssetsValue: number = 0;
+  public offerIndex = 0;
 
   constructor(private offerService: OfferService, private activatedRoute: ActivatedRoute, private router: Router, private investService: InvestService) {}
 
@@ -24,8 +25,8 @@ export class OfferDetailsComponent implements OnInit {
     let offers = this.offerService.getCachedOffers();
     // subscribe to router event
     this.activatedRoute.params.subscribe((params: Params) => {
-      let offerIndex = params['id'];
-      this.offer = offers[offerIndex];
+      this.offerIndex = params['id'];
+      this.offer = offers[this.offerIndex];
     });
   }
 
@@ -60,7 +61,7 @@ export class OfferDetailsComponent implements OnInit {
       investedIn: null
     }
 
-    this.investService.cacheInvestment(invest);
+    this.investService.cacheInvestment(invest, this.offerIndex);
 
     this.router.navigate(["investor/invest"]);
 

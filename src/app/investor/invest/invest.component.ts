@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { InvestService } from './invest.service';
+import { Router } from '@angular/router';
+import { Invest } from './invest.interface';
 
 @Component({
   selector: 'app-invest',
@@ -7,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InvestComponent implements OnInit {
 
-  constructor() { }
+  public investment: Invest;
+  public offerIndex: number;
+
+  constructor(private investService: InvestService, private router: Router) { }
 
   ngOnInit() {
+  	this.investment = this.investService.getCachedInvestment();
+  	if(!this.investment) this.router.navigate(["/investor/offers"]);
+  	this.offerIndex = this.investService.getCachedOfferIndex();
+  }
+
+  confirmInvestment(){
+  	
   }
 
 }
