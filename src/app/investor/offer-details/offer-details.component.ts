@@ -57,8 +57,7 @@ export class OfferDetailsComponent implements OnInit {
       totalAmount: this.totalAssetsValue,
       roi: this.offer.roi,
       paybackMonths: this.offer.paybackMonths,
-      assets: assets,
-      investedIn: null
+      assets: assets
     }
 
     this.investService.cacheInvestment(invest, this.offerIndex);
