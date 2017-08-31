@@ -14,5 +14,6 @@ export interface Offer {
     walletAddress: string;
     companyName: string;
     companyLogo: string;
+    companyId: string;
 	assets: OfferAsset[];
 }

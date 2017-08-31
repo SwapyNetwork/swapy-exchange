@@ -20,9 +20,10 @@ import { LogoutService } from '../common/services/logout.service';
 import { TermsPageComponent } from './terms-page/terms-page.component';
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 import { ProfileComponent } from './profile/profile.component';
+import { InvestComponent } from './invest/invest.component';
 
 import { OfferService } from './offers/offer.service';
-import { InvestComponent } from './invest/invest.component';
+import { InvestService } from './invest/invest.service';
 
 @NgModule({
   imports: [
@@ -35,7 +36,7 @@ import { InvestComponent } from './invest/invest.component';
     TextMaskModule
   ],
   declarations: [InvestorComponent, OffersComponent, DashboardComponent, VerificationPhoneComponent, VerificationMainComponent, VerificationIdentityComponent, VerificationAddressComponent, OfferComponent, OfferDetailsComponent, CreditCompanyComponent, TermsPageComponent, PrivacyPageComponent, ProfileComponent, InvestComponent],
-  providers: [LogoutService, OfferService],
+  providers: [LogoutService, OfferService, InvestService],
   bootstrap: [InvestorComponent]
 })
 export class InvestorModule { }

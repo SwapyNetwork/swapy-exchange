@@ -9,6 +9,7 @@ import { VerificationMainComponent } from './verification-main/verification-main
 import { CreditCompanyComponent } from './credit-company/credit-company.component';
 import { TermsPageComponent } from './terms-page/terms-page.component';
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
+import { InvestComponent } from './invest/invest.component';
 
 const routes: Routes = [
 	{
@@ -22,6 +23,7 @@ const routes: Routes = [
 			{ path: 'offers', component: OffersComponent },
 			{ path: 'terms-of-service', component: TermsPageComponent },
 			{ path: 'privacy-policy', component: PrivacyPageComponent },
+			{ path: 'invest', component: InvestComponent },
 		]
 	}
 ];

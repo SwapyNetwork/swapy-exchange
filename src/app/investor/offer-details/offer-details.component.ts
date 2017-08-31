@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { OfferService } from '../offers/offer.service';
 import { Offer } from '../offers/offer/offer.interface';
+import { Invest } from '../invest/invest.interface';
+import { InvestService } from '../invest/invest.service';
 
 @Component({
   selector: 'app-offer-details',
@@ -16,7 +18,7 @@ export class OfferDetailsComponent implements OnInit {
 
   public totalAssetsValue: number = 0;
 
-  constructor(private offerService: OfferService, private activatedRoute: ActivatedRoute) {}
+  constructor(private offerService: OfferService, private activatedRoute: ActivatedRoute, private router: Router, private investService: InvestService) {}
 
   ngOnInit() {
     let offers = this.offerService.getCachedOffers();
@@ -40,6 +42,28 @@ export class OfferDetailsComponent implements OnInit {
   invest(){
 
     let offerAssets = this.getSelectedAssets();
+    let assets = [];
+
+    for(let offerAsset of offerAssets){
+      assets.push({uuid: offerAsset.uuid, value: offerAsset.value});
+    }
+
+    let invest: Invest = {
+      uuid: null,
+      companyId: this.offer.companyId,
+      companyName: this.offer.companyName,
+      offerUuid: this.offer.uuid,
+      totalAmount: this.totalAssetsValue,
+      roi: this.offer.roi,
+      paybackMonths: this.offer.paybackMonths,
+      assets: assets,
+      investedIn: null
+    }
+
+    this.investService.cacheInvestment(invest);
+
+    this.router.navigate(["investor/invest"]);
+
 
   }
 }
