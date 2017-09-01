@@ -22,6 +22,11 @@ export class InvestComponent implements OnInit {
   }
 
   confirmInvestment(){
+  	this.investService.addInvest(this.investment).then(data => {
+  		console.log(data);
+  	}, error => {
+  		console.log(error);
+  	})
   	
   }
 

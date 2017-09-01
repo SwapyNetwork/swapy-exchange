@@ -15,7 +15,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.offerService.getMyOffers().then(
       (data:any) => {
-        console.log(data.offers);
         this.offers = data.offers;
       },
       (error:any) => {

@@ -28,7 +28,7 @@ export class InvestService {
   }
 
   public addInvest(invest): Promise<any> {
-  	return this.httpService.post("invest/add", invest);
+  	return this.httpService.post("investment/add", invest);
   }
 
 }
