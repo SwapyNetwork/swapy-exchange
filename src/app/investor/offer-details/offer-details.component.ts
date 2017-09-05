@@ -60,7 +60,8 @@ export class OfferDetailsComponent implements OnInit {
       assets: assets
     }
 
-    this.investService.cacheInvestment(invest, this.offerIndex);
+    this.investService.cacheInvestment(invest);
+    this.investService.cacheOfferIndex(this.offerIndex);
 
     this.router.navigate(["investor/invest"]);
 

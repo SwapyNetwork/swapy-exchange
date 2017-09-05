@@ -14,8 +14,11 @@ export class InvestService {
 
   constructor(public httpService: HttpService) { }
 
-  public cacheInvestment(invest: Invest, offerIndex: number){
+  public cacheInvestment(invest: Invest){
   	this.cachedInvest = invest;
+  }
+
+  public cacheOfferIndex(offerIndex: number){
   	this.cachedOfferIndex = offerIndex;
   }
 

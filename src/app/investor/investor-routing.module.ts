@@ -10,6 +10,7 @@ import { CreditCompanyComponent } from './credit-company/credit-company.componen
 import { TermsPageComponent } from './terms-page/terms-page.component';
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 import { InvestComponent } from './invest/invest.component';
+import { SuccessfulInvestmentComponent } from './successful-investment/successful-investment.component';
 
 const routes: Routes = [
 	{
@@ -24,6 +25,7 @@ const routes: Routes = [
 			{ path: 'terms-of-service', component: TermsPageComponent },
 			{ path: 'privacy-policy', component: PrivacyPageComponent },
 			{ path: 'invest', component: InvestComponent },
+			{ path: 'invest/success', component: SuccessfulInvestmentComponent }
 		]
 	}
 ];

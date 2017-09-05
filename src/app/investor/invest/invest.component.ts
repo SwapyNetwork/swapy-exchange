@@ -23,7 +23,10 @@ export class InvestComponent implements OnInit {
 
   confirmInvestment(){
   	this.investService.addInvest(this.investment).then(data => {
-  		console.log(data);
+  		this.investService.cacheInvestment(data.investment);
+  		console.log(data.investment);
+
+  		this.router.navigate(["investor/invest/success"]);
   	}, error => {
   		console.log(error);
   	})
