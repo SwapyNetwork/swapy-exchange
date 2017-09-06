@@ -5,3 +5,7 @@
     text-align: center;
     padding: 0 0 15px 0;
 }
+.sw-contract-number {
+    font-weight: 500;
+    font-size: 12px;
+}

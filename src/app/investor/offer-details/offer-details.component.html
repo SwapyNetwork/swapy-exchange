@@ -32,8 +32,8 @@
                  <div class="col-sm-6 col-md-6 sw-assets">
                     <div *ngFor="let asset of offer.assets, let i = index" class="checkbox">
                      <label>
-                      <input type="checkbox" name="assets" [(ngModel)] = "assets[i]" (change) = "setTotalAssetsValue()"> <!-- Asset SOLD -->
-                      <p class="sw-box-text">Asset {{i + 1}} - <span class="sw-box-title sw-asset-sold-line">{{asset.value | currency}}</span></p>
+                      <input type="checkbox" name="assets_{{i}}" [(ngModel)]="assets[i]" [disabled]="!asset.active" (change)="setTotalAssetsValue()">
+                      <p class="sw-box-text">Asset {{i + 1}} - <span [ngClass]="{'sw-box-title': true, 'sw-asset-sold-line': !asset.active}">{{asset.value | currency}}</span><span *ngIf=!asset.active> Sold</span></p>
                      </label>                      
                     </div>
                 </div>

@@ -27,6 +27,7 @@ export class OfferDetailsComponent implements OnInit {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.offerIndex = params['id'];
       this.offer = offers[this.offerIndex];
+      console.log(this.offer);
     });
   }
 

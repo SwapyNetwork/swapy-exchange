@@ -1,0 +1,17 @@
+
+.sw-assets {
+    border-right: 1px solid #CCC;
+}
+.sw-assets-total {
+    font-weight: 500;
+    font-size: 21px;
+    padding-top: 15px; 
+    color: #00adef; 
+}
+.sw-details-right-col {
+    padding: 0px 0 0 35px;
+}
+.sw-asset-sold-line {
+    text-decoration: line-through;
+}
+@media only screen and (max-width: 765px){ .sw-assets { border-right: transparent;} }

@@ -24,7 +24,6 @@ export class InvestComponent implements OnInit {
   confirmInvestment(){
   	this.investService.addInvest(this.investment).then(data => {
   		this.investService.cacheInvestment(data.investment);
-  		console.log(data.investment);
 
   		this.router.navigate(["investor/invest/success"]);
   	}, error => {
