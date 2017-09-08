@@ -4,6 +4,7 @@ import { OfferService } from '../offers/offer.service';
 import { Offer } from '../offers/offer/offer.interface';
 import { Invest } from '../invest/invest.interface';
 import { InvestService } from '../invest/invest.service';
+import { OPEN, SOLD, PENDING } from '../../common/models/offerAsset.model';
 
 @Component({
   selector: 'app-offer-details',
@@ -12,12 +13,16 @@ import { InvestService } from '../invest/invest.service';
 })
 export class OfferDetailsComponent implements OnInit {
 
+  public OPEN: number = 1;
+  public SOLD: number = 2;
+  public PENDING: number = 3; 
+  
   public offer: Offer;
 
   public assets: boolean[] = [];
 
   public totalAssetsValue: number = 0;
-  public offerIndex = 0;
+  public offerIndex: number = 0;
 
   constructor(private offerService: OfferService, private activatedRoute: ActivatedRoute, private router: Router, private investService: InvestService) {}
 
