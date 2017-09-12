@@ -10,3 +10,7 @@
 .sw-successful-bold {
     font-weight: 500;
 }
+
+.sw-error-message {
+	color: #C11B1B;
+}

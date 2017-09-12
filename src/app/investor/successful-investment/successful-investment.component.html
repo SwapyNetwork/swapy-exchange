@@ -32,9 +32,12 @@
             <div class="row sw-box-space">
               
             <div class="col-sm-12 col-md-12">
-              <div class="row">
-                  <p class="sw-box-title">Congratulations !</p>
-                  <p class="sw-box-title">Your investment was successful</p>
+              <div class="row" *ngIf='successfulMessage != undefined'>
+                  <p class="sw-box-title">{{successfulMessage}}</p>
+                  <hr>
+              </div>
+              <div class="row"  *ngIf='successfulMessage == undefined'>
+                  <p class="sw-box-title sw-error-message" *ngFor='let errorsMessage of errorsMessages'>{{errorsMessage}}</p>
                   <hr>
               </div>
 
@@ -42,20 +45,23 @@
               <div class=" col-sm-4 col-md-4"> 
               <img src="assets/img/swapy-logo5.jpg" alt="Swapy logo">   
               </div> 
-              <div class=" col-sm-8 col-md-8">   
+              <div class=" col-sm-8 col-md-8" *ngIf='successfulMessage != undefined'>   
                   <p class="sw-box-text sw-blue1">Your contract address:</p>
                   <a href="" class="sw-successful-address">185c4cc8...3ab88279</a>
               </div> 
             </div>
 
               <div class="row">
-                <div class=" col-sm-4 col-md-4">
+                <div class=" col-sm-4 col-md-4"  *ngIf='successfulMessage != undefined'>
                   <p class="sw-box-text sw-successful-message">Now you can follow your investment on: <span class="sw-successful-bold">Manage</span></p>
+                </div>
+                <div class=" col-sm-4 col-md-4"  *ngIf='successfulMessage == undefined'>
+                  <p class="sw-box-text sw-successful-message">You can go back and choose another asset</p>
                 </div>
                 <div class=" col-sm-4 col-md-4">
                 </div>
                 <div class=" col-sm-4 col-md-4">  
-                  <a class="sw-button sw-btn-ghost1" routerLink="/investor">Close</a>
+                  <a class="sw-button sw-btn-ghost1" routerLink="/investor/offer/{{offerIndex}}">Go back</a>
                 </div>
               </div>
 
