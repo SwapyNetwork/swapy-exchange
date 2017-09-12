@@ -60,7 +60,10 @@
                 </div>
                 <div class=" col-sm-4 col-md-4">
                 </div>
-                <div class=" col-sm-4 col-md-4">  
+                <div class=" col-sm-4 col-md-4"*ngIf='successfulMessage != undefined'>  
+                  <a class="sw-button sw-btn-ghost1" routerLink="/investor">Close</a>
+                </div>
+                <div class=" col-sm-4 col-md-4" *ngIf='successfulMessage == undefined'>  
                   <a class="sw-button sw-btn-ghost1" routerLink="/investor/offer/{{offerIndex}}">Go back</a>
                 </div>
               </div>
