@@ -23,6 +23,9 @@ export class OfferDetailsComponent implements OnInit {
 
   public totalAssetsValue: number = 0;
   public offerIndex: number = 0;
+  
+  public errorMessages:string[] = [];
+
 
   constructor(private offerService: OfferService, private activatedRoute: ActivatedRoute, private router: Router, private investService: InvestService) {}
 
@@ -45,30 +48,41 @@ export class OfferDetailsComponent implements OnInit {
                                 .reduce((total, current) => (total + current), 0);
   }
 
+  validateInput(){
+    this.errorMessages = [];
+    if(this.getSelectedAssets().length == 0){
+      this.errorMessages.push('Please, select at least one asset.');
+    }
+
+    return this.errorMessages.length == 0;
+
+  }
+
   invest(){
+    if(this.validateInput()){
+      let offerAssets = this.getSelectedAssets();
+      let assets = [];
 
-    let offerAssets = this.getSelectedAssets();
-    let assets = [];
+      for(let offerAsset of offerAssets){
+        assets.push({uuid: offerAsset.uuid, value: offerAsset.value});
+      }
 
-    for(let offerAsset of offerAssets){
-      assets.push({uuid: offerAsset.uuid, value: offerAsset.value});
+      let invest: Invest = {
+        uuid: null,
+        companyId: this.offer.companyUuid,
+        companyName: this.offer.companyName,
+        offerUuid: this.offer.uuid,
+        totalAmount: this.totalAssetsValue,
+        roi: this.offer.roi,
+        paybackMonths: this.offer.paybackMonths,
+        assets: assets
+      }
+
+      this.investService.cacheInvestment(invest);
+      this.investService.cacheOfferIndex(this.offerIndex);
+
+      this.router.navigate(["investor/invest"]);
     }
-
-    let invest: Invest = {
-      uuid: null,
-      companyId: this.offer.companyUuid,
-      companyName: this.offer.companyName,
-      offerUuid: this.offer.uuid,
-      totalAmount: this.totalAssetsValue,
-      roi: this.offer.roi,
-      paybackMonths: this.offer.paybackMonths,
-      assets: assets
-    }
-
-    this.investService.cacheInvestment(invest);
-    this.investService.cacheOfferIndex(this.offerIndex);
-
-    this.router.navigate(["investor/invest"]);
 
 
   }
