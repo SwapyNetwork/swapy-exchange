@@ -51,6 +51,15 @@
               </div>
 
                 <div class="row">
+                  <div *ngIf="errorMessages.length > 0">
+                    <div *ngFor="let message of errorMessages" class="alert alert-danger">
+                      {{message}}
+                    </div>  
+                  </div>
+                </div>
+                
+                <div class="row">
+
                   <div class=" col-sm-8 col-md-8">
                     <p class="sw-assets-total">TOTAL {{totalAssetsValue | currency}}</p> <!-- Total = n. of Assets selected above -->
                   </div>
