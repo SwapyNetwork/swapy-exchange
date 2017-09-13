@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { I18nService } from '../../common/services/i18n.service';
 
 import { AddOfferService } from '../add-offer/add-offer.service';
+import { CreditCompanyComponent } from '../credit-company.component'
 
 @Component({
   selector: 'app-confirm-offer',
@@ -14,7 +15,7 @@ export class ConfirmOfferComponent implements OnInit {
   public offer:any;
   public errorMessages:string[] = [];
 
-  constructor(private addOfferService: AddOfferService, private router: Router, private i18nService: I18nService) { }
+  constructor(private addOfferService: AddOfferService, private router: Router, private i18nService: I18nService, private creditCompanyComponent: CreditCompanyComponent) { }
 
   ngOnInit() {
     this.offer = this.addOfferService.getCachedOffer();
@@ -27,6 +28,8 @@ export class ConfirmOfferComponent implements OnInit {
         this.offer.uuid = data.offer.uuid;
         this.offer.address = data.offer.address;
         this.addOfferService.cacheOffer(this.offer);
+        this.creditCompanyComponent.refreshStatusBar();
+        
         this.router.navigate(["/credit-company/raise/success"])
       },
       error => {

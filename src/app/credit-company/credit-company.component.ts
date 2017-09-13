@@ -8,23 +8,29 @@ import {CreditCompanyService} from './credit-company.service';
   templateUrl: './credit-company.component.html',
   styleUrls: ['./credit-company.component.css']
 })
-export class CreditCompanyComponent implements OnInit{
+export class CreditCompanyComponent implements OnInit {
   title = 'credit-company';
 
-  public amountRequested = '';
-  public offersLength = '';
+  public amountRequested;
+  public amountRaised;
+  public offersLength;
 
-  constructor(private creditCompanyService: CreditCompanyService){};
+  constructor(private creditCompanyService: CreditCompanyService) {};
 
-	ngOnInit(){ /**@todo Not only on ngOnInit - Refresh everytime that a raise is done*/
+  ngOnInit() {
+    this.refreshStatusBar();
+  };
+
+  refreshStatusBar() { /**@todo Refresh via websocket when a investment is done */
     this.creditCompanyService.getMyOffersInfos().then(
-			(data:any) => {
-				this.amountRequested = data.amountRequested;
-				this.offersLength = data.offersLength;
-			},
-			(error:any) => {
-				console.log(error);
-			}
-		);
-	};
+      (data: any) => {
+        this.amountRequested = data.amountRequested;
+        this.amountRaised = data.amountRaised;
+        this.offersLength = data.offersLength;
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  };
 }
