@@ -17,15 +17,20 @@ export class CreditCompanyComponent implements OnInit {
 
   constructor(private creditCompanyService: CreditCompanyService) {};
 
-  ngOnInit() { /**@todo Not only on ngOnInit - Refresh everytime that a raise is done*/
-  this.creditCompanyService.getMyOffersInfos().then(
-    (data: any) => {
-      this.amountRequested = data.amountRequested;
-      this.amountRaised = data.amountRaised;
-      this.offersLength = data.offersLength;
-    },
-    (error: any) => {
-      console.log(error);
-    });
+  ngOnInit() {
+    this.refreshStatusBar();
+  };
+
+  refreshStatusBar() { /**@todo Refresh via websocket when a investment is done */
+    this.creditCompanyService.getMyOffersInfos().then(
+      (data: any) => {
+        this.amountRequested = data.amountRequested;
+        this.amountRaised = data.amountRaised;
+        this.offersLength = data.offersLength;
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
   };
 }
