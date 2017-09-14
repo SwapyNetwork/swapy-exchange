@@ -35,6 +35,19 @@ export class OfferDetailsComponent implements OnInit {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.offerIndex = params['id'];
       this.offer = offers[this.offerIndex];
+      this.offerService.getOfferByUuid(this.offer.uuid).then((data: any) => {
+        this.offer = {
+          roi: data.offer.offerRoi,
+          paybackMonths: data.offer.offerPaybackMonths,
+          raisingAmount: data.offer.offerRaisingAmount,
+          walletAddress: data.offer.offerWalletAddress,
+          uuid: data.offer.offerUuid,
+          companyName: data.offer.firstName + " " + data.offer.lastName,
+          companyLogo: data.offer.picture,
+          companyUuid: data.offer.uuid,
+          assets: data.offer.assets
+        };
+      })
     });
   }
 
