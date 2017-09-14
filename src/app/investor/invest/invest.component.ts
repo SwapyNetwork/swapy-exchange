@@ -17,23 +17,27 @@ export class InvestComponent implements OnInit {
   constructor(private investService: InvestService, private router: Router, private successfulInvestmentService: SuccessfulInvestmentService) { }
 
   ngOnInit() {
-  	this.investment = this.investService.getCachedInvestment();
-  	if(!this.investment) this.router.navigate(["/investor/offers"]);
+    this.investment = this.investService.getCachedInvestment();
+  	if(!this.investment) this.router.navigate(['/investor/offers']);
   	this.offerIndex = this.investService.getCachedOfferIndex();
   }
 
-  confirmInvestment(){
+  confirmInvestment() {
     this.successfulInvestmentService.cleanMessages();
-  	this.investService.addInvest(this.investment).then(data => {
-  		this.investService.cacheInvestment(data.investment);
+    const body = {
+      companyUuid: this.investment.companyId,
+      offerUuid: this.investment.offerUuid,
+      assets: this.investment.assets,
+    };
+    this.investService.addInvest(body).then(data => {
+      this.investService.cacheInvestment(data.investment);
       this.successfulInvestmentService.cacheSuccessfulMessages(data);
-      this.router.navigate(["investor/invest/success"]);
+      this.router.navigate(['investor/invest/success']);
     }, error => {
 
       this.successfulInvestmentService.cacheErrors(error.error);
-      this.router.navigate(["investor/invest/success"]);
-  	})
-  	
+      this.router.navigate(['investor/invest/success']);
+    });
   }
 
 }
