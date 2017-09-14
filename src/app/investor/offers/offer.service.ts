@@ -24,6 +24,10 @@ export class OfferService {
 		return this.httpService.get("offers");
 	}
 
+	public getOfferByUuid(offerUuid): Promise<Offer> {
+		return this.httpService.post("offers/listByUuid", {offerUuid});
+	}
+
 	public cacheOffers(offers: Offer[]) {
 		this.cachedOffers = offers;
 	}
