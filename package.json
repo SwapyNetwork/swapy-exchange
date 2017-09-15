@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
-    "alpha": "ng serve --host 0.0.0.0 --disable-host-check",
+    "alpha": "ng serve --env=prod --host 0.0.0.0 --disable-host-check",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
