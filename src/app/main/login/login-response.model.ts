@@ -1,9 +1,10 @@
-import {UserResponseModel} from '../../common/models/user-response.model';
+import { UserResponseModel } from '../../common/models/user-response.model';
 
 export class LoginResponseModel {
   constructor(
-  	public code: string,
-  	public message: string,
-    public user: UserResponseModel
-  ) {  }
+    public code: string,
+    public message: string,
+    public user: UserResponseModel,
+    public accessToken: string
+  ) {}
 }
