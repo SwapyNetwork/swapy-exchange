@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {ViewEncapsulation} from '@angular/core';  
+import { ViewEncapsulation } from '@angular/core';
+import { InvestorService } from './investor.service';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -9,4 +10,24 @@ import {ViewEncapsulation} from '@angular/core';
 })
 export class InvestorComponent {
   title = 'investor';
+
+  public assetsLength;
+  public investedValue;
+  public averageReturn;
+  public returnValue;
+
+  constructor(private investorService: InvestorService) {};
+
+  ngOnInit() {
+  	this.refreshStatusBar();
+  };
+
+  refreshStatusBar(){
+    this.investorService.getMyInvestmnetsInfo().then((data: any) => {
+      this.assetsLength = data.assetsLength;
+      this.investedValue = data.investedValue;
+      this.averageReturn = data.averageReturn;
+      this.returnValue = data.returnValue;
+  	});
+  };
 }
