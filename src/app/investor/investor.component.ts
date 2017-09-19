@@ -15,6 +15,7 @@ export class InvestorComponent {
   public investedValue;
   public averageReturn;
   public returnValue;
+  public averagePaybackPeriod;
 
   constructor(private investorService: InvestorService) {};
 
@@ -28,6 +29,7 @@ export class InvestorComponent {
       this.investedValue = data.investedValue;
       this.averageReturn = data.averageReturn;
       this.returnValue = data.returnValue;
+      this.averagePaybackPeriod = data.averagePaybackPeriod;
   	});
   };
 }
