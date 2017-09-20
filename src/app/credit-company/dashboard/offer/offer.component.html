@@ -37,7 +37,7 @@
                <div class="sw-value-bar"></div>
            </div>
           </div> <!-- End Circular chart-->
-      </div> 
+      </div>
       <div class="col-sm-3 col-md-3">
           <p class="sw-box-text sw-chart-roi">ROI</p>
           <div class="sw-progress-circle p{{offer.roi*100}}"> <!-- Start Circular chart-->
@@ -55,42 +55,14 @@
            <tr class="active">
               <th>Asset</th>
               <th>Investor</th>
-              <th>First Payback</th> <!-- @todo Delete it ? -->
+              <th>Invested in</th>
               <th>Last Payback</th> <!-- @todo Delete it ? -->
-              <th>{{offer.paybackMonths}}x</th> <!-- @todo Delete it ? --> 
+              <th>{{offer.paybackMonths}}x</th> <!-- @todo Delete it ? -->
            </tr>
-           <tr>
-              <td>1</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-           </tr>
-           <tr>
-              <td>2</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-           </tr>
-           <tr>
-              <td>3</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-           </tr>
-           <tr>
-              <td>4</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-           </tr>
-           <tr>
-              <td>5</td>
-              <td>-</td>
-              <td>-</td>
+           <tr *ngFor="let asset of offer.assets, let i = index">
+              <td>{{i + 1}}</td>
+              <td>{{asset.investorName == null ? '-' : asset.investorName }}</td>
+              <td>{{asset.investedIn == null ? '-' : (asset.investedIn | date: 'yyyy-MM-dd') }}</td>
               <td>-</td>
               <td>-</td>
            </tr>
