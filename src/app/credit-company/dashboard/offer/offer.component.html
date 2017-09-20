@@ -7,7 +7,7 @@
          </h4>
       </div>
       <div class="col-sm-4 col-md-4">
-         <p class="sw-box-text sw-collapse-icons"><i class="fa fa-circle" aria-hidden="true"></i> <i class="fa fa-circle" aria-hidden="true"> </i> <i class="fa fa-circle" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> | <span class="sw-low">Low Funds</span></p>
+         <p class="sw-box-text sw-collapse-icons"><i class="fa fa-circle" aria-hidden="true"></i> <i class="fa fa-circle" aria-hidden="true"> </i> <i class="fa fa-circle" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> | <span class="sw-low">Low Funds</span></p> <!-- @todo Delete it ? -->
       </div>
    </div>
   </div>
@@ -24,7 +24,7 @@
       </div>
       <div class="col-sm-3 col-md-3">
           <p class="sw-box-text">5 Assets of: {{offer.raisingAmount/5 | currency:'USD':true:'.2'}}</p>
-          <p class="sw-box-text">Debt: {{offer.paybackMonths}}x {{(offer.raisingAmount*(1+offer.roi))/offer.paybackMonths | currency:'USD':true:'.2'}}</p>
+          <!-- <p class="sw-box-text">Debt: {{offer.paybackMonths}}x {{(offer.raisingAmount*(1+offer.roi))/offer.paybackMonths | currency:'USD':true:'.2'}}</p> -->
           <p class="sw-box-text">Performance: <span class="sw-high">High / No Delay</span></p>
           <p><i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i></p>
       </div>
@@ -37,7 +37,7 @@
                <div class="sw-value-bar"></div>
            </div>
           </div> <!-- End Circular chart-->
-      </div>
+      </div> 
       <div class="col-sm-3 col-md-3">
           <p class="sw-box-text sw-chart-roi">ROI</p>
           <div class="sw-progress-circle p{{offer.roi*100}}"> <!-- Start Circular chart-->
@@ -55,9 +55,9 @@
            <tr class="active">
               <th>Asset</th>
               <th>Investor</th>
-              <th>First Payback</th>
-              <th>Last Payback</th>
-              <th>{{offer.paybackMonths}}x</th>
+              <th>First Payback</th> <!-- @todo Delete it ? -->
+              <th>Last Payback</th> <!-- @todo Delete it ? -->
+              <th>{{offer.paybackMonths}}x</th> <!-- @todo Delete it ? --> 
            </tr>
            <tr>
               <td>1</td>
