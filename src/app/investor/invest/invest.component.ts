@@ -3,6 +3,7 @@ import { InvestService } from './invest.service';
 import { Router } from '@angular/router';
 import { Invest } from './invest.interface';
 import { SuccessfulInvestmentService } from './../successful-investment/successful-investment.service';
+import { InvestorComponent } from './../investor.component';
 
 @Component({
   selector: 'app-invest',
@@ -14,7 +15,7 @@ export class InvestComponent implements OnInit {
   public investment: Invest;
   public offerIndex: number;
 
-  constructor(private investService: InvestService, private router: Router, private successfulInvestmentService: SuccessfulInvestmentService) { }
+  constructor(private investService: InvestService, private router: Router, private successfulInvestmentService: SuccessfulInvestmentService, private investorComponent: InvestorComponent ) { }
 
   ngOnInit() {
     this.investment = this.investService.getCachedInvestment();
@@ -31,6 +32,7 @@ export class InvestComponent implements OnInit {
     };
     this.investService.addInvest(body).then(data => {
       this.investService.cacheInvestment(data.investment);
+      this.investorComponent.refreshStatusBar();
       this.successfulInvestmentService.cacheSuccessfulMessages(data);
       this.router.navigate(['investor/invest/success']);
     }, error => {
