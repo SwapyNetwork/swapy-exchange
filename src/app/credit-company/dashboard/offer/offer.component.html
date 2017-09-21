@@ -7,7 +7,9 @@
          </h4>
       </div>
       <div class="col-sm-4 col-md-4">
-         <p class="sw-box-text sw-collapse-icons"><i class="fa fa-circle" aria-hidden="true"></i> <i class="fa fa-circle" aria-hidden="true"> </i> <i class="fa fa-circle" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> | <span class="sw-low">Low Funds</span></p> <!-- @todo Delete it ? -->
+         <p class="sw-box-text sw-collapse-icons">
+           <i *ngFor="let asset of offer.assets" [ngClass]="{'fa fa-circle sw-blue1': true, 'sw-blue1': asset.status !== SOLD}" aria-hidden="true">&nbsp;</i>
+         </p>
       </div>
    </div>
   </div>
@@ -18,28 +20,29 @@
           <p class="sw-box-text">Fundraising: {{offer.raisingAmount | currency:'USD':true:'.2'}}</p>
           <p class="sw-box-text">Payback: {{offer.paybackMonths}} months</p>
           <!-- <p class="sw-box-text">6 installments</p> -->
-          <p class="sw-box-text">ROI: {{offer.roi | percent}}</p><hr>
+          <p class="sw-box-text">Gross return rate: {{offer.roi | percent}}</p><hr>
           <p class="sw-box-text"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Launch: {{offer.createdOn | date: 'yyyy-MM-dd'}}</p>
 
       </div>
-      <div class="col-sm-3 col-md-3">
-          <p class="sw-box-text">5 Assets of: {{offer.raisingAmount/5 | currency:'USD':true:'.2'}}</p>
+      <!-- <div class="col-sm-3 col-md-3"> -->
           <!-- <p class="sw-box-text">Debt: {{offer.paybackMonths}}x {{(offer.raisingAmount*(1+offer.roi))/offer.paybackMonths | currency:'USD':true:'.2'}}</p> -->
-          <p class="sw-box-text">Performance: <span class="sw-high">High / No Delay</span></p>
-          <p><i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i></p>
-      </div>
+          <!-- <p class="sw-box-text">Performance: <span class="sw-high">High / No Delay</span></p> -->
+          <!-- <p><i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i></p> -->
+      <!-- </div> -->
+      <!-- <div class="col-sm-3 col-md-3"> -->
+          <!-- <p class="sw-box-text sw-chart-installs">Payback (months)</p> -->
+          <!-- <div class="sw-progress-circle p0">  -->
+            <!-- Start Circular chart-->
+            <!-- <span>0/{{offer.paybackMonths}}</span> -->
+            <!-- <div class="sw-left-half-clipper"> -->
+              <!-- <div class="sw-first50-bar"></div> -->
+               <!-- <div class="sw-value-bar"></div> -->
+           <!-- </div> -->
+          <!-- </div>  -->
+          <!-- End Circular chart-->
+      <!-- </div> -->
       <div class="col-sm-3 col-md-3">
-          <p class="sw-box-text sw-chart-installs">Payback (months)</p>
-          <div class="sw-progress-circle p0"> <!-- Start Circular chart-->
-            <span>0/{{offer.paybackMonths}}</span>
-            <div class="sw-left-half-clipper">
-               <div class="sw-first50-bar"></div>
-               <div class="sw-value-bar"></div>
-           </div>
-          </div> <!-- End Circular chart-->
-      </div>
-      <div class="col-sm-3 col-md-3">
-          <p class="sw-box-text sw-chart-roi">ROI</p>
+          <p class="sw-box-text sw-chart-roi">Gross return rate</p>
           <div class="sw-progress-circle p{{offer.roi*100}}"> <!-- Start Circular chart-->
             <span>{{offer.roi | percent}}</span>
             <div class="sw-left-half-clipper">
@@ -49,22 +52,23 @@
           </div> <!-- End Circular chart-->
       </div>
 
-      <hr>
       <div class="col-sm-12 col-md-12 table-responsive">
         <table class="table table-hover">
            <tr class="active">
               <th>Asset</th>
+              <th>Value</th>
+              <th>Status</th>
               <th>Investor</th>
               <th>Invested in</th>
-              <th>Last Payback</th> <!-- @todo Delete it ? -->
-              <th>{{offer.paybackMonths}}x</th> <!-- @todo Delete it ? -->
+              <th>Payback date</th>
            </tr>
            <tr *ngFor="let asset of offer.assets, let i = index">
               <td>{{i + 1}}</td>
+              <td>{{asset.value | currency:'USD':true:'.2'}}</td>
+              <td>{{asset.status == OPEN ? 'Available' : (asset.status == SOLD ? 'Sold' : 'Pending confirmation')}}</td>
               <td>{{asset.investorName == null ? '-' : asset.investorName }}</td>
               <td>{{asset.investedIn == null ? '-' : (asset.investedIn | date: 'yyyy-MM-dd') }}</td>
-              <td>-</td>
-              <td>-</td>
+              <td>{{asset.investedIn == null ? '-' : (calculatePaybackDate(asset) | date: 'yyyy-MM-dd') }}</td>
            </tr>
         </table>
 
