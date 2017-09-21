@@ -1,13 +1,19 @@
+interface OfferAsset {
+  uuid: string;
+  value: number;
+  investorID: string;
+  investorName: string;
+  investedIn: Date;
+}
+
 export interface Offer {
-    companyId: string; // UserModel._id
-    companyName: string; // UserModel.firstName + // UserModel.lastName
-    companyPicture: string;
-    companyCreatedAt: Date;
-    raisingAmount: number;
-    roi: number;
-    paybackMonths: number;
-    createdOn: Date;
-    active: boolean;
-    uuid: string;
-    walletAddress: string;
+  uuid: string;
+  raisingAmount: number;
+  paybackMonths: number;
+  roi: number;
+  walletAddress: string;
+  companyName: string;
+  companyLogo: string;
+  companyUuid: string;
+  assets: OfferAsset[];
 }

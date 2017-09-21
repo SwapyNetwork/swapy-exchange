@@ -13,17 +13,17 @@ import { OPEN, SOLD, PENDING } from '../../common/models/offerAsset.model';
 })
 export class OfferDetailsComponent implements OnInit {
 
-  public OPEN: number = 1;
-  public SOLD: number = 2;
-  public PENDING: number = 3; 
-  
+  public OPEN = OPEN;
+  public SOLD = SOLD;
+  public PENDING = PENDING;
+
   public offer: Offer;
 
   public assets: boolean[] = [];
 
   public totalAssetsValue: number = 0;
   public offerIndex: number = 0;
-  
+
   public errorMessages:string[] = [];
 
 
