@@ -25,7 +25,7 @@ export class InvestComponent implements OnInit {
   confirmInvestment() {
     this.successfulInvestmentService.cleanMessages();
     const body = {
-      companyUuid: this.investment.companyId,
+      companyUuid: this.investment.companyUuid,
       offerUuid: this.investment.offerUuid,
       assets: this.investment.assets,
     };
