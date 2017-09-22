@@ -1,9 +1,9 @@
-import {UserResponseModel} from '../../common/models/user-response.model';
+// import {UserResponseModel} from '../../common/models/user-response.model';
+import {UserResponseInterface} from '../../common/interfaces/user-response.interface';
 
-export class LoginResponseModel {
-  constructor(
-  	public code: string,
-  	public message: string,
-    public user: UserResponseModel
-  ) {  }
-}
+export interface LoginResponseModel {
+  code: string;
+  message: string;
+  user: UserResponseInterface;
+
+};

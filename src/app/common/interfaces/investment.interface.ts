@@ -1,9 +1,9 @@
-interface InvestAsset {
+interface InvestmentAsset {
 	uuid: string;
 	value: number;
-}
+};
 
-export interface Invest {
+export interface Investment {
 	uuid: string;
 	companyId: string;
 	companyName: string;
@@ -12,5 +12,5 @@ export interface Invest {
 	roi: number;
 	paybackMonths: number;
 	investedIn: Date;
-	assets: InvestAsset[];
-}
+	assets: InvestmentAsset[];
+};

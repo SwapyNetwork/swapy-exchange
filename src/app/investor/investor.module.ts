@@ -27,6 +27,7 @@ import { OfferService } from './offers/offer.service';
 import { InvestService } from './invest/invest.service';
 import { SuccessfulInvestmentService } from './successful-investment/successful-investment.service';
 import { InvestorService } from './investor.service';
+import { InvestmentComponent } from './dashboard/investment/investment.component';
 
 @NgModule({
   imports: [
@@ -38,7 +39,7 @@ import { InvestorService } from './investor.service';
     FormsModule,
     TextMaskModule
   ],
-  declarations: [InvestorComponent, OffersComponent, DashboardComponent, VerificationPhoneComponent, VerificationMainComponent, VerificationIdentityComponent, VerificationAddressComponent, OfferComponent, OfferDetailsComponent, CreditCompanyComponent, TermsPageComponent, PrivacyPageComponent, ProfileComponent, InvestComponent, SuccessfulInvestmentComponent],
+  declarations: [InvestorComponent, OffersComponent, DashboardComponent, VerificationPhoneComponent, VerificationMainComponent, VerificationIdentityComponent, VerificationAddressComponent, OfferComponent, OfferDetailsComponent, CreditCompanyComponent, TermsPageComponent, PrivacyPageComponent, ProfileComponent, InvestComponent, SuccessfulInvestmentComponent, InvestmentComponent],
   providers: [LogoutService, OfferService, InvestService, SuccessfulInvestmentService, InvestorService],
   bootstrap: [InvestorComponent]
 })
