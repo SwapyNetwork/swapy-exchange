@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from '../../../environments/environment';
 
-import { Offer } from './offer/offer.interface';
+import { Offer } from '../../common/interfaces/offer.interface';
 
 import { HttpService } from '../../common/services/http.service';
 

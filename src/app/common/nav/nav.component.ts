@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LogoutService } from '../services/logout.service';
 import { StorageService } from '../services/storage.service';
-import { UserResponseModel, INVESTOR, CREDIT_COMPANY } from '../models/user-response.model';
+import { UserResponseInterface, INVESTOR, CREDIT_COMPANY } from '../interfaces/user-response.interface';
 
 @Component({
   selector: 'app-nav',
@@ -11,7 +11,7 @@ import { UserResponseModel, INVESTOR, CREDIT_COMPANY } from '../models/user-resp
 })
 export class NavComponent implements OnInit {
 
-  public user: UserResponseModel;
+  public user: UserResponseInterface;
   public menu:any[];
   public profileUrl:string = '';
   public helpUrl:string = '';
@@ -67,7 +67,7 @@ export class NavComponent implements OnInit {
   public logout() {
     this.logoutService.logout().then(
       data => {
-        console.log(data);
+        // console.log(data);
         this.router.navigate(['/']);
       },
       err => {

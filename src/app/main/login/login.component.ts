@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {LoginService} from './login.service';
 import {Router} from '@angular/router';
 import { LoginResponseModel } from './login-response.model';
-import { INVESTOR, CREDIT_COMPANY } from '../../common/models/user-response.model';
+import { UserResponseInterface, INVESTOR, CREDIT_COMPANY } from '../../common/interfaces/user-response.interface';
 import { I18nService } from '../../common/services/i18n.service';
 
 @Component({

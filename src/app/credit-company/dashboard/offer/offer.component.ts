@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Offer } from './offer.interface';
-import { OPEN, SOLD, PENDING } from '../../../common/models/offerAsset.model';
+import { Offer} from '../../../common/interfaces/offer.interface';
+import { OPEN, SOLD, PENDING } from '../../../common/interfaces/offerAssetStatus.interface';
 
 @Component({
   selector: 'dashboard-offer',

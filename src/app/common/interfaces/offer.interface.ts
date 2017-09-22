@@ -4,7 +4,7 @@ interface OfferAsset {
   investorID: string;
   investorName: string;
   investedIn: Date;
-}
+};
 
 export interface Offer {
   uuid: string;
@@ -16,4 +16,4 @@ export interface Offer {
   companyLogo: string;
   companyUuid: string;
   assets: OfferAsset[];
-}
+};

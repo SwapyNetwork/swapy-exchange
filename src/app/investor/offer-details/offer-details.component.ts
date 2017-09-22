@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { OfferService } from '../offers/offer.service';
-import { Offer } from '../offers/offer/offer.interface';
+import { Offer } from '../../common/interfaces/offer.interface';
 import { Invest } from '../invest/invest.interface';
 import { InvestService } from '../invest/invest.service';
-import { OPEN, SOLD, PENDING } from '../../common/models/offerAsset.model';
+import { OPEN, SOLD, PENDING } from '../../common/interfaces/offerAssetStatus.interface';
 
 @Component({
   selector: 'app-offer-details',

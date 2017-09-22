@@ -20,7 +20,7 @@ export class InvestmentComponent implements OnInit {
     this.collapsed = !this.collapsed;
   }
 
-  public calculateReturnAmount(){
+  public calculateReturnAmount() {
     return this.investment.totalAmount * (1 + this.investment.roi);
   }
 
