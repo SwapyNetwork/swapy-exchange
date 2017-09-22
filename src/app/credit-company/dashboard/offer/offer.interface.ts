@@ -1,5 +1,5 @@
 export interface Offer {
-    companyId: string; // UserModel._id
+    companyUuid: string; // UserModel.uuid
     companyName: string; // UserModel.firstName + // UserModel.lastName
     companyPicture: string;
     companyCreatedAt: Date;

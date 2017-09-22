@@ -15,15 +15,15 @@ export class OfferDetailsComponent implements OnInit {
 
   public OPEN: number = 1;
   public SOLD: number = 2;
-  public PENDING: number = 3; 
-  
+  public PENDING: number = 3;
+
   public offer: Offer;
 
   public assets: boolean[] = [];
 
   public totalAssetsValue: number = 0;
   public offerIndex: number = 0;
-  
+
   public errorMessages:string[] = [];
 
 
@@ -82,7 +82,7 @@ export class OfferDetailsComponent implements OnInit {
 
       let invest: Invest = {
         uuid: null,
-        companyId: this.offer.companyUuid,
+        companyUuid: this.offer.companyUuid,
         companyName: this.offer.companyName,
         offerUuid: this.offer.uuid,
         totalAmount: this.totalAssetsValue,
