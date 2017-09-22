@@ -71,16 +71,16 @@ export class OfferDetailsComponent implements OnInit {
 
   }
 
-  invest(){
-    if(this.validateInput()){
+  invest() {
+    if (this.validateInput()) {
       let offerAssets = this.getSelectedAssets();
       let assets = [];
 
-      for(let offerAsset of offerAssets){
+      for (const offerAsset of offerAssets){
         assets.push({uuid: offerAsset.uuid, value: offerAsset.value});
       }
 
-      let invest: Invest = {
+      const invest: Invest = {
         uuid: null,
         companyId: this.offer.companyUuid,
         companyName: this.offer.companyName,
@@ -88,13 +88,14 @@ export class OfferDetailsComponent implements OnInit {
         totalAmount: this.totalAssetsValue,
         roi: this.offer.roi,
         paybackMonths: this.offer.paybackMonths,
+        investedIn: null,
         assets: assets
       }
 
       this.investService.cacheInvestment(invest);
       this.investService.cacheOfferIndex(this.offerIndex);
 
-      this.router.navigate(["investor/invest"]);
+      this.router.navigate(['investor/invest']);
     }
 
 

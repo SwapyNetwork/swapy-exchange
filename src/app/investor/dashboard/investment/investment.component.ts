@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Invest } from '../../invest/invest.interface';
 
 @Component({
   selector: 'dashboard-investment',
@@ -7,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class InvestmentComponent implements OnInit {
 
-  @Input() public investment;
+  @Input() public investment: Invest;
   @Input() public collapsed: boolean;
 
   constructor() { }

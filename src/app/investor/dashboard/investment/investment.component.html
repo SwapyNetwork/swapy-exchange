@@ -17,7 +17,6 @@
       <div class="panel-body">
         <div class="col-sm-3 col-md-3">
             <a href="credit-company-profile.html"><p class="sw-box-text sw-blue1">{{investment.companyName}}</p></a>
-            <p class="sw-box-text">Assets: {{investment.assets.length}}</p>
             <p class="sw-box-text">Payback: {{investment.paybackMonths}} months</p>
             <p class="sw-box-text">Since {{investment.investedIn | date: 'yyyy-MM-dd'}}</p><hr>
             <p class="sw-box-text">Contract Address: <a href=""><b>185c4cc8…3ab88279</b></a></p>
@@ -25,7 +24,7 @@
         </div>
         <div class="col-sm-3 col-md-3">
             <p class="sw-box-text">Investment: {{investment.totalAmount | currency:'USD':true:'.2' }}</p>
-            <p class="sw-box-text">Return: {{calculateReturnAmount() | currency:'USD':true:'.2' }}</p>
+            <p class="sw-box-text">Gross return: {{calculateReturnAmount() | currency:'USD':true:'.2' }}</p>
             <p class="sw-box-text">Payback date: <span class="sw-blue1">{{calculatePaybackDate() | date: 'yyyy-MM-dd'}}</span></p>
             <!-- <p class="sw-box-text">Performance: <span class="sw-high">High / No Delay</span></p> -->
             <!-- <p><i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i></p> -->
