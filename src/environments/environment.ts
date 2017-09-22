@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  api: "http://api.swapy.dev:8080/v1/"
+  api: "http://localhost:3000/v1/"
 };

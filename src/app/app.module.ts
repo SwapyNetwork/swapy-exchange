@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { StorageService } from './common/services/storage.service';
 import { HttpService } from './common/services/http.service';
 import { I18nService } from './common/services/i18n.service';
+import { LoadingService } from './common/services/loading.service';
 
 
 @NgModule({
@@ -20,7 +21,7 @@ import { I18nService } from './common/services/i18n.service';
     FormsModule,
     HttpClientModule
   ],
-  providers: [StorageService, HttpService, I18nService],
+  providers: [StorageService, HttpService, I18nService, LoadingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
