@@ -1,7 +1,6 @@
 interface InvestAsset {
   uuid: string;
   value: number;
-  investedIn: Date;
 }
 
 export interface Invest {
@@ -12,5 +11,6 @@ export interface Invest {
   totalAmount: number;
   roi: number;
   paybackMonths: number;
+  investedIn: Date;
   assets: InvestAsset[];
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Offer } from './offer.interface'
+import { Offer } from '../../../common/interfaces/offer.interface'
 
 @Component({
   selector: 'offer-card',

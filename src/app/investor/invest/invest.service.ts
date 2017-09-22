@@ -34,4 +34,8 @@ export class InvestService {
   	return this.httpService.post("investment/add", invest);
   }
 
+  public getMyInvestments(): Promise<any> {
+  	return this.httpService.get("investment/mine");
+  }
+
 }

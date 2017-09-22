@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { SignUpService } from './sign-up.service';
 import { LoginResponseModel } from '../login/login-response.model';
-import { INVESTOR, CREDIT_COMPANY } from '../../common/models/user-response.model';
+import { INVESTOR, CREDIT_COMPANY } from '../../common/interfaces/user-response.interface';
 import { I18nService } from '../../common/services/i18n.service';
 
 @Component({

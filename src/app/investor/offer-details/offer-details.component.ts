@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { OfferService } from '../offers/offer.service';
-import { Offer } from '../offers/offer/offer.interface';
+import { Offer } from '../../common/interfaces/offer.interface';
 import { Invest } from '../invest/invest.interface';
 import { InvestService } from '../invest/invest.service';
-import { OPEN, SOLD, PENDING } from '../../common/models/offerAsset.model';
+import { OPEN, SOLD, PENDING } from '../../common/interfaces/offerAssetStatus.interface';
 
 @Component({
   selector: 'app-offer-details',
@@ -13,9 +13,9 @@ import { OPEN, SOLD, PENDING } from '../../common/models/offerAsset.model';
 })
 export class OfferDetailsComponent implements OnInit {
 
-  public OPEN: number = 1;
-  public SOLD: number = 2;
-  public PENDING: number = 3;
+  public OPEN = OPEN;
+  public SOLD = SOLD;
+  public PENDING = PENDING;
 
   public offer: Offer;
 
@@ -71,16 +71,16 @@ export class OfferDetailsComponent implements OnInit {
 
   }
 
-  invest(){
-    if(this.validateInput()){
+  invest() {
+    if (this.validateInput()) {
       let offerAssets = this.getSelectedAssets();
       let assets = [];
 
-      for(let offerAsset of offerAssets){
+      for (const offerAsset of offerAssets){
         assets.push({uuid: offerAsset.uuid, value: offerAsset.value});
       }
 
-      let invest: Invest = {
+      const invest: Invest = {
         uuid: null,
         companyUuid: this.offer.companyUuid,
         companyName: this.offer.companyName,
@@ -88,13 +88,14 @@ export class OfferDetailsComponent implements OnInit {
         totalAmount: this.totalAssetsValue,
         roi: this.offer.roi,
         paybackMonths: this.offer.paybackMonths,
+        investedIn: null,
         assets: assets
       }
 
       this.investService.cacheInvestment(invest);
       this.investService.cacheOfferIndex(this.offerIndex);
 
-      this.router.navigate(["investor/invest"]);
+      this.router.navigate(['investor/invest']);
     }
 
 

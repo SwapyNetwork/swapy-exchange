@@ -5,7 +5,9 @@ import { LoginModel } from './login.model';
 import { LoginResponseModel } from './login-response.model';
 
 import { StorageService } from '../../common/services/storage.service';
+import { LoadingService } from '../../common/services/loading.service';
 import { environment } from '../../../environments/environment';
+
 
 /*
   Generated class for the LoginService provider.
@@ -16,7 +18,7 @@ import { environment } from '../../../environments/environment';
 @Injectable()
 export class LoginService {
 
-  constructor(public http: HttpClient, public storageService: StorageService) {}
+  constructor(public http: HttpClient, public storageService: StorageService, public loadingService: LoadingService) {}
 
   login(login: LoginModel) {
     const url: string = environment.api + 'login';
@@ -34,14 +36,17 @@ export class LoginService {
       // We're using Angular HTTP provider to request the data,
       // then on the response, it'll map the JSON data to a parsed JS object.
       // Next, we process the data and resolve the promise with the new data.
+      this.loadingService.show();
       this.http.post(url, login, options)
         // .map(res => res.json())
         .subscribe((data: LoginResponseModel) => {
           this.storageService.setItem('user', data.user);
           this.storageService.setItem('accessToken', data.accessToken);
+          this.loadingService.hide();
           resolve(data);
         },
         error => {
+          this.loadingService.hide();
           reject(error);
         });
     });

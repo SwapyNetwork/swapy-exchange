@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
-import { Offer } from './offer/offer.interface';
+import { Offer } from '../../common/interfaces/offer.interface';
 import { OfferService } from './offer.service';
 
 @Component({

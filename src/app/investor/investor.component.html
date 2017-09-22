@@ -16,8 +16,8 @@
           <a href="#"><p class="sw-funds-add">Add Funds +</p></a>
         </div>
         <div class="col-xs-2 col-sm-2 col-md-2">
-          <p class="sw-roi-lable" title="Total ROI">ROI</p>
-          <p class="sw-roi-value">0%</p>
+          <p class="sw-roi-lable" title="Total ROI">Assets</p>
+          <p class="sw-roi-value">{{assetsLength}}</p>
         </div>
       </div> <!-- END Top White Bar with  Swapy logo -->
 
@@ -30,11 +30,21 @@
          <div class="row sw-top-sidebar">
           <div class="col-xs-6 col-sm-12 col-md-12">
               <p class="sw-top-lable">Total Spent</p>
-              <p class="sw-top-value">$ 0.00</p>
+              <p class="sw-top-value">{{investedValue | currency:'USD':true:'.2'}}</p>
           </div>
           <div class="col-xs-6 col-sm-12 col-md-12 sw-top-bottom">
-              <p class="sw-top-lable">Return</p>
-              <p class="sw-top-value">$ 0.00</p>
+              <p class="sw-top-lable">Gross return expected</p>
+              <p class="sw-top-value">{{returnValue | currency:'USD':true:'.2'}}</p>
+
+          </div>
+          <div class="col-xs-6 col-sm-12 col-md-12 sw-top-bottom">
+              <p class="sw-top-lable">Average return expected</p>
+              <p class="sw-top-value">{{averageReturn | percent}}</p>
+
+          </div>
+          <div class="col-xs-6 col-sm-12 col-md-12 sw-top-bottom">
+              <p class="sw-top-lable">Average payback period in days</p>
+              <p class="sw-top-value">{{averagePaybackPeriod}}</p>
 
           </div>
          </div>
@@ -45,7 +55,7 @@
         <div class="sw-scrollbar">
 					<div class="sw-scrollbar">
 						<a href="javascript:void(0)"><div class="sw-sidebar-notifications"> <!-- Notification 1  -->
-							<p class="sw-notfication-message">IMPORTANT! This beta release works in a Ethereum testnet and the transactions are not valid in the Ethereum public blockchain. Please, do not transfer funds from your wallets.</p><!-- max 48 caracteres  -->
+							<p class="sw-notfication-message">IMPORTANT! This alpha release works in a Ethereum testnet and the transactions are not valid in the Ethereum public blockchain. Please, do not transfer funds from your wallets.</p><!-- max 48 caracteres  -->
 							<p class="sw-notfication-time">a few seconds ago</p>
 						</div></a>
 	          <a href="javascript:void(0)"><div class="sw-sidebar-notifications"> <!-- Notification 1  -->
