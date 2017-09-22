@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import { LoadingService } from '../../common/services/loading.service';
 import { environment } from '../../../environments/environment';
 
 /*
@@ -16,7 +17,7 @@ export class HttpService {
 	private headers: HttpHeaders;
 	private options: any;
 
-	constructor(public http: HttpClient, public router: Router) {
+	constructor(public http: HttpClient, public router: Router, public loadingService: LoadingService) {
     this.headers = new HttpHeaders();
     this.headers.set('Content-Type', 'application/json');
     this.headers.set('Accept', 'application/json');
@@ -30,9 +31,16 @@ export class HttpService {
 	get(endpoint) {
 	  return new Promise( (resolve, reject) => {
 	    // We're using Angular HTTP provider to request services
+			this.loadingService.show();
 	    this.http.get(this.url(endpoint), this.options).subscribe(
-	    	data => resolve(data),
-	      error => this.handleError(reject, error)
+	    	data => {
+					this.loadingService.hide();
+					resolve(data)
+				},
+	      error => {
+					this.loadingService.hide();
+					this.handleError(reject, error)
+				}
       );
   	});
 
@@ -42,9 +50,16 @@ export class HttpService {
 
 	  return new Promise( (resolve, reject) => {
 	    // We're using Angular HTTP provider to request services
+			this.loadingService.show();
 	    this.http.post(this.url(endpoint), body, this.options).subscribe(
-	    	data => resolve(data),
-	      error => this.handleError(reject, error)
+	    	data => {
+					this.loadingService.hide();
+					resolve(data)
+				},
+	      error => {
+					this.loadingService.hide();
+					this.handleError(reject, error)
+				}
       );
   	});
 
