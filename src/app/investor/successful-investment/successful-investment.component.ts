@@ -9,16 +9,16 @@ import { InvestService } from './../invest/invest.service';
 })
 export class SuccessfulInvestmentComponent implements OnInit {
 
-	public successfulMessage :string;
-	public errorsMessages :string;
-	private offerIndex :number;
+  public successfulMessage :string;
+  public errorsMessages :string;
+  private offerIndex :number;
 
   constructor(private successfulInvestmentService: SuccessfulInvestmentService, private investService: InvestService ) { }
 
   ngOnInit() {
-  	this.successfulMessage = this.successfulInvestmentService.getSuccessfulMessages();
-  	this.errorsMessages = this.successfulInvestmentService.getErrorsMessages();
-  	this.offerIndex = this.investService.getCachedOfferIndex();
+    this.successfulMessage = this.successfulInvestmentService.getSuccessfulMessages();
+    this.errorsMessages = this.successfulInvestmentService.getErrorsMessages();
+    this.offerIndex = this.investService.getCachedOfferIndex();
   }
 
 }

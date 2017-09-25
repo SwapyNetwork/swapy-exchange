@@ -13,21 +13,21 @@ import { InvestComponent } from './invest/invest.component';
 import { SuccessfulInvestmentComponent } from './successful-investment/successful-investment.component';
 
 const routes: Routes = [
-	{
-		path: '',
-		component: InvestorComponent,
-		children: [
-			{ path: '', component: DashboardComponent },
-			{ path: 'verification', component: VerificationMainComponent },
-			{ path: 'offer/:id', component: OfferDetailsComponent },
-			{ path: 'credit-company/:id', component: CreditCompanyComponent },
-			{ path: 'offers', component: OffersComponent },
-			{ path: 'terms-of-service', component: TermsPageComponent },
-			{ path: 'privacy-policy', component: PrivacyPageComponent },
-			{ path: 'invest', component: InvestComponent },
-			{ path: 'invest/success', component: SuccessfulInvestmentComponent }
-		]
-	}
+  {
+    path: '',
+    component: InvestorComponent,
+    children: [
+      { path: '', component: DashboardComponent },
+      { path: 'verification', component: VerificationMainComponent },
+      { path: 'offer/:id', component: OfferDetailsComponent },
+      { path: 'credit-company/:id', component: CreditCompanyComponent },
+      { path: 'offers', component: OffersComponent },
+      { path: 'terms-of-service', component: TermsPageComponent },
+      { path: 'privacy-policy', component: PrivacyPageComponent },
+      { path: 'invest', component: InvestComponent },
+      { path: 'invest/success', component: SuccessfulInvestmentComponent }
+    ]
+  }
 ];
 
 @NgModule({

@@ -11,19 +11,19 @@ import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
-	{
-		path: '',
-		component: CreditCompanyComponent,
-		children: [
-			{ path: '', component: DashboardComponent },
-			{ path: 'raise', component: AddOfferComponent },
-			{ path: 'raise/confirm', component: ConfirmOfferComponent },
-			{ path: 'raise/success', component: SuccessfulOfferComponent },
-			{ path: 'terms-of-service', component: TermsPageComponent },
-			{ path: 'privacy-policy', component: PrivacyPageComponent },
-			{ path: 'profile', component: ProfileComponent },
-		]
-	}
+  {
+    path: '',
+    component: CreditCompanyComponent,
+    children: [
+      { path: '', component: DashboardComponent },
+      { path: 'raise', component: AddOfferComponent },
+      { path: 'raise/confirm', component: ConfirmOfferComponent },
+      { path: 'raise/success', component: SuccessfulOfferComponent },
+      { path: 'terms-of-service', component: TermsPageComponent },
+      { path: 'privacy-policy', component: PrivacyPageComponent },
+      { path: 'profile', component: ProfileComponent },
+    ]
+  }
 ];
 
 @NgModule({

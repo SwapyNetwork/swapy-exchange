@@ -20,7 +20,7 @@ export class InvestorComponent {
   constructor(private investorService: InvestorService) {};
 
   ngOnInit() {
-  	this.refreshStatusBar();
+    this.refreshStatusBar();
   };
 
   refreshStatusBar(){
@@ -30,6 +30,6 @@ export class InvestorComponent {
       this.averageReturn = data.averageReturn;
       this.returnValue = data.returnValue;
       this.averagePaybackPeriod = data.averagePaybackPeriod;
-  	});
+    });
   };
 }

@@ -12,11 +12,11 @@ export class AddOfferService {
 
   private cachedOffer:any;
 
-	constructor(public httpService: HttpService) {}
+  constructor(public httpService: HttpService) {}
 
-	addOffer(offer): Promise<any> {
-		return this.httpService.post("offers/add", offer);
-	}
+  addOffer(offer): Promise<any> {
+    return this.httpService.post("offers/add", offer);
+  }
 
   cacheOffer(offer) {
     this.cachedOffer = offer;

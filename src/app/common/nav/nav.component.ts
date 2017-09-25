@@ -49,17 +49,17 @@ export class NavComponent implements OnInit {
 
   ngOnInit() { }
 
-	// store state
+  // store state
   isIn = false;
   isSettingsOpen = false;
 
-	// click handler
+  // click handler
   public toggleState() {
     let bool = this.isIn;
     this.isIn = bool === false ? true : false;
   }
 
-	public toggleSettingsDropdown() {
+  public toggleSettingsDropdown() {
     let bool = this.isSettingsOpen;
     this.isSettingsOpen = bool === false ? true : false;
   }

@@ -19,8 +19,8 @@ export class InvestComponent implements OnInit {
 
   ngOnInit() {
     this.investment = this.investService.getCachedInvestment();
-  	if(!this.investment) this.router.navigate(['/investor/offers']);
-  	this.offerIndex = this.investService.getCachedOfferIndex();
+    if(!this.investment) this.router.navigate(['/investor/offers']);
+    this.offerIndex = this.investService.getCachedOfferIndex();
   }
 
   confirmInvestment() {

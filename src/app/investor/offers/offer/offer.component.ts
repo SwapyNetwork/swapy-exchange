@@ -8,7 +8,7 @@ import { Offer } from '../../../common/interfaces/offer.interface'
 })
 export class OfferComponent implements OnInit {
 
-	@Input() public offer: Offer;
+  @Input() public offer: Offer;
   @Input() public offerIndex: number;
 
   constructor() { }

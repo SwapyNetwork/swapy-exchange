@@ -13,7 +13,7 @@ export class OfferComponent implements OnInit {
   public SOLD = SOLD;
   public PENDING = PENDING;
 
-	@Input() public offer: Offer;
+  @Input() public offer: Offer;
   @Input() public collapsed: boolean;
 
   constructor() { }

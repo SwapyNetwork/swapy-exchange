@@ -10,15 +10,15 @@ import { OfferService } from './offer.service';
 })
 export class OffersComponent implements OnInit {
 
-	public offers: Offer[] = [];
-	public errorMessage;
-	mode = 'Observable';
+  public offers: Offer[] = [];
+  public errorMessage;
+  mode = 'Observable';
 
   constructor(private offerService: OfferService) { }
 
   ngOnInit() {
     this.offerService.getOffers().then(
-    	(data:any) => {
+      (data:any) => {
 
         for (var o of data.offers) {
           this.offers.push({
@@ -37,8 +37,8 @@ export class OffersComponent implements OnInit {
         this.offerService.cacheOffers(this.offers);
 
       },
-    	error =>  this.errorMessage = <any>error
-  	);
+      error =>  this.errorMessage = <any>error
+    );
   }
 
 }

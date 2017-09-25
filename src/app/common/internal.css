@@ -14,8 +14,8 @@ body {
     border: none;
 }
 .navbar {
-	min-height: 35px !important;
-	height: 35px !important;
+  min-height: 35px !important;
+  height: 35px !important;
 }
 .navbar-toggle {
     padding: 0px 0px;
@@ -61,14 +61,14 @@ body {
 /* //////////////////////////////// END NAVBAR ////////////////////////////////*/
 /* //////////////////////////////// TOP WHITE BAR ////////////////////////////////*/
 .sw-top {
-	background-color: #fff;
-	height: 115px;
-	padding: 35px 0px 0px 0px;
-	text-align: center;
+  background-color: #fff;
+  height: 115px;
+  padding: 35px 0px 0px 0px;
+  text-align: center;
 }
 .sw-swapy-logo {
-	padding: 8px 0px 0px 0px;
-	margin-left: -150px;
+  padding: 8px 0px 0px 0px;
+  margin-left: -150px;
 }
 .sw-swapy-logo2 {
     padding: 8px 0px 0px 0px;
@@ -81,7 +81,7 @@ body {
     margin: 0;
 }
 .sw-roi-value {
-	font-weight: 400;
+  font-weight: 400;
     font-size: 21px;
     margin: -2px 0px 0px 0px;
 }
@@ -109,7 +109,7 @@ body {
     text-decoration: none;
 }
 .sw-available-lable {
-	font-weight: 300;
+  font-weight: 300;
     font-size: 14px;
     text-align: right;
     padding: 30px 10px 0px 0px;
@@ -126,12 +126,12 @@ body {
 /* //////////////////////////////// END TOP WHITE BAR ////////////////////////////////*/
 /* //////////////////////////////// SIDEBAR ////////////////////////////////*/
 .sw-sidebar {
-	background-color: #393939;
-	text-align: left;
+  background-color: #393939;
+  text-align: left;
     padding: 50px 0px 0px 0px;
-	color: #FFF;
-	height: 100%;
-	position: absolute;
+  color: #FFF;
+  height: 100%;
+  position: absolute;
 }
 .sw-top-sidebar {
     margin: 0px;

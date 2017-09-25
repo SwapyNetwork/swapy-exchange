@@ -14,11 +14,11 @@ import { I18nService } from '../../common/services/i18n.service';
 })
 export class SignUpComponent implements OnInit {
 
-	public name: string = '';
-	public email: string = '';
-	public password: string = '';
-	public confirmPassword: string = '';
-	public type: number = 1;
+  public name: string = '';
+  public email: string = '';
+  public password: string = '';
+  public confirmPassword: string = '';
+  public type: number = 1;
   public agreedToTerms: boolean = false;
   public errorMessages:string[] = [];
 
@@ -30,19 +30,19 @@ export class SignUpComponent implements OnInit {
     /** @todo frontend validations */
     this.errorMessages = [];
 
-		var nameParts = this.name.split(/\s(.+)?/);
-		var firstName = nameParts[0];
-		var lastName = nameParts[1] ? nameParts[1].trim() : null;
+    var nameParts = this.name.split(/\s(.+)?/);
+    var firstName = nameParts[0];
+    var lastName = nameParts[1] ? nameParts[1].trim() : null;
 
-  	let body = {
-  		firstName: firstName,
-  		lastName: lastName,
-  		email: this.email,
-  		password: this.password,
+    let body = {
+      firstName: firstName,
+      lastName: lastName,
+      email: this.email,
+      password: this.password,
       confirmPassword: this.confirmPassword,
-  		type: this.type,
+      type: this.type,
       agreedToTerms: this.agreedToTerms
-  	};
+    };
 
     if(this.validateForm()){
 

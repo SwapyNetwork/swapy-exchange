@@ -10,10 +10,10 @@ import { HttpService } from '../../../common/services/http.service';
 @Injectable()
 export class OfferService {
 
-	constructor(public httpService: HttpService) {}
+  constructor(public httpService: HttpService) {}
 
-	getMyOffers(): Promise<any> {
-		return this.httpService.get("offers/mine");
-	}
+  getMyOffers(): Promise<any> {
+    return this.httpService.get("offers/mine");
+  }
 
 }
