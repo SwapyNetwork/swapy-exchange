@@ -65,15 +65,7 @@ export class NavComponent implements OnInit {
   }
 
   public logout() {
-    this.logoutService.logout().then(
-      data => {
-        // console.log(data);
-        this.router.navigate(['/']);
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    this.logoutService.logout();
   }
 
 }
