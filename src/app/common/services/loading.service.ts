@@ -7,17 +7,23 @@ export class LoadingService {
   // Observable string sources
   private loadingShowedSource = new Subject<string>();
   private loadingHidSource = new Subject<string>();
-
+  private activeRequests = 0;
   // Observable string streams
   loadingShowed$ = this.loadingShowedSource.asObservable();
   loadingHid$ = this.loadingHidSource.asObservable();
 
   // Service message commands
   show() {
-    this.loadingShowedSource.next();
+    if (this.activeRequests === 0) {
+      this.loadingShowedSource.next();
+    }
+    this.activeRequests++;
   }
 
   hide() {
-    this.loadingHidSource.next();
+    if (this.activeRequests === 1) {
+      this.loadingHidSource.next();
+    }
+    this.activeRequests--;
   }
 }
