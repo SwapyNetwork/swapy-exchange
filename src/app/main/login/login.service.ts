@@ -18,47 +18,37 @@ import { environment } from '../../../environments/environment';
 @Injectable()
 export class LoginService {
 
-	constructor(public http: HttpClient, public storageService: StorageService, public loadingService: LoadingService) {}
+  constructor(public http: HttpClient, public storageService: StorageService, public loadingService: LoadingService) {}
 
-	login(login:LoginModel) {
-		let url:string = environment.api + "login";
+  login(login: LoginModel) {
+    const url: string = environment.api + 'login';
 
-	  // don't have the data yet
-	  return new Promise( (resolve, reject) => {
-    	let headers = new HttpHeaders();
-    	headers.set('Content-Type', 'application/json');
+    // don't have the data yet
+    return new Promise( (resolve, reject) => {
+      const headers = new HttpHeaders();
+      headers.set('Content-Type', 'application/json');
 
-			let options = {
-				headers: headers,
-				withCredentials: true
-			};
+      const options = {
+        headers: headers,
+        withCredentials: true
+      };
 
-	    // We're using Angular HTTP provider to request the data,
-	    // then on the response, it'll map the JSON data to a parsed JS object.
-	    // Next, we process the data and resolve the promise with the new data.
-			this.loadingService.show();
-	    this.http.post(url, login, options)
-	      // .map(res => res.json())
-	      .subscribe( (data:LoginResponseModel) => {
-	      	var user = {
-	      		email: data.user.email,
-	      		firstName: data.user.firstName,
-	      		lastName: data.user.lastName,
-	      		type: data.user.type
-	      	};
-
-	        //now we have the users info, let's save it in the Storage
-					let self = this;
-	        this.storageService.setItem('user', user);
-					this.loadingService.hide();
-	        resolve(data)
-	      },
-	      error => {
-					let self = this;
-					this.loadingService.hide();
-	      	reject(error);
-	      });
-  	});
-	}
-
+      // We're using Angular HTTP provider to request the data,
+      // then on the response, it'll map the JSON data to a parsed JS object.
+      // Next, we process the data and resolve the promise with the new data.
+      this.loadingService.show();
+      this.http.post(url, login, options)
+        // .map(res => res.json())
+        .subscribe((data: LoginResponseModel) => {
+          this.storageService.setItem('user', data.user);
+          this.storageService.setItem('accessToken', data.accessToken);
+          this.loadingService.hide();
+          resolve(data);
+        },
+        error => {
+          this.loadingService.hide();
+          reject(error);
+        });
+    });
+  }
 }

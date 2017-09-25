@@ -82,7 +82,7 @@ export class OfferDetailsComponent implements OnInit {
 
       const invest: Invest = {
         uuid: null,
-        companyId: this.offer.companyUuid,
+        companyUuid: this.offer.companyUuid,
         companyName: this.offer.companyName,
         offerUuid: this.offer.uuid,
         totalAmount: this.totalAssetsValue,
