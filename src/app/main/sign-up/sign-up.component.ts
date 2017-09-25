@@ -41,7 +41,7 @@ export class SignUpComponent implements OnInit {
       password: this.password,
       confirmPassword: this.confirmPassword,
       type: this.type,
-      agreedToTerms: this.agreedToTerms
+      agreedToTerms: this.agreedToTerms,
     };
 
     if(this.validateForm()){
@@ -49,7 +49,7 @@ export class SignUpComponent implements OnInit {
       this.signUpService.signUp(body).then(
         // Successful responses call the first callback.
         (data: LoginResponseModel) => {
-          this.router.navigate([this.solveRoute(data.user.type)]);
+          this.router.navigate(['/2fa/setup']);
         },
         // Errors will call this callback instead:
         err => {
@@ -72,11 +72,11 @@ export class SignUpComponent implements OnInit {
     if(this.agreedToTerms == false)
       this.errorMessages.push('You must agree to our terms of services and privacy policy.');
 
-    return this.errorMessages.length == 0;
+    return this.errorMessages.length === 0;
   }
 
   private solveRoute(userType: number) {
-    switch(userType) {
+    switch (userType) {
       case INVESTOR:
         return '/investor';
       case CREDIT_COMPANY:

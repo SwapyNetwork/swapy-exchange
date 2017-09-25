@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TfaService } from './tfa.service';
 
 @Component({
   selector: 'app-tfa-setup',
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tfa-setup.component.css']
 })
 export class TfaSetupComponent implements OnInit {
+  private qrcode;
 
-  constructor() { }
+  constructor(private tfaService: TfaService) { }
 
   ngOnInit() {
+    this.tfaService.getQrcode().then(
+      (data: any) => {
+        this.qrcode = data.qrcode;
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
   }
 
 }
