@@ -5,4 +5,5 @@ export interface LoginResponseModel {
   message: string;
   user: UserResponseInterface;
   accessToken: string;
+  tfa: boolean;
 };

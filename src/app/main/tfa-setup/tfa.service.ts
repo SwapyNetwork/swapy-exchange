@@ -19,4 +19,8 @@ export class TfaService {
     return this.httpService.post('2fa/verify', { otp });
   }
 
+  postOtpAndGetJwt(otp): Promise<any> {
+    return this.httpService.post('2fa/verify-jwt', { otp });
+  }
+
 }

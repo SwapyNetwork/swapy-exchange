@@ -32,7 +32,8 @@ export class LoginComponent implements OnInit {
     this.loginService.login(body).then(
       // Successful responses call the first callback.
       (data: LoginResponseModel) => {
-        this.router.navigate([this.solveRoute(data.user.type)]);
+        console.log(data.user);
+        this.router.navigate([this.solveRoute(data.user.type, data.user.tfa)]);
       },
       // Errors will call this callback instead:
       err => {
@@ -48,14 +49,15 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  private solveRoute(userType: number) {
-    switch(userType) {
+  private solveRoute(userType: number, tfa: boolean) {
+    if(tfa) return '/2fa/validation';
+    switch (userType) {
       case INVESTOR:
         return '/investor';
       case CREDIT_COMPANY:
         return '/credit-company';
       default:
-        return '/'
+        return '/';
     }
   }
 
