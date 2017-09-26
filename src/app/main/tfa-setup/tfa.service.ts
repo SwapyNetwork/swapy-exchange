@@ -15,4 +15,8 @@ export class TfaService {
     return this.httpService.get('2fa/qrcode');
   }
 
+  postOtp(otp): Promise<any> {
+    return this.httpService.post('2fa/verify', { otp });
+  }
+
 }
