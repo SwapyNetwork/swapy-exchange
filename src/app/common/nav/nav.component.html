@@ -19,7 +19,7 @@
         <li><a [routerLink]="profileUrl" class="sw-box-text">{{user.firstName}} {{user.lastName}}</a></li>
       </ul>
 
-    	<ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right">
         <li *ngFor="let item of menu">
           <a [routerLink]="item.url" class="sw-box-text">{{item.label}}</a>
         </li>

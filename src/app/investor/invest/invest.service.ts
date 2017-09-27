@@ -8,34 +8,34 @@ import { HttpService } from '../../common/services/http.service';
 @Injectable()
 export class InvestService {
 
-	private cachedInvest: Invest;
+  private cachedInvest: Invest;
 
-	public cachedOfferIndex: number;
+  public cachedOfferIndex: number;
 
   constructor(public httpService: HttpService) { }
 
   public cacheInvestment(invest: Invest){
-  	this.cachedInvest = invest;
+    this.cachedInvest = invest;
   }
 
   public cacheOfferIndex(offerIndex: number){
-  	this.cachedOfferIndex = offerIndex;
+    this.cachedOfferIndex = offerIndex;
   }
 
   public getCachedInvestment(): Invest {
-  	return this.cachedInvest;
+    return this.cachedInvest;
   }
 
   public getCachedOfferIndex(): number{
-  	return this.cachedOfferIndex;
+    return this.cachedOfferIndex;
   }
 
   public addInvest(invest): Promise<any> {
-  	return this.httpService.post("investment/add", invest);
+    return this.httpService.post("investment/add", invest);
   }
 
   public getMyInvestments(): Promise<any> {
-  	return this.httpService.get("investment/mine");
+    return this.httpService.get("investment/mine");
   }
 
 }

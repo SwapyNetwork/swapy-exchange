@@ -4,45 +4,45 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class I18nService {
 
-	public messages = {};
+  public messages = {};
 
-	constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) {}
 
-	// Update here to use the system locale
-	// where is pt-BR should be a generic way to get the user OS Locale
-	init(namespace: string):Promise<any> {
-		return new Promise(resolve => {
+  // Update here to use the system locale
+  // where is pt-BR should be a generic way to get the user OS Locale
+  init(namespace: string):Promise<any> {
+    return new Promise(resolve => {
       return resolve();
-			// if all namespaces are loaded, resolve promise
-			// if (this.messages[namespace] && this.messages["general"]) {
-			// 	return resolve();
-			// }
+      // if all namespaces are loaded, resolve promise
+      // if (this.messages[namespace] && this.messages["general"]) {
+      //   return resolve();
+      // }
       //
-			// // load general messages
-			// var general = "i18n/general/pt-BR.messages.json";
-			// this.http.get(general)
-      // 	.subscribe(data => {
-      // 		// set general messages in list
-      // 		this.messages["general"] = data;
+      // // load general messages
+      // var general = "i18n/general/pt-BR.messages.json";
+      // this.http.get(general)
+      //   .subscribe(data => {
+      //     // set general messages in list
+      //     this.messages["general"] = data;
       //
-      // 		// load namespace messages
-      // 		var path = "i18n/"+namespace+"/pt-BR.messages.json";
-      // 		this.http.get(path)
-      // 			.subscribe(data_n => {
+      //     // load namespace messages
+      //     var path = "i18n/"+namespace+"/pt-BR.messages.json";
+      //     this.http.get(path)
+      //       .subscribe(data_n => {
       //
-      // 				// set namespace messages in list
-      // 				this.messages[namespace] = data_n;
-      // 				return resolve();
-      // 			});
-      // 	});
-		});
-	}
+      //         // set namespace messages in list
+      //         this.messages[namespace] = data_n;
+      //         return resolve();
+      //       });
+      //   });
+    });
+  }
 
-	private translate(namespace:string, code:string, defaultMessage:string):string {
+  private translate(namespace:string, code:string, defaultMessage:string):string {
     return defaultMessage;
-		// var msg = this.messages[namespace][code] ? this.messages[namespace][code] : this.messages["general"][code];
-		// return msg ? msg : defaultMessage;
-	}
+    // var msg = this.messages[namespace][code] ? this.messages[namespace][code] : this.messages["general"][code];
+    // return msg ? msg : defaultMessage;
+  }
 
   doTranslate(namespace:string, message:any):Promise<string> {
     return new Promise(resolve => {

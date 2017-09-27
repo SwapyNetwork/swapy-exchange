@@ -6,6 +6,7 @@ import { SignUpService } from './sign-up.service';
 import { LoginResponseModel } from '../login/login-response.model';
 import { INVESTOR, CREDIT_COMPANY } from '../../common/interfaces/user-response.interface';
 import { I18nService } from '../../common/services/i18n.service';
+import { StorageService } from '../../common/services/storage.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,15 +15,16 @@ import { I18nService } from '../../common/services/i18n.service';
 })
 export class SignUpComponent implements OnInit {
 
-	public name: string = '';
-	public email: string = '';
-	public password: string = '';
-	public confirmPassword: string = '';
-	public type: number = 1;
+  public name: string = '';
+  public email: string = '';
+  public password: string = '';
+  public confirmPassword: string = '';
+  public type: number = 1;
   public agreedToTerms: boolean = false;
   public errorMessages:string[] = [];
 
-  constructor(private signUpService: SignUpService, private i18nService: I18nService, private router: Router) { }
+  constructor(private signUpService: SignUpService, private i18nService: I18nService,
+    private router: Router, private storageService: StorageService) { }
 
   ngOnInit() {}
 
@@ -30,26 +32,28 @@ export class SignUpComponent implements OnInit {
     /** @todo frontend validations */
     this.errorMessages = [];
 
-		var nameParts = this.name.split(/\s(.+)?/);
-		var firstName = nameParts[0];
-		var lastName = nameParts[1] ? nameParts[1].trim() : null;
+    var nameParts = this.name.split(/\s(.+)?/);
+    var firstName = nameParts[0];
+    var lastName = nameParts[1] ? nameParts[1].trim() : null;
 
-  	let body = {
-  		firstName: firstName,
-  		lastName: lastName,
-  		email: this.email,
-  		password: this.password,
+    let body = {
+      firstName: firstName,
+      lastName: lastName,
+      email: this.email,
+      password: this.password,
       confirmPassword: this.confirmPassword,
-  		type: this.type,
-      agreedToTerms: this.agreedToTerms
-  	};
+      type: this.type,
+      agreedToTerms: this.agreedToTerms,
+    };
 
     if(this.validateForm()){
 
       this.signUpService.signUp(body).then(
         // Successful responses call the first callback.
         (data: LoginResponseModel) => {
-          this.router.navigate([this.solveRoute(data.user.type)]);
+          this.storageService.setItem('user', data.user);
+          this.storageService.setItem('accessToken', data.accessToken);
+          this.router.navigate(['/2fa/setup']);
         },
         // Errors will call this callback instead:
         err => {
@@ -72,11 +76,11 @@ export class SignUpComponent implements OnInit {
     if(this.agreedToTerms == false)
       this.errorMessages.push('You must agree to our terms of services and privacy policy.');
 
-    return this.errorMessages.length == 0;
+    return this.errorMessages.length === 0;
   }
 
   private solveRoute(userType: number) {
-    switch(userType) {
+    switch (userType) {
       case INVESTOR:
         return '/investor';
       case CREDIT_COMPANY:

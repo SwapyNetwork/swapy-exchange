@@ -12,20 +12,20 @@ import { TermsPageComponent } from './terms-page/terms-page.component';
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 
 const routes: Routes = [
-	{
-		path: '',
-		component: MainComponent,
-		children: [
-			{ path: '', component: LoginComponent },
-			{ path: 'sign-up', component: SignUpComponent },
-			{ path: 'forgot-password', component: ForgotPasswordComponent },
-			{ path: '2fa/question', component: TfaQuestionComponent },
-			{ path: '2fa/setup', component: TfaSetupComponent },
-			{ path: '2fa/validation', component: TfaValidationComponent },
-			{ path: 'terms-of-service', component: TermsPageComponent },
-			{ path: 'privacy-policy', component: PrivacyPageComponent },
-		]
-	}
+  {
+    path: '',
+    component: MainComponent,
+    children: [
+      { path: '', component: LoginComponent },
+      { path: 'sign-up', component: SignUpComponent },
+      { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: '2fa/question', component: TfaQuestionComponent },
+      { path: '2fa/setup', component: TfaSetupComponent },
+      { path: '2fa/validation', component: TfaValidationComponent },
+      { path: 'terms-of-service', component: TermsPageComponent },
+      { path: 'privacy-policy', component: PrivacyPageComponent },
+    ]
+  }
 ];
 
 @NgModule({

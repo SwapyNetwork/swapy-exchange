@@ -7,8 +7,8 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { NavRoutingModule } from './nav-routing.module';
 
 @NgModule({
-	declarations: [NavComponent, TermsOfServiceComponent, PrivacyPolicyComponent],
-	imports: [CommonModule, NavRoutingModule],
-	exports: [NavComponent, TermsOfServiceComponent, PrivacyPolicyComponent]
+  declarations: [NavComponent, TermsOfServiceComponent, PrivacyPolicyComponent],
+  imports: [CommonModule, NavRoutingModule],
+  exports: [NavComponent, TermsOfServiceComponent, PrivacyPolicyComponent]
 })
 export class NavModule {}

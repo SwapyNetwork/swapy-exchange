@@ -7,7 +7,7 @@ export class InvestorService {
   constructor(public httpService: HttpService) { }
 
   getMyInvestmnetsInfo(): Promise<any> {
-  	return this.httpService.get('investment/mine/generalInfo');
+    return this.httpService.get('investment/mine/generalInfo');
   }
 
 }

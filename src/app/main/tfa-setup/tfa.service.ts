@@ -8,22 +8,19 @@ import { HttpService } from '../../common/services/http.service';
   for more info on providers and Angular 2 DI.
 */
 @Injectable()
-export class AddOfferService {
-
-  private cachedOffer:any;
-
+export class TfaService {
   constructor(public httpService: HttpService) {}
 
-  addOffer(offer): Promise<any> {
-    return this.httpService.post("offers/add", offer);
+  getQrcode(): Promise<any> {
+    return this.httpService.get('2fa/qrcode');
   }
 
-  cacheOffer(offer) {
-    this.cachedOffer = offer;
+  postOtp(otp): Promise<any> {
+    return this.httpService.post('2fa/verify', { otp });
   }
 
-  getCachedOffer(){
-    return this.cachedOffer;
+  postOtpAndGetJwt(otp): Promise<any> {
+    return this.httpService.post('2fa/verify-jwt', { otp });
   }
 
 }

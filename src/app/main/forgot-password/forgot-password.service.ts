@@ -10,11 +10,11 @@ import {HttpService} from '../../common/services/http.service';
 @Injectable()
 export class ForgotPasswordService {
 
-	constructor(public httpService: HttpService) {}
+  constructor(public httpService: HttpService) {}
 
-	retrivePassword(email: string) {
-	    // We're using Angular HTTP provider to request the service
-	    return this.httpService.post("retrieve-password", {email: email});
-	}
+  retrivePassword(email: string) {
+      // We're using Angular HTTP provider to request the service
+      return this.httpService.post("retrieve-password", {email: email});
+  }
 
 }

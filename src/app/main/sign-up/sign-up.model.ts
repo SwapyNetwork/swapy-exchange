@@ -6,6 +6,6 @@ export class SignUpModel {
     public type: number,
     public password: string,
     public confirmPassword: string,
-    public agreedToTerms: boolean
+    public agreedToTerms: boolean,
   ) {  }
 }

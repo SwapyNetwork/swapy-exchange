@@ -6,5 +6,5 @@ export interface UserResponseInterface {
   firstName: string;
   lastName: string;
   type: number;
-
+  tfa: boolean;
 };
