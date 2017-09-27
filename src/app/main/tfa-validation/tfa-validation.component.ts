@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import createNumberMask from 'text-mask-addons/src/createNumberMask';
 
 import { TfaService } from '../tfa-setup/tfa.service';
 import { StorageService } from '../../common/services/storage.service';
+import { I18nService } from '../../common/services/i18n.service';
 import { INVESTOR, CREDIT_COMPANY } from '../../common/interfaces/user-response.interface';
 
 @Component({
@@ -12,8 +14,19 @@ import { INVESTOR, CREDIT_COMPANY } from '../../common/interfaces/user-response.
 })
 export class TfaValidationComponent implements OnInit {
   public otp: number;
+  public errorMessages: string[] = [];
 
-  constructor(private tfaService: TfaService, private router: Router, private storageService: StorageService) { }
+  public otpMask = createNumberMask({
+    prefix: '',
+    suffix: '',
+    includeThousandsSeparator: true,
+    thousandsSeparatorSymbol: '',
+    allowDecimal: false,
+    integerLimit: 6,
+  });
+
+  constructor(private tfaService: TfaService, private router: Router,
+    private storageService: StorageService, private i18nService: I18nService) { }
 
   ngOnInit() {
   }
@@ -24,11 +37,23 @@ export class TfaValidationComponent implements OnInit {
       this.tfaService.postOtpAndGetJwt(this.otp).then(res => {
         this.storageService.setItem('accessToken', res.accessToken);
         this.router.navigate([this.solveRoute(user.type)]);
-      }, err => console.log(err));
+      }, err => {
+        const namespace = 'tfa';
+
+        this.i18nService.doTranslateList(namespace, err.error).then( res => {
+          this.errorMessages = res; // errorMessages is a list of error strings
+        });
+      });
     } else {
       this.tfaService.postOtp(this.otp).then(res => {
         this.router.navigate([this.solveRoute(user.type)]);
-      }, err => console.log(err));
+      }, err => {
+        const namespace = 'tfa';
+
+        this.i18nService.doTranslateList(namespace, err.error).then( res => {
+          this.errorMessages = res; // errorMessages is a list of error strings
+        });
+      });
     }
   }
 

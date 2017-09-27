@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TextMaskModule } from 'angular2-text-mask';
 
 import { MainComponent } from './main.component';
 import { MainRoutingModule } from './main-routing.module';
@@ -24,7 +25,8 @@ import { NavModule } from '../common/nav/nav.module';
     CommonModule,
     MainRoutingModule,
     FormsModule,
-    NavModule
+    NavModule,
+    TextMaskModule
   ],
   declarations: [MainComponent, LoginComponent, SignUpComponent, ForgotPasswordComponent, TfaQuestionComponent, TfaValidationComponent, TfaSetupComponent, PrivacyPageComponent, TermsPageComponent],
   providers: [LoginService, SignUpService, ForgotPasswordService, TfaService],
