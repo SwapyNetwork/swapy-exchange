@@ -9,6 +9,7 @@ import { StorageService } from './common/services/storage.service';
 import { HttpService } from './common/services/http.service';
 import { I18nService } from './common/services/i18n.service';
 import { LoadingService } from './common/services/loading.service';
+import { Web3Service } from './common/services/web3.service';
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import { LoadingService } from './common/services/loading.service';
     FormsModule,
     HttpClientModule
   ],
-  providers: [StorageService, HttpService, I18nService, LoadingService],
+  providers: [StorageService, HttpService, I18nService, LoadingService, Web3Service],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
