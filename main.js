@@ -1,10 +1,13 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
+const isDev = require('electron-is-dev');
 
-require('electron-reload')(path.join(__dirname, 'dist'), {
-  electron: path.join(__dirname, '../node_modules', '.bin', 'electron')
-});
+if(isDev) {
+  require('electron-reload')(path.join(__dirname, 'dist'), {
+    electron: path.join(__dirname, '../node_modules', '.bin', 'electron')
+  });
+}
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -12,7 +15,7 @@ let win;
 
 function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({ width: 800, height: 600 });
+  win = new BrowserWindow({ width: 800, height: 600, icon: 'dist/assets/swapy3.png' });
 
   // and load the index.html of the app.
   win.loadURL(url.format({
@@ -21,8 +24,10 @@ function createWindow() {
     slashes: true
   }));
 
-  // Open the DevTools.
-  win.webContents.openDevTools();
+  //if(isDev) {
+    // Open the DevTools.
+    win.webContents.openDevTools();
+  //}
   // Emitted when the window is closed.
   win.on('closed', () => {
     // Dereference the window object, usually you would store windows
