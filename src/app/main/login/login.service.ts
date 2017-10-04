@@ -7,6 +7,7 @@ import { LoginResponseModel } from './login-response.model';
 import { StorageService } from '../../common/services/storage.service';
 import { LoadingService } from '../../common/services/loading.service';
 import { environment } from '../../../environments/environment';
+import { Web3Service } from '../../common/services/web3.service';
 
 
 /*
@@ -18,7 +19,7 @@ import { environment } from '../../../environments/environment';
 @Injectable()
 export class LoginService {
 
-  constructor(public http: HttpClient, public storageService: StorageService, public loadingService: LoadingService) {}
+  constructor(public http: HttpClient, public storageService: StorageService, public loadingService: LoadingService, public web3Service: Web3Service) {}
 
   login(login: LoginModel) {
     const url: string = environment.api + 'login';
