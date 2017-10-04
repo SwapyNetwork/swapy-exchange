@@ -14,6 +14,9 @@ export class Web3Service {
   }
 
   public getInstance() {
+    if (this.web3 == null) {
+      this.init();
+    }
     return this.web3;
   }
 

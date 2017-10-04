@@ -8,7 +8,6 @@ import { LoginResponseModel } from '../login/login-response.model';
 import { LoginService } from '../login/login.service';
 import { LoadingService } from '../../common/services/loading.service';
 import { environment } from '../../../environments/environment';
-import { Web3Service } from '../../common/services/web3.service';
 
 /*
   Generated class for the LoginService provider.
@@ -19,7 +18,7 @@ import { Web3Service } from '../../common/services/web3.service';
 @Injectable()
 export class SignUpService {
 
-  constructor(public http: HttpClient, public loginService: LoginService, public loadingService: LoadingService, public web3: Web3Service) {}
+  constructor(public http: HttpClient, public loginService: LoginService, public loadingService: LoadingService) {}
 
   signUp(signUp:SignUpModel) {
     let url:string = environment.api + "sign-up";
