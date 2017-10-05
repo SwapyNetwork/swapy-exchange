@@ -44,8 +44,14 @@ export class SignUpService {
           //now we have the users info, let's save it in the Storage
           let body = {email: signUp.email, password: signUp.password};
           this.loginService.login(body).then(
-            loginData => resolve(loginData),
-            error => reject(error)
+            loginData => {
+              this.loadingService.hide();
+              resolve(loginData);
+            },
+            error => {
+              this.loadingService.hide();
+              reject(error);
+            }
           );
 
         },

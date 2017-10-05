@@ -3,7 +3,7 @@
 <div *ngIf="errorMessages.length > 0">
   <div *ngFor="let message of errorMessages" class="alert alert-danger">
     {{message}}
-  </div>  
+  </div>
 </div>
 
 <form #loginForm="ngForm" (submit)="login()">
@@ -15,7 +15,7 @@
         <div [hidden]="!emailInput.errors.pattern">
       Email format is invalid.
         </div>
-  </div>  
+  </div>
   <input type="password" class="form-control sw-round" placeholder="Password" [(ngModel)]="password" #passwordInput="ngModel" name="password" required minlength="6"><br>
   <div *ngIf="passwordInput.errors && (passwordInput.touched || passwordInput.dirty)" class="alert alert-danger">
         <div [hidden]="!passwordInput.errors.required">

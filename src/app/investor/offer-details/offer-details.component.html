@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="col-sm-2 col-md-2 sw-company-logo-right">
-                       <a href="javascript:void(0)"><img src="/assets/img/meucreditoapp-logo2.jpg" alt="meu credito app logo"></a>
+                       <a href="javascript:void(0)"><img src="assets/img/meucreditoapp-logo2.jpg" alt="meu credito app logo"></a>
                     </div>
                   </div>
                   <hr>
@@ -34,7 +34,7 @@
                      <label>
                       <input type="checkbox" name="assets_{{i}}" [(ngModel)]="assets[i]" [disabled]="asset.status == SOLD || asset.status == PENDING" (change)="setTotalAssetsValue()">
                       <p class="sw-box-text">Asset {{i + 1}} - <span [ngClass]="{'sw-box-title': true, 'sw-asset-sold-line': asset.status == PENDING || asset.status == SOLD }">{{asset.value | currency}}</span><span *ngIf='asset.status == SOLD || asset.status == PENDING'> {{asset.status == PENDING ? ' Pending confirmation' : ' Sold'}}</span></p>
-                     </label>                      
+                     </label>
                     </div>
                 </div>
 
@@ -54,10 +54,10 @@
                   <div *ngIf="errorMessages.length > 0">
                     <div *ngFor="let message of errorMessages" class="alert alert-danger">
                       {{message}}
-                    </div>  
+                    </div>
                   </div>
                 </div>
-                
+
                 <div class="row">
 
                   <div class=" col-sm-8 col-md-8">
