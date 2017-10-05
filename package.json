@@ -9,7 +9,8 @@
   "scripts": {
     "ng": "ng",
     "start": "node_modules/electron/cli.js .",
-    "build": "electron-packager . swapy-exchange-alpha --arch=x64 --platform=linux --overwrite --out dist/",
+    "build.copy": "cp package.json dist/",
+    "build": "ng build && electron-packager . swapy-exchange-alpha --arch=x64 --platform=linux --overwrite --out installers/ --ignore=\\src",
     "deb64": "electron-installer-debian --config debian.json --arch amd64",
     "watch": "(ng build --watch &) && npm start",
     "alpha": "ng serve --env=prod --host 0.0.0.0 --disable-host-check",

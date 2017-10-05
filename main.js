@@ -4,9 +4,7 @@ const url = require('url');
 const isDev = require('electron-is-dev');
 
 if(isDev) {
-  require('electron-reload')(path.join(__dirname, 'dist'), {
-    electron: path.join(__dirname, '../node_modules', '.bin', 'electron')
-  });
+  require('electron-reload')(path.join(__dirname));
 }
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -15,7 +13,8 @@ let win;
 
 function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({ width: 800, height: 600, icon: 'dist/assets/swapy3.png' });
+  win = new BrowserWindow({ width: 800, height: 600, icon: 'assets/swapy3.png' });
+  const fs = require('fs');
 
   // and load the index.html of the app.
   win.loadURL(url.format({
@@ -24,10 +23,10 @@ function createWindow() {
     slashes: true
   }));
 
-  //if(isDev) {
+  if(isDev) {
     // Open the DevTools.
     win.webContents.openDevTools();
-  //}
+  }
   // Emitted when the window is closed.
   win.on('closed', () => {
     // Dereference the window object, usually you would store windows
