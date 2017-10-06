@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  api: "http://api.swapynow.com/v1/"
+  api: "http://alpha.swapy.exchange/v1/"
 };

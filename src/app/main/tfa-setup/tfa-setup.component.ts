@@ -12,7 +12,7 @@ import { INVESTOR, CREDIT_COMPANY } from '../../common/interfaces/user-response.
   styleUrls: ['./tfa-setup.component.css']
 })
 export class TfaSetupComponent implements OnInit {
-  private qrcode;
+  public qrcode;
 
   constructor(private tfaService: TfaService, private router: Router,
     private storageService: StorageService) { }

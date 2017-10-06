@@ -1,0 +1,9 @@
+{
+  "name": "swapy-exchange-alpha",
+  "productName": "Swapy Alpha",
+  "genericName": "swapy-exchange-alpha",
+  "src": "installers/swapy-exchange-alpha-linux-x64/",
+  "dest": "installers/",
+  "icon": "dist/assets/img/swapy3.png",
+  "bin": "swapy-exchange-alpha"
+}
