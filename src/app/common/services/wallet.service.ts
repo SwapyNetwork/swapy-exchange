@@ -10,7 +10,7 @@ export class WalletService {
   private wallet: Wallet;
   constructor(private web3Service: Web3Service) { }
 
-  createWallet() {
+  public createWallet() {
     this.web3 = this.web3Service.getInstance();
     const account = this.web3.eth.accounts.create();
     // When not using electron-store
@@ -23,7 +23,7 @@ export class WalletService {
 
   }
 
-  getWallet() {
+  public getWallet() {
     // Get keys from local file (preferably with electron-store)
     return this.wallet;
   }
