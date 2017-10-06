@@ -7,10 +7,7 @@ import { LoginResponseModel } from '../login/login-response.model';
 import { INVESTOR, CREDIT_COMPANY } from '../../common/interfaces/user-response.interface';
 import { I18nService } from '../../common/services/i18n.service';
 import { StorageService } from '../../common/services/storage.service';
-import { Web3Service } from '../../common/services/web3.service';
-
-// const Store = require('electron-store');
-import Store from 'electron-store';
+import { WalletService } from '../../common/services/wallet.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -26,13 +23,10 @@ export class SignUpComponent implements OnInit {
   public type: number = 1;
   public agreedToTerms: boolean = false;
   public errorMessages: string[] = [];
-  private web3;
-  private store: Store;
   constructor(private signUpService: SignUpService, private i18nService: I18nService,
-    private router: Router, private storageService: StorageService, private web3Service: Web3Service) { }
+    private router: Router, private storageService: StorageService, private walletService: WalletService) { }
 
   ngOnInit() {
-    this.store = new Store({ 'name': 'keys', 'encryptionKey': 'secret' });
   }
 
   signUp() {
@@ -59,10 +53,7 @@ export class SignUpComponent implements OnInit {
         // Successful responses call the first callback.
         (data: LoginResponseModel) => {
 
-          this.web3 = this.web3Service.getInstance();
-          const account = this.web3.eth.accounts.create();
-          this.store.set('publicKey', account.publicKey);
-          this.store.set('privateKey', account.privateKey);
+          this.walletService.createWallet();
 
           this.storageService.setItem('user', data.user);
           this.storageService.setItem('accessToken', data.accessToken);
