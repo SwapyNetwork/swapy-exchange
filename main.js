@@ -58,5 +58,11 @@ app.on('activate', () => {
   }
 });
 
+const ipc = require('electron').ipcMain
+
+ipc.on('synchronous-message', function (event, arg) {
+  event.returnValue = 'pong'
+})
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
