@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import createNumberMask from 'text-mask-addons/src/createNumberMask';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
 import { TfaService } from '../tfa-setup/tfa.service';
 import { StorageService } from '../../common/services/storage.service';

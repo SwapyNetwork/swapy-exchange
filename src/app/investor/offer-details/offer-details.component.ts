@@ -45,7 +45,8 @@ export class OfferDetailsComponent implements OnInit {
           companyName: data.offer.firstName + " " + data.offer.lastName,
           companyLogo: data.offer.picture,
           companyUuid: data.offer.uuid,
-          assets: data.offer.assets
+          assets: data.offer.assets,
+          createdOn: data.offer.createdOn,
         };
       })
     });

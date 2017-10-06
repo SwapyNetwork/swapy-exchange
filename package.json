@@ -9,8 +9,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node_modules/electron/cli.js .",
-    "build.copy": "cp package.json dist/",
-    "build.linux": "ng build && electron-packager . swapy-exchange-alpha --arch=x64 --platform=linux --overwrite --out installers/ --ignore=\\src/",
+    "build.linux": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=linux --overwrite --out installers/ --ignore=\\src/",
     "build.windows": "ng build && electron-packager . swapy-exchange-alpha --arch=x64 --platform=win32 --overwrite --out installers/ --ignore=\\src/ --asar",
     "deb64": "electron-installer-debian --config debian.json --arch amd64",
     "watch": "(ng build --watch &) && npm start",
@@ -64,6 +63,7 @@
     "protractor": "~5.1.2",
     "ts-node": "~3.0.4",
     "tslint": "~5.3.2",
-    "typescript": "~2.3.3"
+    "typescript": "~2.3.3",
+    "uglify-js": "github:mishoo/UglifyJS2#harmony"
   }
 }

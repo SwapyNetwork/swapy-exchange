@@ -16,4 +16,5 @@ export interface Offer {
   companyLogo: string;
   companyUuid: string;
   assets: OfferAsset[];
+  createdOn: string;
 };

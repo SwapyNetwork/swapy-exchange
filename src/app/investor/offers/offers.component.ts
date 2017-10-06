@@ -30,7 +30,8 @@ export class OffersComponent implements OnInit {
             companyName: o.firstName + " " + o.lastName,
             companyLogo: o.picture,
             companyUuid: o.uuid,
-            assets: o.assets
+            assets: o.assets,
+            createdOn: o.createdOn,
           });
         }
 
