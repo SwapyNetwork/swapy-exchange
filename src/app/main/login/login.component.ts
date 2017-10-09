@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import { LoginResponseModel } from './login-response.model';
 import { UserResponseInterface, INVESTOR, CREDIT_COMPANY } from '../../common/interfaces/user-response.interface';
 import { I18nService } from '../../common/services/i18n.service';
+import { Web3Service } from '../../common/services/web3.service';
 
 @Component({
   selector: 'app-login',
@@ -16,10 +17,14 @@ export class LoginComponent implements OnInit {
   public email: string = '';
   public password: string = '';
   public errorMessages:string[] = [];
+  private web3;
 
-  constructor(private loginService: LoginService, private i18nService: I18nService, private router: Router) { }
+  constructor(private loginService: LoginService, private i18nService: I18nService, private router: Router, private web3Service: Web3Service) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.web3Service.init();
+    this.web3 = this.web3Service.getInstance();
+  }
 
   login() {
     /** @todo frontend validations */

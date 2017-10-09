@@ -7,6 +7,7 @@ import { LoginResponseModel } from '../login/login-response.model';
 import { INVESTOR, CREDIT_COMPANY } from '../../common/interfaces/user-response.interface';
 import { I18nService } from '../../common/services/i18n.service';
 import { StorageService } from '../../common/services/storage.service';
+import { WalletService } from '../../common/services/wallet.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -21,12 +22,12 @@ export class SignUpComponent implements OnInit {
   public confirmPassword: string = '';
   public type: number = 1;
   public agreedToTerms: boolean = false;
-  public errorMessages:string[] = [];
-
+  public errorMessages: string[] = [];
   constructor(private signUpService: SignUpService, private i18nService: I18nService,
-    private router: Router, private storageService: StorageService) { }
+    private router: Router, private storageService: StorageService, private walletService: WalletService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   signUp() {
     /** @todo frontend validations */
@@ -46,11 +47,14 @@ export class SignUpComponent implements OnInit {
       agreedToTerms: this.agreedToTerms,
     };
 
-    if(this.validateForm()){
+    if (this.validateForm()) {
 
       this.signUpService.signUp(body).then(
         // Successful responses call the first callback.
         (data: LoginResponseModel) => {
+
+          this.walletService.createWallet();
+
           this.storageService.setItem('user', data.user);
           this.storageService.setItem('accessToken', data.accessToken);
           this.router.navigate(['/2fa/setup']);
@@ -59,7 +63,7 @@ export class SignUpComponent implements OnInit {
         err => {
           let namespace = "sign-up";
 
-          this.i18nService.doTranslateList(namespace, err.error).then( res => {
+          this.i18nService.doTranslateList(namespace, err.error).then(res => {
             this.errorMessages = res; // errorMessages is a list of error strings
           });
         }
@@ -69,11 +73,11 @@ export class SignUpComponent implements OnInit {
 
   }
 
-  private validateForm(){
-    if(this.password != this.confirmPassword)
+  private validateForm() {
+    if (this.password != this.confirmPassword)
       this.errorMessages.push('Passwords must match.');
 
-    if(this.agreedToTerms == false)
+    if (this.agreedToTerms == false)
       this.errorMessages.push('You must agree to our terms of services and privacy policy.');
 
     return this.errorMessages.length === 0;
