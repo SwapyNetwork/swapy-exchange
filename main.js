@@ -63,14 +63,18 @@ const Store = require('electron-store');
 const store = new Store({ 'name': 'keys', 'encryptionKey': process.env.STORE_SECRET });
 
 ipc.on('create-wallet', function (event, data) {
-  store.set('address', data.address);
-  store.set('privateKey', data.privateKey);
+  store.set(data.user + '.address', data.address);
+  store.set(data.user + '.privateKey', data.privateKey);
 });
 
 ipc.on('get-wallet', function (event, data) {
-  const address = store.get('address');
-  const privateKey = store.get('privateKey');
-  event.returnValue = { address, privateKey };
+  if(store.has(data)){
+    const address = store.get(data).address;
+    const privateKey = store.get(data).privateKey;
+    event.returnValue = { address, privateKey };
+  } else {
+    event.returnValue = false;
+  }
 });
 
 // In this file you can include the rest of your app's specific main process
