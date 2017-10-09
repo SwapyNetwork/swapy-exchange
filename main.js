@@ -58,11 +58,20 @@ app.on('activate', () => {
   }
 });
 
-const ipc = require('electron').ipcMain
+const ipc = require('electron').ipcMain;
+const Store = require('electron-store');
+const store = new Store({ 'name': 'keys', 'encryptionKey': process.env.STORE_SECRET });
 
-ipc.on('synchronous-message', function (event, arg) {
-  event.returnValue = 'pong'
-})
+ipc.on('create-wallet', function (event, data) {
+  store.set('address', data.address);
+  store.set('privateKey', data.privateKey);
+});
+
+ipc.on('get-wallet', function (event, data) {
+  const address = store.get('address');
+  const privateKey = store.get('privateKey');
+  event.returnValue = { address, privateKey };
+});
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
