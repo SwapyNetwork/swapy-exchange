@@ -67,8 +67,6 @@ app.on('activate', () => {
 const ipc = require('electron').ipcMain;
 const Store = require('electron-store');
 const sha1 = require('sha1');
-// const walletFile = fs.readFileSync(app.getPath('userData') + '/' + 'data' + '.json', 'utf-8');
-// console.log(walletFile);
 
 function createElectronStore(fileName){
   const file = fs.readFileSync('./env.json', 'utf-8');
