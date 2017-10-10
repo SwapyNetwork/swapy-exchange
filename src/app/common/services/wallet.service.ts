@@ -36,5 +36,4 @@ export class WalletService {
     }
     return this.wallet;
   }
-
 }

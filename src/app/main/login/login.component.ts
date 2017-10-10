@@ -6,6 +6,7 @@ import { LoginResponseModel } from './login-response.model';
 import { UserResponseInterface, INVESTOR, CREDIT_COMPANY } from '../../common/interfaces/user-response.interface';
 import { I18nService } from '../../common/services/i18n.service';
 import { Web3Service } from '../../common/services/web3.service';
+import { ProtocolService } from '../../common/services/protocol.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,12 @@ export class LoginComponent implements OnInit {
   public errorMessages:string[] = [];
   private web3;
 
-  constructor(private loginService: LoginService, private i18nService: I18nService, private router: Router, private web3Service: Web3Service) { }
+  constructor(private loginService: LoginService,
+    private i18nService: I18nService,
+    private router: Router,
+    private web3Service: Web3Service,
+    private protocolService: ProtocolService
+  ) { }
 
   ngOnInit() {
     this.web3Service.init();
