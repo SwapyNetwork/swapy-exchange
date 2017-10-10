@@ -2,6 +2,11 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 const isDev = require('electron-is-dev');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+
 
 if(isDev) {
   require('electron-reload')(path.join(__dirname));
