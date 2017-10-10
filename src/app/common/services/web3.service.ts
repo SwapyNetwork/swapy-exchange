@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import Web3 from 'web3';
 
-import * as ProviderFile from '../../../../provider.json';
+import * as ProviderFile from '../../../../env.json';
 
 @Injectable()
 export class Web3Service {

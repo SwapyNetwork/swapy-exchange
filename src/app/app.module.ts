@@ -11,6 +11,7 @@ import { I18nService } from './common/services/i18n.service';
 import { LoadingService } from './common/services/loading.service';
 import { Web3Service } from './common/services/web3.service';
 import { WalletService } from './common/services/wallet.service';
+import { LogoutService } from './common/services/logout.service';
 import { NgxElectronModule } from 'ngx-electron';
 
 
@@ -26,7 +27,7 @@ import { NgxElectronModule } from 'ngx-electron';
     HttpClientModule,
     NgxElectronModule,
   ],
-  providers: [StorageService, HttpService, I18nService, LoadingService, Web3Service, WalletService],
+  providers: [StorageService, HttpService, I18nService, LoadingService, Web3Service, WalletService, LogoutService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
