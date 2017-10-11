@@ -2,6 +2,12 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 const isDev = require('electron-is-dev');
+const fs = require('fs');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+
 
 if(isDev) {
   require('electron-reload')(path.join(__dirname));
@@ -60,17 +66,30 @@ app.on('activate', () => {
 
 const ipc = require('electron').ipcMain;
 const Store = require('electron-store');
-const store = new Store({ 'name': 'keys', 'encryptionKey': process.env.STORE_SECRET });
+const sha1 = require('sha1');
+
+function createElectronStore(fileName){
+  const file = fs.readFileSync('./env.json', 'utf-8');
+  const secret = JSON.parse(file.toString('utf8')).STORE_SECRET;
+  const store = new Store({ 'name': fileName, 'encryptionKey': secret });
+  return store;;
+}
 
 ipc.on('create-wallet', function (event, data) {
+  const store = createElectronStore(sha1(data.user));
   store.set('address', data.address);
   store.set('privateKey', data.privateKey);
 });
 
 ipc.on('get-wallet', function (event, data) {
-  const address = store.get('address');
-  const privateKey = store.get('privateKey');
-  event.returnValue = { address, privateKey };
+  if(fs.existsSync(app.getPath('userData') + '/' + sha1(data) + '.json', 'utf-8')){
+    const store = createElectronStore(sha1(data));
+    const address = store.get('address');
+    const privateKey = store.get('privateKey');
+    event.returnValue = { address, privateKey };
+  } else {
+    event.returnValue = false;
+  }
 });
 
 // In this file you can include the rest of your app's specific main process
