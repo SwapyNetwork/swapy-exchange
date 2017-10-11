@@ -9,15 +9,15 @@
     font-size: 14px;
     font-weight: 300;
     width: 100%;
-}    
-.sw-btn-ghost1 {  
+}
+.sw-btn-ghost1 {
     background-color: #00adef;
     border: 1px solid #00adef;
     color: #FFF;
-    padding: 10px 10px; 
+    padding: 10px 10px;
 
 }
-.sw-btn-ghost1:hover {  
+.sw-btn-ghost1:hover {
     background-color: #00baef;
     border: 1px solid #00baef;
     color: #FFF;
@@ -27,13 +27,13 @@
 .sw-btn-ghost1:focus {
     color: #FFF;
 }
-.sw-btn-ghost2 {  
+.sw-btn-ghost2 {
     background-color: #FFF;
     border: 1px solid #00adef;
     color: #00adef;
-    padding: 10px 10px; 
+    padding: 10px 10px;
 }
-.sw-btn-ghost2:hover {  
+.sw-btn-ghost2:hover {
     background-color: #00adef;
     border: 1px solid #00adef;
     color: #FFF;
@@ -41,6 +41,22 @@
     text-decoration: none;
 }
 .sw-btn-ghost2:focus {
+    color: #FFF;
+}
+.sw-btn-danger {
+    background-color: #e22d2d;
+    border: 1px solid #e22d2d;
+    color: #FFF;
+    padding: 10px 10px;
+}
+.sw-btn-danger:hover {
+    background-color: #e22d2d;
+    border: 1px solid #e22d2d;
+    color: #FFF;
+    padding: 10px 10px;
+    text-decoration: none;
+}
+.sw-btn-danger:focus {
     color: #FFF;
 }
 /* /////////////////////////////// END BUTTONS   /////////////////////////////////////////// */
