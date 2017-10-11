@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
-import { Web3Service } from './web3.service';
-import { WalletService } from './wallet.service';
+import { Web3Service } from '../web3.service';
+import { WalletService } from '../wallet.service';
 
-import { SwapyExchangeInterface as SwapyExchange } from '../../../../contracts/SwapyExchange';
-import { addresses } from '../../../../contracts/address';
+import { SwapyExchangeInterface as SwapyExchange } from '../../../../../contracts/SwapyExchange';
+import { addresses } from '../../../../../contracts/address';
 
 @Injectable()
-export class ProtocolService {
+export class ExchangeProtocolService {
   private web3;
   private wallet;
   private contract;
@@ -23,9 +23,9 @@ export class ProtocolService {
     }
   }
 
-  public createOffer(payback: number, grossReturn: number) {
+  public createOffer(id: string, payback: number, grossReturn: number, assets: number[]) {
     this.instantiateContract();
-    const encoded = this.contract.methods.createOffer(payback, grossReturn * 10000).encodeABI();
+    const encoded = this.contract.methods.createOffer(id, payback, grossReturn * 10000, assets).encodeABI();
     this.signAndSendTransaction(encoded);
   }
 

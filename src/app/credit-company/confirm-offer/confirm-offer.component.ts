@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { I18nService } from '../../common/services/i18n.service';
-import { ProtocolService } from '../../common/services/protocol.service';
+import { ExchangeProtocolService } from '../../common/services/protocol/exchange.service';
 
 
 import { AddOfferService } from '../add-offer/add-offer.service';
@@ -21,7 +21,7 @@ export class ConfirmOfferComponent implements OnInit {
     private router: Router,
     private i18nService: I18nService,
     private creditCompanyComponent: CreditCompanyComponent,
-    private protocolService: ProtocolService
+    private exchangeService: ExchangeProtocolService
   ) { }
 
   ngOnInit() {
@@ -30,19 +30,17 @@ export class ConfirmOfferComponent implements OnInit {
   }
 
   confirmOffer() {
-    this.protocolService.createOffer(this.offer.paybackMonths, this.offer.roi);
-
     this.addOfferService.addOffer(this.offer).then(
       data => {
+        this.exchangeService.createOffer('123456', this.offer.paybackMonths, this.offer.roi, [111, 222, 333, 444, 555]);
         this.offer.uuid = data.offer.uuid;
         this.offer.address = data.offer.address;
         this.addOfferService.cacheOffer(this.offer);
         this.creditCompanyComponent.refreshStatusBar();
 
-        this.router.navigate(["/credit-company/raise/success"])
+        this.router.navigate(["/credit-company/raise/pending"]);
       },
       error => {
-        console.log(error);
         let namespace = "confirm-offer";
 
         this.i18nService.doTranslateList(namespace, error).then( res => {
