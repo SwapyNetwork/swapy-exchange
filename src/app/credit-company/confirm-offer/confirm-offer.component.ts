@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { I18nService } from '../../common/services/i18n.service';
+import { ProtocolService } from '../../common/services/protocol.service';
+
 
 import { AddOfferService } from '../add-offer/add-offer.service';
 import { CreditCompanyComponent } from '../credit-company.component'
@@ -12,10 +14,15 @@ import { CreditCompanyComponent } from '../credit-company.component'
 })
 export class ConfirmOfferComponent implements OnInit {
 
-  public offer:any;
-  public errorMessages:string[] = [];
+  public offer: any;
+  public errorMessages: string[] = [];
 
-  constructor(private addOfferService: AddOfferService, private router: Router, private i18nService: I18nService, private creditCompanyComponent: CreditCompanyComponent) { }
+  constructor(private addOfferService: AddOfferService,
+    private router: Router,
+    private i18nService: I18nService,
+    private creditCompanyComponent: CreditCompanyComponent,
+    private protocolService: ProtocolService
+  ) { }
 
   ngOnInit() {
     this.offer = this.addOfferService.getCachedOffer();
@@ -23,13 +30,15 @@ export class ConfirmOfferComponent implements OnInit {
   }
 
   confirmOffer() {
+    this.protocolService.createOffer(this.offer.paybackMonths, this.offer.roi);
+
     this.addOfferService.addOffer(this.offer).then(
       data => {
         this.offer.uuid = data.offer.uuid;
         this.offer.address = data.offer.address;
         this.addOfferService.cacheOffer(this.offer);
         this.creditCompanyComponent.refreshStatusBar();
-        
+
         this.router.navigate(["/credit-company/raise/success"])
       },
       error => {

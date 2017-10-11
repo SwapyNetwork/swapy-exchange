@@ -7,11 +7,10 @@ import { UserResponseInterface, INVESTOR, CREDIT_COMPANY } from '../../common/in
 
 import { I18nService } from '../../common/services/i18n.service';
 import { Web3Service } from '../../common/services/web3.service';
+import { ProtocolService } from '../../common/services/protocol.service';
 import { WalletService } from '../../common/services/wallet.service';
 import { LogoutService } from '../../common/services/logout.service';
-
 import { Wallet } from '../../common/interfaces/wallet.interface';
-
 
 @Component({
   selector: 'app-login',
@@ -25,7 +24,14 @@ export class LoginComponent implements OnInit {
   public errorMessages: string[] = [];
   private web3;
 
-  constructor(private loginService: LoginService, private i18nService: I18nService, private router: Router, private web3Service: Web3Service, private walletService: WalletService, public logoutService: LogoutService) { }
+  constructor(private loginService: LoginService,
+    private i18nService: I18nService,
+    private router: Router,
+    private web3Service: Web3Service,
+    private protocolService: ProtocolService,
+    private walletService: WalletService,
+    public logoutService: LogoutService
+  ) { }
 
   ngOnInit() {
     this.web3Service.init();

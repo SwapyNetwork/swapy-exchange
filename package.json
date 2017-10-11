@@ -8,7 +8,7 @@
   "homepage": "https://swapy.network",
   "scripts": {
     "ng": "ng",
-    "start": "node_modules/electron/cli.js .",
+    "start": "electron .",
     "build.linux": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=linux --overwrite --out installers/ --ignore=\\src/",
     "build.windows": "ng build && electron-packager . swapy-exchange-alpha --arch=x64 --platform=win32 --overwrite --out installers/ --ignore=\\src/ --asar",
     "deb64": "electron-installer-debian --config debian.json --arch amd64",
@@ -54,6 +54,7 @@
     "@types/node": "~6.0.60",
     "codelyzer": "~3.0.1",
     "electron": "^1.7.8",
+    "electron-installer-debian": "^0.6.0",
     "electron-packager": "^9.1.0",
     "electron-reload": "^1.2.2",
     "electron-winstaller": "^2.6.3",
