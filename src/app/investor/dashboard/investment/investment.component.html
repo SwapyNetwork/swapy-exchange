@@ -52,6 +52,32 @@
             </div> <!-- End Circular chart-->
         </div>
 
+        <hr>
+
+        <div class="col-sm-12 col-md-12 table-responsive">
+          <table class="table table-hover">
+            <tr class="active">
+              <th>Asset</th>
+              <th>Value</th>
+              <th>Status</th>
+              <th>Contract address</th>
+              <th>Transfer</th>
+            </tr>
+            <tr *ngFor="let asset of investment.assets, let i = index">
+              <td>{{i + 1}}</td>
+              <td>{{asset.value | currency:'USD':true:'.2'}}</td>
+              <td>{{statusToString(asset.status)}}</td> <!--@todo "status.toString()" -->
+              <td>{{asset.contractAddress || '-'}}</td>
+              <td>
+                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.status == TX_AGREED"><i class="fa fa-check" aria-hidden="true"></i></button>
+                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="asset.status == TX_AGREED"><i class="fa fa-times" aria-hidden="true"></i></button>
+              </td>
+            </tr>
+
+          </table>
+
+        </div>
+
       </div>
     </div>
   </div>
