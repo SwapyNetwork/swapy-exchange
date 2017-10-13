@@ -1,4 +1,4 @@
-export const SwapyExchangeInterface = {
+export const InvestmentOfferInterface = {
   "contract_name": "SwapyExchange",
   "abi": [
     {

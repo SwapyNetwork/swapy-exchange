@@ -32,7 +32,7 @@ export class ConfirmOfferComponent implements OnInit {
   confirmOffer() {
     this.addOfferService.addOffer(this.offer).then(
       data => {
-        this.exchangeService.createOffer('123456', this.offer.paybackMonths, this.offer.roi, [111, 222, 333, 444, 555]);
+        this.exchangeService.createOffer(data.event.uuid, this.offer.paybackMonths, this.offer.roi, [111, 222, 333, 444, 555]);
         this.offer.uuid = data.offer.uuid;
         this.offer.address = data.offer.address;
         this.addOfferService.cacheOffer(this.offer);
