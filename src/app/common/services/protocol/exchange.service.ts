@@ -14,7 +14,7 @@ export class ExchangeProtocolService {
 
   constructor(private web3Service: Web3Service, private walletService: WalletService) {
     this.web3 = this.web3Service.getInstance();
-    this.wallet = this.walletService.getWallet();
+    // this.wallet = this.walletService.getWallet();
   }
 
   private instantiateContract() {

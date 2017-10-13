@@ -1,6 +1,7 @@
 interface InvestmentAsset {
   uuid: string;
   value: number;
+  status: number;
 };
 
 export interface Investment {
