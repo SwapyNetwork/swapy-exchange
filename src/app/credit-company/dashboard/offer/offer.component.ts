@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Offer} from '../../../common/interfaces/offer.interface';
+import { Offer } from '../../../common/interfaces/offer.interface';
+import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
 import { OPEN, SOLD, PENDING } from '../../../common/interfaces/offerAssetStatus.interface';
 
 @Component({
@@ -16,7 +17,7 @@ export class OfferComponent implements OnInit {
   @Input() public offer: Offer;
   @Input() public collapsed: boolean;
 
-  constructor() { }
+  constructor(private investmentAsset: InvestmentAssetService) { }
 
   ngOnInit() {
   }
@@ -32,7 +33,7 @@ export class OfferComponent implements OnInit {
   }
 
   public agreeInvestment(offer) {
-    console.log(offer);
+    this.investmentAsset.agreeInvestment();
   }
 
 }
