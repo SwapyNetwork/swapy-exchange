@@ -16,6 +16,10 @@ export class DashboardComponent implements OnInit {
     private exchangeService: ExchangeService, private eventService: EventService) { }
 
   ngOnInit() {
+    this.updateOffers();
+  }
+
+  updateOffers() {
     this.offerService.getMyOffers().then(
       (data: any) => {
         this.offers = data.offers;
@@ -33,8 +37,9 @@ export class DashboardComponent implements OnInit {
           if (error) {
             console.log(error);
           } else if (ev.length > 0) {
-            ev.eventUuid = event.uuid;
-            return this.eventService.update(ev);
+            this.offerService.updateMinedOffers({ eventUuid: event.uuid, eventContent: ev[ev.length - 1] }).then(res => {
+              this.updateOffers();
+            });
           }
         });
       })

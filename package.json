@@ -10,7 +10,7 @@
     "ng": "ng",
     "start": "electron .",
     "build.linux": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=linux --overwrite --out installers/ --ignore=\\src/",
-    "build.windows": "ng build && electron-packager . swapy-exchange-alpha --arch=x64 --platform=win32 --overwrite --out installers/ --ignore=\\src/ --asar",
+    "build.windows": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=win32 --overwrite --out installers/ --ignore=\\src/ --asar",
     "deb64": "electron-installer-debian --config debian.json --arch amd64",
     "watch": "(ng build --watch &) && npm start",
     "alpha": "ng serve --env=prod --host 0.0.0.0 --disable-host-check",

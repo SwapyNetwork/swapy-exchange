@@ -16,4 +16,8 @@ export class OfferService {
     return this.httpService.get("offers/mine");
   }
 
+  updateMinedOffers(offer): Promise<any> {
+    return this.httpService.put('offers/minedOffer', offer);
+  }
+
 }

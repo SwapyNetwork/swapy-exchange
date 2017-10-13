@@ -31,4 +31,8 @@ export class OfferComponent implements OnInit {
     this.collapsed = !this.collapsed;
   }
 
+  public agreeInvestment(offer) {
+    console.log(offer);
+  }
+
 }

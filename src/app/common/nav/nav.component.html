@@ -16,7 +16,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" [ngClass]="{ 'in': isIn }">
       <img class="sw-swapy-logo3 visible-xs" src="assets/img/swapy-logo3.png" alt="Swapy logo" />
       <ul class="nav navbar-nav navbar-center">
-        <li><a [routerLink]="profileUrl" class="sw-box-text">{{user.firstName}} {{user.lastName}}</a></li>
+        <li><a [routerLink]="profileUrl" class="sw-box-text">{{user.firstName}} {{user.lastName}} - {{wallet.address}}</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
