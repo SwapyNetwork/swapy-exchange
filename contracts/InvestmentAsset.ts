@@ -1,4 +1,4 @@
-export const InvestmentAsset = {
+export const InvestmentAssetInterface = {
   "contract_name": "InvestmentAsset",
   "abi": [
     {
