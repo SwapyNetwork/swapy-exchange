@@ -16,14 +16,14 @@ export class ExchangeProtocolService {
     this.web3 = this.web3Service.getInstance();
   }
 
-  private getWallet() {
+  protected getWallet() {
     if (!this.wallet) {
       this.wallet = this.walletService.getWallet();
     }
     return this.wallet;
   }
 
-  private getContract() {
+  protected getContract() {
     if (!this.contract) {
       this.contract = new this.web3.eth.Contract(SwapyExchange.abi, addresses.swapyExchange);
     }

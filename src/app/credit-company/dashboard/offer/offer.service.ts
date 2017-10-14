@@ -13,7 +13,11 @@ export class OfferService {
   constructor(public httpService: HttpService) {}
 
   getMyOffers(): Promise<any> {
-    return this.httpService.get("offers/mine");
+    return this.httpService.get('offers/mine');
+  }
+
+  acceptInvestor(asset): Promise<any> {
+    return this.httpService.put('offers/accept-investor', asset);
   }
 
   updateMinedOffers(offer): Promise<any> {
