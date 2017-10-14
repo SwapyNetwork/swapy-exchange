@@ -11,7 +11,10 @@ import { I18nService } from './common/services/i18n.service';
 import { LoadingService } from './common/services/loading.service';
 import { Web3Service } from './common/services/web3.service';
 import { WalletService } from './common/services/wallet.service';
-import { ProtocolService } from './common/services/protocol.service';
+import { EventService } from './common/services/event.service';
+import { ExchangeProtocolService } from './common/services/protocol/exchange.service';
+import { InvestmentOfferProtocolService } from './common/services/protocol/investment-offer.service';
+import { InvestmentAssetProtocolService } from './common/services/protocol/investment-asset.service';
 import { LogoutService } from './common/services/logout.service';
 import { NgxElectronModule } from 'ngx-electron';
 
@@ -28,7 +31,8 @@ import { NgxElectronModule } from 'ngx-electron';
     HttpClientModule,
     NgxElectronModule,
   ],
-  providers: [StorageService, HttpService, I18nService, LoadingService, Web3Service, WalletService, ProtocolService, LogoutService],
+  providers: [StorageService, HttpService, I18nService, LoadingService, Web3Service,
+    WalletService, EventService, ExchangeProtocolService, InvestmentOfferProtocolService, InvestmentAssetProtocolService, LogoutService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

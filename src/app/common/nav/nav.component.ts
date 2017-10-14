@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LogoutService } from '../services/logout.service';
 import { StorageService } from '../services/storage.service';
+import { WalletService } from '../services/wallet.service';
 import { UserResponseInterface, INVESTOR, CREDIT_COMPANY } from '../interfaces/user-response.interface';
 
 @Component({
@@ -12,15 +13,18 @@ import { UserResponseInterface, INVESTOR, CREDIT_COMPANY } from '../interfaces/u
 export class NavComponent implements OnInit {
 
   public user: UserResponseInterface;
+  public wallet: any;
   public menu:any[];
   public profileUrl:string = '';
   public helpUrl:string = '';
   public termsUrl:string = '';
   public privacyUrl:string = '';
 
-  constructor(public logoutService: LogoutService, private storageService: StorageService, private router: Router) {
+  constructor(public logoutService: LogoutService, private storageService: StorageService,
+    private walletService: WalletService, private router: Router) {
     let user = this.storageService.getItem('user');
     this.user = user ? user : {};
+    this.wallet = this.walletService.getWallet();
 
     switch (this.user.type) {
       case INVESTOR:

@@ -70,6 +70,24 @@ export class HttpService {
     });
   }
 
+  put(endpoint, body) {
+    const headers = this.appendHeaders();
+    return new Promise( (resolve, reject) => {
+      this.loadingService.show();
+      // We're using Angular HTTP provider to request services
+      this.http.put(this.url(endpoint), body, { headers, withCredentials: true }).subscribe(
+        data => {
+          this.loadingService.hide();
+          resolve(data);
+        },
+        error => {
+          this.loadingService.hide();
+          this.handleError(reject, error);
+        }
+      );
+    });
+  }
+
   private handleError(reject, err) {
     const error = err.error;
     if (error.length === 0) {

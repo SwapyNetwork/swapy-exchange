@@ -17,6 +17,7 @@ import { CreditCompanyService } from './credit-company.service';
 import { OfferService } from './dashboard/offer/offer.service';
 import { ConfirmOfferComponent } from './confirm-offer/confirm-offer.component';
 import { SuccessfulOfferComponent } from './successful-offer/successful-offer.component';
+import { PendingOfferComponent } from './pending-offer/pending-offer.component';
 import { ProfileComponent } from './profile/profile.component';
 
 import { TermsPageComponent } from './terms-page/terms-page.component';
@@ -33,7 +34,8 @@ import { OfferComponent } from './dashboard/offer/offer.component';
     FormsModule,
     TextMaskModule
   ],
-  declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent, ConfirmOfferComponent, SuccessfulOfferComponent, ProfileComponent, TermsPageComponent, PrivacyPageComponent, OfferComponent],
+  declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent, ConfirmOfferComponent,
+    SuccessfulOfferComponent, PendingOfferComponent, ProfileComponent, TermsPageComponent, PrivacyPageComponent, OfferComponent],
   providers: [LogoutService, AddOfferService, OfferService, CreditCompanyService],
   bootstrap: [CreditCompanyComponent]
 })

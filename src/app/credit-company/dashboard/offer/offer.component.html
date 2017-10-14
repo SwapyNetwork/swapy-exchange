@@ -59,8 +59,9 @@
               <th>Value</th>
               <th>Status</th>
               <th>Investor</th>
-              <th>Invested in</th>
+              <th>Requested in</th>
               <th>Payback date</th>
+              <th>Agree</th>
            </tr>
            <tr *ngFor="let asset of offer.assets, let i = index">
               <td>{{i + 1}}</td>
@@ -69,6 +70,10 @@
               <td>{{asset.investorName == null ? '-' : asset.investorName }}</td>
               <td>{{asset.investedIn == null ? '-' : (asset.investedIn | date: 'yyyy-MM-dd') }}</td>
               <td>{{asset.investedIn == null ? '-' : (calculatePaybackDate(asset) | date: 'yyyy-MM-dd') }}</td>
+              <td>
+                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.investedIn" (click)="agreeInvestment(offer)"><i class="fa fa-check" aria-hidden="true"></i></button>
+                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="asset.investedIn"><i class="fa fa-times" aria-hidden="true"></i></button>
+              </td>
            </tr>
         </table>
 

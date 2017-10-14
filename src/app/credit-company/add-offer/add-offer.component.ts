@@ -14,6 +14,7 @@ export class AddOfferComponent implements OnInit {
   public amount: string;
   public paybackMonths: string;
   public roi: string;
+  public errorMessages: string[] = [];
 
   public paybackMonthsMask = [/\d/, /\d/];
 
@@ -42,6 +43,8 @@ export class AddOfferComponent implements OnInit {
   ngOnInit() {}
 
   addOffer() {
+    /** @todo frontend validations */
+    this.errorMessages = [];
     /** todo text-mask maintains the mask on the model value. When it got fixed, remove the replacing */
     let raisingAmount = parseFloat(this.amount.replace(/[^0-9.]/g, ''));
     let assets = [];
