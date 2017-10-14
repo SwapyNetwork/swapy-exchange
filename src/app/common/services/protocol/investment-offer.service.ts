@@ -45,9 +45,10 @@ export class InvestmentOfferProtocolService {
       gas: 5000000
     };
 
-    this.web3.eth.accounts.signTransaction(tx, this.wallet.privateKey).then((signed) => {
+    return this.web3.eth.accounts.signTransaction(tx, this.wallet.privateKey).then((signed) => {
       this.web3.eth.sendSignedTransaction(signed.rawTransaction)
-        .on('receipt', console.log);
+        .on('receipt', console.log)
+        .on('error', console.log);
     });
   }
 

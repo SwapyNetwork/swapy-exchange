@@ -37,8 +37,11 @@ export class DashboardComponent implements OnInit {
           if (error) {
             console.log(error);
           } else if (ev.length > 0) {
+            console.log(ev);
             this.offerService.updateMinedOffers({ eventUuid: event.uuid, eventContent: ev[ev.length - 1] }).then(res => {
               this.updateOffers();
+            }).catch(err => {
+              console.log(err);
             });
           }
         });
