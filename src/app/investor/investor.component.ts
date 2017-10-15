@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core';
 import { InvestorService } from './investor.service';
+import { WalletService } from '../common/services/wallet.service';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -16,8 +17,9 @@ export class InvestorComponent {
   public averageReturn;
   public returnValue;
   public averagePaybackPeriod;
+  public balance;
 
-  constructor(private investorService: InvestorService) {};
+  constructor(private investorService: InvestorService, private walletService: WalletService) {};
 
   ngOnInit() {
     this.refreshStatusBar();
@@ -30,6 +32,12 @@ export class InvestorComponent {
       this.averageReturn = data.averageReturn;
       this.returnValue = data.returnValue;
       this.averagePaybackPeriod = data.averagePaybackPeriod;
+
+      this.walletService.getEthBalance().then((balance) => {
+        this.balance = balance;
+      }, (error) => {
+        console.error(error);
+      });
     });
   };
 }

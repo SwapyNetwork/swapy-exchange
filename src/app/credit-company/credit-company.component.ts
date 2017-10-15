@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ViewEncapsulation} from '@angular/core';
-import {CreditCompanyService} from './credit-company.service';
+import { CreditCompanyService } from './credit-company.service';
+import { WalletService } from '../common/services/wallet.service';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -14,8 +15,9 @@ export class CreditCompanyComponent implements OnInit {
   public amountRequested;
   public amountRaised;
   public offersLength;
+  public balance;
 
-  constructor(private creditCompanyService: CreditCompanyService) {};
+  constructor(private creditCompanyService: CreditCompanyService, private walletService: WalletService) {};
 
   ngOnInit() {
     this.refreshStatusBar();
@@ -27,9 +29,14 @@ export class CreditCompanyComponent implements OnInit {
         this.amountRequested = data.amountRequested;
         this.amountRaised = data.amountRaised;
         this.offersLength = data.offersLength;
+        this.walletService.getEthBalance().then((balance) => {
+          this.balance = balance;
+        }, (error) => {
+          console.error(error);
+        });
       },
       (error: any) => {
-        console.log(error);
+        console.error(error);
       }
     );
   };
