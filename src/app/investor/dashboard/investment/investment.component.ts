@@ -69,7 +69,7 @@ export class InvestmentComponent implements OnInit {
   }
 
   public exploreContract() {
-    console.log(this.investment.contractAddress);
+    console.log(this.investment.offerContractAddress);
     // const shell = require('electron').shell;
     // shell.openExternal(this.explorerUrl + contractAddress);
   }

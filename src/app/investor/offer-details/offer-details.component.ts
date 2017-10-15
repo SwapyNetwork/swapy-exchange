@@ -86,7 +86,7 @@ export class OfferDetailsComponent implements OnInit {
         uuid: null,
         companyUuid: this.offer.companyUuid,
         companyName: this.offer.companyName,
-        contractAddress: this.offer.contractAddress,
+        offerContractAddress: this.offer.contractAddress,
         offerUuid: this.offer.uuid,
         totalAmount: this.totalAssetsValue,
         roi: this.offer.roi,

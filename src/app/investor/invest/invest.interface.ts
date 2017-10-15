@@ -8,10 +8,10 @@ export interface Invest {
   companyUuid: string;
   companyName: string;
   offerUuid: string;
+  offerContractAddress: string;
   totalAmount: number;
   roi: number;
   paybackMonths: number;
   investedIn: Date;
   assets: InvestAsset[];
-  contractAddress: string;
 }
