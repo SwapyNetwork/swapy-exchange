@@ -16,8 +16,13 @@ export class OfferService {
     return this.httpService.get('offers/mine');
   }
 
-  acceptInvestor(asset): Promise<any> {
-    return this.httpService.put('offers/accept-investor', asset);
+  acceptInvestor(offerUuid, asset): Promise<any> {
+    const data = {
+      offerUuid: offerUuid,
+      asset: asset
+    };
+
+    return this.httpService.put('offers/accept-investor', data);
   }
 
   updateMinedOffers(offer): Promise<any> {

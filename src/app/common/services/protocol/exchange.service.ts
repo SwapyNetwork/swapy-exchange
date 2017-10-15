@@ -23,16 +23,11 @@ export class ExchangeProtocolService {
     return this.wallet;
   }
 
-  protected getContract() {
+  public getContract() {
     if (!this.contract) {
       this.contract = new this.web3.eth.Contract(SwapyExchange.abi, addresses.swapyExchange);
     }
     return this.contract;
-  }
-
-  public createOffer(id: string, payback: number, grossReturn: number, assets: number[]) {
-    const encoded = this.getContract().methods.createOffer(id, payback, grossReturn * 10000, assets).encodeABI();
-    this.signAndSendTransaction(encoded);
   }
 
   public signAndSendTransaction(encoded: string) {

@@ -8,11 +8,13 @@ import { addresses } from '../../../../../contracts/address';
 import { ExchangeProtocolService } from './exchange.service';
 
 @Injectable()
-export class InvestmentAssetProtocolService extends ExchangeProtocolService {
+export class InvestmentAssetProtocolService {
+
+  constructor(private exchangeProtocol: ExchangeProtocolService) {}
 
   public agreeInvestment(id: string, investor: string, agreementTermsHash: string, value: number) {
-    const encoded = this.getContract().methods.agreeInvestment(id, investor, agreementTermsHash, value).encodeABI();
-    this.signAndSendTransaction(encoded);
+    const encoded = this.exchangeProtocol.getContract().methods.agreeInvestment(id, investor, agreementTermsHash, value).encodeABI();
+    this.exchangeProtocol.signAndSendTransaction(encoded);
   }
 
 }

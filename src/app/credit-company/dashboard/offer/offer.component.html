@@ -71,7 +71,7 @@
               <td>{{asset.investedIn == null ? '-' : (asset.investedIn | date: 'yyyy-MM-dd') }}</td>
               <td>{{asset.investedIn == null ? '-' : (calculatePaybackDate(asset) | date: 'yyyy-MM-dd') }}</td>
               <td>
-                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.investedIn" (click)="agreeInvestment(asset)"><i class="fa fa-check" aria-hidden="true"></i></button>
+                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.investedIn" (click)="acceptInvestor(offer.uuid, asset)"><i class="fa fa-check" aria-hidden="true"></i></button>
                 <button class="btn sw-accept-decline sw-btn-danger" *ngIf="asset.investedIn"><i class="fa fa-times" aria-hidden="true"></i></button>
               </td>
            </tr>
