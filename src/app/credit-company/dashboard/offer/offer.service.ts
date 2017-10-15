@@ -19,10 +19,12 @@ export class OfferService {
   acceptInvestor(offerUuid, asset): Promise<any> {
     const data = {
       offerUuid: offerUuid,
-      asset: asset
+      assetUuid: asset.uuid,
+      contractAddress: asset.contractAddress,
+      investorUuid: asset.investorUuid
     };
 
-    return this.httpService.put('offers/accept-investor', data);
+    return this.httpService.put('offers/acceptInvestor', data);
   }
 
   updateMinedOffers(offer): Promise<any> {

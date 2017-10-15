@@ -12,11 +12,11 @@ export class AppComponent {
 
   constructor(public loadingService: LoadingService){
     this.loadingService.loadingShowed$.subscribe(
-      showed => {console.log("show");this.loading = true}
+      showed => {this.loading = true}
     );
 
     this.loadingService.loadingHid$.subscribe(
-      hid => {console.log("hide");this.loading = false}
+      hid => {this.loading = false}
     );
   }
 

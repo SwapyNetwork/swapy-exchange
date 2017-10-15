@@ -6,7 +6,7 @@ import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../
 import { OPEN, SOLD, PENDING, TX_AGREEMENT_PENDING } from '../../../common/interfaces/offerAssetStatus.interface';
 
 @Component({
-  selector: 'dashboard-offer',
+  selector: 'app-dashboard-offer',
   templateUrl: './offer.component.html',
   styleUrls: ['./offer.component.css']
 })
@@ -43,7 +43,7 @@ export class OfferComponent implements OnInit {
     const value = asset.value / ethusd;
 
     this.offerService.acceptInvestor(offerUuid, asset).then(data => {
-        this.assetProtocol.agreeInvestment(data.event.uuid, asset.investorWallet, agreementTermsHash, value);
+        this.assetProtocol.agreeInvestment(data.event.uuid, asset.investorWallet, agreementTermsHash, value, asset.contractAddress);
         asset.status = TX_AGREEMENT_PENDING;
     }, error => {
       const namespace = 'agree-investment';

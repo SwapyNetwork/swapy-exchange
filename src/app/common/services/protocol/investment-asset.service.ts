@@ -5,16 +5,17 @@ import { WalletService } from '../wallet.service';
 
 import { InvestmentAssetInterface as InvestmentAsset } from '../../../../../contracts/InvestmentAsset';
 import { addresses } from '../../../../../contracts/address';
-import { ExchangeProtocolService } from './exchange.service';
+import { ProtocolAbstract } from './protocol.abstract';
 
 @Injectable()
-export class InvestmentAssetProtocolService {
+export class InvestmentAssetProtocolService extends ProtocolAbstract {
 
-  constructor(private exchangeProtocol: ExchangeProtocolService) {}
+  protected abi = InvestmentAsset.abi;
 
-  public agreeInvestment(id: string, investor: string, agreementTermsHash: string, value: number) {
-    const encoded = this.exchangeProtocol.getContract().methods.agreeInvestment(id, investor, agreementTermsHash, value).encodeABI();
-    this.exchangeProtocol.signAndSendTransaction(encoded);
+  public agreeInvestment(id: string, investor: string, agreementTermsHash: string, value: number, contractAddress: string) {
+    const encoded = super.getContract(contractAddress).methods.agreeInvestment(id, investor,
+      this.web3Service.getInstance().utils.fromAscii(agreementTermsHash), value).encodeABI();
+    super.signAndSendTransaction(encoded, contractAddress);
   }
 
 }

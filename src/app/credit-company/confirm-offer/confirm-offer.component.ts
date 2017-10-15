@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { I18nService } from '../../common/services/i18n.service';
-import { InvestmentOfferProtocolService as OfferProtocol } from '../../common/services/protocol/investment-offer.service';
+import { ExchangeProtocolService as ExchangeProtocol } from '../../common/services/protocol/exchange.service';
 
 import { AddOfferService } from '../add-offer/add-offer.service';
 import { CreditCompanyComponent } from '../credit-company.component'
@@ -20,7 +20,7 @@ export class ConfirmOfferComponent implements OnInit {
     private router: Router,
     private i18nService: I18nService,
     private creditCompanyComponent: CreditCompanyComponent,
-    private offerProtocol: OfferProtocol
+    private exchangeProtocol: ExchangeProtocol
   ) { }
 
   ngOnInit() {
@@ -33,7 +33,7 @@ export class ConfirmOfferComponent implements OnInit {
   confirmOffer() {
     this.addOfferService.addOffer(this.offer).then(
       data => {
-        this.offerProtocol.createOffer(data.event.uuid, this.offer.paybackMonths, this.offer.roi, [111, 222, 333, 444, 555]);
+        this.exchangeProtocol.createOffer(data.event.uuid, this.offer.paybackMonths, this.offer.roi, [111, 222, 333, 444, 555]);
         this.offer.uuid = data.offer.uuid;
         this.offer.address = data.offer.address;
         this.addOfferService.cacheOffer(this.offer);
