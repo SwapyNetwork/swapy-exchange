@@ -15,11 +15,11 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.investService.getMyInvestments().then(
-      (data:any) => {
+      (data: any) => {
         this.investments = data.investments;
       },
-      (error:any) => {
-        console.log(error)
+      (error: any) => {
+        console.log(error);
       }
     );
   }

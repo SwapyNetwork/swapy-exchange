@@ -13,4 +13,5 @@ export interface Invest {
   paybackMonths: number;
   investedIn: Date;
   assets: InvestAsset[];
+  contractAddress: string;
 }

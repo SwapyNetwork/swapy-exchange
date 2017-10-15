@@ -19,7 +19,7 @@
             <a href="credit-company-profile.html"><p class="sw-box-text sw-blue1">{{investment.companyName}}</p></a>
             <p class="sw-box-text">Payback: {{investment.paybackMonths}} months</p>
             <p class="sw-box-text">Since {{investment.investedIn | date: 'yyyy-MM-dd'}}</p><hr>
-            <p class="sw-box-text">Contract Address: <a href=""><b>185c4cc8…3ab88279</b></a></p>
+            <p class="sw-box-text">Contract Address: <a (click)="exploreContract()"><b>Explore smart contract</b></a></p>
 
         </div>
         <div class="col-sm-3 col-md-3">

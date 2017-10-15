@@ -18,16 +18,17 @@ export class OffersComponent implements OnInit {
 
   ngOnInit() {
     this.offerService.getOffers().then(
-      (data:any) => {
+      (data: any) => {
 
-        for (var o of data.offers) {
+        for (const o of data.offers) {
           this.offers.push({
             roi: o.offerRoi,
             paybackMonths: o.offerPaybackMonths,
             raisingAmount: o.offerRaisingAmount,
             walletAddress: o.offerWalletAddress,
+            contractAddress: o.offerContractAddress,
             uuid: o.offerUuid,
-            companyName: o.firstName + " " + o.lastName,
+            companyName: o.firstName + ' ' + o.lastName,
             companyLogo: o.picture,
             companyUuid: o.uuid,
             assets: o.assets,
