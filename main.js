@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, shell } = require('electron');
 const path = require('path');
 const url = require('url');
 const isDev = require('electron-is-dev');
@@ -90,6 +90,12 @@ ipc.on('get-wallet', function (event, data) {
   } else {
     event.returnValue = false;
   }
+});
+
+ipc.on('open-browser', function (event, url) {
+   shell.openExternal(url, (error) => { console.error(error); });
+   /** it is important to set the event.returnValue although the electro app freezes */
+   event.returnValue = true;
 });
 
 // In this file you can include the rest of your app's specific main process

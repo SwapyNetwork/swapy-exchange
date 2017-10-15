@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Invest } from '../../invest/invest.interface';
 import { OPEN, SOLD, PENDING } from '../../../common/interfaces/offerAssetStatus.interface';
 import * as env from '../../../../../env.json';
+import { ElectronService } from 'ngx-electron';
 
 @Component({
   selector: 'app-dashboard-investment',
@@ -25,7 +26,7 @@ export class InvestmentComponent implements OnInit {
 
   public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
 
-  constructor() { }
+  constructor(private electronService: ElectronService) { }
 
   ngOnInit() {
   }
@@ -68,10 +69,9 @@ export class InvestmentComponent implements OnInit {
 
   }
 
-  public exploreContract() {
-    console.log(this.investment.offerContractAddress);
-    // const shell = require('electron').shell;
-    // shell.openExternal(this.explorerUrl + contractAddress);
+  public exploreContract(address: string) {
+    const url = this.explorerUrl + address;
+    this.electronService.ipcRenderer.sendSync('open-browser', url);
   }
 
 }
