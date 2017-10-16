@@ -28,7 +28,7 @@ export class ProtocolAbstract {
     return this.contract;
   }
 
-  public signAndSendTransaction(encoded: string, address: string) {
+  public signAndSendTransaction(encoded: string, address: string, value?: number) {
     const tx = {
       from: this.getWallet().address,
       to: address,
@@ -36,11 +36,15 @@ export class ProtocolAbstract {
       chainId: this.web3.eth.net.getId(),
       data: encoded,
       gas: this.gas
-    };
+    } as any;
+
+    if (value) {
+      tx.value = value;
+    }
 
     this.web3.eth.accounts.signTransaction(tx, this.wallet.privateKey).then((signed) => {
       this.web3.eth.sendSignedTransaction(signed.rawTransaction)
-        .on('receipt', console.log);
+        .on('error', console.log);
     });
   }
 
@@ -48,6 +52,6 @@ export class ProtocolAbstract {
     this.getContract(contractAddress).getPastEvents('Offers', {
       fromBlock: 0,
       toBlock: 'latest'
-    }, (error, events) => { cb(error, events.filter(event => event.returnValues._id === eventUuid)) });
+    }, (error, events) => { console.log(events); cb(error, events.filter(event => event.returnValues._id === eventUuid)) });
   }
 }
