@@ -39,7 +39,10 @@ import { InvestmentComponent } from './dashboard/investment/investment.component
     FormsModule,
     TextMaskModule
   ],
-  declarations: [InvestorComponent, OffersComponent, DashboardComponent, VerificationPhoneComponent, VerificationMainComponent, VerificationIdentityComponent, VerificationAddressComponent, OfferComponent, OfferDetailsComponent, CreditCompanyComponent, TermsPageComponent, PrivacyPageComponent, ProfileComponent, InvestComponent, SuccessfulInvestmentComponent, InvestmentComponent],
+  declarations: [InvestorComponent, OffersComponent, DashboardComponent, VerificationPhoneComponent,
+    VerificationMainComponent, VerificationIdentityComponent, VerificationAddressComponent, OfferComponent,
+    OfferDetailsComponent, CreditCompanyComponent, TermsPageComponent, PrivacyPageComponent, ProfileComponent,
+    InvestComponent, SuccessfulInvestmentComponent, InvestmentComponent],
   providers: [LogoutService, OfferService, InvestService, SuccessfulInvestmentService, InvestorService],
   bootstrap: [InvestorComponent]
 })

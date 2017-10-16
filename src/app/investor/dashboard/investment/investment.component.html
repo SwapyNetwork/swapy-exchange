@@ -19,7 +19,7 @@
             <a href="credit-company-profile.html"><p class="sw-box-text sw-blue1">{{investment.companyName}}</p></a>
             <p class="sw-box-text">Payback: {{investment.paybackMonths}} months</p>
             <p class="sw-box-text">Since {{investment.investedIn | date: 'yyyy-MM-dd'}}</p><hr>
-            <p class="sw-box-text">Contract Address: <a href=""><b>185c4cc8…3ab88279</b></a></p>
+            <a href (click)="exploreContract(investment.offerContractAddress)"><b>Explore Ethereum contract</b></a>
 
         </div>
         <div class="col-sm-3 col-md-3">
@@ -60,14 +60,14 @@
               <th>Asset</th>
               <th>Value</th>
               <th>Status</th>
-              <th>Contract address</th>
+              <th>Contract</th>
               <th>Transfer</th>
             </tr>
             <tr *ngFor="let asset of investment.assets, let i = index">
               <td>{{i + 1}}</td>
               <td>{{asset.value | currency:'USD':true:'.2'}}</td>
               <td>{{statusToString(asset.status)}}</td> <!--@todo "status.toString()" -->
-              <td>{{asset.contractAddress || '-'}}</td>
+              <td><span *ngIf="!asset.contractAddress">-</span><a *ngIf="asset.contractAddress" href (click)="exploreContract(asset.contractAddress)">Explore</a></td>
               <td>
                 <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.status == TX_AGREED"><i class="fa fa-check" aria-hidden="true"></i></button>
                 <button class="btn sw-accept-decline sw-btn-danger" *ngIf="asset.status == TX_AGREED"><i class="fa fa-times" aria-hidden="true"></i></button>

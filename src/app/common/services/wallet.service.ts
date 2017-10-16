@@ -53,4 +53,19 @@ export class WalletService {
     this.wallet = null;
   }
 
+  getBalance() {
+    return this.web3Service.getInstance().eth.getBalance(this.getWallet().address);
+  }
+
+  getEthBalance() {
+    return new Promise( (resolve, reject) => {
+      this.getBalance().then((balance) => {
+        const ethBalance = this.web3Service.getInstance().utils.fromWei(balance, 'ether');
+        resolve(ethBalance);
+      }, (error) => {
+        reject(error);
+      })
+    });
+  }
+
 }

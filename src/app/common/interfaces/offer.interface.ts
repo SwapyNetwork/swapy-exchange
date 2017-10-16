@@ -17,4 +17,5 @@ export interface Offer {
   companyUuid: string;
   assets: OfferAsset[];
   createdOn: string;
+  contractAddress: string;
 };
