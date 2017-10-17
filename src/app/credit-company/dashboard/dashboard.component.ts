@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
   getUpdatesFromBlockchain() {
     this.eventService.findByCompany().then(events => {
       (events as [any]).forEach(event => {
-        this.exchangeService.getEvents(event.uuid, (error, ev) => {
+        this.exchangeService.getEvents(event.uuid, 'Offers', (error, ev) => {
           if (error) {
             console.log(error);
           } else if (ev.length > 0) {

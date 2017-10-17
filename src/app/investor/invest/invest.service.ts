@@ -14,11 +14,11 @@ export class InvestService {
 
   constructor(public httpService: HttpService) { }
 
-  public cacheInvestment(invest: Invest){
+  public cacheInvestment(invest: Invest) {
     this.cachedInvest = invest;
   }
 
-  public cacheOfferIndex(offerIndex: number){
+  public cacheOfferIndex(offerIndex: number) {
     this.cachedOfferIndex = offerIndex;
   }
 
@@ -26,16 +26,20 @@ export class InvestService {
     return this.cachedInvest;
   }
 
-  public getCachedOfferIndex(): number{
+  public getCachedOfferIndex(): number {
     return this.cachedOfferIndex;
   }
 
   public addInvest(invest): Promise<any> {
-    return this.httpService.post("investment/add", invest);
+    return this.httpService.post('investment/add', invest);
   }
 
   public getMyInvestments(): Promise<any> {
-    return this.httpService.get("investment/mine");
+    return this.httpService.get('investment/mine');
+  }
+
+  public updateMinedAgreement(event): Promise<any> {
+    return this.httpService.put('investment/minedAgreement', event);
   }
 
 }
