@@ -21,7 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { ToastOptions } from 'ng2-toastr';
 
-class CustomToastOption extends ToastOptions {
+export class CustomToastOption extends ToastOptions {
   animate = 'flyRight';
   positionClass = 'toast-bottom-left';
   showCloseButton = true;
