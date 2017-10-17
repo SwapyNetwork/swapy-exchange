@@ -44,7 +44,7 @@ export class ProtocolAbstract {
     });
   }
 
-  public getEvents(eventUuid, eventName, cb, contractAddress) {
+  public getEvents(eventUuid, eventName, contractAddress, cb) {
     this.getContract(contractAddress).getPastEvents(eventName, {
       fromBlock: 0,
       toBlock: 'latest'

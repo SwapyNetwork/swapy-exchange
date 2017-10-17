@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InvestService } from './../invest/invest.service';
+import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../common/services/protocol/investment-asset.service';
 import { EventService } from '../../common/services/event.service';
 import { ExchangeProtocolService as ExchangeService } from '../../common/services/protocol/exchange.service';
 import { AGREE_INVESTMENT, TRANSFER_FUNDS } from '../../common/interfaces/events.interface';
@@ -15,7 +16,7 @@ export class DashboardComponent implements OnInit {
   public investments;
 
   constructor(private investService: InvestService, private eventService: EventService,
-    private exchangeService: ExchangeService) { }
+    private exchangeService: ExchangeService, private investmentAssetService: InvestmentAssetService) { }
 
   ngOnInit() {
     this.updateInvestments();
@@ -39,7 +40,7 @@ export class DashboardComponent implements OnInit {
       // @todo Do Another if when transferFunds gets implemented.
       if (agreeInvestmentEvents.length > 0) {
         agreeInvestmentEvents.forEach(event => {
-          this.exchangeService.getEvents(event.uuid, 'Agreements', event.data.contractAddress, (error, ev) => {
+          this.investmentAssetService.getEvents(event.uuid, 'Agreements', event.data.contractAddress, (error, ev) => {
             if (error) {
               console.error(error);
             } else if (ev.length > 0) {
