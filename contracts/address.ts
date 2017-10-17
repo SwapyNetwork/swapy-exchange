@@ -1,3 +1,3 @@
 export const addresses = {
-  swapyExchange: '0x2bcbba5d700fb17f14108002379ed88e411839c3',
+  swapyExchange: '0x75f1dcc22aa49ebf6d84d1e05576fa31411ea360',
 };
