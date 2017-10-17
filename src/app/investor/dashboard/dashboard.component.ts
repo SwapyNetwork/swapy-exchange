@@ -24,4 +24,8 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  getUpdatesFromBlockchain(){
+    
+  }
+
 }
