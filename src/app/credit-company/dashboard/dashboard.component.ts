@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { OfferService } from './offer/offer.service';
 import { ExchangeProtocolService as ExchangeService } from '../../common/services/protocol/exchange.service';
 import { EventService } from '../../common/services/event.service';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,8 +13,10 @@ export class DashboardComponent implements OnInit {
 
   public offers;
 
-  constructor(private offerService: OfferService,
-    private exchangeService: ExchangeService, private eventService: EventService) { }
+  constructor(private offerService: OfferService, private exchangeService: ExchangeService,
+    private eventService: EventService, private toastr: ToastsManager, vcr: ViewContainerRef) {
+      this.toastr.setRootViewContainerRef(vcr);
+    }
 
   ngOnInit() {
     this.updateOffers();

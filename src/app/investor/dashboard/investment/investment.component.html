@@ -69,8 +69,12 @@
               <td>{{statusToString(asset.status)}}</td> <!--@todo "status.toString()" -->
               <td><span *ngIf="!asset.contractAddress">-</span><a *ngIf="asset.contractAddress" href (click)="exploreContract(asset.contractAddress)">Explore</a></td>
               <td>
-                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.status == TX_AGREED"><i class="fa fa-check" aria-hidden="true"></i></button>
-                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="asset.status == TX_AGREED"><i class="fa fa-times" aria-hidden="true"></i></button>
+                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.status == TX_AGREED" (click)="transferFunds(asset)">
+                  <i class="fa fa-check" aria-hidden="true"></i>
+                </button>
+                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="asset.status == TX_AGREED">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
               </td>
             </tr>
 

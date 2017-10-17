@@ -17,8 +17,15 @@ import { InvestmentOfferProtocolService } from './common/services/protocol/inves
 import { InvestmentAssetProtocolService } from './common/services/protocol/investment-asset.service';
 import { LogoutService } from './common/services/logout.service';
 import { NgxElectronModule } from 'ngx-electron';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import { ToastOptions } from 'ng2-toastr';
 
-
+class CustomToastOption extends ToastOptions {
+  animate = 'flyRight';
+  positionClass = 'toast-bottom-left';
+  showCloseButton = true;
+}
 
 @NgModule({
   declarations: [
@@ -30,9 +37,12 @@ import { NgxElectronModule } from 'ngx-electron';
     FormsModule,
     HttpClientModule,
     NgxElectronModule,
+    BrowserAnimationsModule,
+    ToastModule.forRoot(),
   ],
   providers: [StorageService, HttpService, I18nService, LoadingService, Web3Service,
-    WalletService, EventService, ExchangeProtocolService, InvestmentOfferProtocolService, InvestmentAssetProtocolService, LogoutService],
+    WalletService, EventService, ExchangeProtocolService, InvestmentOfferProtocolService,
+    InvestmentAssetProtocolService, LogoutService, { provide: ToastOptions, useClass: CustomToastOption }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

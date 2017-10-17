@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { I18nService } from '../../common/services/i18n.service';
 import { ExchangeProtocolService as ExchangeProtocol } from '../../common/services/protocol/exchange.service';
 
 import { AddOfferService } from '../add-offer/add-offer.service';
-import { CreditCompanyComponent } from '../credit-company.component'
+import { CreditCompanyComponent } from '../credit-company.component';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-confirm-offer',
@@ -20,8 +21,12 @@ export class ConfirmOfferComponent implements OnInit {
     private router: Router,
     private i18nService: I18nService,
     private creditCompanyComponent: CreditCompanyComponent,
-    private exchangeProtocol: ExchangeProtocol
-  ) { }
+    private exchangeProtocol: ExchangeProtocol,
+    private vcr: ViewContainerRef,
+    private toastr: ToastsManager,
+  ) {
+    this.toastr.setRootViewContainerRef(vcr);
+  }
 
   ngOnInit() {
     this.offer = this.addOfferService.getCachedOffer();
@@ -33,7 +38,14 @@ export class ConfirmOfferComponent implements OnInit {
   confirmOffer() {
     this.addOfferService.addOffer(this.offer).then(
       data => {
-        this.exchangeProtocol.createOffer(data.event.uuid, this.offer.paybackMonths, this.offer.roi, [111, 222, 333, 444, 555]);
+        this.exchangeProtocol
+          .createOffer(data.event.uuid, this.offer.paybackMonths, this.offer.roi, [111, 222, 333, 444, 555], (success) => {
+            console.log(success);
+            this.toastr.success('Your offer was mined by the Ethereum blockchain.');
+          }, (error) => {
+            console.log(error);
+            this.toastr.error('An error occurred in the blockchain.');
+          });
         this.offer.uuid = data.offer.uuid;
         this.offer.address = data.offer.address;
         this.addOfferService.cacheOffer(this.offer);
