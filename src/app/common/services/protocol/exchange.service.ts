@@ -18,8 +18,9 @@ export class ExchangeProtocolService extends ProtocolAbstract {
     return super.signAndSendTransaction(encoded, addresses.swapyExchange);
   }
 
-  public getEvents(eventUuid, eventName, cb) {
-    return super.getEvents(eventUuid, eventName, cb, addresses.swapyExchange);
+  public getEvents(eventUuid, eventName, contractAddress, cb) {
+    contractAddress = contractAddress == null ? addresses.swapyExchange : contractAddress;
+    return super.getEvents(eventUuid, eventName, cb, contractAddress);
   }
 
   public createOffer(id: string, payback: number, grossReturn: number, assets: number[]) {

@@ -14,7 +14,7 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
 
   public agreeInvestment(id: string, investor: string, agreementTermsHash: string, value: number, contractAddress: string) {
     const encoded = super.getContract(contractAddress).methods.agreeInvestment(id, investor,
-      this.web3Service.getInstance().utils.fromAscii(agreementTermsHash), value).encodeABI();
+      this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash), value).encodeABI();
     super.signAndSendTransaction(encoded, contractAddress);
   }
 
