@@ -10,8 +10,12 @@ export class EventService {
     return this.http.get('event/company');
   }
 
-  update(events) {
-    return this.http.post('event/update', events);
+  findByInvestor() {
+    return this.http.get('event/investor');
   }
+
+update(events) {
+  return this.http.post('event/update', events);
+}
 
 }

@@ -19,6 +19,18 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
     super.signAndSendTransaction(encoded, contractAddress);
   }
 
+  public getContract(address) {
+    this.contract = new this.web3.eth.Contract(this.abi, address);
+    return this.contract;
+  }
+
+  public getEvents(eventUuid, eventName, contractAddress, cb) {
+    this.getContract(contractAddress).getPastEvents(eventName, {
+      fromBlock: 0,
+      toBlock: 'latest'
+    }, (error, events) => { cb(error, events.filter(event => event.returnValues._id === eventUuid)) });
+  }
+
   public transferFunds(id: string, agreementTermsHash: string, contractAddress: string, value: number) {
     const encoded = super.getContract(contractAddress).methods.transferFunds(id,
       this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash)).encodeABI();

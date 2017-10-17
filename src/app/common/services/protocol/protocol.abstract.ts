@@ -47,12 +47,8 @@ export class ProtocolAbstract {
     });
   }
 
-  public getEvents(eventUuid, cb, contractAddress) {
-    // new this.web3.eth.Contract(ia.abi, '0x5de6b9a0ccb34815a895848dfc619c1c6ebccdb9').getPastEvents('Agreements', {
-    //   fromBlock: 0,
-    //   toBlock: 'latest'
-    // }, (error, events) => {console.log(events)});
-    this.getContract(contractAddress).getPastEvents('Offers', {
+  public getEvents(eventUuid, eventName, contractAddress, cb) {
+    this.getContract(contractAddress).getPastEvents(eventName, {
       fromBlock: 0,
       toBlock: 'latest'
     }, (error, events) => { console.log(events); cb(error, events.filter(event => event.returnValues._id === eventUuid)) });
