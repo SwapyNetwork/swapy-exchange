@@ -14,17 +14,17 @@ export class ExchangeProtocolService extends ProtocolAbstract {
     return super.getContract(addresses.swapyExchange);
   }
 
-  public signAndSendTransaction(encoded: string) {
-    return super.signAndSendTransaction(encoded, addresses.swapyExchange);
+  public signAndSend(encoded: string, success?: Function, error?: Function) {
+    return super.signAndSendTransaction(encoded, addresses.swapyExchange, null, success, error);
   }
 
   public getEvents(eventUuid, eventName, cb) {
     return super.getEvents(eventUuid, eventName, addresses.swapyExchange, cb);
   }
 
-  public createOffer(id: string, payback: number, grossReturn: number, assets: number[]) {
+  public createOffer(id: string, payback: number, grossReturn: number, assets: number[], success?: Function, error?: Function) {
     const encoded = this.getProtocolContract().methods.createOffer(id, payback, grossReturn * 10000, assets).encodeABI();
-    this.signAndSendTransaction(encoded);
+    this.signAndSend(encoded, success, error);
   }
 
 }

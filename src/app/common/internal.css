@@ -1,7 +1,7 @@
 nav {
   padding-right: 10px;
   font-family: 'Roboto', sans-serif, helvetica;
-} 
+}
 body {
   padding-top: 0px;
   font-family: 'Roboto', sans-serif, helvetica;
@@ -22,12 +22,12 @@ body {
 }
 .navbar-collapse {
     background-color: #393939;
-    padding: 0px 0px 10px 50px;  
+    padding: 0px 0px 10px 50px;
     max-height: 640px !important;
 }
 .navbar-inverse .navbar-nav>.open>a:focus {
     background-color: #3f3f3f;
-} 
+}
 .sw-badge {
     background-color: #f7601d;
     font-weight: 100;
@@ -88,7 +88,7 @@ body {
 .sw-funds {
     text-align: right;
     padding: 0px 0px 0px 0px;
-    
+
 }
 .sw-funds-value {
     font-weight: 400;
@@ -134,6 +134,7 @@ body {
   position: absolute;
 }
 .sw-top-sidebar {
+    height: 290px;
     margin: 0px;
     padding: 0px;
 }
@@ -160,7 +161,7 @@ body {
     background: repeating-linear-gradient(90deg,#4a4a4a,#4a4a4a 5px,#393939 5px,#393939 10px);
     padding: 35px 0px 0px 0px;
     max-height: 5px !important;
-} 
+}
 .sw-sidebar-notifications {
     background-color: #4a4a4a;
     text-align: left;
@@ -183,7 +184,7 @@ body {
     font-style: italic;
 }
 .sw-scrollbar {
-    height: calc(100vh - 277px) !important; /*Height value is defined by 100% of screen height size minus 277px*/
+    height: calc(100vh - 400px) !important; /*Height value is defined by 100% of screen height size minus 277px*/
     overflow-y:auto;
 }
 .sw-sidebar-bottom {
@@ -252,11 +253,12 @@ body {
 }
 .sw-scrollbar2 {
     height: calc(100vh - 115px) !important; /*Height value is defined by 100% of screen height size minus 235px*/
-    overflow-y:auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* ////////////////////// Titles /////////////// */
-.sw-box-title {            
+.sw-box-title {
     font-weight: 500;
     font-size: 21px;
     padding-top: 0px;
@@ -277,7 +279,7 @@ body {
     text-decoration: none !important;
 }
 /* ////////////////////// Text styles /////////////// */
-.sw-box-text {              
+.sw-box-text {
     font-weight: 300 !important;
     font-size: 14px;
 }
@@ -289,14 +291,14 @@ body {
     color: #00adef;
 }
 /* ////////////////////// STAR full & empty /////////////////////// */
-.sw-star-full {              
+.sw-star-full {
     color: #fcd233;
 }
 .sw-star-empty {
     color: #8e8e8e;
 }
 /* ////////////////////// Performance: High, Medium, Low - COLORS /////////////// */
-.sw-high {                   
+.sw-high {
     color: #00adef;
     font-weight: 500;
 }
@@ -309,7 +311,7 @@ body {
     font-weight: 500;
 }
 /* ////////////////////// Since date /////////////// */
-.sw-box-since {              
+.sw-box-since {
     font-weight: 300;
     font-size: 14px;
     padding: 5px 20px;
@@ -325,19 +327,19 @@ body {
 .sw-company-logo-right {
     margin: 0 0 0 -30px;
     border: 1px solid #CCC;
-    padding: 5px 0; 
+    padding: 5px 0;
     text-align: center;
 }
-.sw-company-logo-right img { 
+.sw-company-logo-right img {
     height: 49px;/* //// Limit the size of logo images uploaded //// */
 }
 .sw-company-logo-left {
     margin: 0 0 0 15px;
     border: 1px solid #CCC;
-    padding: 5px 0; 
+    padding: 5px 0;
     text-align: center;
 }
-.sw-company-logo-left img { 
+.sw-company-logo-left img {
     height: 49px;/* //// Limit the size of logo images uploaded //// */
 }
 @media only screen and (max-width: 765px){ .sw-company-logo-right { display: none;} }
@@ -355,14 +357,14 @@ body {
     font-size: 14px;
     font-weight: 300;
 }
-.sw-btn-ghost1 {  
+.sw-btn-ghost1 {
     background-color: #00adef;
     border: 1px solid #00adef;
     color: #FFF;
-    padding: 10px 10px; 
+    padding: 10px 10px;
 
 }
-.sw-btn-ghost1:hover {  
+.sw-btn-ghost1:hover {
     background-color: #00baef;
     border: 1px solid #00baef;
     color: #FFF;
@@ -373,14 +375,14 @@ body {
 .sw-btn-ghost1:focus {
     color: #FFF;
 }
-.sw-btn-ghost2 {  
+.sw-btn-ghost2 {
     background-color: #FFF;
     border: 1px solid #8d8d8d;
     color: #8d8d8d;
-    padding: 10px 10px; 
+    padding: 10px 10px;
 
 }
-.sw-btn-ghost2:hover {  
+.sw-btn-ghost2:hover {
     background-color: #FFF;
     border: 1px solid #333;
     color: #333;
@@ -519,7 +521,7 @@ input.cmn-toggle-round:checked + label:after {
    padding: 0;
    width: 5em;
    height: 5em;
-   background-color: #CCC; 
+   background-color: #CCC;
    border-radius: 50%;
    line-height: 5em;
 }
@@ -547,13 +549,13 @@ input.cmn-toggle-round:checked + label:after {
     color: #ffa200;
     z-index: 2;
 }
-.sw-left-half-clipper { 
+.sw-left-half-clipper {
    /* a round circle */
    border-radius: 50%;
    width: 5em;
    height: 5em;
    position: absolute; /* needed for clipping */
-   clip: rect(0, 5em, 5em, 2.5em); /* clips the whole left half*/ 
+   clip: rect(0, 5em, 5em, 2.5em); /* clips the whole left half*/
 }
 /* when p>50, don't clip left half*/
 .sw-progress-circle.sw-over50 .sw-left-half-clipper {
@@ -562,7 +564,7 @@ input.cmn-toggle-round:checked + label:after {
 .sw-value-bar {
    /*This is an overlayed square, that is made round with the border radius,
    then it is cut to display only the left half, then rotated clockwise
-   to escape the outer clipping path.*/ 
+   to escape the outer clipping path.*/
    position: absolute; /*needed for clipping*/
    clip: rect(0, 2.5em, 5em, 0);
    width: 5em;
@@ -571,7 +573,7 @@ input.cmn-toggle-round:checked + label:after {
    border: 0.45em solid #ffa200; /*The border is 0.35 but making it larger removes visual artifacts */
    /*background-color: #4D642D;*/ /* for debug */
    box-sizing: border-box;
-  
+
 }
 /* Progress bar filling the whole right half for values above 50% */
 .sw-progress-circle.sw-over50 .sw-first50-bar {

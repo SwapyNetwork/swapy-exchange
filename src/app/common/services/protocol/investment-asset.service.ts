@@ -14,7 +14,8 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
 
   public agreeInvestment(id: string, investor: string, agreementTermsHash: string, value: number, contractAddress: string) {
     const encoded = super.getContract(contractAddress).methods.agreeInvestment(id, investor,
-      this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash), value).encodeABI();
+      this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash),
+      this.web3Service.getInstance().utils.toWei(value)).encodeABI();
     super.signAndSendTransaction(encoded, contractAddress);
   }
 
@@ -29,4 +30,11 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
       toBlock: 'latest'
     }, (error, events) => { cb(error, events.filter(event => event.returnValues._id === eventUuid)) });
   }
+
+  public transferFunds(id: string, agreementTermsHash: string, contractAddress: string, value: number) {
+    const encoded = super.getContract(contractAddress).methods.transferFunds(id,
+      this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash)).encodeABI();
+    super.signAndSendTransaction(encoded, contractAddress, this.web3Service.getInstance().utils.toWei(value));
+  }
+
 }

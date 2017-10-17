@@ -167,10 +167,59 @@ export const SwapyExchangeInterface = {
         }
       },
       "links": {},
-      "address": "0x2bcbba5d700fb17f14108002379ed88e411839c3",
-      "updated_at": 1508191411407
+      "address": "0x75f1dcc22aa49ebf6d84d1e05576fa31411ea360",
+      "updated_at": 1508275578790
+    },
+    "4": {
+      "events": {
+        "0x8bdadff6ba7b2efbeeb5b0859dcb6b08ad033a666984a347866a45bb356f0b00": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "_id",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "_from",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "_protocolVersion",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "_offerAddress",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "_paybackMonths",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "_grossReturn",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "_assets",
+              "type": "address[]"
+            }
+          ],
+          "name": "Offers",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xd65f39450f11f873fcd269279027d895edf80c10",
+      "updated_at": 1508271340976
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1508191411407
+  "updated_at": 1508275578790
 };
