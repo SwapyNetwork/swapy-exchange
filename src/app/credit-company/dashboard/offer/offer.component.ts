@@ -3,7 +3,10 @@ import { Offer } from '../../../common/interfaces/offer.interface';
 import { I18nService } from '../../../common/services/i18n.service';
 import { OfferService } from './offer.service';
 import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
-import { OPEN, SOLD, PENDING, TX_AGREEMENT_PENDING } from '../../../common/interfaces/offerAssetStatus.interface';
+import {
+  TX_CREATION_PENDING, TX_CREATED, LOCKED, TX_AGREEMENT_PENDING,
+  TX_AGREED, TX_INVEST_PENDING, TX_INVESTED
+} from '../../../common/interfaces/offerAssetStatus.interface';
 
 @Component({
   selector: 'app-dashboard-offer',
@@ -12,9 +15,13 @@ import { OPEN, SOLD, PENDING, TX_AGREEMENT_PENDING } from '../../../common/inter
 })
 export class OfferComponent implements OnInit {
 
-  public OPEN = OPEN;
-  public SOLD = SOLD;
-  public PENDING = PENDING;
+  public TX_CREATION_PENDING = TX_CREATION_PENDING;
+  public TX_CREATED = TX_CREATED;
+  public LOCKED = LOCKED;
+  public TX_AGREEMENT_PENDING = TX_AGREEMENT_PENDING;
+  public TX_AGREED = TX_AGREED;
+  public TX_INVEST_PENDING = TX_INVEST_PENDING;
+  public TX_INVESTED = TX_INVESTED;
 
   @Input() public offer: Offer;
   @Input() public collapsed: boolean;
@@ -24,7 +31,7 @@ export class OfferComponent implements OnInit {
   constructor(private assetProtocol: InvestmentAssetService, private offerService: OfferService,
     private i18nService: I18nService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   public calculatePaybackDate(asset) {
     const paybackDate = new Date(asset.investedIn);
@@ -43,15 +50,44 @@ export class OfferComponent implements OnInit {
     const value = asset.value / ethusd;
 
     this.offerService.acceptInvestor(offerUuid, asset).then(data => {
-        this.assetProtocol.agreeInvestment(data.event.uuid, asset.investorWallet, agreementTermsHash, value, asset.contractAddress);
-        asset.status = TX_AGREEMENT_PENDING;
+      this.assetProtocol.agreeInvestment(data.event.uuid, asset.investorWallet, agreementTermsHash, value, asset.contractAddress);
+      asset.status = TX_AGREEMENT_PENDING;
     }, error => {
       const namespace = 'agree-investment';
 
-      this.i18nService.doTranslateList(namespace, error).then( res => {
+      this.i18nService.doTranslateList(namespace, error).then(res => {
         this.errorMessages = res; // errorMessages is a list of error strings
       });
     });
+  }
+
+  public statusToString(status) {
+    let statusString;
+    switch (status) {
+      case this.TX_CREATION_PENDING:
+        statusString = 'Pending Ethereum confirmation';
+        break;
+      case this.TX_CREATED:
+        statusString = 'Available';
+        break;
+      case this.LOCKED:
+        statusString = 'Pending your confirmation';
+        break;
+      case this.TX_AGREEMENT_PENDING:
+        statusString = 'Pending Ethereum confirmation';
+        break;
+      case this.TX_AGREED:
+        statusString = 'Pending investor transfer';
+        break;
+      case this.TX_INVEST_PENDING:
+        statusString = 'Pending Ethereum confirmation from investor transfer';
+        break;
+      case this.TX_INVESTED:
+        statusString = 'Sold';
+        break;
+    }
+    return statusString;
+
   }
 
 }
