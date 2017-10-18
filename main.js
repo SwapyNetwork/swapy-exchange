@@ -69,7 +69,7 @@ const Store = require('electron-store');
 const sha1 = require('sha1');
 
 function createElectronStore(fileName){
-  const file = fs.readFileSync('./env.json', 'utf-8');
+  const file = fs.readFileSync(path.join(__dirname, './env.json'), 'utf-8');
   const secret = JSON.parse(file.toString('utf8')).STORE_SECRET;
   const store = new Store({ 'name': fileName, 'encryptionKey': secret });
   return store;;
