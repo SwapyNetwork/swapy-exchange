@@ -23,6 +23,7 @@ export class TfaValidationComponent implements OnInit {
     thousandsSeparatorSymbol: '',
     allowDecimal: false,
     integerLimit: 6,
+    allowLeadingZeroes: true,
   });
 
   constructor(private tfaService: TfaService, private router: Router,
