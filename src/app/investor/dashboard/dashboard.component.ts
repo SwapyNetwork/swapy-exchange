@@ -35,42 +35,28 @@ export class DashboardComponent implements OnInit {
 
   getUpdatesFromBlockchain() {
     this.eventService.findPendingByInvestor().then(events => {
-      const agreeInvestmentEvents = (events as [any]).filter(event => event.eventType === AGREE_INVESTMENT);
-      const transferFundsEvents = (events as [any]).filter(event => event.eventType === TRANSFER_FUNDS);
-      // @todo Do Another if when transferFunds gets implemented.
-      if (agreeInvestmentEvents.length > 0) {
-        agreeInvestmentEvents.forEach(event => {
-          this.investmentAssetService.getEvents(event.uuid, 'Agreements', event.data.contractAddress, (error, ev) => {
-            if (error) {
-              console.error(error);
-            } else if (ev.length > 0) {
-              console.log(ev);
-              this.eventService.updateMined({ eventUuid: event.uuid, eventContent: ev[ev.length - 1].returnValues }).then(res => {
-                this.updateInvestments();
-              }).catch(err => {
-                console.error(err);
-              });
-            }
-          });
-        })
-      }
-
-      if (transferFundsEvents.length > 0) {
-        transferFundsEvents.forEach(event => {
-          this.investmentAssetService.getEvents(event.uuid, 'Transferred', event.data.contractAddress, (error, ev) => {
-            if (error) {
-              console.error(error);
-            } else if (ev.length > 0) {
-              console.log(ev);
-              this.eventService.updateMined({ eventUuid: event.uuid, eventContent: ev[ev.length - 1].returnValues }).then(res => {
-                this.updateInvestments();
-              }).catch(err => {
-                console.error(err);
-              });
-            }
-          });
-        })
-      }
+      const createOfferEvents = (events as [any]).forEach(event => {
+        let eventType = '';
+        switch (event.eventType) {
+          case AGREE_INVESTMENT:
+            eventType = 'Agreements';
+            break;
+          case TRANSFER_FUNDS:
+            eventType = 'Transferred';
+            break;
+        }
+        this.investmentAssetService.getEvents(event.uuid, eventType, event.data.contractAddress, (error, ev) => {
+          if (error) {
+            console.error(error);
+          } else if (ev.length > 0) {
+            this.eventService.updateMined({ eventUuid: event.uuid, eventContent: ev[ev.length - 1].returnValues }).then(res => {
+              this.updateInvestments();
+            }).catch(err => {
+              console.error(err);
+            });
+          }
+        });
+      });
     });
   }
 

@@ -79,12 +79,12 @@ export class InvestmentComponent implements OnInit {
   }
 
   public transferFunds(investment: any, asset: any) {
-    console.log(investment, asset)
     this.investService.transferFunds({
       offerUuid: investment.offerUuid,
       assetUuid: asset.uuid,
       companyUuid: investment.companyUuid,
     }).then(res => {
+      asset.status = this.TX_INVEST_PENDING;
       const ethusd = 340.0;
       const agreementTermsHash = '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed';
       const value = asset.value / ethusd;
