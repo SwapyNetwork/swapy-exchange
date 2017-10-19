@@ -17,10 +17,6 @@ export class InvestmentComponent implements OnInit {
 
   @Input() public investment: Invest;
   @Input() public collapsed: boolean;
-
-  public OPEN = OPEN;
-  public SOLD = SOLD;
-  public PENDING = PENDING;
   //
   public LOCKED = LOCKED;
   public TX_AGREEMENT_PENDING = TX_AGREEMENT_PENDING;
@@ -56,7 +52,7 @@ export class InvestmentComponent implements OnInit {
         statusString = 'Pending ' + this.investment.companyName + '\'s confirmation';
         break;
       case this.TX_AGREEMENT_PENDING:
-        statusString = 'Pending ' + this.investment.companyName + '\'s confirmation';
+        statusString = 'Pending Ethereum confirmation';
         break;
       case this.TX_AGREED:
         statusString = 'Asset accepted by ' + this.investment.companyName;

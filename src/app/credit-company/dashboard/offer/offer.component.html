@@ -15,7 +15,7 @@
       </div>
       <div class="col-sm-4 col-md-4">
          <p class="sw-box-text sw-collapse-icons">
-           <i *ngFor="let asset of offer.assets" [ngClass]="{'fa fa-circle sw-blue1': true, 'sw-blue1': asset.status !== SOLD}" aria-hidden="true">&nbsp;</i>
+           <i *ngFor="let asset of offer.assets" [ngClass]="{'fa fa-circle sw-blue1': true, 'sw-blue1': asset.status !== TX_INVESTED}" aria-hidden="true">&nbsp;</i>
          </p>
       </div>
    </div>
@@ -73,13 +73,13 @@
            <tr *ngFor="let asset of offer.assets, let i = index">
               <td>{{i + 1}}</td>
               <td>{{asset.value | currency:'USD':true:'.2'}}</td>
-              <td>{{asset.status == OPEN ? 'Available' : (asset.status == SOLD ? 'Sold' : 'Pending confirmation')}}</td>
+              <td>{{statusToString(asset.status)}}</td>
               <td>{{asset.investorName == null ? '-' : asset.investorName }}</td>
               <td><span *ngIf="!asset.contractAddress">-</span><a *ngIf="asset.contractAddress" (click)="exploreContract(asset.contractAddress)">Explore</a></td>
               <td>{{asset.investedIn == null ? '-' : (calculatePaybackDate(asset) | date: 'yyyy-MM-dd') }}</td>
               <td>
-                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.investedIn && asset.status === 2" (click)="acceptInvestor(offer.uuid, asset)"><i class="fa fa-check" aria-hidden="true"></i></button>
-                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="asset.investedIn && asset.status === 2"><i class="fa fa-times" aria-hidden="true"></i></button>
+                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.investedIn && asset.status === LOCKED" (click)="acceptInvestor(offer.uuid, asset)"><i class="fa fa-check" aria-hidden="true"></i></button>
+                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="asset.investedIn && asset.status === LOCKED"><i class="fa fa-times" aria-hidden="true"></i></button>
               </td>
            </tr>
         </table>
