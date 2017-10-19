@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Invest } from '../../invest/invest.interface';
-import { OPEN, SOLD, PENDING, LOCKED, TX_AGREEMENT_PENDING,
-  TX_AGREED, TX_INVEST_PENDING, TX_INVESTED } from '../../../common/interfaces/offerAssetStatus.interface';
+import { LOCKED, TX_AGREEMENT_PENDING, TX_AGREED,
+  TX_INVEST_PENDING, TX_INVESTED } from '../../../common/interfaces/offerAssetStatus.interface';
 import * as env from '../../../../../env.json';
 import { ElectronService } from 'ngx-electron';
 import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
@@ -15,10 +15,6 @@ export class InvestmentComponent implements OnInit {
 
   @Input() public investment: Invest;
   @Input() public collapsed: boolean;
-
-  public OPEN = OPEN;
-  public SOLD = SOLD;
-  public PENDING = PENDING;
   //
   public LOCKED = LOCKED;
   public TX_AGREEMENT_PENDING = TX_AGREEMENT_PENDING;
@@ -55,7 +51,7 @@ export class InvestmentComponent implements OnInit {
         statusString = 'Pending ' + this.investment.companyName + '\'s confirmation';
         break;
       case this.TX_AGREEMENT_PENDING:
-        statusString = 'Pending ' + this.investment.companyName + '\'s confirmation';
+        statusString = 'Pending Ethereum confirmation';
         break;
       case this.TX_AGREED:
         statusString = 'Asset accepted by ' + this.investment.companyName;
