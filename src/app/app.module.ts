@@ -9,6 +9,7 @@ import { StorageService } from './common/services/storage.service';
 import { HttpService } from './common/services/http.service';
 import { I18nService } from './common/services/i18n.service';
 import { LoadingService } from './common/services/loading.service';
+import { LinkService } from './common/services/link.service';
 import { Web3Service } from './common/services/web3.service';
 import { WalletService } from './common/services/wallet.service';
 import { EventService } from './common/services/event.service';
@@ -36,7 +37,7 @@ import { CustomToastOption } from './common/CustomToastOption';
     BrowserAnimationsModule,
     ToastModule.forRoot(),
   ],
-  providers: [StorageService, HttpService, I18nService, LoadingService, Web3Service,
+  providers: [StorageService, HttpService, I18nService, LoadingService, LinkService, Web3Service,
     WalletService, EventService, ExchangeProtocolService, InvestmentOfferProtocolService,
     InvestmentAssetProtocolService, LogoutService, ToastrService, { provide: ToastOptions, useClass: CustomToastOption }],
   bootstrap: [AppComponent]

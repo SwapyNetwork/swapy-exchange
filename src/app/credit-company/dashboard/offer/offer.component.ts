@@ -3,11 +3,14 @@ import { Offer } from '../../../common/interfaces/offer.interface';
 import { I18nService } from '../../../common/services/i18n.service';
 import { ToastrService } from '../../../common/services/toastr.service';
 import { OfferService } from './offer.service';
+import { LinkService } from '../../../common/services/link.service';
 import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
 import {
   TX_CREATION_PENDING, TX_CREATED, LOCKED, TX_AGREEMENT_PENDING,
   TX_AGREED, TX_INVEST_PENDING, TX_INVESTED
 } from '../../../common/interfaces/offerAssetStatus.interface';
+
+import * as env from '../../../../../env.json';
 
 @Component({
   selector: 'app-dashboard-offer',
@@ -24,13 +27,15 @@ export class OfferComponent implements OnInit {
   public TX_INVEST_PENDING = TX_INVEST_PENDING;
   public TX_INVESTED = TX_INVESTED;
 
+  public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
+
   @Input() public offer: Offer;
   @Input() public collapsed: boolean;
 
   public errorMessages: any[] = [];
 
   constructor(private assetProtocol: InvestmentAssetService, private offerService: OfferService,
-    private toastrService: ToastrService, private i18nService: I18nService) { }
+    private toastrService: ToastrService, private i18nService: I18nService, private linkService: LinkService) { }
 
   ngOnInit() { }
 
@@ -70,6 +75,11 @@ export class OfferComponent implements OnInit {
     });
   }
 
+  public exploreContract(address: string) {
+    const url = this.explorerUrl + address;
+    this.linkService.openLink(url);
+  }
+
   public statusToString(status) {
     let statusString;
     switch (status) {
@@ -96,7 +106,6 @@ export class OfferComponent implements OnInit {
         break;
     }
     return statusString;
-
   }
 
 }
