@@ -34,14 +34,14 @@ export class DashboardComponent implements OnInit {
   }
 
   getUpdatesFromBlockchain() {
-    this.eventService.findByCompany().then(events => {
+    this.eventService.findPendingByCompany().then(events => {
       (events as [any]).forEach(event => {
         this.exchangeService.getEvents(event.uuid, 'Offers', (error, ev) => {
           if (error) {
             console.log(error);
           } else if (ev.length > 0) {
             console.log(ev);
-            this.offerService.updateMinedOffers({ eventUuid: event.uuid, eventContent: ev[ev.length - 1] }).then(res => {
+            this.eventService.updateMined({ eventUuid: event.uuid, eventContent: ev[ev.length - 1].returnValues }).then(res => {
               this.updateOffers();
             }).catch(err => {
               console.log(err);

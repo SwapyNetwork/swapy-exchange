@@ -42,4 +42,8 @@ export class InvestService {
     return this.httpService.put('investment/minedAgreement', event);
   }
 
+  public transferFunds(data) {
+    return this.httpService.post('investment/transferFunds', data);
+  }
+
 }

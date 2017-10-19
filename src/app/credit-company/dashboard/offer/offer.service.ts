@@ -27,8 +27,4 @@ export class OfferService {
     return this.httpService.put('offers/acceptInvestor', data);
   }
 
-  updateMinedOffers(offer): Promise<any> {
-    return this.httpService.put('offers/minedOffer', offer);
-  }
-
 }
