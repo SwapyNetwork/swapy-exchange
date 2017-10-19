@@ -576,6 +576,11 @@ input.cmn-toggle-round:checked + label:after {
    box-sizing: border-box;
 
 }
+.sw-accept-decline {
+  width: 42px;
+  height: 42px;
+  border-radius: 50% !important;
+}
 /* Progress bar filling the whole right half for values above 50% */
 .sw-progress-circle.sw-over50 .sw-first50-bar {
    /*Progress bar for the first 50%, filling the whole right half*/

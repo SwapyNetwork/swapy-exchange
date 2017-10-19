@@ -4,9 +4,13 @@
       <div class="col-sm-8 col-md-8">
          <h4 class="panel-title">
            <a role="button" data-toggle="collapse" data-parent="#accordion" (click)="toggleCollapse()" aria-expanded="true" aria-controls="collapseOne">
-             {{offer.raisingAmount | currency}} - {{offer.companyName}}
-             <div><a *ngIf="offer.offerContractAddress" class="sw-box-text">{{offer.offerContractAddress}}</a></div>
-         </a>
+             {{offer.raisingAmount | currency}}
+             <span class="sw-box-text">- {{offer.companyName}}
+               <div class="sw-box-text">
+                 {{offer.offerContractAddress}}
+               </div>
+             </span>
+           </a>
          </h4>
       </div>
       <div class="col-sm-4 col-md-4">

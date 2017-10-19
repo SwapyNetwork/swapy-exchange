@@ -2,9 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Invest } from '../../invest/invest.interface';
 import { OPEN, SOLD, PENDING, LOCKED, TX_AGREEMENT_PENDING,
   TX_AGREED, TX_INVEST_PENDING, TX_INVESTED } from '../../../common/interfaces/offerAssetStatus.interface';
-import * as env from '../../../../../env.json';
-import { ElectronService } from 'ngx-electron';
+import { LinkService } from '../../../common/services/link.service';
 import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
+
+import * as env from '../../../../../env.json';
 
 @Component({
   selector: 'app-dashboard-investment',
@@ -28,7 +29,7 @@ export class InvestmentComponent implements OnInit {
 
   public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
 
-  constructor(private electronService: ElectronService,
+  constructor(private linkService: LinkService,
   private investmentAssetService: InvestmentAssetService) { }
 
   ngOnInit() {
@@ -74,7 +75,7 @@ export class InvestmentComponent implements OnInit {
 
   public exploreContract(address: string) {
     const url = this.explorerUrl + address;
-    this.electronService.shell.openExternal(url);
+    this.linkService.openLink(url);
   }
 
   public transferFunds(asset: any) {

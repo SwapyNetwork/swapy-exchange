@@ -2,10 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Offer } from '../../../common/interfaces/offer.interface';
 import { I18nService } from '../../../common/services/i18n.service';
 import { OfferService } from './offer.service';
-import * as env from '../../../../../env.json';
-import { ElectronService } from 'ngx-electron';
+import { LinkService } from '../../../common/services/link.service';
 import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
 import { OPEN, SOLD, PENDING, TX_AGREEMENT_PENDING } from '../../../common/interfaces/offerAssetStatus.interface';
+
+import * as env from '../../../../../env.json';
 
 @Component({
   selector: 'app-dashboard-offer',
@@ -26,7 +27,7 @@ export class OfferComponent implements OnInit {
   public errorMessages: any[] = [];
 
   constructor(private assetProtocol: InvestmentAssetService, private offerService: OfferService,
-    private i18nService: I18nService, private electronService: ElectronService) { }
+    private i18nService: I18nService, private linkService: LinkService) { }
 
   ngOnInit() {}
 
@@ -60,7 +61,7 @@ export class OfferComponent implements OnInit {
 
   public exploreContract(address: string) {
     const url = this.explorerUrl + address;
-    this.electronService.shell.openExternal(url);
+    this.linkService.openLink(url);
   }
 
 }
