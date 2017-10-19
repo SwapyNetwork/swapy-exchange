@@ -8,7 +8,7 @@
       </div>
       <div class="col-sm-4 col-md-4">
          <p class="sw-box-text sw-collapse-icons">
-           <i *ngFor="let asset of offer.assets" [ngClass]="{'fa fa-circle sw-blue1': true, 'sw-blue1': asset.status !== SOLD}" aria-hidden="true">&nbsp;</i>
+           <i *ngFor="let asset of offer.assets" [ngClass]="{'fa fa-circle sw-blue1': true, 'sw-blue1': asset.status !== TX_INVESTED}" aria-hidden="true">&nbsp;</i>
          </p>
       </div>
    </div>

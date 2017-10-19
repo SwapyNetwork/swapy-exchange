@@ -4,7 +4,10 @@ import { OfferService } from '../offers/offer.service';
 import { Offer } from '../../common/interfaces/offer.interface';
 import { Invest } from '../invest/invest.interface';
 import { InvestService } from '../invest/invest.service';
-import { OPEN, SOLD, PENDING } from '../../common/interfaces/offerAssetStatus.interface';
+import {TX_CREATION_PENDING, TX_CREATED,
+  LOCKED, TX_AGREEMENT_PENDING, TX_AGREED,
+  TX_INVEST_PENDING, TX_INVESTED
+} from '../../common/interfaces/offerAssetStatus.interface';
 
 @Component({
   selector: 'app-offer-details',
@@ -13,9 +16,13 @@ import { OPEN, SOLD, PENDING } from '../../common/interfaces/offerAssetStatus.in
 })
 export class OfferDetailsComponent implements OnInit {
 
-  public OPEN = OPEN;
-  public SOLD = SOLD;
-  public PENDING = PENDING;
+  public TX_CREATION_PENDING = TX_CREATION_PENDING;
+  public TX_CREATED = TX_CREATED;
+  public LOCKED = LOCKED;
+  public TX_AGREEMENT_PENDING = TX_AGREEMENT_PENDING;
+  public TX_AGREED = TX_AGREED;
+  public TX_INVEST_PENDING = TX_INVEST_PENDING;
+  public TX_INVESTED = TX_INVESTED;
 
   public offer: Offer;
 
@@ -24,10 +31,11 @@ export class OfferDetailsComponent implements OnInit {
   public totalAssetsValue: number = 0;
   public offerIndex: number = 0;
 
-  public errorMessages:string[] = [];
+  public errorMessages: string[] = [];
 
 
-  constructor(private offerService: OfferService, private activatedRoute: ActivatedRoute, private router: Router, private investService: InvestService) {}
+  constructor(private offerService: OfferService, private activatedRoute: ActivatedRoute,
+    private router: Router, private investService: InvestService) { }
 
   ngOnInit() {
     let offers = this.offerService.getCachedOffers();
@@ -53,23 +61,47 @@ export class OfferDetailsComponent implements OnInit {
     });
   }
 
-  getSelectedAssets(){
-    return this.offer.assets.filter((asset, index) => this.assets[index] == true);
+  getSelectedAssets() {
+    return this.offer.assets.filter((asset, index) => this.assets[index] === true);
   }
 
-  setTotalAssetsValue(){
-    let selectedAssets = this.getSelectedAssets();
+  setTotalAssetsValue() {
+    const selectedAssets = this.getSelectedAssets();
     this.totalAssetsValue = selectedAssets.map(asset => asset.value)
-                                .reduce((total, current) => (total + current), 0);
+      .reduce((total, current) => (total + current), 0);
   }
 
-  validateInput(){
+  validateInput() {
     this.errorMessages = [];
-    if(this.getSelectedAssets().length == 0){
+    if (this.getSelectedAssets().length === 0) {
       this.errorMessages.push('Please, select at least one asset.');
     }
 
-    return this.errorMessages.length == 0;
+    return this.errorMessages.length === 0;
+
+  }
+
+  statusToString(status) {
+    let statusString;
+    switch (status) {
+      case this.TX_CREATION_PENDING:
+        statusString = 'Pending Ethereum confirmation';
+        break;
+      case this.TX_CREATED:
+        statusString = 'Available';
+        break;
+      case this.LOCKED:
+      case this.TX_AGREEMENT_PENDING:
+      case this.TX_AGREED:
+      case this.TX_INVEST_PENDING:
+        statusString = 'Pending confirmation';
+        break;
+      case this.TX_INVESTED:
+        statusString = 'Sold';
+        break;
+    }
+
+    return statusString;
 
   }
 
@@ -78,8 +110,8 @@ export class OfferDetailsComponent implements OnInit {
       let offerAssets = this.getSelectedAssets();
       let assets = [];
 
-      for (const offerAsset of offerAssets){
-        assets.push({uuid: offerAsset.uuid, value: offerAsset.value});
+      for (const offerAsset of offerAssets) {
+        assets.push({ uuid: offerAsset.uuid, value: offerAsset.value });
       }
 
       const invest: Invest = {
