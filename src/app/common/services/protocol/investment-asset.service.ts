@@ -12,11 +12,11 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
 
   protected abi = InvestmentAsset.abi;
 
-  public agreeInvestment(id: string, investor: string, agreementTermsHash: string, value: number, contractAddress: string) {
+  public agreeInvestment(id: string, investor: string, agreementTermsHash: string, value: number, contractAddress: string, success?: Function, error?: Function) {
     const encoded = super.getContract(contractAddress).methods.agreeInvestment(id, investor,
       this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash),
       this.web3Service.getInstance().utils.toWei(value)).encodeABI();
-    super.signAndSendTransaction(encoded, contractAddress);
+    super.signAndSendTransaction(encoded, contractAddress, null, success, error);
   }
 
   public getContract(address) {
