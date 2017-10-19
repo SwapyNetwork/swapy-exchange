@@ -4,6 +4,8 @@ import { LogoutService } from '../services/logout.service';
 import { StorageService } from '../services/storage.service';
 import { WalletService } from '../services/wallet.service';
 import { UserResponseInterface, INVESTOR, CREDIT_COMPANY } from '../interfaces/user-response.interface';
+import * as env from '../../../../env.json';
+import { LinkService } from '../services/link.service';
 
 @Component({
   selector: 'app-nav',
@@ -20,8 +22,10 @@ export class NavComponent implements OnInit {
   public termsUrl:string = '';
   public privacyUrl:string = '';
 
+  public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
+
   constructor(public logoutService: LogoutService, private storageService: StorageService,
-    private walletService: WalletService, private router: Router) {
+    private walletService: WalletService, private linkService: LinkService, private router: Router) {
     let user = this.storageService.getItem('user');
     this.user = user ? user : {};
     this.wallet = this.walletService.getWallet();
@@ -49,6 +53,10 @@ export class NavComponent implements OnInit {
         break;
     }
 
+  }
+
+  public openWalletInExplorer(address: string) {
+    this.linkService.openLink(this.explorerUrl + address);
   }
 
   ngOnInit() { }

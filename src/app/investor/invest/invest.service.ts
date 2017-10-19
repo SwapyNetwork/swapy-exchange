@@ -38,8 +38,8 @@ export class InvestService {
     return this.httpService.get('investment/mine');
   }
 
-  public updateMinedAgreement(event): Promise<any> {
-    return this.httpService.put('investment/minedAgreement', event);
+  public transferFunds(data) {
+    return this.httpService.post('investment/transferFunds', data);
   }
 
 }
