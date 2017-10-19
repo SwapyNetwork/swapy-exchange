@@ -4,6 +4,7 @@ import { OPEN, SOLD, PENDING, LOCKED, TX_AGREEMENT_PENDING,
   TX_AGREED, TX_INVEST_PENDING, TX_INVESTED } from '../../../common/interfaces/offerAssetStatus.interface';
 import { LinkService } from '../../../common/services/link.service';
 import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
+import { ToastrService } from '../../../common/services/toastr.service';
 import { InvestService } from '../../invest/invest.service';
 
 import * as env from '../../../../../env.json';
@@ -26,7 +27,8 @@ export class InvestmentComponent implements OnInit {
 
   public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
 
-  constructor(private linkService: LinkService, private investmentAssetService: InvestmentAssetService, private investService: InvestService) { }
+  constructor(private linkService: LinkService, private investmentAssetService: InvestmentAssetService,
+    private investService: InvestService, private toastrService: ToastrService) { }
 
   ngOnInit() {
   }
@@ -85,7 +87,13 @@ export class InvestmentComponent implements OnInit {
       const agreementTermsHash = '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed';
       const value = asset.value / ethusd;
       // should be event.id
-      this.investmentAssetService.transferFunds((res as any).event.uuid, agreementTermsHash, asset.contractAddress, value);
+      this.investmentAssetService.transferFunds(asset.uuid, agreementTermsHash, asset.contractAddress, value, (success) => {
+        console.log(success);
+        this.toastrService.getInstance().success('Your transfer was mined by the Ethereum blockchain.');
+      }, (error) => {
+        console.log(error);
+        this.toastrService.getInstance().error(error.message);
+      });
     }, err => {
       console.log(err);
     });

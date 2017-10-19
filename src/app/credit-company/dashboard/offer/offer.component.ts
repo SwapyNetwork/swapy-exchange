@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Offer } from '../../../common/interfaces/offer.interface';
 import { I18nService } from '../../../common/services/i18n.service';
+import { ToastrService } from '../../../common/services/toastr.service';
 import { OfferService } from './offer.service';
 import { LinkService } from '../../../common/services/link.service';
 import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
@@ -34,7 +35,7 @@ export class OfferComponent implements OnInit {
   public errorMessages: any[] = [];
 
   constructor(private assetProtocol: InvestmentAssetService, private offerService: OfferService,
-    private i18nService: I18nService, private linkService: LinkService) { }
+    private toastrService: ToastrService, private i18nService: I18nService, private linkService: LinkService) { }
 
   ngOnInit() { }
 
@@ -55,7 +56,15 @@ export class OfferComponent implements OnInit {
     const value = asset.value / ethusd;
 
     this.offerService.acceptInvestor(offerUuid, asset).then(data => {
-      this.assetProtocol.agreeInvestment(data.event.uuid, asset.investorWallet, agreementTermsHash, value, asset.contractAddress);
+      this.assetProtocol.agreeInvestment(data.event.uuid, asset.investorWallet, agreementTermsHash, value, asset.contractAddress,
+        (success) => {
+          console.log(success);
+          this.toastrService.getInstance().success('Your agreement was mined by the Ethereum blockchain.');
+        }, (error) => {
+          console.log(error);
+          this.toastrService.getInstance().error(error.message);
+        }
+      );
       asset.status = TX_AGREEMENT_PENDING;
     }, error => {
       const namespace = 'agree-investment';

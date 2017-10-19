@@ -12,11 +12,11 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
 
   protected abi = InvestmentAsset.abi;
 
-  public agreeInvestment(id: string, investor: string, agreementTermsHash: string, value: number, contractAddress: string) {
+  public agreeInvestment(id: string, investor: string, agreementTermsHash: string, value: number, contractAddress: string, success?: Function, error?: Function) {
     const encoded = super.getContract(contractAddress).methods.agreeInvestment(id, investor,
       this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash),
       this.web3Service.getInstance().utils.toWei(value)).encodeABI();
-    super.signAndSendTransaction(encoded, contractAddress);
+    super.signAndSendTransaction(encoded, contractAddress, null, success, error);
   }
 
   public getContract(address) {
@@ -31,10 +31,10 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
     }, (error, events) => { cb(error, events.filter(event => event.returnValues._id === eventUuid)) });
   }
 
-  public transferFunds(id: string, agreementTermsHash: string, contractAddress: string, value: number) {
+  public transferFunds(id: string, agreementTermsHash: string, contractAddress: string, value: number, success?: Function, error?: Function) {
     const encoded = super.getContract(contractAddress).methods.transferFunds(id,
       this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash)).encodeABI();
-    super.signAndSendTransaction(encoded, contractAddress, this.web3Service.getInstance().utils.toWei(value));
+    super.signAndSendTransaction(encoded, contractAddress, this.web3Service.getInstance().utils.toWei(value), success, error);
   }
 
 }

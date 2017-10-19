@@ -5,7 +5,7 @@ import { ExchangeProtocolService as ExchangeProtocol } from '../../common/servic
 
 import { AddOfferService } from '../add-offer/add-offer.service';
 import { CreditCompanyComponent } from '../credit-company.component';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ToastrService } from '../../common/services/toastr.service';
 
 @Component({
   selector: 'app-confirm-offer',
@@ -16,19 +16,19 @@ export class ConfirmOfferComponent implements OnInit {
 
   public offer: any;
   public errorMessages: string[] = [];
+  private toastr;
 
   constructor(private addOfferService: AddOfferService,
     private router: Router,
     private i18nService: I18nService,
     private creditCompanyComponent: CreditCompanyComponent,
     private exchangeProtocol: ExchangeProtocol,
-    private vcr: ViewContainerRef,
-    private toastr: ToastsManager,
+    private toastrService: ToastrService,
   ) {
-    this.toastr.setRootViewContainerRef(vcr);
   }
 
   ngOnInit() {
+    this.toastr = this.toastrService.getInstance();
     this.offer = this.addOfferService.getCachedOffer();
     if (!this.offer) {
       this.router.navigate(['/credit-company/raise']);
@@ -41,10 +41,10 @@ export class ConfirmOfferComponent implements OnInit {
         this.exchangeProtocol
           .createOffer(data.event.uuid, this.offer.paybackMonths, this.offer.roi, [111, 222, 333, 444, 555], (success) => {
             console.log(success);
-            this.toastr.success('Your offer was mined by the Ethereum blockchain.');
+            this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
           }, (error) => {
             console.log(error);
-            this.toastr.error('An error occurred in the blockchain.');
+            this.toastrService.getInstance().error(error.message);
           });
         this.offer.uuid = data.offer.uuid;
         this.offer.address = data.offer.address;

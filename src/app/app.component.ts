@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
 import { LoadingService } from './common/services/loading.service';
 
 @Component({
@@ -10,7 +10,7 @@ export class AppComponent {
   title = 'app';
   loading = false;
 
-  constructor(public loadingService: LoadingService){
+  constructor(public loadingService: LoadingService, public viewContainerRef: ViewContainerRef){
     this.loadingService.loadingShowed$.subscribe(
       showed => {this.loading = true}
     );

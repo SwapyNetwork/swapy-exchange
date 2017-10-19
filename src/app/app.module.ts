@@ -21,12 +21,8 @@ import { NgxElectronModule } from 'ngx-electron';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { ToastOptions } from 'ng2-toastr';
-
-export class CustomToastOption extends ToastOptions {
-  animate = 'flyRight';
-  positionClass = 'toast-bottom-left';
-  showCloseButton = true;
-}
+import { ToastrService } from './common/services/toastr.service';
+import { CustomToastOption } from './common/CustomToastOption';
 
 @NgModule({
   declarations: [
@@ -43,7 +39,7 @@ export class CustomToastOption extends ToastOptions {
   ],
   providers: [StorageService, HttpService, I18nService, LoadingService, LinkService, Web3Service,
     WalletService, EventService, ExchangeProtocolService, InvestmentOfferProtocolService,
-    InvestmentAssetProtocolService, LogoutService, { provide: ToastOptions, useClass: CustomToastOption }],
+    InvestmentAssetProtocolService, LogoutService, ToastrService, { provide: ToastOptions, useClass: CustomToastOption }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
