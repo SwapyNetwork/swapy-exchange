@@ -74,7 +74,7 @@ export class InvestmentComponent implements OnInit {
 
   public exploreContract(address: string) {
     const url = this.explorerUrl + address;
-    this.electronService.ipcRenderer.sendSync('open-browser', url);
+    this.electronService.shell.openExternal(url);
   }
 
   public transferFunds(asset: any) {

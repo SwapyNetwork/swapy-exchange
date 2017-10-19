@@ -15,21 +15,21 @@
 
     <div id="collapseOne" class="panel-collapse collapse" [ngClass]="{'in': collapsed}"  role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body">
-        <div class="col-sm-3 col-md-3">
+        <div class="col-sm-4 col-md-4">
             <a href="credit-company-profile.html"><p class="sw-box-text sw-blue1">{{investment.companyName}}</p></a>
             <p class="sw-box-text">Payback: {{investment.paybackMonths}} months</p>
             <p class="sw-box-text">Since {{investment.investedIn | date: 'yyyy-MM-dd'}}</p><hr>
-            <a href (click)="exploreContract(investment.offerContractAddress)"><b>Explore Ethereum contract</b></a>
+            <a (click)="exploreContract(investment.offerContractAddress)"><b>Explore Ethereum contract</b></a>
 
         </div>
-        <div class="col-sm-3 col-md-3">
+        <div class="col-sm-4 col-md-4">
             <p class="sw-box-text">Investment: {{investment.totalAmount | currency:'USD':true:'.2' }}</p>
             <p class="sw-box-text">Gross return: {{calculateReturnAmount() | currency:'USD':true:'.2' }}</p>
             <p class="sw-box-text">Payback date: <span class="sw-blue1">{{calculatePaybackDate() | date: 'yyyy-MM-dd'}}</span></p>
             <!-- <p class="sw-box-text">Performance: <span class="sw-high">High / No Delay</span></p> -->
             <!-- <p><i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i></p> -->
         </div>
-        <!-- <div class="col-sm-3 col-md-3"> -->
+        <!-- <div class="col-sm-4 col-md-4"> -->
             <!-- <p class="sw-box-text sw-chart-installs">Installments payed</p> -->
             <!-- <div class="sw-progress-circle p50"> -->
             <!-- Start Circular chart-->
@@ -41,7 +41,7 @@
             <!-- </div>  -->
             <!-- End Circular chart-->
         <!-- </div> -->
-        <div class="col-sm-3 col-md-3">
+        <div class="col-sm-4 col-md-4">
             <p class="sw-box-text sw-chart-roi">Gross return rate</p>
             <div class="sw-progress-circle p{{investment.roi*100}}"> <!-- Start Circular chart-->
               <span>{{investment.roi | percent}}</span>
@@ -67,7 +67,7 @@
               <td>{{i + 1}}</td>
               <td>{{asset.value | currency:'USD':true:'.2'}}</td>
               <td>{{statusToString(asset.status)}}</td> <!--@todo "status.toString()" -->
-              <td><span *ngIf="!asset.contractAddress">-</span><a *ngIf="asset.contractAddress" href (click)="exploreContract(asset.contractAddress)">Explore</a></td>
+              <td><span *ngIf="!asset.contractAddress">-</span><a *ngIf="asset.contractAddress" (click)="exploreContract(asset.contractAddress)">Explore</a></td>
               <td>
                 <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.status == TX_AGREED" (click)="transferFunds(asset)">
                   <i class="fa fa-check" aria-hidden="true"></i>

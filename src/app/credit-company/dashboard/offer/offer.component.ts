@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Offer } from '../../../common/interfaces/offer.interface';
 import { I18nService } from '../../../common/services/i18n.service';
 import { OfferService } from './offer.service';
+import * as env from '../../../../../env.json';
+import { ElectronService } from 'ngx-electron';
 import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
 import { OPEN, SOLD, PENDING, TX_AGREEMENT_PENDING } from '../../../common/interfaces/offerAssetStatus.interface';
 
@@ -16,13 +18,15 @@ export class OfferComponent implements OnInit {
   public SOLD = SOLD;
   public PENDING = PENDING;
 
+  public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
+
   @Input() public offer: Offer;
   @Input() public collapsed: boolean;
 
   public errorMessages: any[] = [];
 
   constructor(private assetProtocol: InvestmentAssetService, private offerService: OfferService,
-    private i18nService: I18nService) { }
+    private i18nService: I18nService, private electronService: ElectronService) { }
 
   ngOnInit() {}
 
@@ -52,6 +56,11 @@ export class OfferComponent implements OnInit {
         this.errorMessages = res; // errorMessages is a list of error strings
       });
     });
+  }
+
+  public exploreContract(address: string) {
+    const url = this.explorerUrl + address;
+    this.electronService.shell.openExternal(url);
   }
 
 }

@@ -3,7 +3,10 @@
    <div class="row">
       <div class="col-sm-8 col-md-8">
          <h4 class="panel-title">
-         <a role="button" data-toggle="collapse" data-parent="#accordion" (click)="toggleCollapse()" aria-expanded="true" aria-controls="collapseOne">{{offer.raisingAmount | currency}} <span class="sw-box-text"> - {{offer.companyName}} -- {{offer.uuid}}</span></a>
+           <a role="button" data-toggle="collapse" data-parent="#accordion" (click)="toggleCollapse()" aria-expanded="true" aria-controls="collapseOne">
+             {{offer.raisingAmount | currency}} - {{offer.companyName}}
+             <div><a *ngIf="offer.offerContractAddress" class="sw-box-text">{{offer.offerContractAddress}}</a></div>
+         </a>
          </h4>
       </div>
       <div class="col-sm-4 col-md-4">
@@ -16,20 +19,20 @@
 
   <div id="collapseOne" class="panel-collapse collapse" [ngClass]="{'in': collapsed}" role="tabpanel" aria-labelledby="headingOne">
     <div class="panel-body">
-      <div class="col-sm-3 col-md-3">
+      <div class="col-sm-6 col-md-6">
           <p class="sw-box-text">Fundraising: {{offer.raisingAmount | currency:'USD':true:'.2'}}</p>
           <p class="sw-box-text">Payback: {{offer.paybackMonths}} months</p>
           <!-- <p class="sw-box-text">6 installments</p> -->
           <p class="sw-box-text">Gross return rate: {{offer.roi | percent}}</p><hr>
           <p class="sw-box-text"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Launch: {{offer.createdOn | date: 'yyyy-MM-dd'}}</p>
-
+          <a *ngIf="offer.offerContractAddress" (click)="exploreContract(offer.offerContractAddress)"><b>Explore Ethereum contract</b></a>
       </div>
-      <!-- <div class="col-sm-3 col-md-3"> -->
+      <!-- <div class="col-sm-6 col-md-6"> -->
           <!-- <p class="sw-box-text">Debt: {{offer.paybackMonths}}x {{(offer.raisingAmount*(1+offer.roi))/offer.paybackMonths | currency:'USD':true:'.2'}}</p> -->
           <!-- <p class="sw-box-text">Performance: <span class="sw-high">High / No Delay</span></p> -->
           <!-- <p><i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i></p> -->
       <!-- </div> -->
-      <!-- <div class="col-sm-3 col-md-3"> -->
+      <!-- <div class="col-sm-6 col-md-6"> -->
           <!-- <p class="sw-box-text sw-chart-installs">Payback (months)</p> -->
           <!-- <div class="sw-progress-circle p0">  -->
             <!-- Start Circular chart-->
@@ -41,8 +44,8 @@
           <!-- </div>  -->
           <!-- End Circular chart-->
       <!-- </div> -->
-      <div class="col-sm-3 col-md-3">
-          <p class="sw-box-text sw-chart-roi">Gross return rate</p>
+      <div class="col-sm-6 col-md-6">
+          <p class="sw-box-text">Gross return rate</p>
           <div class="sw-progress-circle p{{offer.roi*100}}"> <!-- Start Circular chart-->
             <span>{{offer.roi | percent}}</span>
             <div class="sw-left-half-clipper">
@@ -59,7 +62,7 @@
               <th>Value</th>
               <th>Status</th>
               <th>Investor</th>
-              <th>Requested in</th>
+              <th>Contract</th>
               <th>Payback date</th>
               <th>Agree</th>
            </tr>
@@ -68,7 +71,7 @@
               <td>{{asset.value | currency:'USD':true:'.2'}}</td>
               <td>{{asset.status == OPEN ? 'Available' : (asset.status == SOLD ? 'Sold' : 'Pending confirmation')}}</td>
               <td>{{asset.investorName == null ? '-' : asset.investorName }}</td>
-              <td>{{asset.investedIn == null ? '-' : (asset.investedIn | date: 'yyyy-MM-dd') }}</td>
+              <td><span *ngIf="!asset.contractAddress">-</span><a *ngIf="asset.contractAddress" (click)="exploreContract(asset.contractAddress)">Explore</a></td>
               <td>{{asset.investedIn == null ? '-' : (calculatePaybackDate(asset) | date: 'yyyy-MM-dd') }}</td>
               <td>
                 <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.investedIn && asset.status === 2" (click)="acceptInvestor(offer.uuid, asset)"><i class="fa fa-check" aria-hidden="true"></i></button>
