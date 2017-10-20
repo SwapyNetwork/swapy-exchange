@@ -18,6 +18,7 @@ import { OfferService } from './dashboard/offer/offer.service';
 import { ConfirmOfferComponent } from './confirm-offer/confirm-offer.component';
 import { SuccessfulOfferComponent } from './successful-offer/successful-offer.component';
 import { PendingOfferComponent } from './pending-offer/pending-offer.component';
+import { PendingOfferService } from './pending-offer/pending-offer.service';
 import { ProfileComponent } from './profile/profile.component';
 
 import { TermsPageComponent } from './terms-page/terms-page.component';
@@ -36,7 +37,7 @@ import { OfferComponent } from './dashboard/offer/offer.component';
   ],
   declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent, ConfirmOfferComponent,
     SuccessfulOfferComponent, PendingOfferComponent, ProfileComponent, TermsPageComponent, PrivacyPageComponent, OfferComponent],
-  providers: [LogoutService, AddOfferService, OfferService, CreditCompanyService],
+  providers: [LogoutService, AddOfferService, OfferService, CreditCompanyService, PendingOfferService],
   bootstrap: [CreditCompanyComponent]
 })
 export class CreditCompanyModule { }

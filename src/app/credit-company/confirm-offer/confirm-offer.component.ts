@@ -7,6 +7,8 @@ import { AddOfferService } from '../add-offer/add-offer.service';
 import { CreditCompanyComponent } from '../credit-company.component';
 import { ToastrService } from '../../common/services/toastr.service';
 
+import { PendingOfferService } from './../pending-offer/pending-offer.service';
+
 @Component({
   selector: 'app-confirm-offer',
   templateUrl: './confirm-offer.component.html',
@@ -24,6 +26,7 @@ export class ConfirmOfferComponent implements OnInit {
     private creditCompanyComponent: CreditCompanyComponent,
     private exchangeProtocol: ExchangeProtocol,
     private toastrService: ToastrService,
+    private pendingOfferService: PendingOfferService,
   ) {
   }
 
@@ -42,8 +45,10 @@ export class ConfirmOfferComponent implements OnInit {
           .createOffer(data.event.uuid, this.offer.paybackMonths, this.offer.roi, [111, 222, 333, 444, 555], (success) => {
             console.log(success);
             this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+            this.pendingOfferService.setMessage('Your offer was mined by the Ethereum blockchain.');
           }, (error) => {
             console.log(error);
+            this.pendingOfferService.setMessage(error.message);
             this.toastrService.getInstance().error(error.message);
           });
         this.offer.uuid = data.offer.uuid;
