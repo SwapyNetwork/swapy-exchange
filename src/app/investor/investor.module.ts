@@ -28,7 +28,6 @@ import { InvestService } from './invest/invest.service';
 import { SuccessfulInvestmentService } from './successful-investment/successful-investment.service';
 import { InvestorService } from './investor.service';
 import { InvestmentComponent } from './dashboard/investment/investment.component';
-import { PendingInvestmentComponent } from './pending-investment/pending-investment.component';
 
 @NgModule({
   imports: [
@@ -43,7 +42,7 @@ import { PendingInvestmentComponent } from './pending-investment/pending-investm
   declarations: [InvestorComponent, OffersComponent, DashboardComponent, VerificationPhoneComponent,
     VerificationMainComponent, VerificationIdentityComponent, VerificationAddressComponent, OfferComponent,
     OfferDetailsComponent, CreditCompanyComponent, TermsPageComponent, PrivacyPageComponent, ProfileComponent,
-    InvestComponent, SuccessfulInvestmentComponent, InvestmentComponent, PendingInvestmentComponent],
+    InvestComponent, SuccessfulInvestmentComponent, InvestmentComponent],
   providers: [LogoutService, OfferService, InvestService, SuccessfulInvestmentService, InvestorService],
   bootstrap: [InvestorComponent]
 })
