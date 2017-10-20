@@ -1,0 +1,12 @@
+
+.sw-successful-address {
+    font-weight: 500;
+    font-size: 24px;
+    color: #00adef;
+}
+.sw-successful-message {
+    padding: 18px 0 0 0;
+}
+.sw-successful-bold {
+    font-weight: 500;
+}
