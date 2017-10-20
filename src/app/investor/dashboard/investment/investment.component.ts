@@ -87,7 +87,7 @@ export class InvestmentComponent implements OnInit {
       const agreementTermsHash = '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed';
       const value = asset.value / ethusd;
       // should be event.id
-      this.investmentAssetService.transferFunds(asset.uuid, agreementTermsHash, asset.contractAddress, value, (success) => {
+      this.investmentAssetService.transferFunds((res as any).event.uuid, agreementTermsHash, asset.contractAddress, value, (success) => {
         console.log(success);
         this.toastrService.getInstance().success('Your transfer was mined by the Ethereum blockchain.');
       }, (error) => {

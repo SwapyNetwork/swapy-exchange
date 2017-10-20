@@ -28,7 +28,11 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
     this.getContract(contractAddress).getPastEvents(eventName, {
       fromBlock: 0,
       toBlock: 'latest'
-    }, (error, events) => { cb(error, events.filter(event => event.returnValues._id === eventUuid)) });
+    }, (error, events) => {
+      console.log(eventUuid);
+      console.log(events);
+      cb(error, events.filter(event => event.returnValues._id === eventUuid))
+    });
   }
 
   public transferFunds(id: string, agreementTermsHash: string, contractAddress: string, value: number, success?: Function, error?: Function) {
