@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class SuccessfulInvestmentService {
 
-  private errors :string;
-  private messages :string;
+  private errors: string;
+  private messages: string;
 
   constructor() { }
 
@@ -12,7 +12,7 @@ export class SuccessfulInvestmentService {
     this.errors = errors.map((error) => error.message);
   }
 
-  public cacheSuccessfulMessages(response){
+  public cacheSuccessfulMessages(response) {
     this.messages = response.message
   }
 
