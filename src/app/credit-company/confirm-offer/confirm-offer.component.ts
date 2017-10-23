@@ -49,7 +49,7 @@ export class ConfirmOfferComponent implements OnInit {
           }, (error) => {
             console.log(error);
             this.pendingOfferService.setErrorMessage(error.message);
-            this.toastrService.getInstance().error(error.message);
+            this.toastrService.getInstance().error(this.pendingOfferService.getMessage());
           });
         this.offer.uuid = data.offer.uuid;
         this.offer.address = data.offer.address;
