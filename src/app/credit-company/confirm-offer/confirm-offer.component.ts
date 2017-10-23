@@ -48,7 +48,7 @@ export class ConfirmOfferComponent implements OnInit {
             this.pendingOfferService.setMessage('Your offer was mined by the Ethereum blockchain.');
           }, (error) => {
             console.log(error);
-            this.pendingOfferService.setMessage(error.message);
+            this.pendingOfferService.setErrorMessage(error.message);
             this.toastrService.getInstance().error(error.message);
           });
         this.offer.uuid = data.offer.uuid;
