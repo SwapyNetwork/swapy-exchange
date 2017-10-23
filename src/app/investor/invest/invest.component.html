@@ -47,7 +47,7 @@
             <div class="col-xs-4 col-sm-4 col-md-4">
                 <p class="sw-box-text sw-confirmation-col-left">Company:</p>
                 <p class="sw-box-text sw-confirmation-col-left">Investment:</p>
-                <p class="sw-box-text sw-confirmation-col-left">ROI:</p>
+                <p class="sw-box-text sw-confirmation-col-left">Gross return rate:</p>
                 <p class="sw-box-text sw-confirmation-col-left">Payback:</p>
                 <p class="sw-box-text sw-confirmation-col-left">Assets:</p>
 
@@ -55,7 +55,7 @@
             <div class="col-xs-8 col-sm-8 col-md-8">
                 <p class="sw-box-text">{{investment.companyName}}</p>
                 <p class="sw-box-text">{{investment.totalAmount | currency}}</p>
-                <p class="sw-box-text">{{investment.roi | percent}} per annum</p>
+                <p class="sw-box-text">{{investment.roi | percent}}</p>
                 <p class="sw-box-text">{{investment.paybackMonths}} months</p>
                 <p class="sw-box-text">{{investment.assets.length}}</p>
 

@@ -5,7 +5,7 @@
     </div>
   </div> <!-- END Page name  -->
 
- 
+
   <div class="row"> <!-- //////////// MAIN Content //////////// -->
     <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
 
@@ -39,8 +39,8 @@
                </div>
 
                <div class="form-group">
-                  <label for="inputRoi"><span class="sw-box-text">ROI</span></label>
-                  <input type="text" class="form-control" placeholder="Add ROI per annum (%)" name="roi" [(ngModel)]="roi" [textMask]="{mask: percentMask}" #roiInput="ngModel" required>
+                  <label for="inputRoi"><span class="sw-box-text">Gross return rate</span></label>
+                  <input type="text" class="form-control" placeholder="Add gross return rate (%)" name="roi" [(ngModel)]="roi" [textMask]="{mask: percentMask}" #roiInput="ngModel" required>
                </div>
 
             </div>
@@ -64,7 +64,7 @@
                 Fundraising amount is required.
             </div>
             <div *ngIf="roiInput.errors && (roiInput.touched || roiInput.dirty)" class="alert alert-danger">
-                ROI is required.
+                Gross return rate is required.
             </div>
             <div *ngIf="paybackMonthsInput.errors && (paybackMonthsInput.touched || paybackMonthsInput.dirty)" class="alert alert-danger">
               <div [hidden]="!paybackMonthsInput.errors.required">
