@@ -45,7 +45,7 @@
     "sha1": "^1.1.1",
     "swarm-js": "^0.1.36",
     "text-mask-addons": "3.6.0",
-    "web3": "^1.0.0-beta.22",
+    "web3": "^1.0.0-beta.18",
     "web3-eth-accounts": "^1.0.0-beta.23",
     "web3-eth-contract": "^1.0.0-beta.23",
     "web3-eth-personal": "^1.0.0-beta.23",
