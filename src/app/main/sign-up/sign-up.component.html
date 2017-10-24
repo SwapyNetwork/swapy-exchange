@@ -53,13 +53,13 @@
       </label>
     </div>
   </div>
-  <button type="submit" class="sw-button sw-btn-ghost1 key2" [disabled]="!signupForm.form.valid">Sign up</button><br/>
-
   <div class="checkbox">
       <label>
         <input type="checkbox" name="agreedToTerms" [(ngModel)]="agreedToTerms"/>I agree to Swapy's<a routerLink="/terms-of-service"> Terms of Service</a> and<a routerLink="/privacy-policy"> Privacy Policy.</a>
       </label>
   </div>
+  <button type="submit" class="sw-button sw-btn-ghost1 key2" [disabled]="!signupForm.form.valid">Sign up</button>
+  <a class="sw-button sw-btn-ghost2" routerLink="">Back</a>
 </form>
 
 <!-- <div id="sw-activate" class="hide">
