@@ -23,6 +23,7 @@ export class ExchangeProtocolService extends ProtocolAbstract {
   }
 
   public createOffer(id: string, payback: number, grossReturn: number, assets: number[], success?: Function, error?: Function) {
+    this.errorLogService.setParamValues([id, payback, grossReturn * 10000, assets]);
     const encoded = this.getProtocolContract().methods.createOffer(id, payback, grossReturn * 10000, assets).encodeABI();
     this.signAndSend(encoded, success, error);
   }

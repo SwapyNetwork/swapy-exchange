@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Web3Service } from '../web3.service';
 import { WalletService } from '../wallet.service';
+import { ErrorLogService } from '../error-log.service';
 
 import { InvestmentAssetInterface as ia } from '../../../../../contracts/InvestmentAsset';
 
@@ -10,10 +11,13 @@ export class ProtocolAbstract {
   protected web3;
   protected contract;
   protected abi;
-  protected gas = 5000000;
+  protected gas = 500000;
 
-  constructor(protected web3Service: Web3Service, private walletService: WalletService) {
-    this.web3 = this.web3Service.getInstance();
+  constructor(
+    protected web3Service: Web3Service,
+    private walletService: WalletService,
+    public errorLogService: ErrorLogService) {
+      this.web3 = this.web3Service.getInstance();
   }
 
   protected getWallet() {
@@ -40,6 +44,7 @@ export class ProtocolAbstract {
     if (value) {
       tx.value = value;
     }
+    this.errorLogService.setTXvalue(tx);
     this.web3.eth.accounts.signTransaction(tx, this.getWallet().privateKey).then((signed) => {
       this.web3.eth.sendSignedTransaction(signed.rawTransaction)
         .on('error', error)

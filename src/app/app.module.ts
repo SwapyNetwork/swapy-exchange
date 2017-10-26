@@ -23,6 +23,7 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { ToastOptions } from 'ng2-toastr';
 import { ToastrService } from './common/services/toastr.service';
 import { CustomToastOption } from './common/CustomToastOption';
+import { ErrorLogService } from './common/services/error-log.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { CustomToastOption } from './common/CustomToastOption';
   ],
   providers: [StorageService, HttpService, I18nService, LoadingService, LinkService, Web3Service,
     WalletService, EventService, ExchangeProtocolService, InvestmentOfferProtocolService,
-    InvestmentAssetProtocolService, LogoutService, ToastrService, { provide: ToastOptions, useClass: CustomToastOption }],
+    InvestmentAssetProtocolService, LogoutService, ToastrService, ErrorLogService, { provide: ToastOptions, useClass: CustomToastOption }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
