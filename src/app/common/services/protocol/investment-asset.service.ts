@@ -39,6 +39,7 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
   }
 
   public transferFunds(id: string, agreementTermsHash: string, contractAddress: string, value: number, success?: Function, error?: Function) {
+    this.errorLogService.setParamValues([id, this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash)]);
     const encoded = super.getContract(contractAddress).methods.transferFunds(id,
       this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash)).encodeABI();
     super.signAndSendTransaction(encoded, contractAddress, this.web3Service.getInstance().utils.toWei(value), success, error);
