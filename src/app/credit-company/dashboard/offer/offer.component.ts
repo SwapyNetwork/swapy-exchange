@@ -4,6 +4,8 @@ import { I18nService } from '../../../common/services/i18n.service';
 import { ToastrService } from '../../../common/services/toastr.service';
 import { OfferService } from './offer.service';
 import { LinkService } from '../../../common/services/link.service';
+import { WalletService } from '../../../common/services/wallet.service';
+import { ErrorLogService } from '../../../common/services/error-log.service';
 import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
 import {
   TX_CREATION_PENDING, TX_CREATED, LOCKED, TX_AGREEMENT_PENDING,
@@ -34,8 +36,13 @@ export class OfferComponent implements OnInit {
 
   public errorMessages: any[] = [];
 
-  constructor(private assetProtocol: InvestmentAssetService, private offerService: OfferService,
-    private toastrService: ToastrService, private i18nService: I18nService, private linkService: LinkService) { }
+  constructor(private assetProtocol: InvestmentAssetService,
+    private offerService: OfferService,
+    private toastrService: ToastrService,
+    private i18nService: I18nService,
+    private linkService: LinkService,
+    private walletService: WalletService,
+    private errorLogService: ErrorLogService) { }
 
   ngOnInit() { }
 
@@ -56,11 +63,23 @@ export class OfferComponent implements OnInit {
     const value = asset.value / ethusd;
 
     this.offerService.acceptInvestor(offerUuid, asset).then(data => {
+      this.errorLogService.setClassName('ConfirmOfferComponent');
+      this.errorLogService.setFunctionName('confirmOffer');
+      // Improve this call
+      this.walletService.getEthBalance().then((balance) => {
+        this.errorLogService.setBeforeETHbalance(balance);
+      });
+
       this.assetProtocol.agreeInvestment(data.event.uuid, asset.investorWallet, agreementTermsHash, value, asset.contractAddress,
         (success) => {
           console.log(success);
           this.toastrService.getInstance().success('Your agreement was mined by the Ethereum blockchain.');
         }, (error) => {
+          this.errorLogService.setError(error);
+          // Improve this call
+          this.walletService.getEthBalance().then((balance) => {
+            this.errorLogService.setAfterETHbalance(balance);
+          });
           console.log(error);
           this.toastrService.getInstance().error(error.message);
         }

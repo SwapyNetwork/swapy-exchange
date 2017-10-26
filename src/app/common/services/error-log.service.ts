@@ -36,6 +36,10 @@ export class ErrorLogService {
     this.errorObject.error = error;
   }
 
+  setTime(time) {
+    this.errorObject.time = time;
+  }
+
   setAfterETHbalance(afterETHbalance) {
     this.errorObject.afterETHbalance = afterETHbalance;
   }
