@@ -105,10 +105,10 @@ export class InvestmentComponent implements OnInit {
         console.log(success);
         this.toastrService.getInstance().success('Your transfer was mined by the Ethereum blockchain.');
       }, (error) => {
-        this.errorLogService.setError(error);
         // Improve this call
         this.walletService.getEthBalance().then((balance) => {
           this.errorLogService.setAfterETHbalance(balance);
+          this.errorLogService.setError(error);
         });
         console.log(error);
         this.toastrService.getInstance().error(error.message);

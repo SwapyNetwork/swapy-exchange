@@ -57,10 +57,10 @@ export class ConfirmOfferComponent implements OnInit {
             this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
             this.pendingOfferService.setMessage('Your offer was mined by the Ethereum blockchain.');
           }, (error) => {
-            this.errorLogService.setError(error);
             // Improve this call
             this.walletService.getEthBalance().then((balance) => {
               this.errorLogService.setAfterETHbalance(balance);
+              this.errorLogService.setError(error);
             });
             console.log(error);
             this.pendingOfferService.setErrorMessage(error.message);
