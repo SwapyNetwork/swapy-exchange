@@ -34,17 +34,22 @@ export class ProtocolAbstract {
       nonce: this.web3.eth.getTransactionCount(this.getWallet().address),
       chainId: this.web3.eth.net.getId(),
       data: encoded,
-      gas: this.gas
     } as any;
 
-    if (value) {
-      tx.value = value;
-    }
-    this.web3.eth.accounts.signTransaction(tx, this.getWallet().privateKey).then((signed) => {
-      this.web3.eth.sendSignedTransaction(signed.rawTransaction)
+    this.web3.eth.estimateGas(tx).then(estimatedGas => {
+      const gas = this.web3.utils.hexToNumber(estimatedGas);
+
+      tx.gas = Math.round(gas * 1.1);
+      if (value) {
+        tx.value = value;
+      }
+      this.web3.eth.accounts.signTransaction(tx, this.getWallet().privateKey).then((signed) => {
+        this.web3.eth.sendSignedTransaction(signed.rawTransaction)
         .on('error', error)
         .on('receipt', success);
+      });
     });
+
   }
 
   public getEvents(eventUuid, eventName, contractAddress, cb) {
