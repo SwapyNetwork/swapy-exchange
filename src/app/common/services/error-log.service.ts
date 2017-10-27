@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
+import { ElectronService } from 'ngx-electron';
 
 @Injectable()
 export class ErrorLogService {
 
   private errorObject: any;
-  constructor() {
+  constructor(private electronService: ElectronService) {
     this.errorObject = {};
   }
 
   delete() {
     this.errorObject = {};
+  }
+
+  sendError() {
+    console.log(this.errorObject);
+    this.electronService.ipcRenderer.send('log-error', this.errorObject);
   }
 
   setClassName(className) {
@@ -34,6 +40,7 @@ export class ErrorLogService {
 
   setError(error) {
     this.errorObject.error = error;
+    this.sendError();
   }
 
   setTime(time) {
