@@ -94,8 +94,8 @@ export class InvestmentComponent implements OnInit {
       const ethusd = 340.0;
       const agreementTermsHash = '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed';
       const value = asset.value / ethusd;
-      this.errorLogService.setClassName('ConfirmOfferComponent');
-      this.errorLogService.setFunctionName('confirmOffer');
+      this.errorLogService.setClassName('InvestmentComponent');
+      this.errorLogService.setFunctionName('transferFunds');
       // Improve this call
       this.walletService.getEthBalance().then((balance) => {
         this.errorLogService.setBeforeETHbalance(balance);

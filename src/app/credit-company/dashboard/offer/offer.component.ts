@@ -63,8 +63,8 @@ export class OfferComponent implements OnInit {
     const value = asset.value / ethusd;
 
     this.offerService.acceptInvestor(offerUuid, asset).then(data => {
-      this.errorLogService.setClassName('ConfirmOfferComponent');
-      this.errorLogService.setFunctionName('confirmOffer');
+      this.errorLogService.setClassName('OfferComponent');
+      this.errorLogService.setFunctionName('acceptInvestor');
       // Improve this call
       this.walletService.getEthBalance().then((balance) => {
         this.errorLogService.setBeforeETHbalance(balance);
