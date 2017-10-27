@@ -19,6 +19,7 @@ export class ExchangeProtocolService extends ProtocolAbstract {
   }
 
   public getEvents(eventUuid, eventName, cb) {
+    this.errorLogService.setParamValues([eventUuid, eventName, addresses.swapyExchange, cb]);
     return super.getEvents(eventUuid, eventName, addresses.swapyExchange, cb);
   }
 

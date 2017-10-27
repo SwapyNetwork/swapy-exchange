@@ -28,6 +28,7 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
   }
 
   public getEvents(eventUuid, eventName, contractAddress, cb) {
+    this.errorLogService.setParamValues([eventUuid, eventName, contractAddress, cb]);
     this.getContract(contractAddress).getPastEvents(eventName, {
       fromBlock: 0,
       toBlock: 'latest'
