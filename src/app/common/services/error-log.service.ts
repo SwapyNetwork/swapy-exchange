@@ -14,8 +14,9 @@ export class ErrorLogService {
   }
 
   sendError() {
-    console.log(this.errorObject);
+    console.error(this.errorObject);
     this.electronService.ipcRenderer.send('log-error', this.errorObject);
+    this.delete();
   }
 
   setClassName(className) {
