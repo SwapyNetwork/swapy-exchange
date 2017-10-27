@@ -9,9 +9,9 @@
   "scripts": {
     "ng": "ng",
     "start": "electron .",
-    "build.linux": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=linux --overwrite --out installers/ --ignore=\\src/ --icon=./src/assets/img/s-exchange.png --asar",
-    "build.windows": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=win32 --overwrite --out installers/ --ignore=\\src/ --asar --icon=./src/assets/img/s-exchange.ico",
-    "build.mac": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=darwin --overwrite --out installers/ --ignore=\\src/ --icon=./src/assets/img/s-exchange.icns --asar",
+    "build.linux": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=linux --overwrite --out installers/ --ignore=\\src/ --icon=./src/assets/img/s-exchange.png  --ignore=env.json --asar",
+    "build.windows": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=win32 --overwrite --out installers/ --ignore=\\src/ --icon=./src/assets/img/s-exchange.ico  --ignore=env.json --asar",
+    "build.mac": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=darwin --overwrite --out installers/ --ignore=\\src/ --icon=./src/assets/img/s-exchange.icns  --ignore=env.json --asar",
     "deb64": "electron-installer-debian --config debian.json --arch amd64",
     "watch": "(ng build --watch &) && npm start",
     "alpha": "ng serve --env=prod --host 0.0.0.0 --disable-host-check",
