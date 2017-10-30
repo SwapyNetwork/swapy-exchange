@@ -56,6 +56,9 @@ export class ProtocolAbstract {
     this.getContract(contractAddress).getPastEvents(eventName, {
       fromBlock: 0,
       toBlock: 'latest'
-    }, (error, events) => { console.log(events); cb(error, events.filter(event => event.returnValues._id === eventUuid)) });
+    }, (error, events) => {
+      console.log(events);
+      cb(error, events.filter(event => event.returnValues._id === eventUuid))
+    });
   }
 }
