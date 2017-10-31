@@ -11,7 +11,7 @@ export class ProtocolAbstract {
   protected web3;
   protected contract;
   protected abi;
-  protected gas = 500000;
+  protected gas = 4500000;
 
   constructor(
     protected web3Service: Web3Service,
@@ -40,21 +40,22 @@ export class ProtocolAbstract {
       data: encoded,
     } as any;
 
-    this.web3.eth.estimateGas(tx).then(estimatedGas => {
-      const gas = this.web3.utils.hexToNumber(estimatedGas);
-
-      tx.gas = Math.round(gas * 1.1);
+    // this.web3.eth.estimateGas(tx).then(estimatedGas => {
+    //   const gas = this.web3.utils.hexToNumber(estimatedGas);
+    //
+    //   tx.gas = Math.round(gas * 1.1);
+      tx.gas = this.gas;
       if (value) {
         tx.value = value;
       }
       this.errorLogService.setTXvalue(tx);
-      
+
       this.web3.eth.accounts.signTransaction(tx, this.getWallet().privateKey).then((signed) => {
         this.web3.eth.sendSignedTransaction(signed.rawTransaction)
         .on('error', error)
         .on('receipt', success);
       });
-    });
+    // });
 
   }
 
