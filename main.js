@@ -3,10 +3,6 @@ const path = require('path');
 const url = require('url');
 const isDev = require('electron-is-dev');
 const fs = require('fs');
-const dotenv = require('dotenv');
-
-
-dotenv.config();
 
 
 
