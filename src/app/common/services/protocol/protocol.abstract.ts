@@ -32,30 +32,34 @@ export class ProtocolAbstract {
   }
 
   public signAndSendTransaction(encoded: string, address: string, value?: number, success?: Function, error?: Function) {
-    const tx = {
-      from: this.getWallet().address,
-      to: address,
-      nonce: this.web3.eth.getTransactionCount(this.getWallet().address),
-      chainId: this.web3.eth.net.getId(),
-      data: encoded,
-    } as any;
+    return this.web3.eth.net.getId().then(chainId => {
+      return this.web3.eth.getTransactionCount(this.getWallet().address).then(nonce => {
+        const tx = {
+          from: this.getWallet().address,
+          to: address,
+          nonce: nonce,
+          chainId: chainId,
+          data: encoded,
+        } as any;
 
-    // this.web3.eth.estimateGas(tx).then(estimatedGas => {
-    //   const gas = this.web3.utils.hexToNumber(estimatedGas);
-    //
-    //   tx.gas = Math.round(gas * 1.1);
-      tx.gas = this.gas;
-      if (value) {
-        tx.value = value;
-      }
-      this.errorLogService.setTXvalue(tx);
+        // this.web3.eth.estimateGas(tx).then(estimatedGas => {
+        //   const gas = this.web3.utils.hexToNumber(estimatedGas);
+        //
+        //   tx.gas = Math.round(gas * 1.1);
+          tx.gas = this.gas;
+          if (value) {
+            tx.value = value;
+          }
+          this.errorLogService.setTXvalue(tx);
 
-      this.web3.eth.accounts.signTransaction(tx, this.getWallet().privateKey).then((signed) => {
-        this.web3.eth.sendSignedTransaction(signed.rawTransaction)
-        .on('error', error)
-        .on('receipt', success);
+          return this.web3.eth.accounts.signTransaction(tx, this.getWallet().privateKey).then((signed) => {
+            return this.web3.eth.sendSignedTransaction(signed.rawTransaction)
+            .on('error', error)
+            .on('receipt', success);
+          });
+        // });
       });
-    // });
+    });
 
   }
 
