@@ -6,8 +6,10 @@ import { ExchangeProtocolService as ExchangeProtocol } from '../../common/servic
 import { AddOfferService } from '../add-offer/add-offer.service';
 import { CreditCompanyComponent } from '../credit-company.component';
 import { ToastrService } from '../../common/services/toastr.service';
-
 import { PendingOfferService } from './../pending-offer/pending-offer.service';
+import { ErrorLogService } from '../../common/services/error-log.service';
+import { WalletService } from '../../common/services/wallet.service';
+
 
 @Component({
   selector: 'app-confirm-offer',
@@ -27,6 +29,8 @@ export class ConfirmOfferComponent implements OnInit {
     private exchangeProtocol: ExchangeProtocol,
     private toastrService: ToastrService,
     private pendingOfferService: PendingOfferService,
+    private errorLogService: ErrorLogService,
+    private walletService: WalletService,
   ) {
   }
 
@@ -41,16 +45,27 @@ export class ConfirmOfferComponent implements OnInit {
   confirmOffer() {
     this.addOfferService.addOffer(this.offer).then(
       data => {
-        this.exchangeProtocol
-          .createOffer(data.event.uuid, this.offer.paybackMonths, this.offer.roi, [111, 222, 333, 444, 555], (success) => {
-            console.log(success);
-            this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
-            this.pendingOfferService.setMessage('Your offer was mined by the Ethereum blockchain.');
-          }, (error) => {
-            console.log(error);
-            this.pendingOfferService.setErrorMessage(error.message);
-            this.toastrService.getInstance().error(this.pendingOfferService.getMessage());
-          });
+        this.errorLogService.setClassName('ConfirmOfferComponent');
+        this.errorLogService.setFunctionName('confirmOffer');
+        // Improve this call
+        this.walletService.getEthBalance().then((balance) => {
+          this.errorLogService.setBeforeETHbalance(balance);
+          this.exchangeProtocol
+            .createOffer(data.event.uuid, this.offer.paybackMonths, this.offer.roi, [111, 222, 333, 444, 555], (success) => {
+              console.log(success);
+              this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+              this.pendingOfferService.setMessage('Your offer was mined by the Ethereum blockchain.');
+            }, (error) => {
+              // Improve this call
+              this.walletService.getEthBalance().then((currentBalance) => {
+                this.errorLogService.setAfterETHbalance(currentBalance);
+                this.errorLogService.setError(error);
+              });
+              console.log(error);
+              this.pendingOfferService.setErrorMessage(error.message);
+              this.toastrService.getInstance().error(this.pendingOfferService.getMessage());
+            });
+        });
         this.offer.uuid = data.offer.uuid;
         this.offer.address = data.offer.address;
         this.addOfferService.cacheOffer(this.offer);

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Web3Service } from './web3.service';
 import { StorageService } from './storage.service';
+import { ErrorLogService } from './error-log.service';
 
 import { Wallet } from '../interfaces/wallet.interface';
 
@@ -11,7 +12,10 @@ export class WalletService {
 
   private web3;
   private wallet: Wallet;
-  constructor(private web3Service: Web3Service, private electronService: ElectronService, public storageService: StorageService) {
+  constructor(private web3Service: Web3Service,
+    private electronService: ElectronService,
+    private errorLogService: ErrorLogService,
+    public storageService: StorageService) {
 
     this.electronService.ipcRenderer.on('create-wallet-error', (event, err) => {
       // Error handling if the wallet creation fails;
@@ -58,11 +62,14 @@ export class WalletService {
   }
 
   getEthBalance() {
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       this.getBalance().then((balance) => {
         const ethBalance = this.web3Service.getInstance().utils.fromWei(balance, 'ether');
         resolve(ethBalance);
       }, (error) => {
+        this.errorLogService.setClassName('WalletService');
+        this.errorLogService.setFunctionName('getEthBalance');
+        this.errorLogService.setError(error);
         reject(error);
       })
     });

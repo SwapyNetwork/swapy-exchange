@@ -112,5 +112,10 @@ ipc.on('open-browser', function (event, url) {
    event.returnValue = true;
 });
 
+ipc.on('log-error', function (event, error) {
+  const store = new Store({ 'name': 'error-log'});
+  store.set((new Date()).toString(), error);
+})
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

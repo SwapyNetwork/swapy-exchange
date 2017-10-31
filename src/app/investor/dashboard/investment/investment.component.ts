@@ -6,6 +6,8 @@ import { LinkService } from '../../../common/services/link.service';
 import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
 import { ToastrService } from '../../../common/services/toastr.service';
 import { InvestService } from '../../invest/invest.service';
+import { WalletService } from '../../../common/services/wallet.service';
+import { ErrorLogService } from '../../../common/services/error-log.service';
 
 import * as env from '../../../../../env.json';
 
@@ -27,8 +29,12 @@ export class InvestmentComponent implements OnInit {
 
   public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
 
-  constructor(private linkService: LinkService, private investmentAssetService: InvestmentAssetService,
-    private investService: InvestService, private toastrService: ToastrService) { }
+  constructor(private linkService: LinkService,
+    private investmentAssetService: InvestmentAssetService,
+    private investService: InvestService,
+    private toastrService: ToastrService,
+    private errorLogService: ErrorLogService,
+    private walletService: WalletService) { }
 
   ngOnInit() {
   }
@@ -86,13 +92,24 @@ export class InvestmentComponent implements OnInit {
       const ethusd = 340.0;
       const agreementTermsHash = '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed';
       const value = asset.value / ethusd;
-      // should be event.id
-      this.investmentAssetService.transferFunds((res as any).event.uuid, agreementTermsHash, asset.contractAddress, value, (success) => {
-        console.log(success);
-        this.toastrService.getInstance().success('Your transfer was mined by the Ethereum blockchain.');
-      }, (error) => {
-        console.log(error);
-        this.toastrService.getInstance().error(error.message);
+      this.errorLogService.setClassName('InvestmentComponent');
+      this.errorLogService.setFunctionName('transferFunds');
+      // Improve this call
+      this.walletService.getEthBalance().then((balance) => {
+        this.errorLogService.setBeforeETHbalance(balance);
+        // should be event.id
+        this.investmentAssetService.transferFunds((res as any).event.uuid, agreementTermsHash, asset.contractAddress, value, (success) => {
+          console.log(success);
+          this.toastrService.getInstance().success('Your transfer was mined by the Ethereum blockchain.');
+        }, (error) => {
+          // Improve this call
+          this.walletService.getEthBalance().then((currentBalance) => {
+            this.errorLogService.setAfterETHbalance(currentBalance);
+            this.errorLogService.setError(error);
+          });
+          console.log(error);
+          this.toastrService.getInstance().error(error.message);
+        });
       });
     }, err => {
       console.log(err);

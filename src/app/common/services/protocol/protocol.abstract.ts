@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Web3Service } from '../web3.service';
 import { WalletService } from '../wallet.service';
+import { ErrorLogService } from '../error-log.service';
 
 import { InvestmentAssetInterface as ia } from '../../../../../contracts/InvestmentAsset';
 
@@ -10,10 +11,13 @@ export class ProtocolAbstract {
   protected web3;
   protected contract;
   protected abi;
-  protected gas = 5000000;
+  protected gas = 4500000;
 
-  constructor(protected web3Service: Web3Service, private walletService: WalletService) {
-    this.web3 = this.web3Service.getInstance();
+  constructor(
+    protected web3Service: Web3Service,
+    private walletService: WalletService,
+    public errorLogService: ErrorLogService) {
+      this.web3 = this.web3Service.getInstance();
   }
 
   protected getWallet() {
@@ -36,19 +40,22 @@ export class ProtocolAbstract {
       data: encoded,
     } as any;
 
-    this.web3.eth.estimateGas(tx).then(estimatedGas => {
-      const gas = this.web3.utils.hexToNumber(estimatedGas);
-
-      tx.gas = Math.round(gas * 1.1);
+    // this.web3.eth.estimateGas(tx).then(estimatedGas => {
+    //   const gas = this.web3.utils.hexToNumber(estimatedGas);
+    //
+    //   tx.gas = Math.round(gas * 1.1);
+      tx.gas = this.gas;
       if (value) {
         tx.value = value;
       }
+      this.errorLogService.setTXvalue(tx);
+
       this.web3.eth.accounts.signTransaction(tx, this.getWallet().privateKey).then((signed) => {
         this.web3.eth.sendSignedTransaction(signed.rawTransaction)
         .on('error', error)
         .on('receipt', success);
       });
-    });
+    // });
 
   }
 
@@ -56,6 +63,8 @@ export class ProtocolAbstract {
     this.getContract(contractAddress).getPastEvents(eventName, {
       fromBlock: 0,
       toBlock: 'latest'
-    }, (error, events) => { console.log(events); cb(error, events.filter(event => event.returnValues._id === eventUuid)) });
+    }, (error, events) => {
+      cb(error, events.filter(event => event.returnValues._id === eventUuid));
+    });
   }
 }
