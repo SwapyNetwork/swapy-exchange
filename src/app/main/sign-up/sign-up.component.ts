@@ -35,7 +35,7 @@ export class SignUpComponent implements OnInit {
 
     var nameParts = this.name.split(/\s(.+)?/);
     var firstName = nameParts[0];
-    var lastName = nameParts[1] ? nameParts[1].trim() : null;
+    var lastName = nameParts[1] ? nameParts[1].trim() : '';
 
     let body = {
       firstName: firstName,
