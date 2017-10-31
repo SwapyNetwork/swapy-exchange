@@ -50,22 +50,22 @@ export class ConfirmOfferComponent implements OnInit {
         // Improve this call
         this.walletService.getEthBalance().then((balance) => {
           this.errorLogService.setBeforeETHbalance(balance);
-        });
-        this.exchangeProtocol
-          .createOffer(data.event.uuid, this.offer.paybackMonths, this.offer.roi, [111, 222, 333, 444, 555], (success) => {
-            console.log(success);
-            this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
-            this.pendingOfferService.setMessage('Your offer was mined by the Ethereum blockchain.');
-          }, (error) => {
-            // Improve this call
-            this.walletService.getEthBalance().then((balance) => {
-              this.errorLogService.setAfterETHbalance(balance);
-              this.errorLogService.setError(error);
+          this.exchangeProtocol
+            .createOffer(data.event.uuid, this.offer.paybackMonths, this.offer.roi, [111, 222, 333, 444, 555], (success) => {
+              console.log(success);
+              this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+              this.pendingOfferService.setMessage('Your offer was mined by the Ethereum blockchain.');
+            }, (error) => {
+              // Improve this call
+              this.walletService.getEthBalance().then((currentBalance) => {
+                this.errorLogService.setAfterETHbalance(currentBalance);
+                this.errorLogService.setError(error);
+              });
+              console.log(error);
+              this.pendingOfferService.setErrorMessage(error.message);
+              this.toastrService.getInstance().error(this.pendingOfferService.getMessage());
             });
-            console.log(error);
-            this.pendingOfferService.setErrorMessage(error.message);
-            this.toastrService.getInstance().error(this.pendingOfferService.getMessage());
-          });
+        });
         this.offer.uuid = data.offer.uuid;
         this.offer.address = data.offer.address;
         this.addOfferService.cacheOffer(this.offer);

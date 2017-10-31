@@ -68,22 +68,22 @@ export class OfferComponent implements OnInit {
       // Improve this call
       this.walletService.getEthBalance().then((balance) => {
         this.errorLogService.setBeforeETHbalance(balance);
-      });
 
-      this.assetProtocol.agreeInvestment(data.event.uuid, asset.investorWallet, agreementTermsHash, value, asset.contractAddress,
-        (success) => {
-          console.log(success);
-          this.toastrService.getInstance().success('Your agreement was mined by the Ethereum blockchain.');
-        }, (error) => {
-          // Improve this call
-          this.walletService.getEthBalance().then((balance) => {
-            this.errorLogService.setAfterETHbalance(balance);
-            this.errorLogService.setError(error);
-          });
-          console.log(error);
-          this.toastrService.getInstance().error(error.message);
-        }
-      );
+        this.assetProtocol.agreeInvestment(data.event.uuid, asset.investorWallet, agreementTermsHash, value, asset.contractAddress,
+          (success) => {
+            console.log(success);
+            this.toastrService.getInstance().success('Your agreement was mined by the Ethereum blockchain.');
+          }, (error) => {
+            // Improve this call
+            this.walletService.getEthBalance().then((currentBalance) => {
+              this.errorLogService.setAfterETHbalance(currentBalance);
+              this.errorLogService.setError(error);
+            });
+            console.log(error);
+            this.toastrService.getInstance().error(error.message);
+          }
+        );
+      });
       asset.status = TX_AGREEMENT_PENDING;
     }, error => {
       const namespace = 'agree-investment';

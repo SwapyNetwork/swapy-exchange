@@ -1,9 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Invest } from '../../invest/invest.interface';
-import {
-  OPEN, SOLD, PENDING, LOCKED, TX_AGREEMENT_PENDING,
-  TX_AGREED, TX_INVEST_PENDING, TX_INVESTED
-} from '../../../common/interfaces/offerAssetStatus.interface';
+import { OPEN, SOLD, PENDING, LOCKED, TX_AGREEMENT_PENDING,
+  TX_AGREED, TX_INVEST_PENDING, TX_INVESTED } from '../../../common/interfaces/offerAssetStatus.interface';
 import { LinkService } from '../../../common/services/link.service';
 import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
 import { ToastrService } from '../../../common/services/toastr.service';
@@ -99,19 +97,19 @@ export class InvestmentComponent implements OnInit {
       // Improve this call
       this.walletService.getEthBalance().then((balance) => {
         this.errorLogService.setBeforeETHbalance(balance);
-      });
-      // should be event.id
-      this.investmentAssetService.transferFunds((res as any).event.uuid, agreementTermsHash, asset.contractAddress, value, (success) => {
-        console.log(success);
-        this.toastrService.getInstance().success('Your transfer was mined by the Ethereum blockchain.');
-      }, (error) => {
-        // Improve this call
-        this.walletService.getEthBalance().then((balance) => {
-          this.errorLogService.setAfterETHbalance(balance);
-          this.errorLogService.setError(error);
+        // should be event.id
+        this.investmentAssetService.transferFunds((res as any).event.uuid, agreementTermsHash, asset.contractAddress, value, (success) => {
+          console.log(success);
+          this.toastrService.getInstance().success('Your transfer was mined by the Ethereum blockchain.');
+        }, (error) => {
+          // Improve this call
+          this.walletService.getEthBalance().then((currentBalance) => {
+            this.errorLogService.setAfterETHbalance(currentBalance);
+            this.errorLogService.setError(error);
+          });
+          console.log(error);
+          this.toastrService.getInstance().error(error.message);
         });
-        console.log(error);
-        this.toastrService.getInstance().error(error.message);
       });
     }, err => {
       console.log(err);

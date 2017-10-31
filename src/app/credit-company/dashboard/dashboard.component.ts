@@ -24,7 +24,7 @@ export class DashboardComponent implements OnInit {
     private investmentAssetService: InvestmentAssetService,
     private errorLogService: ErrorLogService) {
       this.toastr.setRootViewContainerRef(vcr);
-  }
+    }
 
   ngOnInit() {
     this.updateOffers();
@@ -63,12 +63,10 @@ export class DashboardComponent implements OnInit {
     });
 
     this.eventService.findPendingByCompany().then(events => {
-      const createOfferEvents = (events as [any]).forEach(event => {
+      events = (events as [any]).filter((event) => event.eventType !== CREATE_OFFER);
+      (events as [any]).forEach(event => {
         let eventType = '';
         switch (event.eventType) {
-          case CREATE_OFFER:
-            eventType = 'Offers';
-            break;
           case AGREE_INVESTMENT:
             eventType = 'Agreements';
             break;

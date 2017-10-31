@@ -65,7 +65,7 @@ export class ProtocolAbstract {
       toBlock: 'latest'
     }, (error, events) => {
       console.log(events);
-      cb(error, events.filter(event => event.returnValues._id === eventUuid))
+      cb(error, events.filter(event => event.returnValues._id === eventUuid));
     });
   }
 }
