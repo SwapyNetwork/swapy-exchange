@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
 
   getUpdatesFromBlockchain() {
     this.eventService.findPendingByInvestor().then(events => {
-      const createOfferEvents = (events as [any]).forEach(event => {
+      (events as [any]).forEach(event => {
         let eventType = '';
         switch (event.eventType) {
           case AGREE_INVESTMENT:

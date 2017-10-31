@@ -33,8 +33,6 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
       fromBlock: 0,
       toBlock: 'latest'
     }, (error, events) => {
-      console.log(eventUuid);
-      console.log(events);
       cb(error, events.filter(event => event.returnValues._id === eventUuid));
     });
   }
