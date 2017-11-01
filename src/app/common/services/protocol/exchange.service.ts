@@ -28,5 +28,4 @@ export class ExchangeProtocolService extends ProtocolAbstract {
     const encoded = this.getProtocolContract().methods.createOffer(id, payback, grossReturn * 10000, assets).encodeABI();
     this.signAndSend(encoded, success, error);
   }
-
 }

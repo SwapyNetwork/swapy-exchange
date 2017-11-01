@@ -401,9 +401,9 @@ export const InvestmentAssetInterface = {
           "type": "event"
         }
       },
-      "updated_at": 1508271340972
+      "updated_at": 1509545875728
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1508275578782
+  "updated_at": 1509545875728
 };
