@@ -48,7 +48,7 @@
             <div class="col-sm-4 col-md-4">
                <div class="form-group">
                   <label for="inputPayback"><span class="sw-box-text">Payback</span></label>
-                  <input type="tel" class="form-control" placeholder="x months"  name="paybackMonths" [(ngModel)]="paybackMonths" maxlength="2" #paybackMonthsInput="ngModel" pattern="[0-9]{1,2}"required>
+                  <input type="tel" class="form-control" placeholder="x months"  name="paybackMonths" [(ngModel)]="paybackMonths" maxlength="2" #paybackMonthsInput="ngModel" pattern="[0-9]{1,2}" required [disabled]="true">
                </div>
 
                <!-- <div class="form-group">
