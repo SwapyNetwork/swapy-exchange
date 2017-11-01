@@ -47,8 +47,8 @@
 
             <div class="col-sm-4 col-md-4">
                <div class="form-group">
-                  <label for="inputPayback"><span class="sw-box-text">Payback</span></label>
-                  <input type="tel" class="form-control" placeholder="x months"  name="paybackMonths" [(ngModel)]="paybackMonths" maxlength="2" #paybackMonthsInput="ngModel" pattern="[0-9]{1,2}"required>
+                  <label for="inputPayback"><span class="sw-box-text">Contract term</span></label>
+                  <input type="tel" class="form-control" placeholder="x months"  name="paybackMonths" [(ngModel)]="paybackMonths" maxlength="2" #paybackMonthsInput="ngModel" pattern="[0-9]{1,2}" required [disabled]="true">
                </div>
 
                <!-- <div class="form-group">
@@ -68,10 +68,10 @@
             </div>
             <div *ngIf="paybackMonthsInput.errors && (paybackMonthsInput.touched || paybackMonthsInput.dirty)" class="alert alert-danger">
               <div [hidden]="!paybackMonthsInput.errors.required">
-                Payback is required.
+                Contract term is required.
               </div>
               <div [hidden]="!paybackMonthsInput.errors.pattern">
-                Payback format is invalid.
+                Contract term format is invalid.
               </div>
             </div>
 
