@@ -29,7 +29,7 @@
           <!-- <p class="sw-box-text">6 installments</p> -->
           <p class="sw-box-text">Gross return rate: {{offer.roi | percent}}</p><hr>
           <p class="sw-box-text"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Launch: {{offer.createdOn | date: 'yyyy-MM-dd'}}</p>
-          <a *ngIf="offer.contractAddress" (click)="exploreContract(offer.contractAddress)"><b>Explore Ethereum contract</b></a>
+          <a *ngIf="offer.offerContractAddress" (click)="exploreContract(offer.offerContractAddress)"><b>Explore Ethereum contract</b></a>
       </div>
       <!-- <div class="col-sm-6 col-md-6"> -->
           <!-- <p class="sw-box-text">Debt: {{offer.paybackMonths}}x {{(offer.raisingAmount*(1+offer.roi))/offer.paybackMonths | currency:'USD':true:'.2'}}</p> -->
