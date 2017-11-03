@@ -45,7 +45,8 @@ export class ProtocolAbstract {
         return this.web3.eth.estimateGas(tx).then(estimatedGas => {
           const gas = this.web3.utils.hexToNumber(estimatedGas);
           console.log(gas);
-          tx.gas = Math.round(gas * 1.1);
+          // tx.gas = Math.round(gas * 1.1);
+          tx.gas = gas;
           // tx.gas = this.gas;
           if (value) {
             tx.value = value;
