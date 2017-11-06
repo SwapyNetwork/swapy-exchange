@@ -26,7 +26,7 @@
         <!-- <li><a [routerLink]="['/investor']" class="sw-box-text">Manage</a></li> -->
         <!-- <li><a routerLink="/notifications"><i class="fa fa-lg fa-bell-o" aria-hidden="true" title="Notifications"></i><span class="badge sw-badge"></span></a></li> -->
         <li class="dropdown" [ngClass]="{ 'open': isSettingsOpen }" (click)="toggleSettingsDropdown()">
-          <a href="javascript:void()" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-lg fa-cog" aria-hidden="true" title="Settings"></i> <span class="sw-add-name-menu sw-box-text"> Settings & Configuration</span></a>
+          <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-lg fa-cog" aria-hidden="true" title="Settings"></i> <span class="sw-add-name-menu sw-box-text"> Settings & Configuration</span></a>
           <ul class="dropdown-menu">
             <li class="sw-profile-name">{{user.firstName}} {{user.lastName}}</li>
             <li class="sw-profile-email">{{user.email}}</li>
@@ -40,7 +40,7 @@
           </ul>
         </li>
 
-        <li><a (click)="logout()" href="javascript:void()"><i class="fa fa-lg fa-sign-out" aria-hidden="true" title="Sign out"></i> <span class="sw-add-name-menu sw-box-text"> Sign out</span></a></li>
+        <li><a (click)="logout()" href="javascript:void(0);"><i class="fa fa-lg fa-sign-out" aria-hidden="true" title="Sign out"></i> <span class="sw-add-name-menu sw-box-text"> Sign out</span></a></li>
       </ul>
 
 

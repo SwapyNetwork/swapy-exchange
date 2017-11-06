@@ -42,22 +42,22 @@ export class ProtocolAbstract {
           data: encoded,
         } as any;
 
-        // this.web3.eth.estimateGas(tx).then(estimatedGas => {
-        //   const gas = this.web3.utils.hexToNumber(estimatedGas);
-        //
-        //   tx.gas = Math.round(gas * 1.1);
-          tx.gas = this.gas;
+        return this.web3.eth.estimateGas(tx).then(estimatedGas => {
+          const gas = this.web3.utils.hexToNumber(estimatedGas);
+          console.log(gas);
+          // tx.gas = Math.round(gas * 1.1);
+          tx.gas = gas;
+          // tx.gas = this.gas;
           if (value) {
             tx.value = value;
           }
           this.errorLogService.setTXvalue(tx);
-
           return this.web3.eth.accounts.signTransaction(tx, this.getWallet().privateKey).then((signed) => {
             return this.web3.eth.sendSignedTransaction(signed.rawTransaction)
             .on('error', error)
             .on('receipt', success);
           });
-        // });
+        });
       });
     });
 
