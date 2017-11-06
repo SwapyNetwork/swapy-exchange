@@ -23,9 +23,14 @@ export class ExchangeProtocolService extends ProtocolAbstract {
     return super.getEvents(eventUuid, eventName, addresses.swapyExchange, cb);
   }
 
-  public createOffer(id: string, payback: number, grossReturn: number, assets: number[], success?: Function, error?: Function) {
-    this.errorLogService.setParamValues([id, payback, grossReturn * 10000, assets]);
-    const encoded = this.getProtocolContract().methods.createOffer(id, payback, grossReturn * 10000, assets).encodeABI();
-    this.signAndSend(encoded, success, error);
+  public createOffer(id: string, payback: number, grossReturn: number, currency: string,
+    fixedValue: number, offerTermsHash: string, assets: number[], success?: Function, error?: Function) {
+      console.log(fixedValue)
+      this.errorLogService.setParamValues([id, payback, grossReturn * 10000, currency, fixedValue, offerTermsHash, assets]);
+      const encoded = this.getProtocolContract().methods
+        .createOffer(id, payback, grossReturn * 10000, currency, fixedValue * 100,
+          offerTermsHash, assets)
+        .encodeABI();
+      this.signAndSend(encoded, success, error);
   }
 }
