@@ -17,7 +17,8 @@
     "alpha": "ng serve --env=prod --host 0.0.0.0 --disable-host-check",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "copy": "sh scripts/copy_contracts.sh"
   },
   "private": true,
   "dependencies": {

@@ -3,9 +3,6 @@ import { Web3Service } from '../web3.service';
 import { WalletService } from '../wallet.service';
 import { ErrorLogService } from '../error-log.service';
 
-import { InvestmentAssetInterface as ia } from '../../../../../contracts/InvestmentAsset';
-
-
 @Injectable()
 export class ProtocolAbstract {
   protected web3;
@@ -20,6 +17,11 @@ export class ProtocolAbstract {
 
   protected getWallet() {
     return this.walletService.getWallet();
+  }
+
+  protected getAddressFromBuild(build: any) {
+    const buildKeys = Object.keys(build.networks);
+    return build.networks[buildKeys[buildKeys.length - 1]].address;
   }
 
   public getContract(address) {

@@ -43,6 +43,7 @@ export class ConfirmOfferComponent implements OnInit {
   }
 
   confirmOffer() {
+    const offerTermsHash = '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed';
     this.addOfferService.addOffer(this.offer).then(
       data => {
         this.errorLogService.setClassName('ConfirmOfferComponent');
@@ -52,7 +53,7 @@ export class ConfirmOfferComponent implements OnInit {
           this.errorLogService.setBeforeETHbalance(balance);
           this.exchangeProtocol
             .createOffer(data.event.uuid, this.offer.paybackMonths,
-              this.offer.roi, 'USD', this.offer.raisingAmount, '123456', [111, 222, 333, 444, 555], (success) => {
+              this.offer.roi, 'USD', this.offer.raisingAmount, offerTermsHash, [1, 2, 3, 4, 5], (success) => {
               console.log(success);
               this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
               this.pendingOfferService.setMessage('Your offer was mined by the Ethereum blockchain.');

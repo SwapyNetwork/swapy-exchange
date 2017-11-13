@@ -1,4 +1,4 @@
-export const SwapyExchangeInterface = {
+{
   "contract_name": "SwapyExchange",
   "abi": [
     {
@@ -252,8 +252,47 @@ export const SwapyExchangeInterface = {
       "links": {},
       "address": "0x275f2a134373ec751d350f2c26a4321de6ef4169",
       "updated_at": 1509985756113
+    },
+    "1510597131323": {
+      "events": {
+        "0x9c162a238f91121e0ecbe31a7b165c7e0f4c1e7120a9ec9bf214ac1637b7b75f": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "_id",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "_from",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "_protocolVersion",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "_offerAddress",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "_assets",
+              "type": "address[]"
+            }
+          ],
+          "name": "Offers",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xf81880187f3ea2553e6eb7d53f0ac92e1565c73f",
+      "updated_at": 1510597139846
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1509985756113
-};
+  "updated_at": 1510597139846
+}

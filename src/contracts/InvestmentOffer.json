@@ -1,4 +1,4 @@
-export const InvestmentOfferInterface = {
+{
   "contract_name": "InvestmentOffer",
   "abi": [
     {
@@ -284,4 +284,4 @@ export const InvestmentOfferInterface = {
   },
   "schema_version": "0.0.5",
   "updated_at": 1509985644321
-};
+}
