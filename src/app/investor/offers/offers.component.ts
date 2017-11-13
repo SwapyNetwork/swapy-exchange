@@ -22,6 +22,7 @@ export class OffersComponent implements OnInit {
 
   ngOnInit() {
     this.web3 = this.web3Service.getInstance();
+    this.getOffersFromBlockchain();
 
     this.offerService.getOffers().then(
       (data: any) => {
@@ -51,6 +52,14 @@ export class OffersComponent implements OnInit {
 
   getOffersFromBlockchain() {
     const contract = new this.web3.eth.Contract(SwapyExchange.abi, addresses.swapyExchange);
+
+    contract.getPastEvents('Offers', {
+      fromBlock: 0,
+      toBlock: 'latest'
+    }, (error, events) => {
+      console.log(events);
+      }
+    });
   }
 
 
