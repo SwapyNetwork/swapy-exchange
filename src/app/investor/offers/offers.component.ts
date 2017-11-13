@@ -58,6 +58,24 @@ export class OffersComponent implements OnInit {
       toBlock: 'latest'
     }, (error, events) => {
       console.log(events);
+      for (const event of events) {
+        const contractVariables = event.returnValues;
+        /*
+        {
+          roi: contractVariables._grossReturn,
+          paybackMonths: contractVariables._paybackMonths,
+          walletAddress: contractVariables._from,
+          contractAddress: contractAddress.offerAddress,
+          --
+          assets: o.assets,
+          raisingAmount: o.offerRaisingAmount,
+          uuid: o.offerUuid,
+          companyName: o.firstName + ' ' + o.lastName,
+          companyLogo: o.picture,
+          companyUuid: o.uuid,
+          createdOn: o.createdOn,
+        }
+        */
       }
     });
   }
