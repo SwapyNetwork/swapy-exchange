@@ -4,6 +4,7 @@ import { Offer } from '../../common/interfaces/offer.interface';
 import { OfferService } from './offer.service';
 import { Web3Service } from '../../common/services/web3.service';
 import { SwapyExchangeInterface as SwapyExchange } from '../../../../contracts/SwapyExchange';
+import { InvestmentAssetInterface as InvestmentAsset } from '../../../../contracts/InvestmentAsset';
 import { addresses } from '../../../../contracts/address';
 
 @Component({
@@ -58,6 +59,14 @@ export class OffersComponent implements OnInit {
       toBlock: 'latest'
     }, (error, events) => {
       console.log(events);
+      const assetAddress = events[events.length - 1].returnValues._assets[0];
+      const contractAsset = new this.web3.eth.Contract(InvestmentAsset.abi, assetAddress);
+      contractAsset.methods.value().call().then(value => {
+        console.log('value');
+        console.log(value);
+        console.log('value');
+      });
+
       for (const event of events) {
         const contractVariables = event.returnValues;
         /*
