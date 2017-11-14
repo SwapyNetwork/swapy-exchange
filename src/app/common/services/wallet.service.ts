@@ -28,8 +28,8 @@ export class WalletService {
     let wallet = {};
     if ((ProviderFile as any).ENV === 'test') {
       this.wallet = {
-        address: '0x8f6c0c887f7caf7d512c964ea2a3e668d94c5304',
-        privateKey: '0x6393fb4fcf486e30cf5ea2504c47d5ec86ee567ee9d4cb9ae7b8da5ca06f185c',
+        address: (ProviderFile as any).ADDRESS,
+        privateKey: (ProviderFile as any).PRIVATE_KEY,
       };
 
       wallet = {
