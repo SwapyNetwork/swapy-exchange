@@ -24,7 +24,7 @@ export class Web3Service {
   }
 
   public getInstance() {
-    if (this.web3Ws == null) {
+    if (this.web3Ws == null && this.web3Http == null) {
       this.init();
     }
 

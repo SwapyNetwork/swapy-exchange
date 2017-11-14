@@ -52,12 +52,9 @@ export class ProtocolAbstract {
             tx.value = value;
           }
           this.errorLogService.setTXvalue(tx);
-
-          return this.web3Service.getInstance().eth.accounts.signTransaction(tx, this.getWallet().privateKey).then((signed) => {
-            return this.web3Service.getInstance().eth.sendSignedTransaction(signed.rawTransaction)
+          return this.web3Service.getInstance().eth.sendTransaction(tx)
             .on('error', error)
             .on('receipt', success);
-          });
         // });
       });
     });

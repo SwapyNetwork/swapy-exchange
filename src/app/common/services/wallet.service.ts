@@ -28,8 +28,8 @@ export class WalletService {
     let wallet = {};
     if ((ProviderFile as any).ENV === 'test') {
       this.wallet = {
-        address: '0x2ebec2a04c38baa8ee1b52f11426f94633e1fc55',
-        privateKey: '8f29e7112dda8df09d49cca06fc48a565e194faf2a0d66d107429d1c1b8c960d',
+        address: '0x8f6c0c887f7caf7d512c964ea2a3e668d94c5304',
+        privateKey: '0x6393fb4fcf486e30cf5ea2504c47d5ec86ee567ee9d4cb9ae7b8da5ca06f185c',
       };
 
       wallet = {
@@ -55,6 +55,7 @@ export class WalletService {
     }
 
     // Save keys to local file
+    this.addWalletToWeb3(wallet);
     this.electronService.ipcRenderer.send('create-wallet', wallet);
   }
 
@@ -63,6 +64,10 @@ export class WalletService {
       return this.electronService.ipcRenderer.sendSync('get-wallet', this.getUserIdentification());
     }
     return this.wallet;
+  }
+
+  addWalletToWeb3(wallet) {
+    this.web3Service.getInstance().eth.accounts.wallet.add(wallet);
   }
 
   getUserIdentification() {
