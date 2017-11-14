@@ -54,7 +54,7 @@ export class OffersComponent implements OnInit {
   getOffersFromBlockchain() {
     const contract = new this.web3.eth.Contract(SwapyExchange.abi, addresses.swapyExchange);
 
-    return contract.getPastEvents('Offers', {
+    contract.getPastEvents('Offers', {
       fromBlock: 0,
       toBlock: 'latest'
     }, (error, offersEvents) => {
@@ -65,8 +65,8 @@ export class OffersComponent implements OnInit {
         for (const assetAddress of contractVariables._assets) {
           const contractAsset = new this.web3.eth.Contract(InvestmentAsset.abi, assetAddress);
           promises.push(new Promise((resolve) => {
-            contractAsset.methods.value().call().then(value => {
-              contractAsset.methods.status().call().then(status => {
+            return contractAsset.methods.value().call().then(value => {
+              return contractAsset.methods.status().call().then(status => {
                 value = this.web3.utils.fromWei(value) * 340; // Temporary fixed value in Alpha
                 const offerAssets = {
                     value,
@@ -105,7 +105,7 @@ export class OffersComponent implements OnInit {
           this.offers.push(offer);
           this.offerService.cacheOffers(this.offers);
 
-        })
+        });
       }
     });
   }
