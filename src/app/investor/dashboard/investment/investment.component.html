@@ -24,7 +24,7 @@
       <div class="panel-body">
         <div class="col-sm-4 col-md-4">
             <a href="credit-company-profile.html"><p class="sw-box-text sw-blue1">{{investment.companyName}}</p></a>
-            <p class="sw-box-text">Payback: {{investment.paybackMonths}} months</p>
+            <p class="sw-box-text">Contract term: {{investment.paybackMonths}} months</p>
             <p class="sw-box-text">Since {{investment.investedIn | date: 'yyyy-MM-dd'}}</p><hr>
             <a (click)="exploreContract(investment.offerContractAddress)"><b>Explore Ethereum contract</b></a>
 
@@ -32,7 +32,7 @@
         <div class="col-sm-4 col-md-4">
             <p class="sw-box-text">Investment: {{investment.totalAmount | currency:'USD':true:'.2' }}</p>
             <p class="sw-box-text">Gross return: {{calculateReturnAmount() | currency:'USD':true:'.2' }}</p>
-            <p class="sw-box-text">Payback date: <span class="sw-blue1">{{calculatePaybackDate() | date: 'yyyy-MM-dd'}}</span></p>
+            <p class="sw-box-text">Return date: <span class="sw-blue1">{{calculatePaybackDate() | date: 'yyyy-MM-dd'}}</span></p>
             <!-- <p class="sw-box-text">Performance: <span class="sw-high">High / No Delay</span></p> -->
             <!-- <p><i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i></p> -->
         </div>

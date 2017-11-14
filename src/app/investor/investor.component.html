@@ -14,7 +14,7 @@
         <div class="col-xs-6 col-sm-6 col-md-6 sw-funds">
           <p class="sw-funds-value">
             <span class="sw-available-lable">
-              <a (click)="refreshStatusBar()" href="javascript:void()">
+              <a (click)="refreshStatusBar()" href="javascript:void(0);">
                 <i class="fa fa-lg fa-refresh" aria-hidden="true" title="Refresh"></i> Available
               </a>
             </span> ETH {{balance}}
@@ -35,7 +35,7 @@
       <div class="col-sm-2 col-sm-offset-10 col-md-2 col-md-offset-10 sw-sidebar"> <!-- SIDEBAR  -->
          <div class="row sw-top-sidebar">
           <div class="col-xs-6 col-sm-12 col-md-12">
-              <p class="sw-top-lable">Total Spent</p>
+              <p class="sw-top-lable">Total spent</p>
               <p class="sw-top-value">{{investedValue | currency:'USD':true:'.2'}}</p>
           </div>
           <div class="col-xs-6 col-sm-12 col-md-12">
@@ -49,7 +49,7 @@
 
           </div>
           <div class="col-xs-6 col-sm-12 col-md-12 sw-top-bottom">
-              <p class="sw-top-lable">Average payback period in days</p>
+              <p class="sw-top-lable">Average portfolio term in days</p>
               <p class="sw-top-value">{{averagePaybackPeriod}}</p>
 
           </div>

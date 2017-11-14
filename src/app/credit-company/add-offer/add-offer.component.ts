@@ -40,7 +40,9 @@ export class AddOfferComponent implements OnInit {
 
   constructor(private addOfferService: AddOfferService, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.paybackMonths = '12'; // Temporary setting default value
+  }
 
   addOffer() {
     /** @todo frontend validations */
