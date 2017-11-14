@@ -57,34 +57,56 @@ export class OffersComponent implements OnInit {
     contract.getPastEvents('Offers', {
       fromBlock: 0,
       toBlock: 'latest'
-    }, (error, events) => {
-      console.log(events);
-      const assetAddress = events[events.length - 1].returnValues._assets[0];
-      const contractAsset = new this.web3.eth.Contract(InvestmentAsset.abi, assetAddress);
-      contractAsset.methods.value().call().then(value => {
-        console.log('value');
-        console.log(value);
-        console.log('value');
-      });
-
-      for (const event of events) {
-        const contractVariables = event.returnValues;
-        /*
-        {
-          roi: contractVariables._grossReturn,
-          paybackMonths: contractVariables._paybackMonths,
-          walletAddress: contractVariables._from,
-          contractAddress: contractAddress.offerAddress,
-          --
-          assets: o.assets,
-          raisingAmount: o.offerRaisingAmount,
-          uuid: o.offerUuid,
-          companyName: o.firstName + ' ' + o.lastName,
-          companyLogo: o.picture,
-          companyUuid: o.uuid,
-          createdOn: o.createdOn,
+    }, (error, offersEvents) => {
+      for (const offersEvent of offersEvents) {
+        const contractVariables = offersEvent.returnValues;
+        // console.log(offersEvents);
+        const asset = [];
+        let promises = [];
+        for (const assetAddress of contractVariables._assets) {
+          const contractAsset = new this.web3.eth.Contract(InvestmentAsset.abi, assetAddress);
+          // promises.push(new Promise((resolve) => {
+          // }));
+          promises.push(new Promise((resolve) => {
+            contractAsset.methods.value().call().then(value => {
+                contractAsset.methods.status().call().then(status => {
+                  resolve([value, status]);
+                  // resolve(status);
+                });
+            });
+          }));
+          //   contractAsset.methods.value().call().then(value => {
+          //     asset.push({status, value});
+          //
+          //     /*
+          //     {
+          //       roi: contractVariables._grossReturn,
+          //       paybackMonths: contractVariables._paybackMonths,
+          //       walletAddress: contractVariables._from,
+          //       contractAddress: contractAddress._offerAddress,
+          //       --
+          //       assets: o.assets,
+          //       raisingAmount: o.offerRaisingAmount,
+          //       uuid: o.offerUuid,
+          //       companyName: o.firstName + ' ' + o.lastName,
+          //       companyLogo: o.picture,
+          //       companyUuid: o.uuid,
+          //       createdOn: o.createdOn,
+          //     }
+          //     */
+          //     const offer = {
+          //       roi: contractVariables._grossReturn,
+          //       paybackMonths: contractVariables._paybackMonths,
+          //       walletAddress: contractVariables._from,
+          //       contractAddress: contractVariables._offerAddress,
+          //       assets: asset
+          //     }
+          // });
         }
-        */
+
+        Promise.all(promises).then((result) => {
+          console.log(result);
+        })
       }
     });
   }
