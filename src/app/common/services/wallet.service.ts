@@ -4,8 +4,9 @@ import { StorageService } from './storage.service';
 import { ErrorLogService } from './error-log.service';
 
 import { Wallet } from '../interfaces/wallet.interface';
-
 import { ElectronService } from 'ngx-electron';
+
+import * as ProviderFile from '../../../../env.json';
 
 @Injectable()
 export class WalletService {
@@ -24,20 +25,37 @@ export class WalletService {
   }
 
   public createWallet() {
-    this.web3 = this.web3Service.getInstance();
-    const account = this.web3.eth.accounts.create();
-    this.wallet = {
-      address: account.address,
-      privateKey: account.privateKey,
-    };
+    let wallet = {};
+    if ((ProviderFile as any).ENV === 'test') {
+      this.wallet = {
+        address: (ProviderFile as any).ADDRESS,
+        privateKey: (ProviderFile as any).PRIVATE_KEY,
+      };
 
-    const wallet = {
-      address: account.address,
-      privateKey: account.privateKey,
-      user: this.getUserIdentification()
-    };
+      wallet = {
+        address: this.wallet.address,
+        privateKey: this.wallet.privateKey,
+        user: this.getUserIdentification()
+      };
+    } else {
+      this.web3 = this.web3Service.getInstance();
+      let account;
+      account = this.web3.eth.accounts.create();
+      this.wallet = {
+        address: account.address,
+        privateKey: account.privateKey,
+      };
+
+
+      wallet = {
+        address: account.address,
+        privateKey: account.privateKey,
+        user: this.getUserIdentification()
+      };
+    }
 
     // Save keys to local file
+    this.addWalletToWeb3(wallet);
     this.electronService.ipcRenderer.send('create-wallet', wallet);
   }
 
@@ -46,6 +64,10 @@ export class WalletService {
       return this.electronService.ipcRenderer.sendSync('get-wallet', this.getUserIdentification());
     }
     return this.wallet;
+  }
+
+  addWalletToWeb3(wallet) {
+    this.web3Service.getInstance().eth.accounts.wallet.add(wallet);
   }
 
   getUserIdentification() {

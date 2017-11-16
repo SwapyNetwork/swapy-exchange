@@ -54,6 +54,7 @@ export class LoginComponent implements OnInit {
 
         const wallet: Wallet = this.walletService.getWallet();
         if (wallet) {
+          this.walletService.addWalletToWeb3(wallet);
           this.router.navigate([this.solveRoute(data.user.type, data.user.tfa)]);
         } else {
           this.errorMessages.push('Local wallet not found. Please log in from the device you signed up. Decentralized backup to be done in a later version.'); // @todo Improve error message.

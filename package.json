@@ -17,7 +17,8 @@
     "alpha": "ng serve --env=prod --host 0.0.0.0 --disable-host-check",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "copy": "sh scripts/copy_contracts.sh"
   },
   "private": true,
   "dependencies": {
@@ -45,13 +46,7 @@
     "sha1": "^1.1.1",
     "swarm-js": "^0.1.36",
     "text-mask-addons": "3.6.0",
-    "web3": "^1.0.0-beta.18",
-    "web3-eth-accounts": "^1.0.0-beta.23",
-    "web3-eth-contract": "^1.0.0-beta.23",
-    "web3-eth-personal": "^1.0.0-beta.23",
-    "web3-net": "^1.0.0-beta.23",
-    "web3-requestmanager": "^1.0.0-beta.14",
-    "web3-utils": "^1.0.0-beta.23",
+    "web3": "^1.0.0-beta.17",
     "zone.js": "0.8.4"
   },
   "devDependencies": {

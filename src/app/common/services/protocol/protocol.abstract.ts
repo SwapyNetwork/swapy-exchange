@@ -3,37 +3,39 @@ import { Web3Service } from '../web3.service';
 import { WalletService } from '../wallet.service';
 import { ErrorLogService } from '../error-log.service';
 
-import { InvestmentAssetInterface as ia } from '../../../../../contracts/InvestmentAsset';
-
-
 @Injectable()
 export class ProtocolAbstract {
   protected web3;
   protected contract;
   protected abi;
-  protected gas = 4500000;
+  protected gas = 10000000;
 
   constructor(
     protected web3Service: Web3Service,
     private walletService: WalletService,
-    public errorLogService: ErrorLogService) {
-      this.web3 = this.web3Service.getInstance();
-  }
+    public errorLogService: ErrorLogService) {}
 
   protected getWallet() {
     return this.walletService.getWallet();
   }
 
+  protected getAddressFromBuild(build: any) {
+    const buildKeys = Object.keys(build.networks);
+    return build.networks[buildKeys[buildKeys.length - 1]].address;
+  }
+
   public getContract(address) {
     if (!this.contract) {
-      this.contract = new this.web3.eth.Contract(this.abi, address);
+      const web3 = this.web3Service.getInstance();
+      this.contract = new web3.eth.Contract(this.abi, address);
     }
     return this.contract;
   }
 
   public signAndSendTransaction(encoded: string, address: string, value?: number, success?: Function, error?: Function) {
-    return this.web3.eth.net.getId().then(chainId => {
-      return this.web3.eth.getTransactionCount(this.getWallet().address).then(nonce => {
+    const web3 = this.web3Service.getInstance();
+    return web3.eth.net.getId().then(chainId => {
+      return web3.eth.getTransactionCount(this.getWallet().address).then(nonce => {
         const tx = {
           from: this.getWallet().address,
           to: address,
@@ -42,22 +44,19 @@ export class ProtocolAbstract {
           data: encoded,
         } as any;
 
-        return this.web3.eth.estimateGas(tx).then(estimatedGas => {
-          const gas = this.web3.utils.hexToNumber(estimatedGas);
-          console.log(gas);
+        //return web3.eth.estimateGas(tx).then(estimatedGas => {
+          //const gas = web3.utils.hexToNumber(estimatedGas);
           // tx.gas = Math.round(gas * 1.1);
-          tx.gas = gas;
-          // tx.gas = this.gas;
+          //tx.gas = gas;
+          tx.gas = this.gas;
           if (value) {
             tx.value = value;
           }
           this.errorLogService.setTXvalue(tx);
-          return this.web3.eth.accounts.signTransaction(tx, this.getWallet().privateKey).then((signed) => {
-            return this.web3.eth.sendSignedTransaction(signed.rawTransaction)
+          return web3.eth.sendTransaction(tx)
             .on('error', error)
             .on('receipt', success);
-          });
-        });
+        //});
       });
     });
 
