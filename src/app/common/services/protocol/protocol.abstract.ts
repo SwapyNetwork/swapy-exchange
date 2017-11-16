@@ -8,7 +8,7 @@ export class ProtocolAbstract {
   protected web3;
   protected contract;
   protected abi;
-  protected gas = 4500000;
+  protected gas = 10000000;
 
   constructor(
     protected web3Service: Web3Service,
@@ -33,8 +33,9 @@ export class ProtocolAbstract {
   }
 
   public signAndSendTransaction(encoded: string, address: string, value?: number, success?: Function, error?: Function) {
-    return this.web3Service.getInstance().eth.net.getId().then(chainId => {
-      return this.web3Service.getInstance().eth.getTransactionCount(this.getWallet().address).then(nonce => {
+    const web3 = this.web3Service.getInstance();
+    return web3.eth.net.getId().then(chainId => {
+      return web3.eth.getTransactionCount(this.getWallet().address).then(nonce => {
         const tx = {
           from: this.getWallet().address,
           to: address,
@@ -43,20 +44,19 @@ export class ProtocolAbstract {
           data: encoded,
         } as any;
 
-        return this.web3.eth.estimateGas(tx).then(estimatedGas => {
-          const gas = this.web3.utils.hexToNumber(estimatedGas);
-          console.log(gas);
+        //return web3.eth.estimateGas(tx).then(estimatedGas => {
+          //const gas = web3.utils.hexToNumber(estimatedGas);
           // tx.gas = Math.round(gas * 1.1);
-          tx.gas = gas;
-          // tx.gas = this.gas;
+          //tx.gas = gas;
+          tx.gas = this.gas;
           if (value) {
             tx.value = value;
           }
           this.errorLogService.setTXvalue(tx);
-          return this.web3Service.getInstance().eth.sendTransaction(tx)
+          return web3.eth.sendTransaction(tx)
             .on('error', error)
             .on('receipt', success);
-        // });
+        //});
       });
     });
 

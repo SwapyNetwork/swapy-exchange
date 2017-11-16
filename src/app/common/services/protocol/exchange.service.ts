@@ -27,14 +27,6 @@ export class ExchangeProtocolService extends ProtocolAbstract {
     fixedValue: number, offerTermsHash: string, assets: number[], success?: Function, error?: Function) {
       this.errorLogService.setParamValues([id, payback, grossReturn * 10000, currency, fixedValue * 100,
         this.web3Service.getInstance().utils.asciiToHex(offerTermsHash), assets]);
-
-      console.log(id,
-      payback,
-      grossReturn * 10000,
-      currency,
-      fixedValue * 100,
-      this.web3Service.getInstance().utils.asciiToHex(offerTermsHash),
-      assets);
       const encoded = this.getProtocolContract().methods
         .createOffer(
           id,
