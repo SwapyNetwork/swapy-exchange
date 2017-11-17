@@ -62,12 +62,16 @@ export class ProtocolAbstract {
 
   }
 
-  public getEvents(eventUuid, eventName, contractAddress, cb) {
+  public getEvents(filterKey, filterValue, eventName, contractAddress, cb) {
     this.getContract(contractAddress).getPastEvents(eventName, {
       fromBlock: 0,
       toBlock: 'latest'
     }, (error, events) => {
-      cb(error, events.filter(event => event.returnValues._id === eventUuid));
+      if (filterKey && filterValue) {
+        cb(error, events.filter(event => event.returnValues[filterKey] === filterValue));
+      } else {
+        cb(error, events);
+      }
     });
   }
 }

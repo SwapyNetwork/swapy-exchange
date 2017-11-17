@@ -20,7 +20,12 @@ export class ExchangeProtocolService extends ProtocolAbstract {
 
   public getEvents(eventUuid, eventName, cb) {
     this.errorLogService.setParamValues([eventUuid, eventName, this.address, cb]);
-    return super.getEvents(eventUuid, eventName, this.address, cb);
+    return super.getEvents('_id', eventUuid, eventName, this.address, cb);
+  }
+
+  public getMyOffers(cb) {
+    this.errorLogService.setParamValues([this.address, cb]);
+    return super.getEvents(null, null, 'Offers', this.address, cb);
   }
 
   public createOffer(id: string, payback: number, grossReturn: number, currency: string,
