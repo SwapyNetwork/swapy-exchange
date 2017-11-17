@@ -45,7 +45,7 @@ export class ConfirmOfferComponent implements OnInit {
   confirmOffer() {
     const offerTermsHash = '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed';
 
-    const a = this.offer.raisingAmount / 5 * 100;
+    const a = Math.ceil(this.offer.raisingAmount / 5 * 100);
     const assetValues = [a, a, a, a, a];
 
     this.addOfferService.addOffer(this.offer).then(

@@ -32,6 +32,19 @@ export class ProtocolAbstract {
     return this.contract;
   }
 
+  public getConstants(address, constantNames: string[]) {
+    const contract = this.getContract(address);
+    const promises = [];
+    const contractObj = {};
+    constantNames.forEach(constant => {
+      promises.push(contract.methods[constant]().call().then(value => {
+        contractObj[constant] = value;
+      }));
+    })
+
+    return Promise.all(promises).then(resolved => contractObj);
+  }
+
   public signAndSendTransaction(encoded: string, address: string, value?: number, success?: Function, error?: Function) {
     const web3 = this.web3Service.getInstance();
     return web3.eth.net.getId().then(chainId => {

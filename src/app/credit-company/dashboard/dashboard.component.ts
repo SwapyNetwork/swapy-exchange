@@ -39,8 +39,13 @@ export class DashboardComponent implements OnInit {
         console.log(error)
       }
     );
-
+    let contract;
     this.exchangeService.getMyOffers(this.walletService.getWallet().address, (err, offers) => {
+      offers.forEach(offer => {
+        offer.returnValues._assets.forEach(asset => {
+          this.investmentAssetService.getConstants(asset, ['fixedValue', 'paybackDays']).then(obj => console.log(obj));
+        })
+      });
       console.log(offers);
     });
   }

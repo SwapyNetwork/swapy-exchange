@@ -22,7 +22,8 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
   }
 
   public getContract(address) {
-    this.contract = new this.web3.eth.Contract(this.abi, address);
+    const web3 = this.web3Service.getInstance();
+    this.contract = new web3.eth.Contract(this.abi, address);
     return this.contract;
   }
 
