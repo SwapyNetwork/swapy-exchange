@@ -23,7 +23,7 @@ export class ExchangeProtocolService extends ProtocolAbstract {
     return super.getEvents('_id', eventUuid, eventName, this.address, cb);
   }
 
-  public getMyOffers(cb) {
+  public getOffers(cb) {
     this.errorLogService.setParamValues([this.address, cb]);
     return super.getEvents(null, null, 'Offers', this.address, cb);
   }

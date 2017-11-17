@@ -3,8 +3,7 @@ import { Http } from '@angular/http';
 import { Offer } from '../../common/interfaces/offer.interface';
 import { OfferService } from './offer.service';
 import { Web3Service } from '../../common/services/web3.service';
-import * as InvestmentAsset from '../../../contracts/InvestmentAsset.json';
-import * as SwapyExchange from '../../../contracts/SwapyExchange.json';
+import { ExchangeProtocolService as ExchangeService } from '../../common/services/protocol/exchange.service';
 
 @Component({
   selector: 'app-offers',
@@ -18,41 +17,18 @@ export class OffersComponent implements OnInit {
   public web3;
   mode = 'Observable';
 
-  constructor(private offerService: OfferService, private web3Service: Web3Service) { }
+  constructor(
+    private offerService: OfferService,
+    private web3Service: Web3Service,
+    private exchangeService: ExchangeService) { }
 
   ngOnInit() {
     this.web3 = this.web3Service.getInstance();
     this.getOffersFromBlockchain();
-
-    // this.offerService.getOffers().then(
-    //   (data: any) => {
-    //
-    //     for (const o of data.offers) {
-    //       this.offers.push({
-    //         roi: o.offerRoi,
-    //         paybackMonths: o.offerPaybackMonths,
-    //         raisingAmount: o.offerRaisingAmount,
-    //         walletAddress: o.offerWalletAddress,
-    //         contractAddress: o.offerContractAddress,
-    //         uuid: o.offerUuid,
-    //         companyName: o.firstName + ' ' + o.lastName,
-    //         companyLogo: o.picture,
-    //         companyUuid: o.uuid,
-    //         assets: o.assets,
-    //         createdOn: o.createdOn,
-    //       });
-    //     }
-    //
-    //     this.offerService.cacheOffers(this.offers);
-    //
-    //   },
-    //   error =>  this.errorMessage = <any>error
-    // );
   }
 
   getOffersFromBlockchain() {
-    const abi = (<any>SwapyExchange).abi;
-    const contract = new this.web3.eth.Contract((<any>SwapyExchange).abi, );
+
   //
   //   contract.getPastEvents('Offers', {
   //     fromBlock: 0,
