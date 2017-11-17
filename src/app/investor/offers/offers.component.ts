@@ -29,6 +29,20 @@ export class OffersComponent implements OnInit {
 
   getOffersFromBlockchain() {
 
+    this.exchangeService.getOffers((err, offerEvents) => {
+      for (const offerEvent of offerEvents) {
+        const contractVariables = offerEvent.returnValues;
+        const offer = {
+          roi: contractVariables._grossReturn / 10000,
+          paybackMonths: contractVariables._paybackMonths,
+          walletAddress: contractVariables._from,
+          assets: contractVariables._asset
+        } as any;
+        this.offers.push(offer);
+      }
+      this.offerService.cacheOffers(this.offers);
+    });
+
   //
   //   contract.getPastEvents('Offers', {
   //     fromBlock: 0,

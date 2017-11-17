@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
       }
     );
 
-    this.exchangeService.getMyOffers((err, offers) => {
+    this.exchangeService.getOffers((err, offers) => {
       offers.filter(offer => offer.returnValues._from === this.walletService.getWallet().address);
       console.log(offers);
     });

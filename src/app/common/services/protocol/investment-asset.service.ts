@@ -10,6 +10,7 @@ import { ProtocolAbstract } from './protocol.abstract';
 export class InvestmentAssetProtocolService extends ProtocolAbstract {
 
   protected abi = (InvestmentAsset as any).abi;
+  protected address = super.getAddressFromBuild(InvestmentAsset);
 
   public agreeInvestment(id: string, investor: string, agreementTermsHash: string, value: number, contractAddress: string, success?: Function, error?: Function) {
     this.errorLogService.setParamValues([id, investor,
@@ -22,7 +23,7 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
   }
 
   public getContract(address) {
-    this.contract = new this.web3.eth.Contract(this.abi, address);
+    this.contract = new this.web3.eth.Contract(this.abi, this.address);
     return this.contract;
   }
 
