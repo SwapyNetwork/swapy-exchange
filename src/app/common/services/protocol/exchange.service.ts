@@ -33,7 +33,6 @@ export class ExchangeProtocolService extends ProtocolAbstract {
           payback,
           grossReturn * 10000,
           currency,
-          fixedValue * 100,
           this.web3Service.getInstance().utils.asciiToHex(offerTermsHash),
           assets)
         .encodeABI();
