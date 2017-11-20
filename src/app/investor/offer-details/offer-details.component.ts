@@ -96,24 +96,21 @@ export class OfferDetailsComponent implements OnInit {
   }
 
   statusToString(status) {
-    let statusString ='';
-    // switch (status) {
-    //   case this.TX_CREATION_PENDING:
-    //     statusString = 'Pending Ethereum confirmation';
-    //     break;
-    //   case this.TX_CREATED:
-    //     statusString = 'Available';
-    //     break;
-    //   case this.LOCKED:
-    //   case this.TX_AGREEMENT_PENDING:
-    //   case this.TX_AGREED:
-    //   case this.TX_INVEST_PENDING:
-    //     statusString = 'Pending confirmation';
-    //     break;
-    //   case this.TX_INVESTED:
-    //     statusString = 'Sold';
-    //     break;
-    // }
+    let statusString;
+    switch (status) {
+      case this.AVAILABLE:
+        statusString = 'Available';
+        break;
+      case this.PENDING_OWNER_AGREEMENT:
+        statusString = 'Pending agreement';
+        break;
+      case this.INVESTED:
+        statusString = 'Sold';
+        break;
+      case this.RETURNED:
+        statusString = 'Unavailable';
+        break;
+    }
 
     return statusString;
 
