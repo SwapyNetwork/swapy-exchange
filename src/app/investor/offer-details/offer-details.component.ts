@@ -49,12 +49,10 @@ export class OfferDetailsComponent implements OnInit {
       for ( const assetAddress of this.offer.assets) {
         console.log(assetAddress);
         const assetContract = this.assetService.getContract(assetAddress);
-        const constants = ['fixedValue', 'paybackDays', 'grossReturn', 'currency', 'status'];
+        const constants = ['fixedValue', 'status'];
         this.assetService.getConstants(assetAddress, constants).then((assetObject) => {
           const asset = {
             value: assetObject.fixedValue / 100,
-            roi: assetObject.grossReturn / 10000,
-            paybackMonths: assetObject.paybackDays / 30,
             status: assetObject.status
           } as any;
           assets.push(asset);
