@@ -36,15 +36,19 @@ export class OffersComponent implements OnInit {
         const contractVariables = offerEvent.returnValues;
         const assetContract = this.assetService.getContract(contractVariables._assets[0]);
         // Get offer info from contract
-        const offer = {
-          roi: contractVariables._grossReturn / 10000,
-          paybackMonths: contractVariables._paybackMonths,
-          walletAddress: contractVariables._from,
-          assets: contractVariables._asset
-        } as any;
-        this.offers.push(offer);
+        const constants = ['fixedValue', 'paybackDays', 'grossReturn', 'currency'];
+        this.assetService.getConstants(contractVariables._assets[0], constants).then((asset) => {
+          const offer = {
+            raisingAmount: asset.fixedValue * 5 / 100, // Temp way of doing it. Getting all assets would take too long.
+            roi: asset.grossReturn / 10000,
+            paybackMonths: asset.paybackDays / 30,
+            walletAddress: contractVariables._from,
+            assets: contractVariables._assets
+          } as any;
+          this.offers.push(offer);
+          this.offerService.cacheOffers(this.offers);
+        });
       }
-      this.offerService.cacheOffers(this.offers);
     });
 
   //
