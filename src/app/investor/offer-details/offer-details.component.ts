@@ -4,9 +4,8 @@ import { OfferService } from '../offers/offer.service';
 import { Offer } from '../../common/interfaces/offer.interface';
 import { Invest } from '../invest/invest.interface';
 import { InvestService } from '../invest/invest.service';
-import {TX_CREATION_PENDING, TX_CREATED,
-  LOCKED, TX_AGREEMENT_PENDING, TX_AGREED,
-  TX_INVEST_PENDING, TX_INVESTED
+import {AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED,
+  RETURNED, DELAYED_RETURN
 } from '../../common/interfaces/offerAssetStatus.interface';
 import { InvestmentAssetProtocolService as AssetService } from '../../common/services/protocol/investment-asset.service';
 
@@ -18,13 +17,11 @@ import { InvestmentAssetProtocolService as AssetService } from '../../common/ser
 })
 export class OfferDetailsComponent implements OnInit {
 
-  public TX_CREATION_PENDING = '0';
-  public TX_CREATED = TX_CREATED;
-  public LOCKED = LOCKED;
-  public TX_AGREEMENT_PENDING = TX_AGREEMENT_PENDING;
-  public TX_AGREED = TX_AGREED;
-  public TX_INVEST_PENDING = TX_INVEST_PENDING;
-  public TX_INVESTED = TX_INVESTED;
+  public AVAILABLE = AVAILABLE;
+  public PENDING_OWNER_AGREEMENT = PENDING_OWNER_AGREEMENT;
+  public INVESTED = INVESTED;
+  public RETURNED = RETURNED;
+  public DELAYED_RETURN = DELAYED_RETURN;
 
   public offer: Offer;
 
@@ -99,24 +96,24 @@ export class OfferDetailsComponent implements OnInit {
   }
 
   statusToString(status) {
-    let statusString;
-    switch (status) {
-      case this.TX_CREATION_PENDING:
-        statusString = 'Pending Ethereum confirmation';
-        break;
-      case this.TX_CREATED:
-        statusString = 'Available';
-        break;
-      case this.LOCKED:
-      case this.TX_AGREEMENT_PENDING:
-      case this.TX_AGREED:
-      case this.TX_INVEST_PENDING:
-        statusString = 'Pending confirmation';
-        break;
-      case this.TX_INVESTED:
-        statusString = 'Sold';
-        break;
-    }
+    let statusString ='';
+    // switch (status) {
+    //   case this.TX_CREATION_PENDING:
+    //     statusString = 'Pending Ethereum confirmation';
+    //     break;
+    //   case this.TX_CREATED:
+    //     statusString = 'Available';
+    //     break;
+    //   case this.LOCKED:
+    //   case this.TX_AGREEMENT_PENDING:
+    //   case this.TX_AGREED:
+    //   case this.TX_INVEST_PENDING:
+    //     statusString = 'Pending confirmation';
+    //     break;
+    //   case this.TX_INVESTED:
+    //     statusString = 'Sold';
+    //     break;
+    // }
 
     return statusString;
 
