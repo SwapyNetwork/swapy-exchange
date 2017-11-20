@@ -8,6 +8,8 @@ import {TX_CREATION_PENDING, TX_CREATED,
   LOCKED, TX_AGREEMENT_PENDING, TX_AGREED,
   TX_INVEST_PENDING, TX_INVESTED
 } from '../../common/interfaces/offerAssetStatus.interface';
+import { InvestmentAssetProtocolService as AssetService } from '../../common/services/protocol/investment-asset.service';
+
 
 @Component({
   selector: 'app-offer-details',
@@ -16,7 +18,7 @@ import {TX_CREATION_PENDING, TX_CREATED,
 })
 export class OfferDetailsComponent implements OnInit {
 
-  public TX_CREATION_PENDING = TX_CREATION_PENDING;
+  public TX_CREATION_PENDING = '0';
   public TX_CREATED = TX_CREATED;
   public LOCKED = LOCKED;
   public TX_AGREEMENT_PENDING = TX_AGREEMENT_PENDING;
@@ -35,7 +37,7 @@ export class OfferDetailsComponent implements OnInit {
 
 
   constructor(private offerService: OfferService, private activatedRoute: ActivatedRoute,
-    private router: Router, private investService: InvestService) { }
+    private router: Router, private investService: InvestService, private assetService: AssetService) { }
 
   ngOnInit() {
     let offers = this.offerService.getCachedOffers();
@@ -43,6 +45,23 @@ export class OfferDetailsComponent implements OnInit {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.offerIndex = params['id'];
       this.offer = offers[this.offerIndex];
+      const assets = [];
+      for ( const assetAddress of this.offer.assets) {
+        console.log(assetAddress);
+        const assetContract = this.assetService.getContract(assetAddress);
+        const constants = ['fixedValue', 'paybackDays', 'grossReturn', 'currency', 'status'];
+        this.assetService.getConstants(assetAddress, constants).then((assetObject) => {
+          const asset = {
+            value: assetObject.fixedValue / 100,
+            roi: assetObject.grossReturn / 10000,
+            paybackMonths: assetObject.paybackDays / 30,
+            status: assetObject.status
+          } as any;
+          assets.push(asset);
+          this.offer.assets = assets;
+        });
+
+      }
       // this.offerService.getOfferByUuid(this.offer.uuid).then((data: any) => {
       //   this.offer = {
       //     roi: data.offer.offerRoi,
