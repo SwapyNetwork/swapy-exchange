@@ -59,23 +59,7 @@ export class OfferDetailsComponent implements OnInit {
           this.offer.assets = assets;
           this.loadingService.hide();
         });
-
       }
-      // this.offerService.getOfferByUuid(this.offer.uuid).then((data: any) => {
-      //   this.offer = {
-      //     roi: data.offer.offerRoi,
-      //     paybackMonths: data.offer.offerPaybackMonths,
-      //     raisingAmount: data.offer.offerRaisingAmount,
-      //     walletAddress: data.offer.offerWalletAddress,
-      //     contractAddress: data.offer.offerContractAddress,
-      //     uuid: data.offer.offerUuid,
-      //     companyName: data.offer.firstName + ' ' + data.offer.lastName,
-      //     companyLogo: data.offer.picture,
-      //     companyUuid: data.offer.uuid,
-      //     assets: data.offer.assets,
-      //     createdOn: data.offer.createdOn,
-      //   };
-      // })
     });
   }
 
