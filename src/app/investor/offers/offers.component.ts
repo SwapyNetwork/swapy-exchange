@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import { Offer } from '../../common/interfaces/offer.interface';
 import { OfferService } from './offer.service';
 import { Web3Service } from '../../common/services/web3.service';
+import { LoadingService } from '../../common/services/loading.service';
 import { InvestmentAssetProtocolService as AssetService } from '../../common/services/protocol/investment-asset.service';
 import { ExchangeProtocolService as ExchangeService } from '../../common/services/protocol/exchange.service';
 
@@ -22,6 +23,7 @@ export class OffersComponent implements OnInit {
     private offerService: OfferService,
     private web3Service: Web3Service,
     private assetService: AssetService,
+    private loadingService: LoadingService,
     private exchangeService: ExchangeService) { }
 
   ngOnInit() {
@@ -33,6 +35,7 @@ export class OffersComponent implements OnInit {
 
     this.exchangeService.getOffers((err, offerEvents) => {
       for (const offerEvent of offerEvents) {
+        this.loadingService.show();
         const contractVariables = offerEvent.returnValues;
         const assetContract = this.assetService.getContract(contractVariables._assets[0]);
         // Get offer info from contract
@@ -47,6 +50,7 @@ export class OffersComponent implements OnInit {
           } as any;
           this.offers.push(offer);
           this.offerService.cacheOffers(this.offers);
+          this.loadingService.hide();
         });
       }
     });
