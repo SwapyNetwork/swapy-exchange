@@ -9,3 +9,10 @@ export const TX_AGREEMENT_PENDING = 3;
 export const TX_AGREED = 4;
 export const TX_INVEST_PENDING = 5;
 export const TX_INVESTED = 6;
+
+
+export const AVAILABLE = '0';
+export const PENDING_OWNER_AGREEMENT = '1';
+export const INVESTED = '2';
+export const RETURNED = '3';
+export const DELAYED_RETURN = '4';
