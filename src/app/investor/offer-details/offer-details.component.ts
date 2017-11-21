@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { OfferService } from '../offers/offer.service';
 import { Offer } from '../../common/interfaces/offer.interface';
+import { LoadingService } from '../../common/services/loading.service';
 import { Invest } from '../invest/invest.interface';
 import { InvestService } from '../invest/invest.service';
 import {AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED,
@@ -34,7 +35,8 @@ export class OfferDetailsComponent implements OnInit {
 
 
   constructor(private offerService: OfferService, private activatedRoute: ActivatedRoute,
-    private router: Router, private investService: InvestService, private assetService: AssetService) { }
+    private router: Router, private investService: InvestService,
+    private assetService: AssetService, private loadingService: LoadingService) { }
 
   ngOnInit() {
     let offers = this.offerService.getCachedOffers();
@@ -44,6 +46,7 @@ export class OfferDetailsComponent implements OnInit {
       this.offer = offers[this.offerIndex];
       const assets = [];
       for ( const assetAddress of this.offer.assets) {
+        this.loadingService.show();
         console.log(assetAddress);
         const assetContract = this.assetService.getContract(assetAddress);
         const constants = ['fixedValue', 'status'];
@@ -54,6 +57,7 @@ export class OfferDetailsComponent implements OnInit {
           } as any;
           assets.push(asset);
           this.offer.assets = assets;
+          this.loadingService.hide();
         });
 
       }
