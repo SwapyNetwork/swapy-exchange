@@ -24,7 +24,7 @@ export class OfferDetailsComponent implements OnInit {
   public RETURNED = RETURNED;
   public DELAYED_RETURN = DELAYED_RETURN;
 
-  public offer: Offer;
+  public offer;
 
   public assets: boolean[] = [];
 
@@ -48,7 +48,7 @@ export class OfferDetailsComponent implements OnInit {
       this.offerIndex = params['id'];
       this.offer = offers[this.offerIndex];
       const assets = [];
-      for ( const assetAddress of this.offer.assets) {
+      for ( const assetAddress of this.offer.assetsAddress) {
         this.loadingService.show();
         const assetContract = this.assetService.getContract(assetAddress);
         const constants = ['fixedValue', 'status'];

@@ -51,7 +51,7 @@ export class OffersComponent implements OnInit {
             paybackMonths: asset.paybackDays / 30,
             walletAddress: contractVariables._from,
             displayWalletAddress: displayWalletAddress,
-            assets: contractVariables._assets
+            assetsAddress: contractVariables._assets
           } as any;
           this.offers.push(offer);
           this.offerService.cacheOffers(this.offers);
