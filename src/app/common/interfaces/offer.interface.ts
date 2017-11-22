@@ -1,20 +1,17 @@
 interface OfferAsset {
-  uuid: string;
   value: number;
-  investorID: string;
-  investorName: string;
+  investorWallet: string;
+  contractAddress: string;
+  status: string | number;
   investedIn: Date;
 };
 
 export interface Offer {
-  uuid: string;
   raisingAmount: number;
   paybackMonths: number;
-  roi: number;
+  grossReturn: number;
   walletAddress: string;
-  companyName: string;
-  companyLogo: string;
-  companyUuid: string;
+  companyAddress: string;
   assets: OfferAsset[];
   createdOn: string;
   contractAddress: string;

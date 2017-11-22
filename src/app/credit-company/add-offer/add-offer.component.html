@@ -39,8 +39,8 @@
                </div>
 
                <div class="form-group">
-                  <label for="inputRoi"><span class="sw-box-text">Gross return rate</span></label>
-                  <input type="text" class="form-control" placeholder="Add gross return rate (%)" name="roi" [(ngModel)]="roi" [textMask]="{mask: percentMask}" #roiInput="ngModel" required>
+                  <label for="inputGrossReturn"><span class="sw-box-text">Gross return rate</span></label>
+                  <input type="text" class="form-control" placeholder="Add gross return rate (%)" name="grossReturn" [(ngModel)]="grossReturn" [textMask]="{mask: percentMask}" #grossReturnInput="ngModel" required>
                </div>
 
             </div>
@@ -63,7 +63,7 @@
             <div *ngIf="fundraisingInput.errors && (fundraisingInput.touched || fundraisingInput.dirty)" class="alert alert-danger">
                 Fundraising amount is required.
             </div>
-            <div *ngIf="roiInput.errors && (roiInput.touched || roiInput.dirty)" class="alert alert-danger">
+            <div *ngIf="grossReturnInput.errors && (grossReturnInput.touched || grossReturnInput.dirty)" class="alert alert-danger">
                 Gross return rate is required.
             </div>
             <div *ngIf="paybackMonthsInput.errors && (paybackMonthsInput.touched || paybackMonthsInput.dirty)" class="alert alert-danger">

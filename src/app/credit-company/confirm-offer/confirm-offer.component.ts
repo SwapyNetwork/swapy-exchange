@@ -57,7 +57,7 @@ export class ConfirmOfferComponent implements OnInit {
           this.errorLogService.setBeforeETHbalance(balance);
           this.exchangeProtocol
             .createOffer(data.event.uuid, this.offer.paybackMonths,
-              this.offer.roi, 'USD', this.offer.raisingAmount, offerTermsHash, assetValues, (success) => {
+              this.offer.grossReturn, 'USD', this.offer.raisingAmount, offerTermsHash, assetValues, (success) => {
               console.log(success);
               this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
               this.pendingOfferService.setMessage('Your offer was mined by the Ethereum blockchain.');
