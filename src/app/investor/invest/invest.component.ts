@@ -23,6 +23,7 @@ export class InvestComponent implements OnInit {
 
   ngOnInit() {
     this.investment = this.investService.getCachedInvestment();
+    console.log(this.investment);
     if (!this.investment) {
       this.router.navigate(['/investor/offers']);
     }

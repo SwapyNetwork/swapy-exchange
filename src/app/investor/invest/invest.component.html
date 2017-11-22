@@ -45,7 +45,7 @@
 
           <div class="row">
             <div class="col-xs-4 col-sm-4 col-md-4">
-                <p class="sw-box-text sw-confirmation-col-left">Company:</p>
+                <p class="sw-box-text sw-confirmation-col-left">Company's wallet address:</p>
                 <p class="sw-box-text sw-confirmation-col-left">Investment:</p>
                 <p class="sw-box-text sw-confirmation-col-left">Gross return rate:</p>
                 <p class="sw-box-text sw-confirmation-col-left">Contract term:</p>
@@ -53,7 +53,7 @@
 
             </div>
             <div class="col-xs-8 col-sm-8 col-md-8">
-                <p class="sw-box-text">{{investment.companyName}}</p>
+                <p class="sw-box-text">{{investment.walletAddress}}</p>
                 <p class="sw-box-text">{{investment.totalAmount | currency}}</p>
                 <p class="sw-box-text">{{investment.roi | percent}}</p>
                 <p class="sw-box-text">{{investment.paybackMonths}} months</p>

@@ -39,7 +39,10 @@ export class OfferDetailsComponent implements OnInit {
     private assetService: AssetService, private loadingService: LoadingService) { }
 
   ngOnInit() {
-    let offers = this.offerService.getCachedOffers();
+    const offers = this.offerService.getCachedOffers();
+    if (!offers) {
+      this.router.navigate(['/investor/offers']);
+    }
     // subscribe to router event
     this.activatedRoute.params.subscribe((params: Params) => {
       this.offerIndex = params['id'];
@@ -112,18 +115,18 @@ export class OfferDetailsComponent implements OnInit {
         assets.push({ uuid: offerAsset.uuid, value: offerAsset.value });
       }
 
-      const invest: Invest = {
-        uuid: null,
-        companyUuid: this.offer.companyUuid,
-        companyName: this.offer.companyName,
-        offerContractAddress: this.offer.contractAddress,
-        offerUuid: this.offer.uuid,
+      const invest = {
+        // uuid: null,
+        // companyUuid: this.offer.companyUuid,
+        // companyName: this.offer.companyName,
+        // offerContractAddress: this.offer.contractAddress,
+        // offerUuid: this.offer.uuid,
+        walletAddress: this.offer.walletAddress,
         totalAmount: this.totalAssetsValue,
         roi: this.offer.roi,
         paybackMonths: this.offer.paybackMonths,
-        investedIn: null,
-        assets: assets
-      }
+        assets: this.offer.assets
+      } as any;
 
       this.investService.cacheInvestment(invest);
       this.investService.cacheOfferIndex(this.offerIndex);
