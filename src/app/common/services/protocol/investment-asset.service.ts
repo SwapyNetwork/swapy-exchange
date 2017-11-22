@@ -44,4 +44,13 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
     super.signAndSendTransaction(encoded, contractAddress, this.web3Service.getInstance().utils.toWei(value), success, error);
   }
 
+  public invest(contractAddress: string, value: number, agreementTermsHash: string, success?: Function, error?: Function) {
+    const encoded = this.getContract(contractAddress).methods
+      .invest('0', this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash))
+      .encodeABI();
+    const ethusd = 340.0;
+    const ethValue = value / ethusd;
+    super.signAndSendTransaction(encoded, contractAddress, this.web3Service.getInstance().utils.toWei(ethValue), success, error);
+  }
+
 }

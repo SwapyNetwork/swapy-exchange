@@ -5,6 +5,7 @@ import { Invest } from './invest.interface';
 import { SuccessfulInvestmentService } from './../successful-investment/successful-investment.service';
 import { InvestorComponent } from './../investor.component';
 import { WalletService } from '../../common/services/wallet.service';
+import { InvestmentAssetProtocolService as AssetService } from '../../common/services/protocol/investment-asset.service';
 
 @Component({
   selector: 'app-invest',
@@ -13,11 +14,14 @@ import { WalletService } from '../../common/services/wallet.service';
 })
 export class InvestComponent implements OnInit {
 
-  public investment: Invest;
+  public investment;
   public offerIndex: number;
   public wallet: any;
 
-  constructor(private investService: InvestService, private router: Router, private successfulInvestmentService: SuccessfulInvestmentService, private investorComponent: InvestorComponent, private walletService: WalletService) {
+  constructor(private investService: InvestService, private router: Router,
+    private successfulInvestmentService: SuccessfulInvestmentService,
+    private investorComponent: InvestorComponent, private walletService: WalletService,
+    private assetService: AssetService) {
     this.wallet = this.walletService.getWallet();
   }
 
@@ -32,6 +36,18 @@ export class InvestComponent implements OnInit {
 
   confirmInvestment() {
     this.successfulInvestmentService.cleanMessages();
+
+    for (const asset of this.investment.assets) {
+      this.assetService.invest(asset.contractAddress, asset.value,
+        '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed', (success) => {
+          this.assetService.getEvents('1', 'Transferred', asset.contractAddress, (events) => {
+            console.log(events);
+          });
+          console.log(success);
+        }, (error) => {
+          console.log(error);
+        });
+    }
     const body = {
       companyUuid: this.investment.companyUuid,
       offerUuid: this.investment.offerUuid,
