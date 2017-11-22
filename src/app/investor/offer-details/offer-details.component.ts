@@ -54,6 +54,7 @@ export class OfferDetailsComponent implements OnInit {
         const constants = ['fixedValue', 'status'];
         this.assetService.getConstants(assetAddress, constants).then((assetObject) => {
           const asset = {
+            contractAddress: assetAddress,
             value: assetObject.fixedValue / 100,
             status: assetObject.status
           } as any;
@@ -125,7 +126,7 @@ export class OfferDetailsComponent implements OnInit {
         totalAmount: this.totalAssetsValue,
         roi: this.offer.roi,
         paybackMonths: this.offer.paybackMonths,
-        assets: this.offer.assets
+        assets: this.getSelectedAssets()
       } as any;
 
       this.investService.cacheInvestment(invest);
