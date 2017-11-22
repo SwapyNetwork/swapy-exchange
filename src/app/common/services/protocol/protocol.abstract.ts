@@ -42,7 +42,7 @@ export class ProtocolAbstract {
       }));
     })
 
-    return Promise.all(promises).then(resolved => contractObj);
+    return Promise.all(promises).then(resolved => (contractObj as any));
   }
 
   public signAndSendTransaction(encoded: string, address: string, value?: number, success?: Function, error?: Function) {
