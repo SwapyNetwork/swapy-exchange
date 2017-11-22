@@ -47,7 +47,6 @@ export class OfferDetailsComponent implements OnInit {
       const assets = [];
       for ( const assetAddress of this.offer.assets) {
         this.loadingService.show();
-        console.log(assetAddress);
         const assetContract = this.assetService.getContract(assetAddress);
         const constants = ['fixedValue', 'status'];
         this.assetService.getConstants(assetAddress, constants).then((assetObject) => {
