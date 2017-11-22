@@ -10,19 +10,15 @@ import { HttpService } from '../../common/services/http.service';
 @Injectable()
 export class AddOfferService {
 
-  private cachedOffer:any;
+  private cachedOffer: any;
 
   constructor(public httpService: HttpService) {}
-
-  addOffer(offer): Promise<any> {
-    return this.httpService.post("offers/add", offer);
-  }
 
   cacheOffer(offer) {
     this.cachedOffer = offer;
   }
 
-  getCachedOffer(){
+  getCachedOffer() {
     return this.cachedOffer;
   }
 

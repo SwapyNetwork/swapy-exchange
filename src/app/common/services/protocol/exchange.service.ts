@@ -35,13 +35,12 @@ export class ExchangeProtocolService extends ProtocolAbstract {
     });
   }
 
-  public createOffer(id: string, payback: number, grossReturn: number, currency: string,
+  public createOffer(payback: number, grossReturn: number, currency: string,
     fixedValue: number, offerTermsHash: string, assets: number[], success?: Function, error?: Function) {
-      this.errorLogService.setParamValues([id, payback, grossReturn * 10000, currency, fixedValue * 100,
+      this.errorLogService.setParamValues([payback, grossReturn * 10000, currency, fixedValue * 100,
         this.web3Service.getInstance().utils.asciiToHex(offerTermsHash), assets]);
       const encoded = this.getProtocolContract().methods
         .createOffer(
-          id,
           payback,
           grossReturn * 10000,
           currency,

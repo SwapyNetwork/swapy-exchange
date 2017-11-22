@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { OfferService } from './offer/offer.service';
 import { ExchangeProtocolService as ExchangeService } from '../../common/services/protocol/exchange.service';
 import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../common/services/protocol/investment-asset.service';
 import { WalletService } from '../../common/services/wallet.service';
@@ -19,7 +18,6 @@ export class DashboardComponent implements OnInit {
   public offers;
 
   constructor(
-    private offerService: OfferService,
     private exchangeService: ExchangeService,
     private walletService: WalletService,
     private web3Service: Web3Service,

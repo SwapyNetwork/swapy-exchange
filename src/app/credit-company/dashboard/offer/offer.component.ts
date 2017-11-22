@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Offer } from '../../../common/interfaces/offer.interface';
 import { I18nService } from '../../../common/services/i18n.service';
 import { ToastrService } from '../../../common/services/toastr.service';
-import { OfferService } from './offer.service';
 import { LinkService } from '../../../common/services/link.service';
 import { WalletService } from '../../../common/services/wallet.service';
 import { ErrorLogService } from '../../../common/services/error-log.service';
@@ -35,7 +34,6 @@ export class OfferComponent implements OnInit {
   public errorMessages: any[] = [];
 
   constructor(private assetProtocol: InvestmentAssetService,
-    private offerService: OfferService,
     private toastrService: ToastrService,
     private i18nService: I18nService,
     private linkService: LinkService,
