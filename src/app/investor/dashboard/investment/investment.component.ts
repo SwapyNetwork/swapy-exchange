@@ -44,7 +44,7 @@ export class InvestmentComponent implements OnInit {
   }
 
   public calculateReturnAmount() {
-    return this.investment.totalAmount * (1 + this.investment.roi);
+    return this.investment.totalAmount * (1 + this.investment.grossReturn);
   }
 
   public calculatePaybackDate() {
@@ -57,13 +57,13 @@ export class InvestmentComponent implements OnInit {
     let statusString;
     switch (status) {
       case this.LOCKED:
-        statusString = 'Pending ' + this.investment.companyName + '\'s confirmation';
+        statusString = 'Pending ' + this.investment.companyAddress + '\'s confirmation';
         break;
       case this.TX_AGREEMENT_PENDING:
         statusString = 'Pending Ethereum confirmation';
         break;
       case this.TX_AGREED:
-        statusString = 'Asset accepted by ' + this.investment.companyName;
+        statusString = 'Asset accepted by ' + this.investment.companyAddress;
         break;
       case this.TX_INVEST_PENDING:
         statusString = 'Pending Ethereum confirmation';

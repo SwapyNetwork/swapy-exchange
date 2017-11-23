@@ -3,8 +3,7 @@ interface InvestAsset {
 }
 
 export interface Invest {
-  uuid: string;
-  companyWallet: string;
+  companyAddress: string;
   offerContractAddress: string;
   totalAmount: number;
   grossReturn: number;

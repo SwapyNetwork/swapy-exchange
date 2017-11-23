@@ -113,7 +113,7 @@ export class OfferDetailsComponent implements OnInit {
       }
 
       const invest: Invest = {
-        companyWallet: this.offer.companyWallet,
+        companyAddress: this.offer.companyAddress,
         offerContractAddress: this.offer.contractAddress,
         totalAmount: this.totalAssetsValue,
         grossReturn: this.offer.grossReturn,

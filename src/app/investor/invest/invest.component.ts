@@ -17,7 +17,11 @@ export class InvestComponent implements OnInit {
   public offerIndex: number;
   public wallet: any;
 
-  constructor(private investService: InvestService, private router: Router, private successfulInvestmentService: SuccessfulInvestmentService, private investorComponent: InvestorComponent, private walletService: WalletService) {
+  constructor(private investService: InvestService,
+    private router: Router,
+    private successfulInvestmentService: SuccessfulInvestmentService,
+    private investorComponent: InvestorComponent,
+    private walletService: WalletService) {
     this.wallet = this.walletService.getWallet();
   }
 
@@ -31,22 +35,6 @@ export class InvestComponent implements OnInit {
 
   confirmInvestment() {
     this.successfulInvestmentService.cleanMessages();
-    const body = {
-      companyUuid: this.investment.companyUuid,
-      offerUuid: this.investment.offerUuid,
-      assets: this.investment.assets,
-      wallet: this.wallet.address
-    };
-    this.investService.addInvest(body).then(data => {
-      this.investService.cacheInvestment(data.investment);
-      this.investorComponent.refreshStatusBar();
-      this.successfulInvestmentService.cacheSuccessfulMessages(data);
-      this.router.navigate(['investor/invest/success']);
-    }, error => {
-
-      this.successfulInvestmentService.cacheErrors(error.error);
-      this.router.navigate(['investor/invest/success']);
-    });
   }
 
 }
