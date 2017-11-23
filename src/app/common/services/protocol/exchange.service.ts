@@ -28,13 +28,19 @@ export class ExchangeProtocolService extends ProtocolAbstract {
     return super.getEvents(null, null, 'Offers', this.address, cb);
   }
 
-  public createOffer(id: string, payback: number, grossReturn: number, currency: string,
+  public getMyOffers(companyAddress, cb) {
+    this.errorLogService.setParamValues([this.address, cb]);
+    return super.getEvents(null, null, 'Offers', this.address, (err, offers) => {
+      cb(err, offers.filter(offer => offer.returnValues._from.toLowerCase() === companyAddress.toLowerCase()));
+    });
+  }
+
+  public createOffer(payback: number, grossReturn: number, currency: string,
     fixedValue: number, offerTermsHash: string, assets: number[], success?: Function, error?: Function) {
-      this.errorLogService.setParamValues([id, payback, grossReturn * 10000, currency, fixedValue * 100,
+      this.errorLogService.setParamValues([payback, grossReturn * 10000, currency, fixedValue * 100,
         this.web3Service.getInstance().utils.asciiToHex(offerTermsHash), assets]);
       const encoded = this.getProtocolContract().methods
         .createOffer(
-          id,
           payback,
           grossReturn * 10000,
           currency,

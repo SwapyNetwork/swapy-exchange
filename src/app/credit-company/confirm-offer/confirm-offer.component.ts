@@ -45,48 +45,34 @@ export class ConfirmOfferComponent implements OnInit {
   confirmOffer() {
     const offerTermsHash = '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed';
 
-    const a = this.offer.raisingAmount / 5 * 100;
+    const a = Math.ceil(this.offer.raisingAmount / 5 * 100);
     const assetValues = [a, a, a, a, a];
 
-    this.addOfferService.addOffer(this.offer).then(
-      data => {
-        this.errorLogService.setClassName('ConfirmOfferComponent');
-        this.errorLogService.setFunctionName('confirmOffer');
-        // Improve this call
-        this.walletService.getEthBalance().then((balance) => {
-          this.errorLogService.setBeforeETHbalance(balance);
-          this.exchangeProtocol
-            .createOffer(data.event.uuid, this.offer.paybackMonths * 30,
-              this.offer.roi, 'USD', this.offer.raisingAmount, offerTermsHash, assetValues, (success) => {
-              console.log(success);
-              this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
-              this.pendingOfferService.setMessage('Your offer was mined by the Ethereum blockchain.');
-            }, (error) => {
-              // Improve this call
-              this.walletService.getEthBalance().then((currentBalance) => {
-                this.errorLogService.setAfterETHbalance(currentBalance);
-                this.errorLogService.setError(error);
-              });
-              console.log(error);
-              this.pendingOfferService.setErrorMessage(error.message);
-              this.toastrService.getInstance().error(this.pendingOfferService.getMessage());
-            });
+    this.errorLogService.setClassName('ConfirmOfferComponent');
+    this.errorLogService.setFunctionName('confirmOffer');
+    // Improve this call
+    this.walletService.getEthBalance().then((balance) => {
+      this.errorLogService.setBeforeETHbalance(balance);
+      this.exchangeProtocol
+        .createOffer(this.offer.paybackMonths * 30,
+          this.offer.grossReturn, 'USD', this.offer.raisingAmount, offerTermsHash, assetValues, (success) => {
+          console.log(success);
+          this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+          this.pendingOfferService.setMessage('Your offer was mined by the Ethereum blockchain.');
+        }, (error) => {
+          // Improve this call
+          this.walletService.getEthBalance().then((currentBalance) => {
+            this.errorLogService.setAfterETHbalance(currentBalance);
+            this.errorLogService.setError(error);
+          });
+          console.log(error);
+          this.pendingOfferService.setErrorMessage(error.message);
+          this.toastrService.getInstance().error(this.pendingOfferService.getMessage());
         });
-        this.offer.uuid = data.offer.uuid;
-        this.offer.address = data.offer.address;
-        this.addOfferService.cacheOffer(this.offer);
-        this.creditCompanyComponent.refreshStatusBar();
+    });
+    this.creditCompanyComponent.refreshStatusBar();
 
-        this.router.navigate(['/credit-company/raise/pending']);
-      },
-      error => {
-        const namespace = 'confirm-offer';
-
-        this.i18nService.doTranslateList(namespace, error).then( res => {
-          this.errorMessages = res; // errorMessages is a list of error strings
-        });
-      }
-    );
+    this.router.navigate(['/credit-company/raise/pending']);
   }
 
 }

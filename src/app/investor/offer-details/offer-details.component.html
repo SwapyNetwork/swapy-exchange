@@ -17,7 +17,7 @@
                   <div class="row">
                     <div class="col-sm-10 col-md-10">
                        <p class="sw-box-title">Fundraising Offer</p>
-                       <p class="sw-box-text">Wallet address - {{offer.walletAddress}}</p>
+                       <p class="sw-box-text">Company's wallet address - {{offer.walletAddress}}</p>
 
                        <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"> </i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i>
                     </div>
@@ -32,8 +32,8 @@
                  <div class="col-sm-6 col-md-6 sw-assets">
                     <div *ngFor="let asset of offer.assets, let i = index" class="checkbox">
                      <label>
-                      <input type="checkbox" name="assets_{{i}}" [(ngModel)]="assets[i]" [disabled]="asset.status !== AVAILABLE" (change)="setTotalAssetsValue()">
-                      <p class="sw-box-text">Asset {{i + 1}} - <span [ngClass]="{'sw-box-title': true, 'sw-asset-sold-line': asset.status !== AVAILABLE }">{{asset.value | currency}}</span><span *ngIf='asset.status !== AVAILABLE'> {{' ' + statusToString(asset.status)}}</span></p>
+                      <input type="checkbox" name="assets_{{i}}" [(ngModel)]="assets[i]" [disabled]="asset.status != AVAILABLE" (change)="setTotalAssetsValue()">
+                      <p class="sw-box-text">Asset {{i + 1}} - <span [ngClass]="{'sw-box-title': true, 'sw-asset-sold-line': asset.status != AVAILABLE }">{{asset.value | currency}}</span><span *ngIf='asset.status != AVAILABLE'> {{' ' + statusToString(asset.status)}}</span></p>
                      </label>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                     <p class="sw-box-text">Fundraising</p>
                     <p class="sw-box-title">{{offer.raisingAmount | currency}}</p>
                     <p class="sw-box-text">Gross return rate</p>
-                    <p class="sw-box-title">{{offer.roi | percent}}</p>
+                    <p class="sw-box-title">{{offer.grossReturn | percent}}</p>
                     <p class="sw-box-text">Contract term</p>
                     <p class="sw-box-title">{{offer.paybackMonths}} months</p>
                     <!-- <p class="sw-box-text">Installments</p>
