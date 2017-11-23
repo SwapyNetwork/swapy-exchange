@@ -40,30 +40,11 @@ export class InvestComponent implements OnInit {
     for (const asset of this.investment.assets) {
       this.assetService.invest(asset.contractAddress, asset.value,
         '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed', (success) => {
-          this.assetService.getEvents('1', 'Transferred', asset.contractAddress, (events) => {
-            console.log(events);
-          });
           console.log(success);
         }, (error) => {
-          console.log(error);
+          console.error(error);
         });
     }
-    const body = {
-      companyUuid: this.investment.companyUuid,
-      offerUuid: this.investment.offerUuid,
-      assets: this.investment.assets,
-      wallet: this.wallet.address
-    };
-    this.investService.addInvest(body).then(data => {
-      this.investService.cacheInvestment(data.investment);
-      this.investorComponent.refreshStatusBar();
-      this.successfulInvestmentService.cacheSuccessfulMessages(data);
-      this.router.navigate(['investor/invest/success']);
-    }, error => {
-
-      this.successfulInvestmentService.cacheErrors(error.error);
-      this.router.navigate(['investor/invest/success']);
-    });
   }
 
 }

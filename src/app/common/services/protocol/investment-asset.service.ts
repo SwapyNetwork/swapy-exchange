@@ -33,7 +33,7 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
       fromBlock: 0,
       toBlock: 'latest'
     }, (error, events) => {
-      cb(error, events.filter(event => event.returnValues._id === eventUuid));
+      cb(error, events);
     });
   }
 
