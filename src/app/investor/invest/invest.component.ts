@@ -40,11 +40,14 @@ export class InvestComponent implements OnInit {
     for (const asset of this.investment.assets) {
       this.assetService.invest(asset.contractAddress, asset.value,
         '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed', (success) => {
+          this.successfulInvestmentService.setMessage('Your investment was mined by the ethereum blockchain.');
           console.log(success);
         }, (error) => {
           console.error(error);
+          this.successfulInvestmentService.setErrorMessage(error.message);
         });
     }
+    this.router.navigate(['investor/invest/success']);
   }
 
 }

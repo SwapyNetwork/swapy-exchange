@@ -45,6 +45,7 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
   }
 
   public invest(contractAddress: string, value: number, agreementTermsHash: string, success?: Function, error?: Function) {
+    this.errorLogService.setParamValues(['0', this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash)]);
     const encoded = this.getContract(contractAddress).methods
       .invest('0', this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash))
       .encodeABI();

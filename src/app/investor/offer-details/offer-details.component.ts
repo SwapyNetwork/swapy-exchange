@@ -109,19 +109,8 @@ export class OfferDetailsComponent implements OnInit {
 
   invest() {
     if (this.validateInput()) {
-      let offerAssets = this.getSelectedAssets();
-      let assets = [];
-
-      for (const offerAsset of offerAssets) {
-        assets.push({ uuid: offerAsset.uuid, value: offerAsset.value });
-      }
 
       const invest = {
-        // uuid: null,
-        // companyUuid: this.offer.companyUuid,
-        // companyName: this.offer.companyName,
-        // offerContractAddress: this.offer.contractAddress,
-        // offerUuid: this.offer.uuid,
         walletAddress: this.offer.walletAddress,
         totalAmount: this.totalAssetsValue,
         roi: this.offer.roi,
