@@ -47,11 +47,11 @@ export class OffersComponent implements OnInit {
               .substring(contractVariables._from.length - 8);
           const offer = {
             raisingAmount: asset.fixedValue * 5 / 100, // Temp way of doing it. Getting all assets would take too long.
-            roi: asset.grossReturn / 10000,
+            grossReturn: asset.grossReturn / 10000,
             paybackMonths: asset.paybackDays / 30,
             walletAddress: contractVariables._from,
             displayWalletAddress: displayWalletAddress,
-            assets: contractVariables._assets
+            assetsAddress: contractVariables._assets
           } as any;
           this.offers.push(offer);
           this.offerService.cacheOffers(this.offers);

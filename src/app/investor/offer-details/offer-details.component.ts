@@ -24,7 +24,7 @@ export class OfferDetailsComponent implements OnInit {
   public RETURNED = RETURNED;
   public DELAYED_RETURN = DELAYED_RETURN;
 
-  public offer: Offer;
+  public offer;
 
   public assets: boolean[] = [];
 
@@ -40,17 +40,21 @@ export class OfferDetailsComponent implements OnInit {
 
   ngOnInit() {
     const offers = this.offerService.getCachedOffers();
+    if (!offers) {
+      this.router.navigate(['/investor/offers']);
+    }
     // subscribe to router event
     this.activatedRoute.params.subscribe((params: Params) => {
       this.offerIndex = params['id'];
       this.offer = offers[this.offerIndex];
       const assets = [];
-      for ( const assetAddress of this.offer.assets) {
+      for ( const assetAddress of this.offer.assetsAddress) {
         this.loadingService.show();
         const assetContract = this.assetService.getContract(assetAddress);
         const constants = ['fixedValue', 'status'];
         this.assetService.getConstants(assetAddress, constants).then((assetObject) => {
           const asset = {
+            contractAddress: assetAddress,
             value: assetObject.fixedValue / 100,
             status: assetObject.status
           } as any;
@@ -84,7 +88,7 @@ export class OfferDetailsComponent implements OnInit {
 
   statusToString(status) {
     let statusString;
-    switch (status) {
+    switch (parseInt(status, 10)) {
       case this.AVAILABLE:
         statusString = 'Available';
         break;
@@ -97,6 +101,9 @@ export class OfferDetailsComponent implements OnInit {
       case this.RETURNED:
         statusString = 'Unavailable';
         break;
+      case this.DELAYED_RETURN:
+        statusString = 'Delayed';
+        break;
     }
 
     return statusString;
@@ -105,22 +112,14 @@ export class OfferDetailsComponent implements OnInit {
 
   invest() {
     if (this.validateInput()) {
-      const offerAssets = this.getSelectedAssets();
-      const assets = [];
 
-      for (const offerAsset of offerAssets) {
-        assets.push({ value: offerAsset.value });
-      }
-
-      const invest: Invest = {
-        companyAddress: this.offer.companyAddress,
-        offerContractAddress: this.offer.contractAddress,
+      const invest = {
+        walletAddress: this.offer.walletAddress,
         totalAmount: this.totalAssetsValue,
         grossReturn: this.offer.grossReturn,
         paybackMonths: this.offer.paybackMonths,
-        investedIn: null,
-        assets: assets
-      }
+        assets: this.getSelectedAssets()
+      } as any;
 
       this.investService.cacheInvestment(invest);
       this.investService.cacheOfferIndex(this.offerIndex);

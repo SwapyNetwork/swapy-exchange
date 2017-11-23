@@ -13,7 +13,6 @@ export class PendingOfferService {
 
   getMessage() {
     return this.message;
-
   }
 
   getError() {

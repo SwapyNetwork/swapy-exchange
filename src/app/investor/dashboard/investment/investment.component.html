@@ -15,7 +15,7 @@
            </h4>
         </div>
         <div class="col-sm-4 col-md-4">
-           <p class="sw-box-text sw-collapse-icons">Assets: {{investment.assets.length}} | <i aria-hidden="true"></i> {{investment.roi | percent}}</p>
+           <p class="sw-box-text sw-collapse-icons">Assets: {{investment.assets.length}} | <i aria-hidden="true"></i> {{investment.grossReturn | percent}}</p>
         </div>
      </div>
     </div>
@@ -50,8 +50,8 @@
         <!-- </div> -->
         <div class="col-sm-4 col-md-4">
             <p class="sw-box-text sw-chart-roi">Gross return rate</p>
-            <div class="sw-progress-circle p{{investment.roi*100}}"> <!-- Start Circular chart-->
-              <span>{{investment.roi | percent}}</span>
+            <div class="sw-progress-circle p{{investment.grossReturn*100}}"> <!-- Start Circular chart-->
+              <span>{{investment.grossReturn | percent}}</span>
               <div class="sw-left-half-clipper">
                  <div class="sw-first50-bar"></div>
                  <div class="sw-value-bar"></div>
