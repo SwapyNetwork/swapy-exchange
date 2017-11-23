@@ -5,6 +5,7 @@ import { Invest } from './invest.interface';
 import { SuccessfulInvestmentService } from './../successful-investment/successful-investment.service';
 import { InvestorComponent } from './../investor.component';
 import { WalletService } from '../../common/services/wallet.service';
+import { ToastrService } from '../../common/services/toastr.service';
 import { InvestmentAssetProtocolService as AssetService } from '../../common/services/protocol/investment-asset.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class InvestComponent implements OnInit {
   constructor(private investService: InvestService, private router: Router,
     private successfulInvestmentService: SuccessfulInvestmentService,
     private investorComponent: InvestorComponent, private walletService: WalletService,
-    private assetService: AssetService) {
+    private assetService: AssetService, private toastrService: ToastrService) {
     this.wallet = this.walletService.getWallet();
   }
 
@@ -40,11 +41,13 @@ export class InvestComponent implements OnInit {
     for (const asset of this.investment.assets) {
       this.assetService.invest(asset.contractAddress, asset.value,
         '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed', (success) => {
+          this.toastrService.getInstance().success('Your investment was mined by the ethereum blockchain.');
           this.successfulInvestmentService.setMessage('Your investment was mined by the ethereum blockchain.');
           console.log(success);
         }, (error) => {
           console.error(error);
           this.successfulInvestmentService.setErrorMessage(error.message);
+          this.toastrService.getInstance().error(this.pendingOfferService.getMessage());
         });
     }
     this.router.navigate(['investor/invest/success']);
