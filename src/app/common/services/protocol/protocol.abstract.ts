@@ -8,7 +8,7 @@ export class ProtocolAbstract {
   protected web3;
   protected contract;
   protected abi;
-  protected gas = 1;
+  protected gas = 10000000;
 
   constructor(
     protected web3Service: Web3Service,

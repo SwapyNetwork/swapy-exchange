@@ -47,7 +47,7 @@ export class InvestComponent implements OnInit {
         }, (error) => {
           console.error(error);
           this.successfulInvestmentService.setErrorMessage(error.message);
-          this.toastrService.getInstance().error(this.pendingOfferService.getMessage());
+          this.toastrService.getInstance().error(this.successfulInvestmentService.getMessage());
         });
     }
     this.router.navigate(['investor/invest/success']);
