@@ -36,6 +36,9 @@ export class DashboardComponent implements OnInit {
     // );
   }
 
-  getUpdatesFromBlockchain() {}
+  getMyInvestmentsFromBlockchain() {
+    this.exchangeService.getOffers((error, offerEvents) => {
+    })
+  }
 
 }
