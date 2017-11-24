@@ -45,12 +45,14 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
   }
 
   public invest(contractAddress: string, value: number, agreementTermsHash: string, success?: Function, error?: Function) {
-    this.errorLogService.setParamValues(['0', this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash)]);
+    this.errorLogService.setParamValues([this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash)]);
     const encoded = this.getContract(contractAddress).methods
-      .invest('0', this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash))
+      .invest(this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash))
       .encodeABI();
     const ethusd = 340.0;
-    const ethValue = value / ethusd;
+    let ethValue = value / ethusd;
+    // Round to 18 decimals
+    ethValue = Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18);
     super.signAndSendTransaction(encoded, contractAddress, this.web3Service.getInstance().utils.toWei(ethValue), success, error);
   }
 

@@ -91,7 +91,9 @@ export class InvestmentComponent implements OnInit {
       asset.status = this.TX_INVEST_PENDING;
       const ethusd = 340.0;
       const agreementTermsHash = '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed';
-      const value = asset.value / ethusd;
+      let value = asset.value / ethusd;
+      // Round to 18 decimals
+      value = Math.round(value * Math.pow(10, 18)) / Math.pow(10, 18);
       this.errorLogService.setClassName('InvestmentComponent');
       this.errorLogService.setFunctionName('transferFunds');
       // Improve this call
