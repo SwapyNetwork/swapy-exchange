@@ -82,40 +82,40 @@ export class InvestmentComponent implements OnInit {
     this.linkService.openLink(url);
   }
 
-  public transferFunds(investment: any, asset: any) {
-    this.investService.transferFunds({
-      offerUuid: investment.offerUuid,
-      assetUuid: asset.uuid,
-      companyUuid: investment.companyUuid,
-    }).then(res => {
-      asset.status = this.TX_INVEST_PENDING;
-      const ethusd = 340.0;
-      const agreementTermsHash = '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed';
-      let value = asset.value / ethusd;
-      // Round to 18 decimals
-      value = Math.round(value * Math.pow(10, 18)) / Math.pow(10, 18);
-      this.errorLogService.setClassName('InvestmentComponent');
-      this.errorLogService.setFunctionName('transferFunds');
-      // Improve this call
-      this.walletService.getEthBalance().then((balance) => {
-        this.errorLogService.setBeforeETHbalance(balance);
-        // should be event.id
-        this.investmentAssetService.transferFunds((res as any).event.uuid, agreementTermsHash, asset.contractAddress, value, (success) => {
-          console.log(success);
-          this.toastrService.getInstance().success('Your transfer was mined by the Ethereum blockchain.');
-        }, (error) => {
-          // Improve this call
-          this.walletService.getEthBalance().then((currentBalance) => {
-            this.errorLogService.setAfterETHbalance(currentBalance);
-            this.errorLogService.setError(error);
-          });
-          console.log(error);
-          this.toastrService.getInstance().error(error.message);
-        });
-      });
-    }, err => {
-      console.log(err);
-    });
-  }
+  // public transferFunds(investment: any, asset: any) {
+  //   this.investService.transferFunds({
+  //     offerUuid: investment.offerUuid,
+  //     assetUuid: asset.uuid,
+  //     companyUuid: investment.companyUuid,
+  //   }).then(res => {
+  //     asset.status = this.TX_INVEST_PENDING;
+  //     const ethusd = 340.0;
+  //     const agreementTermsHash = '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed';
+  //     let value = asset.value / ethusd;
+  //     // Round to 18 decimals
+  //     value = Math.round(value * Math.pow(10, 18)) / Math.pow(10, 18);
+  //     this.errorLogService.setClassName('InvestmentComponent');
+  //     this.errorLogService.setFunctionName('transferFunds');
+  //     // Improve this call
+  //     this.walletService.getEthBalance().then((balance) => {
+  //       this.errorLogService.setBeforeETHbalance(balance);
+  //       // should be event.id
+  //       this.investmentAssetService.transferFunds((res as any).event.uuid, agreementTermsHash, asset.contractAddress, value, (success) => {
+  //         console.log(success);
+  //         this.toastrService.getInstance().success('Your transfer was mined by the Ethereum blockchain.');
+  //       }, (error) => {
+  //         // Improve this call
+  //         this.walletService.getEthBalance().then((currentBalance) => {
+  //           this.errorLogService.setAfterETHbalance(currentBalance);
+  //           this.errorLogService.setError(error);
+  //         });
+  //         console.log(error);
+  //         this.toastrService.getInstance().error(error.message);
+  //       });
+  //     });
+  //   }, err => {
+  //     console.log(err);
+  //   });
+  // }
 
 }

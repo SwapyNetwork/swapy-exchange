@@ -37,11 +37,16 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
     });
   }
 
-  public transferFunds(id: string, agreementTermsHash: string, contractAddress: string, value: number, success?: Function, error?: Function) {
-    this.errorLogService.setParamValues([id, this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash)]);
-    const encoded = super.getContract(contractAddress).methods.transferFunds(id,
+  public withdrawFunds(agreementTermsHash, contractAddress: string, success?: Function, error?: Function) {
+    this.errorLogService.setParamValues([this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash)]);
+    const encoded = super.getContract(contractAddress).methods.withdrawFunds(
       this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash)).encodeABI();
-    super.signAndSendTransaction(encoded, contractAddress, this.web3Service.getInstance().utils.toWei(value), success, error);
+    super.signAndSendTransaction(encoded, contractAddress, null, success, error);
+  }
+
+  public refuseInvestment(contractAddress: string, success?: Function, error?: Function) {
+    const encoded = super.getContract(contractAddress).methods.refuseInvestment().encodeABI();
+    super.signAndSendTransaction(encoded, contractAddress, null, success, error);
   }
 
   public invest(contractAddress: string, value: number, agreementTermsHash: string, success?: Function, error?: Function) {
