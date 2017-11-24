@@ -18,6 +18,7 @@ export class InvestComponent implements OnInit {
   public investment;
   public offerIndex: number;
   public wallet: any;
+  private assetIndex: number;
 
   constructor(private investService: InvestService, private router: Router,
     private successfulInvestmentService: SuccessfulInvestmentService,
@@ -28,29 +29,41 @@ export class InvestComponent implements OnInit {
 
   ngOnInit() {
     this.investment = this.investService.getCachedInvestment();
-    console.log(this.investment);
     if (!this.investment) {
       this.router.navigate(['/investor/offers']);
     }
+    this.assetIndex = 0;
     this.offerIndex = this.investService.getCachedOfferIndex();
   }
 
   confirmInvestment() {
     this.successfulInvestmentService.cleanMessages();
-
-    for (const asset of this.investment.assets) {
-      this.assetService.invest(asset.contractAddress, asset.value,
-        '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed', (success) => {
-          this.toastrService.getInstance().success('Your investment was mined by the ethereum blockchain.');
-          this.successfulInvestmentService.setMessage('Your investment was mined by the ethereum blockchain.');
-          console.log(success);
-        }, (error) => {
-          console.error(error);
-          this.successfulInvestmentService.setErrorMessage(error.message);
-          this.toastrService.getInstance().error(this.successfulInvestmentService.getMessage());
-        });
-    }
+    this.invest();
     this.router.navigate(['investor/invest/success']);
+  }
+
+  invest() {
+    const asset = this.investment.assets[this.assetIndex];
+    this.assetService.invest(asset.contractAddress, asset.value,
+      '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed', (success) => {
+        this.toastrService.getInstance().success('Your investment was mined by the Ethereum blockchain.');
+        this.successfulInvestmentService.setMessage('Your investment was mined by the Ethereum blockchain.');
+
+        if (this.assetIndex < this.investment.assets.length - 1) {
+          this.assetIndex++;
+          this.invest();
+        }
+      }, (error) => {
+        this.successfulInvestmentService.setErrorMessage(error.message);
+        this.toastrService.getInstance().error(this.successfulInvestmentService.getMessage());
+
+        if (this.assetIndex < this.investment.assets.length - 1) {
+          this.assetIndex++;
+          this.invest();
+        }
+      });
+
+
   }
 
 }
