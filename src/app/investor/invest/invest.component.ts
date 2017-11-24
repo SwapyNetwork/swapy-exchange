@@ -18,6 +18,7 @@ export class InvestComponent implements OnInit {
   public investment;
   public offerIndex: number;
   public wallet: any;
+  private count: number = 0;
 
   constructor(private investService: InvestService, private router: Router,
     private successfulInvestmentService: SuccessfulInvestmentService,
@@ -38,19 +39,52 @@ export class InvestComponent implements OnInit {
   confirmInvestment() {
     this.successfulInvestmentService.cleanMessages();
 
-    for (const asset of this.investment.assets) {
-      this.assetService.invest(asset.contractAddress, asset.value,
-        '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed', (success) => {
-          this.toastrService.getInstance().success('Your investment was mined by the ethereum blockchain.');
-          this.successfulInvestmentService.setMessage('Your investment was mined by the ethereum blockchain.');
-          console.log(success);
-        }, (error) => {
-          console.error(error);
-          this.successfulInvestmentService.setErrorMessage(error.message);
-          this.toastrService.getInstance().error(this.successfulInvestmentService.getMessage());
-        });
-    }
+    this.invest();
+
+    // for (const asset of this.investment.assets) {
+    //
+    //   this.assetService.invest(asset.contractAddress, asset.value,
+    //     '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed', (success) => {
+    //       this.toastrService.getInstance().success('Your investment was mined by the ethereum blockchain.');
+    //       this.successfulInvestmentService.setMessage('Your investment was mined by the ethereum blockchain.');
+    //       console.log(success);
+    //     }, (error) => {
+    //       console.error(error);
+    //       this.successfulInvestmentService.setErrorMessage(error.message);
+    //       this.toastrService.getInstance().error(this.successfulInvestmentService.getMessage());
+    //     });
+    // }
     this.router.navigate(['investor/invest/success']);
+  }
+
+  invest() {
+    const asset = this.investment.assets[this.count];
+    return this.assetService.invest(asset.contractAddress, asset.value,
+      '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed', (success) => {
+        this.toastrService.getInstance().success('Your investment was mined by the ethereum blockchain.');
+        this.successfulInvestmentService.setMessage('Your investment was mined by the ethereum blockchain.');
+
+        console.log(success);
+
+        if (this.count < this.investment.assets.length - 1) {
+          this.count++;
+          this.invest();
+        }
+        return true;
+      }, (error) => {
+        this.successfulInvestmentService.setErrorMessage(error.message);
+        this.toastrService.getInstance().error(this.successfulInvestmentService.getMessage());
+
+        console.error(error);
+
+        if (this.count < this.investment.assets.length - 1) {
+          this.count++;
+          this.invest();
+        }
+        return true;
+      });
+
+
   }
 
 }
