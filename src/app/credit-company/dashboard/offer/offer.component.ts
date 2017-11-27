@@ -57,11 +57,42 @@ export class OfferComponent implements OnInit {
     this.linkService.openLink(url);
   }
 
+  public withdrawFunds(asset) {
+    const offerTermsHash = '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed';
+
+    this.assetProtocol.withdrawFunds(offerTermsHash, asset.contractAddress, (success) => {
+      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+    }, (error) => {
+      // Improve this call
+      this.walletService.getEthBalance().then((currentBalance) => {
+        this.errorLogService.setAfterETHbalance(currentBalance);
+        this.errorLogService.setError(error);
+      });
+      this.toastrService.getInstance().error(error.message);
+    });
+  }
+
+  public refuseInvestment(asset) {
+    this.assetProtocol.refuseInvestment(asset.contractAddress, (success) => {
+      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+    }, (error) => {
+      // Improve this call
+      this.walletService.getEthBalance().then((currentBalance) => {
+        this.errorLogService.setAfterETHbalance(currentBalance);
+        this.errorLogService.setError(error);
+      });
+      this.toastrService.getInstance().error(error.message);
+    });
+  }
+
   public statusToString(status) {
     let statusString;
     switch (parseInt(status, 10)) {
       case this.PENDING_ETHEREUM_CONFIRMATION:
         statusString = 'Pending Ethereum confirmation';
+        break;
+      case this.PENDING_OWNER_AGREEMENT:
+        statusString = 'Pending agreement';
         break;
       case this.AVAILABLE:
         statusString = 'Available';
@@ -78,5 +109,4 @@ export class OfferComponent implements OnInit {
     }
     return statusString;
   }
-
 }
