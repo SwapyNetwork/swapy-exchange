@@ -85,6 +85,15 @@ export class OfferComponent implements OnInit {
     });
   }
 
+  public returnInvestment(asset) {
+    const value = asset.value;
+    this.assetProtocol.returnInvestment(asset.contractAddress, value, (success) => {
+      this.toastrService.getInstance().success('Your investment return was mined by the Ethereum blockchain.');
+    }, (error) => {
+      this.toastrService.getInstance().error(error.message);
+    });
+  }
+
   public statusToString(status) {
     let statusString;
     switch (parseInt(status, 10)) {
