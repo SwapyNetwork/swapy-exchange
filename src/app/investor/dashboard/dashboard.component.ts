@@ -36,8 +36,22 @@ export class DashboardComponent implements OnInit {
     // );
   }
 
+  buildInvestments(offer) {
+    return new Promise((resolve, reject) => {
+      offer._assets.forEach(asset => {
+          this.investmentAssetService.getContract(asset).methods
+            .investor().call().then(investor => {
+            });
+      });
+    });
+  }
+
   getMyInvestmentsFromBlockchain() {
     this.exchangeService.getOffers((error, offerEvents) => {
+      const promises = [];
+      offerEvents.forEach(offer => {
+        promises.push(this.buildInvestments(offer));
+      })
     })
   }
 
