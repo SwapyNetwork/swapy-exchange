@@ -30,16 +30,4 @@ export class InvestService {
     return this.cachedOfferIndex;
   }
 
-  public addInvest(invest): Promise<any> {
-    return this.httpService.post('investment/add', invest);
-  }
-
-  public getMyInvestments(): Promise<any> {
-    return this.httpService.get('investment/mine');
-  }
-
-  public transferFunds(data) {
-    return this.httpService.post('investment/transferFunds', data);
-  }
-
 }

@@ -19,8 +19,8 @@ import { Wallet } from '../../common/interfaces/wallet.interface';
 })
 export class LoginComponent implements OnInit {
 
-  public email: string = '';
-  public password: string = '';
+  public email = '';
+  public password = '';
   public errorMessages: string[] = [];
   private web3;
 
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
     /** @todo frontend validations */
     this.errorMessages = [];
 
-    let body = {
+    const body = {
       email: this.email,
       password: this.password
     };
@@ -57,14 +57,15 @@ export class LoginComponent implements OnInit {
           this.walletService.addWalletToWeb3(wallet);
           this.router.navigate([this.solveRoute(data.user.type, data.user.tfa)]);
         } else {
-          this.errorMessages.push('Local wallet not found. Please log in from the device you signed up. Decentralized backup to be done in a later version.'); // @todo Improve error message.
+          this.errorMessages.push('Local wallet not found. Please log in from the device you signed up.' +
+            'Decentralized backup to be done in a later version.'); // @todo Improve error message.
           this.logoutService.logout();
         }
 
       },
       // Errors will call this callback instead:
       err => {
-        let namespace = "login";
+        const namespace = 'login';
 
         // i18nService read language files and translate message by code
         // in case message not exists under the namespace file + language

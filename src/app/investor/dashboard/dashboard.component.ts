@@ -21,21 +21,6 @@ export class DashboardComponent implements OnInit {
     private errorLogService: ErrorLogService,
     private investmentAssetService: InvestmentAssetService) { }
 
-  ngOnInit() {
-    this.updateInvestments();
-  }
-
-  updateInvestments() {
-    // this.investService.getMyInvestments().then(
-    //   (data: any) => {
-    //     this.investments = data.investments;
-    //   },
-    //   (error: any) => {
-    //     console.log(error);
-    //   }
-    // );
-  }
-
-  getUpdatesFromBlockchain() {}
+  ngOnInit() {}
 
 }

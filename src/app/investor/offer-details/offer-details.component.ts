@@ -126,7 +126,5 @@ export class OfferDetailsComponent implements OnInit {
 
       this.router.navigate(['investor/invest']);
     }
-
-
   }
 }

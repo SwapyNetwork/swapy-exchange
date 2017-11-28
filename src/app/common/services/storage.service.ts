@@ -20,12 +20,12 @@ export class StorageService {
   }
 
   public getItem(name) {
-    let data = {};
+    const data = {};
     data[name] = localStorage.getItem(name);
     try {
-       return JSON.parse(data[name]);
+      return JSON.parse(data[name]);
     } catch (e) {
-       return data[name];
+      return data[name];
     }
   }
 

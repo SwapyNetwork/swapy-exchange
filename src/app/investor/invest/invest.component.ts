@@ -62,8 +62,6 @@ export class InvestComponent implements OnInit {
           this.invest();
         }
       });
-
-
   }
 
 }

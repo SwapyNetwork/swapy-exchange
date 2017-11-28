@@ -19,7 +19,8 @@ import { Web3Service } from '../../common/services/web3.service';
 @Injectable()
 export class LoginService {
 
-  constructor(public http: HttpClient, public storageService: StorageService, public loadingService: LoadingService, public web3Service: Web3Service) {}
+  constructor(public http: HttpClient, public storageService: StorageService,
+    public loadingService: LoadingService, public web3Service: Web3Service) {}
 
   login(login: LoginModel) {
     const url: string = environment.api + 'login';

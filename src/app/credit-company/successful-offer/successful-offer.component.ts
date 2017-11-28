@@ -12,10 +12,9 @@ export class SuccessfulOfferComponent implements OnInit {
 
   public offer;
 
-  constructor(private addOfferService: AddOfferService, private router: Router) { }
+  constructor(private addOfferService: AddOfferService, private router: Router) {}
 
   ngOnInit() {
     this.offer = this.addOfferService.getCachedOffer();
   }
-
 }
