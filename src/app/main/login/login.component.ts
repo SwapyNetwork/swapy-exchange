@@ -39,46 +39,18 @@ export class LoginComponent implements OnInit {
     this.walletService.delete();
   }
 
-  login() {
-    /** @todo frontend validations */
-    this.errorMessages = [];
-
-    const body = {
-      email: this.email,
-      password: this.password
-    };
-
-    this.loginService.login(body).then(
-      // Successful responses call the first callback.
-      (data: LoginResponseModel) => {
-
-        const wallet: Wallet = this.walletService.getWallet();
-        if (wallet) {
-          this.walletService.addWalletToWeb3(wallet);
-          this.router.navigate([this.solveRoute(data.user.type, data.user.tfa)]);
-        } else {
-          this.errorMessages.push('Local wallet not found. Please log in from the device you signed up.' +
-            'Decentralized backup to be done in a later version.'); // @todo Improve error message.
-          this.logoutService.logout();
-        }
-
-      },
-      // Errors will call this callback instead:
-      err => {
-        const namespace = 'login';
-
-        // i18nService read language files and translate message by code
-        // in case message not exists under the namespace file + language
-        // uses the default message
-        this.i18nService.doTranslateList(namespace, err.error).then(res => {
-          this.errorMessages = res; // errorMessages is a list of error strings
-        });
-      }
-    );
+  login(userType) {
+    this.router.navigate([this.solveRoute(userType)]);
+    const wallet: Wallet = this.walletService.getWallet();
+    if (wallet) {
+      this.walletService.addWalletToWeb3(wallet);
+    } else {
+      this.errorMessages.push('Local wallet not found. Please log in from the device you signed up.' +
+        'Decentralized backup to be done in a later version.'); // @todo Improve error message.
+    }
   }
 
-  private solveRoute(userType: number, tfa: boolean) {
-    if (tfa) return '/2fa/validation';
+  private solveRoute(userType: number) {
     switch (userType) {
       case INVESTOR:
         return '/investor';

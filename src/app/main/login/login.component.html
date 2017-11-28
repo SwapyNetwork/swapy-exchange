@@ -1,31 +1,5 @@
 <img src="assets/img/swapy-logo.jpg" alt="swapy logo">
 <h1 class="sw-sign-title">Sign in</h1>
-<div *ngIf="errorMessages.length > 0">
-  <div *ngFor="let message of errorMessages" class="alert alert-danger">
-    {{message}}
-  </div>
-</div>
 
-<form #loginForm="ngForm" (submit)="login()">
-  <input type="email" class="form-control sw-round" placeholder="Email" [(ngModel)]="email" #emailInput="ngModel" name="email" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" required><br>
-  <div *ngIf="emailInput.errors && (emailInput.touched || emailInput.dirty)" class="alert alert-danger">
-        <div [hidden]="!emailInput.errors.required">
-      Email is required.
-        </div>
-        <div [hidden]="!emailInput.errors.pattern">
-      Email format is invalid.
-        </div>
-  </div>
-  <input type="password" class="form-control sw-round" placeholder="Password" [(ngModel)]="password" #passwordInput="ngModel" name="password" required minlength="6"><br>
-  <div *ngIf="passwordInput.errors && (passwordInput.touched || passwordInput.dirty)" class="alert alert-danger">
-        <div [hidden]="!passwordInput.errors.required">
-      Password is required.
-        </div>
-        <div [hidden]="!passwordInput.errors.minlength">
-      Password must have at least 6 characters.
-        </div>
-  </div>
-    <p class="sw-forget-pass"><a [routerLink]="['/forgot-password']"> I Forgot my password &nbsp;&nbsp;<i class="fa fa-key"></i></a><br><br></p>
-  <button type="submit" class="sw-button sw-btn-ghost1" [disabled]="!loginForm.form.valid">Sign in</button>
-  <a class="sw-button sw-btn-ghost2" [routerLink]="['/sign-up']">Create an account</a>
-</form>
+<button class="sw-button sw-btn-ghost1" (click)="login(1)">Credit Company</button>
+<button class="sw-button sw-btn-ghost1" (click)="login(2)">Investor</button>

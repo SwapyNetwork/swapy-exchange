@@ -4,7 +4,6 @@ import { StorageService } from './storage.service';
 import { ErrorLogService } from './error-log.service';
 
 import { Wallet } from '../interfaces/wallet.interface';
-import { ElectronService } from 'ngx-electron';
 
 import * as ProviderFile from '../../../../env.json';
 
@@ -14,15 +13,8 @@ export class WalletService {
   private web3;
   private wallet: Wallet;
   constructor(private web3Service: Web3Service,
-    private electronService: ElectronService,
     private errorLogService: ErrorLogService,
-    public storageService: StorageService) {
-
-    this.electronService.ipcRenderer.on('create-wallet-error', (event, err) => {
-      // Error handling if the wallet creation fails;
-      console.log(err);
-    });
-  }
+    public storageService: StorageService) {}
 
   public createWallet() {
     let wallet = {};
@@ -56,13 +48,9 @@ export class WalletService {
 
     // Save keys to local file
     this.addWalletToWeb3(wallet);
-    this.electronService.ipcRenderer.send('create-wallet', wallet);
   }
 
   getWallet() {
-    if (!this.wallet) {
-      return this.electronService.ipcRenderer.sendSync('get-wallet', this.getUserIdentification());
-    }
     return this.wallet;
   }
 

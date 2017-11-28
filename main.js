@@ -4,8 +4,6 @@ const url = require('url');
 const isDev = require('electron-is-dev');
 const fs = require('fs');
 
-
-
 if(isDev) {
   require('electron-reload')(path.join(__dirname));
 }
@@ -17,15 +15,14 @@ let win;
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({ width: 1200, height: 800, icon: 'assets/swapy3.png' });
-  const fs = require('fs');
 
+  win.webContents.executeJavaScript("window.isElectron=true;")
   // and load the index.html of the app.
   win.loadURL(url.format({
     pathname: path.join(__dirname, 'dist/index.html'),
     protocol: 'file',
     slashes: true
   }));
-
   if(isDev) {
     // Open the DevTools.
     win.webContents.openDevTools();
