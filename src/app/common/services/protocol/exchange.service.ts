@@ -35,6 +35,13 @@ export class ExchangeProtocolService extends ProtocolAbstract {
     });
   }
 
+  public getInvestments(cb) {
+    this.errorLogService.setParamValues([this.address, cb]);
+    return super.getEvents(null, null, 'Offers', this.address, (err, investments) => {
+      cb(err, investments);
+    });
+  }
+
   public createOffer(payback: number, grossReturn: number, currency: string,
     fixedValue: number, offerTermsHash: string, assets: number[], success?: Function, error?: Function) {
       this.errorLogService.setParamValues([payback, grossReturn * 10000, currency, fixedValue * 100,
@@ -57,6 +64,6 @@ export class ExchangeProtocolService extends ProtocolAbstract {
     let ethValue = value / ethusd;
     // Round to 18 decimals
     ethValue = Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18);
-    super.signAndSendTransaction(encoded, assetAddress, this.web3Service.getInstance().utils.toWei(ethValue), success, error);
+    super.signAndSendTransaction(encoded, this.address, this.web3Service.getInstance().utils.toWei(ethValue), success, error);
   }
 }
