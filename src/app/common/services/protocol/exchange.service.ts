@@ -49,4 +49,14 @@ export class ExchangeProtocolService extends ProtocolAbstract {
         .encodeABI();
       this.signAndSend(encoded, success, error);
   }
+
+  public invest(assetAddress: string, value: number, agreementTermsHash: string, success?: Function, error?: Function) {
+    const encoded = this.getProtocolContract().methods.invest(assetAddress,
+      this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash)).encodeABI();
+    const ethusd = 340.0;
+    let ethValue = value / ethusd;
+    // Round to 18 decimals
+    ethValue = Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18);
+    super.signAndSendTransaction(encoded, assetAddress, this.web3Service.getInstance().utils.toWei(ethValue), success, error);
+  }
 }
