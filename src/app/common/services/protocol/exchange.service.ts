@@ -35,6 +35,13 @@ export class ExchangeProtocolService extends ProtocolAbstract {
     });
   }
 
+  public getMyInvestments(investorAddress, cb) {
+    this.errorLogService.setParamValues([this.address, cb]);
+    return super.getEvents(null, null, 'Investments', this.address, (err, investments) => {
+      cb(err, investments.filter(investment => investment.returnValues._investor.toLowerCase() === investorAddress.toLowerCase()));
+    });
+  }
+
   public createOffer(payback: number, grossReturn: number, currency: string,
     fixedValue: number, offerTermsHash: string, assets: number[], success?: Function, error?: Function) {
       this.errorLogService.setParamValues([payback, grossReturn * 10000, currency, fixedValue * 100,

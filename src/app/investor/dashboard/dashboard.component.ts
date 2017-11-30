@@ -4,7 +4,7 @@ import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../
 import { ErrorLogService } from '../../common/services/error-log.service';
 import { ExchangeProtocolService as ExchangeService } from '../../common/services/protocol/exchange.service';
 import { AGREE_INVESTMENT, TRANSFER_FUNDS } from '../../common/interfaces/events.interface';
-
+import { WalletService } from '../../common/services/wallet.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,10 +19,12 @@ export class DashboardComponent implements OnInit {
     private investService: InvestService,
     private exchangeService: ExchangeService,
     private errorLogService: ErrorLogService,
+    private walletService: WalletService,
     private investmentAssetService: InvestmentAssetService) { }
 
   ngOnInit() {
     this.updateInvestments();
+    this.getMyInvestmentsFromBlockchain();
   }
 
   updateInvestments() {
@@ -47,10 +49,11 @@ export class DashboardComponent implements OnInit {
   }
 
   getMyInvestmentsFromBlockchain() {
-    this.exchangeService.getOffers((error, offerEvents) => {
+    this.exchangeService.getMyInvestments(this.walletService.getWallet().address, (error, investmentsEvents) => {
       const promises = [];
-      offerEvents.forEach(offer => {
-        promises.push(this.buildInvestments(offer));
+      investmentsEvents.forEach(investment => {
+        console.log(investment);
+        // promises.push(this.buildInvestments(investment));
       })
     })
   }
