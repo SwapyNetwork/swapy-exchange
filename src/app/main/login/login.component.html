@@ -1,7 +1,6 @@
 <img src="assets/img/swapy-logo.jpg" alt="swapy logo">
-<h1 class="sw-sign-title">Sign in</h1>
 
-<div *ngIf="requireMetaMask">
+<div *ngIf="requireMetaMask" class="signin-metamask">
   <p>We didn't find any Ethereum account. Please make sure you have MetaMask running.</p>
 
   <p>If you don't have it, download it here.</p>
@@ -11,7 +10,7 @@
   </a>
 </div>
 
-<div *ngIf="requireMetaMask === false">
+<div *ngIf="requireMetaMask === false" class="signin-metamask">
   <p>Found address <b>{{account}}</b></p>
   <button class="sw-button sw-btn-ghost1" (click)="login(1)">Sign in</button>
 </div>

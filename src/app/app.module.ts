@@ -14,6 +14,7 @@ import { Web3Service } from './common/services/web3.service';
 import { WalletService } from './common/services/wallet.service';
 import { ExchangeProtocolService } from './common/services/protocol/exchange.service';
 import { InvestmentAssetProtocolService } from './common/services/protocol/investment-asset.service';
+import { FinIdProtocolService } from './common/services/protocol/fin-id.service';
 import { LogoutService } from './common/services/logout.service';
 import { NgxElectronModule } from 'ngx-electron';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,7 +38,7 @@ import { ErrorLogService } from './common/services/error-log.service';
     ToastModule.forRoot(),
   ],
   providers: [StorageService, HttpService, I18nService, LoadingService, LinkService, Web3Service,
-    WalletService, ExchangeProtocolService, InvestmentAssetProtocolService, LogoutService,
+    WalletService, ExchangeProtocolService, InvestmentAssetProtocolService, FinIdProtocolService, LogoutService,
     ToastrService, ErrorLogService, { provide: ToastOptions, useClass: CustomToastOption }],
   bootstrap: [AppComponent]
 })

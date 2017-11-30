@@ -8,6 +8,7 @@ import { UserResponseInterface, INVESTOR, CREDIT_COMPANY } from '../../common/in
 import { I18nService } from '../../common/services/i18n.service';
 import { Web3Service } from '../../common/services/web3.service';
 import { ExchangeProtocolService } from '../../common/services/protocol/exchange.service';
+import { FinIdProtocolService } from '../../common/services/protocol/fin-id.service';
 import { WalletService } from '../../common/services/wallet.service';
 import { LogoutService } from '../../common/services/logout.service';
 import { Wallet } from '../../common/interfaces/wallet.interface';
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private web3Service: Web3Service,
     private protocolService: ExchangeProtocolService,
+    private finIdService: FinIdProtocolService,
     private walletService: WalletService,
     public logoutService: LogoutService
   ) { }
@@ -42,12 +44,13 @@ export class LoginComponent implements OnInit {
     const self = this;
     const accounts = await self.web3Service.getInstance().eth.getAccounts();
     this.account = accounts[0];
-    setTimeout(() => {
+    setTimeout(async () => {
       if (!this.account) {
         self.requireMetaMask = true;
         self.checkAccount();
       } else {
         self.requireMetaMask = false;
+        const userType = await self.finIdService.getUser(this.account);
       }
     }, 1000);
   }
