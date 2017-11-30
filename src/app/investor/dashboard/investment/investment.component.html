@@ -6,9 +6,9 @@
            <h4 class="panel-title">
            <a role="button" data-toggle="collapse" data-parent="#accordion" (click)="toggleCollapse()"  aria-expanded="true" aria-controls="collapseOne">
              {{investment.totalAmount | currency:'USD':true:'.2' }}
-             <span class="sw-box-text">- {{investment.companyName}}
+             <span class="sw-box-text">- {{investment.creditCompanyAddress}}
                <div class="sw-box-text">
-                 {{investment.offerContractAddress}}
+                 {{investment.contractAddress}}
                </div>
              </span>
            </a>
@@ -67,14 +67,12 @@
               <th>Asset</th>
               <th>Value</th>
               <th>Status</th>
-              <th>Contract</th>
               <th>Transfer</th>
             </tr>
             <tr *ngFor="let asset of investment.assets, let i = index">
               <td>{{i + 1}}</td>
               <td>{{asset.value | currency:'USD':true:'.2'}}</td>
-              <td>{{statusToString(asset.status)}}</td> <!--@todo "status.toString()" -->
-              <td><span *ngIf="!asset.contractAddress">-</span><a *ngIf="asset.contractAddress" (click)="exploreContract(asset.contractAddress)">Explore</a></td>
+              <td>{{statusToString(asset.status)}}</td>
               <td>
                 <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="(asset.status == TX_AGREED)" (click)="transferFunds(investment, asset)">
                   <i class="fa fa-check" aria-hidden="true"></i>

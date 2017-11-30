@@ -43,21 +43,23 @@ export class DashboardComponent implements OnInit {
   }
 
   buildInvestments(investment) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       this.web3Service.getInstance().eth.getBlock(investment.blockHash).then(block => {
-        const newInvestment = {
-          investedIn: (new Date(block.timestamp * 1000)).toISOString(),
-          assets: [],
-          totalAmount: 0,
-          grossReturn: 0,
-          paybackMonths: 0,
-        };
-        console.log(investment);
         const asset = investment.returnValues._asset;
-          this.investmentAssetService.getContract(asset).methods.getAsset().call().then(assetValues => {
+        this.investmentAssetService.getContract(asset).methods.getAsset().call().then(assetValues => {
+          if (Number(assetValues[5]) !== 0 && assetValues[6] === this.walletService.getWallet().address) {
+            const newInvestment = {
+              investedIn: (new Date(block.timestamp * 1000)).toISOString(),
+              assets: [],
+              totalAmount: 0,
+              grossReturn: 0,
+              paybackMonths: 0,
+              contractAddress: asset,
+              creditCompanyAddress: investment.returnValues._owner,
+            };
             const newAsset = {
               contractAddress: asset,
-              status: assetValues[5],
+              status: Number(assetValues[5]),
               value: assetValues[2] / 100
             };
             newInvestment.assets.push(newAsset);
@@ -65,6 +67,9 @@ export class DashboardComponent implements OnInit {
             newInvestment.totalAmount = assetValues[2] * 5 / 100;
             newInvestment.grossReturn = assetValues[4] / 10000;
             resolve(newInvestment);
+          } else {
+            resolve(false);
+          }
         });
       });
     });
@@ -79,7 +84,10 @@ export class DashboardComponent implements OnInit {
       });
 
       Promise.all(promises).then(resolvedInvestments => {
-        this.investments = resolvedInvestments;
+        this.investments = resolvedInvestments.filter(investment => investment);
+        this.loadingService.hide();
+      }, err => {
+        console.error(err);
         this.loadingService.hide();
       })
     })
