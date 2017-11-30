@@ -5,6 +5,8 @@ import { ErrorLogService } from '../../common/services/error-log.service';
 import { ExchangeProtocolService as ExchangeService } from '../../common/services/protocol/exchange.service';
 import { AGREE_INVESTMENT, TRANSFER_FUNDS } from '../../common/interfaces/events.interface';
 import { WalletService } from '../../common/services/wallet.service';
+import { Web3Service } from '../../common/services/web3.service';
+import { LoadingService } from '../../common/services/loading.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +22,8 @@ export class DashboardComponent implements OnInit {
     private exchangeService: ExchangeService,
     private errorLogService: ErrorLogService,
     private walletService: WalletService,
+    private web3Service: Web3Service,
+    private loadingService: LoadingService,
     private investmentAssetService: InvestmentAssetService) { }
 
   ngOnInit() {
@@ -38,22 +42,45 @@ export class DashboardComponent implements OnInit {
     // );
   }
 
-  buildInvestments(offer) {
-    return new Promise((resolve, reject) => {
-      offer._assets.forEach(asset => {
-          this.investmentAssetService.getContract(asset).methods
-            .investor().call().then(investor => {
-            });
+  buildInvestments(investment) {
+    return new Promise((resolve) => {
+      this.web3Service.getInstance().eth.getBlock(investment.blockHash).then(block => {
+        const newInvestment = {
+          investedIn: (new Date(block.timestamp * 1000)).toISOString(),
+          assets: [],
+          totalAmount: 0,
+          grossReturn: 0,
+          paybackMonths: 0,
+        };
+        console.log(investment);
+        const asset = investment.returnValues._asset;
+          this.investmentAssetService.getContract(asset).methods.getAsset().call().then(assetValues => {
+            const newAsset = {
+              contractAddress: asset,
+              status: assetValues[5],
+              value: assetValues[2] / 100
+            };
+            newInvestment.assets.push(newAsset);
+            newInvestment.paybackMonths = assetValues[3] / 30;
+            newInvestment.totalAmount = assetValues[2] * 5 / 100;
+            newInvestment.grossReturn = assetValues[4] / 10000;
+            resolve(newInvestment);
+        });
       });
     });
   }
 
   getMyInvestmentsFromBlockchain() {
+    this.loadingService.show();
     this.exchangeService.getMyInvestments(this.walletService.getWallet().address, (error, investmentsEvents) => {
       const promises = [];
       investmentsEvents.forEach(investment => {
-        console.log(investment);
-        // promises.push(this.buildInvestments(investment));
+        promises.push(this.buildInvestments(investment));
+      });
+
+      Promise.all(promises).then(resolvedInvestments => {
+        this.investments = resolvedInvestments;
+        this.loadingService.hide();
       })
     })
   }
