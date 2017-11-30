@@ -37,7 +37,7 @@ export class ExchangeProtocolService extends ProtocolAbstract {
 
   public getInvestments(cb) {
     this.errorLogService.setParamValues([this.address, cb]);
-    return super.getEvents(null, null, 'Offers', this.address, (err, investments) => {
+    return super.getEvents(null, null, 'Investments', this.address, (err, investments) => {
       cb(err, investments);
     });
   }
@@ -57,9 +57,8 @@ export class ExchangeProtocolService extends ProtocolAbstract {
       this.signAndSend(encoded, success, error);
   }
 
-  public invest(assetAddress: string, value: number, agreementTermsHash: string, success?: Function, error?: Function) {
-    const encoded = this.getProtocolContract().methods.invest(assetAddress,
-      this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash)).encodeABI();
+  public invest(assetAddress: string, value: number, success?: Function, error?: Function) {
+    const encoded = this.getProtocolContract().methods.invest(assetAddress).encodeABI();
     const ethusd = 340.0;
     let ethValue = value / ethusd;
     // Round to 18 decimals

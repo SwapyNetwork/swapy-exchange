@@ -46,8 +46,7 @@ export class InvestComponent implements OnInit {
 
   invest() {
     const asset = this.investment.assets[this.assetIndex];
-    this.exchangeService.invest(asset.contractAddress, asset.value,
-      '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed', (success) => {
+    this.exchangeService.invest(asset.contractAddress, asset.value, (success) => {
         this.toastrService.getInstance().success('Your investment was mined by the Ethereum blockchain.');
         this.successfulInvestmentService.setMessage('Your investment was mined by the Ethereum blockchain.');
 
