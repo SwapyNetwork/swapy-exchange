@@ -57,11 +57,49 @@ export class OfferComponent implements OnInit {
     this.linkService.openLink(url);
   }
 
+  public withdrawFunds(asset) {
+    this.assetProtocol.withdrawFunds(asset.contractAddress, (success) => {
+      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+    }, (error) => {
+      // Improve this call
+      this.walletService.getEthBalance().then((currentBalance) => {
+        this.errorLogService.setAfterETHbalance(currentBalance);
+        this.errorLogService.setError(error);
+      });
+      this.toastrService.getInstance().error(error.message);
+    });
+  }
+
+  public refuseInvestment(asset) {
+    this.assetProtocol.refuseInvestment(asset.contractAddress, (success) => {
+      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+    }, (error) => {
+      // Improve this call
+      this.walletService.getEthBalance().then((currentBalance) => {
+        this.errorLogService.setAfterETHbalance(currentBalance);
+        this.errorLogService.setError(error);
+      });
+      this.toastrService.getInstance().error(error.message);
+    });
+  }
+
+  public returnInvestment(asset) {
+    const value = asset.value * (1 + this.offer.grossReturn);
+    this.assetProtocol.returnInvestment(asset.contractAddress, value, (success) => {
+      this.toastrService.getInstance().success('Your investment return was mined by the Ethereum blockchain.');
+    }, (error) => {
+      this.toastrService.getInstance().error(error.message);
+    });
+  }
+
   public statusToString(status) {
     let statusString;
     switch (parseInt(status, 10)) {
       case this.PENDING_ETHEREUM_CONFIRMATION:
         statusString = 'Pending Ethereum confirmation';
+        break;
+      case this.PENDING_OWNER_AGREEMENT:
+        statusString = 'Pending agreement';
         break;
       case this.AVAILABLE:
         statusString = 'Available';
@@ -78,5 +116,4 @@ export class OfferComponent implements OnInit {
     }
     return statusString;
   }
-
 }

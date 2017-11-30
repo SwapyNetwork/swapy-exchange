@@ -67,8 +67,9 @@
               <th>Status</th>
               <th>Investor</th>
               <th>Contract</th>
-              <th>Return date</th>
+              <!-- <th>Return date</th> -->
               <th>Agree</th>
+              <th>Return investment</th>
            </tr>
            <tr *ngFor="let asset of offer.assets, let i = index">
               <td>{{i + 1}}</td>
@@ -76,10 +77,13 @@
               <td>{{statusToString(asset.status)}}</td>
               <td>{{asset.investorWallet ? '-' : asset.investorWallet }}</td>
               <td><span *ngIf="!asset.contractAddress">-</span><a *ngIf="asset.contractAddress" (click)="exploreContract(asset.contractAddress)">Explore</a></td>
-              <td>{{asset.investedIn == null ? '-' : (calculatePaybackDate(asset) | date: 'yyyy-MM-dd') }}</td>
+              <!-- <td>{{asset.status == INVESTED ? '-' : (calculatePaybackDate(asset) | date: 'yyyy-MM-dd') }}</td> -->
               <td>
-                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.investedIn && asset.status === LOCKED" (click)="acceptInvestor(offer.uuid, asset)"><i class="fa fa-check" aria-hidden="true"></i></button>
-                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="asset.investedIn && asset.status === LOCKED"><i class="fa fa-times" aria-hidden="true"></i></button>
+                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.status == PENDING_OWNER_AGREEMENT" (click)="withdrawFunds(asset)"><i class="fa fa-check" aria-hidden="true"></i></button>
+                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="asset.status == PENDING_OWNER_AGREEMENT" (click)="refuseInvestment(asset)"><i class="fa fa-times" aria-hidden="true"></i></button>
+              </td>
+              <td>
+                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.status == INVESTED" (click)="returnInvestment(asset)"><i class="fa fa-check" aria-hidden="true"></i></button>
               </td>
            </tr>
         </table>
