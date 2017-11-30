@@ -19,7 +19,8 @@ import { Wallet } from '../../common/interfaces/wallet.interface';
 })
 export class LoginComponent implements OnInit {
 
-  public email = '';
+  public requireMetaMask;
+  public account = '';
   public password = '';
   public errorMessages: string[] = [];
   private web3;
@@ -34,9 +35,21 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.web3Service.init();
-    this.web3 = this.web3Service.getInstance();
-    this.walletService.delete();
+    this.checkAccount();
+  }
+
+  private async checkAccount() {
+    const self = this;
+    const accounts = await self.web3Service.getInstance().eth.getAccounts();
+    this.account = accounts[0];
+    setTimeout(() => {
+      if (!this.account) {
+        self.requireMetaMask = true;
+        self.checkAccount();
+      } else {
+        self.requireMetaMask = false;
+      }
+    }, 1000);
   }
 
   login(userType) {

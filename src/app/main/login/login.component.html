@@ -1,5 +1,17 @@
 <img src="assets/img/swapy-logo.jpg" alt="swapy logo">
 <h1 class="sw-sign-title">Sign in</h1>
 
-<button class="sw-button sw-btn-ghost1" (click)="login(1)">Credit Company</button>
-<button class="sw-button sw-btn-ghost1" (click)="login(2)">Investor</button>
+<div *ngIf="requireMetaMask">
+  <p>We didn't find any Ethereum account. Please make sure you have MetaMask running.</p>
+
+  <p>If you don't have it, download it here.</p>
+
+  <a href="https://metamask.io/" target="_blank">
+    <img src="assets/img/download-metamask.png" alt="metamask download image" class="metamask">
+  </a>
+</div>
+
+<div *ngIf="requireMetaMask === false">
+  <p>Found address <b>{{account}}</b></p>
+  <button class="sw-button sw-btn-ghost1" (click)="login(1)">Sign in</button>
+</div>
