@@ -6,7 +6,6 @@ import { LinkService } from '../../../common/services/link.service';
 import { WalletService } from '../../../common/services/wallet.service';
 import { ErrorLogService } from '../../../common/services/error-log.service';
 import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
-import { ExchangeProtocolService as ExchangeService } from '../../../common/services/protocol/exchange.service';
 import {
   AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, RETURNED,
   DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../../common/interfaces/offerAssetStatus.interface';
@@ -39,7 +38,6 @@ export class OfferComponent implements OnInit {
     private i18nService: I18nService,
     private linkService: LinkService,
     private walletService: WalletService,
-    private exchangeService: ExchangeService,
     private errorLogService: ErrorLogService) { }
 
   ngOnInit() { }
@@ -86,14 +84,6 @@ export class OfferComponent implements OnInit {
   }
 
   public returnInvestment(asset) {
-
-    this.exchangeService.getInvestments((err, investments) => {
-      console.log(err);
-      console.log(investments);
-      console.log(asset.contractAddress);
-      console.log(asset.investorWallet);
-      console.log(this.offer.walletAddress);
-    })
     const value = asset.value * (1 + this.offer.grossReturn);
     this.assetProtocol.returnInvestment(asset.contractAddress, value, (success) => {
       this.toastrService.getInstance().success('Your investment return was mined by the Ethereum blockchain.');
