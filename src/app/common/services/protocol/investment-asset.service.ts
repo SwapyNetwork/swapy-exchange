@@ -46,10 +46,9 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
     });
   }
 
-  public withdrawFunds(agreementTermsHash, contractAddress: string, success?: Function, error?: Function) {
-    this.errorLogService.setParamValues([this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash)]);
-    const encoded = this.getLibraryContract(this.assetLibraryAddress).methods.withdrawFunds(
-      this.web3Service.getInstance().utils.asciiToHex(agreementTermsHash)).encodeABI();
+  public withdrawFunds(contractAddress: string, success?: Function, error?: Function) {
+    this.errorLogService.setParamValues([]);
+    const encoded = this.getLibraryContract(this.assetLibraryAddress).methods.withdrawFunds().encodeABI();
     super.signAndSendTransaction(encoded, contractAddress, null, success, error);
   }
 
