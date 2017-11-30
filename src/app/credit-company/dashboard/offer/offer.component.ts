@@ -58,9 +58,7 @@ export class OfferComponent implements OnInit {
   }
 
   public withdrawFunds(asset) {
-    const offerTermsHash = '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed';
-
-    this.assetProtocol.withdrawFunds(offerTermsHash, asset.contractAddress, (success) => {
+    this.assetProtocol.withdrawFunds(asset.contractAddress, (success) => {
       this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
     }, (error) => {
       // Improve this call
