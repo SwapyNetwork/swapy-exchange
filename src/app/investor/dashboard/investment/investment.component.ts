@@ -85,9 +85,9 @@ export class InvestmentComponent implements OnInit {
 
   public cancelInvestment(asset) {
     this.investmentAssetService.cancelInvestment(asset.contractAddress, (success) => {
-      console.log(success);
+      this.toastrService.getInstance().success('Cancel investment was mined in the Ethereum blockchain');
     }, (error) => {
-      console.log(error);
+      this.toastrService.getInstance().error(error.message);
     })
   }
 

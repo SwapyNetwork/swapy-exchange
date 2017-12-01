@@ -93,6 +93,9 @@ export class DashboardComponent implements OnInit {
           }
         });
       });
+      if (investments.length === 0 ) {
+        this.loadingService.hide();
+      }
     })
   }
 
