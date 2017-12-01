@@ -57,7 +57,7 @@ export class ExchangeProtocolService extends ProtocolAbstract {
       this.signAndSend(encoded, success, error);
   }
 
-  public invest(assetAddress: string, value: number, success?: Function, error?: Function) {
+  public invest(assetAddress: string[], value: number, success?: Function, error?: Function) {
     const encoded = this.getProtocolContract().methods.invest(assetAddress).encodeABI();
     const ethusd = 340.0;
     let ethValue = value / ethusd;

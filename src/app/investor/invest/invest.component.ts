@@ -45,23 +45,16 @@ export class InvestComponent implements OnInit {
   }
 
   invest() {
-    const asset = this.investment.assets[this.assetIndex];
-    this.exchangeService.invest(asset.contractAddress, asset.value, (success) => {
+    const assetsAddress = this.investment.assets.map(asset => asset.contractAddress);
+    const totalValue = this.investment.assets[0].value * assetsAddress.length;
+    this.exchangeService.invest(assetsAddress, totalValue, (success) => {
         this.toastrService.getInstance().success('Your investment was mined by the Ethereum blockchain.');
         this.successfulInvestmentService.setMessage('Your investment was mined by the Ethereum blockchain.');
 
-        if (this.assetIndex < this.investment.assets.length - 1) {
-          this.assetIndex++;
-          this.invest();
-        }
       }, (error) => {
         this.successfulInvestmentService.setErrorMessage(error.message);
         this.toastrService.getInstance().error(this.successfulInvestmentService.getMessage());
 
-        if (this.assetIndex < this.investment.assets.length - 1) {
-          this.assetIndex++;
-          this.invest();
-        }
       });
 
 
