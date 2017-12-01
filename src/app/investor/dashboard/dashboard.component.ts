@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
     // );
   }
 
-  buildInvestments(investment, assetValues) {
+  buildInvestments(investment) {
     return new Promise((resolve) => {
       this.web3Service.getInstance().eth.getBlock(investment.blockHash).then(block => {
         const newInvestment = {
@@ -51,19 +51,28 @@ export class DashboardComponent implements OnInit {
           totalAmount: 0,
           grossReturn: 0,
           paybackMonths: 0,
-          contractAddress: investment.returnValues._asset,
-          creditCompanyAddress: investment.returnValues._owner,
+          creditCompanyAddress: null
         };
-        const newAsset = {
-          contractAddress: investment.returnValues._asset,
-          status: Number(assetValues[5]),
-          value: assetValues[2] / 100
-        };
-        newInvestment.assets.push(newAsset);
-        newInvestment.paybackMonths = assetValues[3] / 30;
-        newInvestment.totalAmount = assetValues[2] * 5 / 100;
-        newInvestment.grossReturn = assetValues[4] / 10000;
-        resolve(newInvestment);
+        investment.returnValues._assets.forEach((asset, index) => {
+          this.investmentAssetService.getContract(asset).methods.getAsset().call().then(assetValues => {
+            if (assetValues[6] === this.walletService.getWallet().address) {
+              const newAsset = {
+                contractAddress: asset,
+                status: Number(assetValues[5]),
+                value: assetValues[2] / 100
+              };
+              newInvestment.assets.push(newAsset);
+            }
+            if (!newInvestment.totalAmount) {
+              newInvestment.paybackMonths = assetValues[3] / 30;
+              newInvestment.totalAmount = assetValues[2] * 5 / 100;
+              newInvestment.grossReturn = assetValues[4] / 10000;
+              newInvestment.creditCompanyAddress = assetValues[0];
+            } else if (index === investment.returnValues._assets.length - 1) {
+              resolve(newInvestment);
+            }
+          });
+        });
       });
     });
   }
@@ -72,30 +81,14 @@ export class DashboardComponent implements OnInit {
     this.loadingService.show();
     this.exchangeService.getMyInvestments(this.walletService.getWallet().address, (error, investmentsEvents) => {
       const promises = [];
-      // Get unique assets
-      const investments = [];
       investmentsEvents.forEach((investment) => {
-        if (investments.map(inv => inv.returnValues._asset).indexOf(investment.returnValues._asset) < 0) {
-          investments.push(investment);
-        }
+        promises.push(this.buildInvestments(investment));
       });
-      investments.forEach((investment, index) => {
-        const asset = investment.returnValues._asset;
-        this.investmentAssetService.getContract(asset).methods.getAsset().call().then(assetValues => {
-          if (assetValues[6] === this.walletService.getWallet().address) {
-            promises.push(this.buildInvestments(investment, assetValues));
-          }
-          if (index === investments.length - 1) {
-            Promise.all(promises).then(resolvedInvestments => {
-              this.investments = resolvedInvestments;
-              this.loadingService.hide();
-            });
-          }
-        });
-      });
-      if (investments.length === 0 ) {
+      
+      Promise.all(promises).then(resolvedInvestments => {
+        this.investments = resolvedInvestments;
         this.loadingService.hide();
-      }
+      });
     })
   }
 
