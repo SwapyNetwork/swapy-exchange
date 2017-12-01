@@ -15,8 +15,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" [ngClass]="{ 'in': isIn }">
       <img class="sw-swapy-logo3 visible-xs" src="assets/img/swapy-logo3.png" alt="Swapy logo" />
-      <ul class="nav navbar-nav navbar-center">
-        <li><a (click)="openWalletInExplorer(wallet.address)" class="sw-box-text">{{user.firstName}} {{user.lastName}} - {{wallet.address}}</a></li>
+      <ul class="nav navbar-nav navbar-center" *ngIf="isWallet(wallet)">
+        <li><a (click)="openWalletInExplorer(wallet.address)" class="sw-box-text">{{wallet.address}}</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">

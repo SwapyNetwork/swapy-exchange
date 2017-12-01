@@ -59,6 +59,10 @@ export class NavComponent implements OnInit {
     this.linkService.openLink(this.explorerUrl + address);
   }
 
+  public isWallet(val) {
+    return typeof val === 'object';
+  }
+
   ngOnInit() {}
 
   // store state

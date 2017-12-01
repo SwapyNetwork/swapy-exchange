@@ -10,6 +10,7 @@ import { Web3Service } from '../../common/services/web3.service';
 import { ExchangeProtocolService } from '../../common/services/protocol/exchange.service';
 import { FinIdProtocolService } from '../../common/services/protocol/fin-id.service';
 import { WalletService } from '../../common/services/wallet.service';
+import { StorageService } from '../../common/services/storage.service';
 import { LogoutService } from '../../common/services/logout.service';
 import { Wallet } from '../../common/interfaces/wallet.interface';
 
@@ -21,20 +22,25 @@ import { Wallet } from '../../common/interfaces/wallet.interface';
 export class LoginComponent implements OnInit {
 
   public requireMetaMask;
-  public account = '';
-  public password = '';
+  public agreedToTerms;
+  public account: Wallet;
   public errorMessages: string[] = [];
   private web3;
+
+  public INVESTOR = INVESTOR;
+  public CREDIT_COMPANY = CREDIT_COMPANY;
 
   constructor(private loginService: LoginService,
     private i18nService: I18nService,
     private router: Router,
     private web3Service: Web3Service,
+    private wallet: WalletService,
     private protocolService: ExchangeProtocolService,
     private finIdService: FinIdProtocolService,
     private walletService: WalletService,
+    private storageService: StorageService,
     public logoutService: LogoutService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.checkAccount();
@@ -42,27 +48,23 @@ export class LoginComponent implements OnInit {
 
   private async checkAccount() {
     const self = this;
-    const accounts = await self.web3Service.getInstance().eth.getAccounts();
-    this.account = accounts[0];
+    this.account = await this.walletService.getCurrentAccount();
     setTimeout(async () => {
       if (!this.account) {
         self.requireMetaMask = true;
         self.checkAccount();
       } else {
         self.requireMetaMask = false;
-        const userType = await self.finIdService.getUser(this.account);
       }
     }, 1000);
   }
 
   login(userType) {
-    this.router.navigate([this.solveRoute(userType)]);
-    const wallet: Wallet = this.walletService.getWallet();
-    if (wallet) {
-      this.walletService.addWalletToWeb3(wallet);
+    if (this.agreedToTerms === true) {
+      this.storageService.setItem('user', { wallet: this.account, type: userType });
+      this.router.navigate([this.solveRoute(userType)]);
     } else {
-      this.errorMessages.push('Local wallet not found. Please log in from the device you signed up.' +
-        'Decentralized backup to be done in a later version.'); // @todo Improve error message.
+      this.errorMessages.push('You have to agree to Swapy\'s Terms of Service and Privacy Policy to proceed.');
     }
   }
 
