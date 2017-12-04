@@ -7,6 +7,7 @@ import { InvestorComponent } from './../investor.component';
 import { WalletService } from '../../common/services/wallet.service';
 import { ToastrService } from '../../common/services/toastr.service';
 import { InvestmentAssetProtocolService as AssetService } from '../../common/services/protocol/investment-asset.service';
+import { ExchangeProtocolService as ExchangeService } from '../../common/services/protocol/exchange.service';
 
 @Component({
   selector: 'app-invest',
@@ -23,7 +24,8 @@ export class InvestComponent implements OnInit {
   constructor(private investService: InvestService, private router: Router,
     private successfulInvestmentService: SuccessfulInvestmentService,
     private investorComponent: InvestorComponent, private walletService: WalletService,
-    private assetService: AssetService, private toastrService: ToastrService) {
+    private assetService: AssetService, private toastrService: ToastrService,
+    private exchangeService: ExchangeService) {
     this.wallet = this.walletService.getWallet();
   }
 
@@ -43,25 +45,14 @@ export class InvestComponent implements OnInit {
   }
 
   invest() {
-    const asset = this.investment.assets[this.assetIndex];
-    this.assetService.invest(asset.contractAddress, asset.value,
-      '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed', (success) => {
-        this.toastrService.getInstance().success('Your investment was mined by the Ethereum blockchain.');
-        this.successfulInvestmentService.setMessage('Your investment was mined by the Ethereum blockchain.');
-
-        if (this.assetIndex < this.investment.assets.length - 1) {
-          this.assetIndex++;
-          this.invest();
-        }
-      }, (error) => {
-        this.successfulInvestmentService.setErrorMessage(error.message);
-        this.toastrService.getInstance().error(this.successfulInvestmentService.getMessage());
-
-        if (this.assetIndex < this.investment.assets.length - 1) {
-          this.assetIndex++;
-          this.invest();
-        }
-      });
+    const assetsAddress = this.investment.assets.map(asset => asset.contractAddress);
+    this.exchangeService.invest(assetsAddress, this.investment.totalAmount, (success) => {
+      this.toastrService.getInstance().success('Your investment was mined by the Ethereum blockchain.');
+      this.successfulInvestmentService.setMessage('Your investment was mined by the Ethereum blockchain.');
+    }, (error) => {
+      this.successfulInvestmentService.setErrorMessage(error.message);
+      this.toastrService.getInstance().error(this.successfulInvestmentService.getMessage());
+    });
   }
 
 }
