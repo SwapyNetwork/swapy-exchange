@@ -8,10 +8,6 @@ import { InvestorRoutingModule } from './investor-routing.module';
 import { InvestorComponent } from './investor.component';
 import { OffersComponent } from './offers/offers.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { VerificationPhoneComponent } from './verification-phone/verification-phone.component';
-import { VerificationMainComponent } from './verification-main/verification-main.component';
-import { VerificationIdentityComponent } from './verification-identity/verification-identity.component';
-import { VerificationAddressComponent } from './verification-address/verification-address.component';
 import { NavModule } from '../common/nav/nav.module';
 import { OfferComponent } from './offers/offer/offer.component';
 import { OfferDetailsComponent } from './offer-details/offer-details.component';
@@ -38,8 +34,7 @@ import { InvestmentComponent } from './dashboard/investment/investment.component
     FormsModule,
     TextMaskModule
   ],
-  declarations: [InvestorComponent, OffersComponent, DashboardComponent, VerificationPhoneComponent,
-    VerificationMainComponent, VerificationIdentityComponent, VerificationAddressComponent, OfferComponent,
+  declarations: [InvestorComponent, OffersComponent, DashboardComponent, OfferComponent,
     OfferDetailsComponent, CreditCompanyComponent, TermsPageComponent, PrivacyPageComponent, ProfileComponent,
     InvestComponent, SuccessfulInvestmentComponent, InvestmentComponent],
   providers: [LogoutService, OfferService, InvestService, SuccessfulInvestmentService],

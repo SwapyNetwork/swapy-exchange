@@ -12,9 +12,9 @@ export class Web3Service {
   }
 
   public init() {
-    if (this.web3Ws == null) {
-      this.web3Ws = new Web3(new Web3.providers.WebsocketProvider((<any>ProviderFile).WS_PROVIDER));
-    }
+    // if (this.web3Ws == null) {
+    //   this.web3Ws = new Web3(new Web3.providers.WebsocketProvider((<any>ProviderFile).WS_PROVIDER));
+    // }
   }
 
   private isOpen(connection) {

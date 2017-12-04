@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import { Web3Service } from '../web3.service';
 import { WalletService } from '../wallet.service';
 import { ProtocolAbstract } from './protocol.abstract';
-import * as FinId from '../../../../contracts/FinId.json';
+// import * as FinId from '../../../../contracts/FinId.json';
 
 @Injectable()
 export class FinIdProtocolService extends ProtocolAbstract {
-  protected abi = (FinId as any).abi;
-  protected address = super.getAddressFromBuild(FinId);
+  // protected abi = (FinId as any).abi;
+  protected address = '0x123';
 
   public getFinIdContract() {
     return super.getContract(this.address);
