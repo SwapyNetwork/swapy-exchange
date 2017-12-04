@@ -7,9 +7,6 @@
            <a role="button" data-toggle="collapse" data-parent="#accordion" (click)="toggleCollapse()"  aria-expanded="true" aria-controls="collapseOne">
              {{investment.totalAmount | currency:'USD':true:'.2' }}
              <span class="sw-box-text">- {{investment.creditCompanyAddress}}
-               <div class="sw-box-text">
-                 {{investment.contractAddress}}
-               </div>
              </span>
            </a>
            </h4>
@@ -26,7 +23,6 @@
             <a href="credit-company-profile.html"><p class="sw-box-text sw-blue1">{{investment.companyName}}</p></a>
             <p class="sw-box-text">Contract term: {{investment.paybackMonths}} months</p>
             <p class="sw-box-text">Since {{investment.investedIn | date: 'yyyy-MM-dd'}}</p><hr>
-            <a (click)="exploreContract(investment.offerContractAddress)"><b>Explore Ethereum contract</b></a>
 
         </div>
         <div class="col-sm-4 col-md-4">
@@ -67,12 +63,14 @@
               <th>Asset</th>
               <th>Value</th>
               <th>Status</th>
+              <th>Contract</th>
               <th>Cancel</th>
             </tr>
             <tr *ngFor="let asset of investment.assets, let i = index">
               <td>{{i + 1}}</td>
               <td>{{asset.value | currency:'USD':true:'.2'}}</td>
               <td>{{statusToString(asset.status)}}</td>
+              <td><span *ngIf="!asset.contractAddress">-</span><a *ngIf="asset.contractAddress" (click)="exploreContract(asset.contractAddress)">Explore</a></td>
               <td>
                 <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == PENDING_OWNER_AGREEMENT)" (click) = "cancelInvestment(asset)">
                   <i class="fa fa-times" aria-hidden="true"></i>

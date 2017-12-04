@@ -56,7 +56,7 @@ export class DashboardComponent implements OnInit {
             newOffer.assets.push(newAsset);
             if (!newOffer.raisingAmount) {
               newOffer.paybackMonths = assetValues[3] / 30;
-              newOffer.raisingAmount = assetValues[2] * 5 / 100;
+              newOffer.raisingAmount = assetValues[2] * offer.returnValues._assets.length / 100;
               newOffer.grossReturn = assetValues[4] / 10000;
             } else if (newOffer.assets.length === offer.returnValues._assets.length) {
               resolve(newOffer);

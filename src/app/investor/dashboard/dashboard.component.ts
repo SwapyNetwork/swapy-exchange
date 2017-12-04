@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
             }
             if (!newInvestment.totalAmount) {
               newInvestment.paybackMonths = assetValues[3] / 30;
-              newInvestment.totalAmount = assetValues[2] * 5 / 100;
+              newInvestment.totalAmount = assetValues[2] * investment.returnValues._assets.length / 100;
               newInvestment.grossReturn = assetValues[4] / 10000;
               newInvestment.creditCompanyAddress = assetValues[0];
             } else if (index === investment.returnValues._assets.length - 1) {
@@ -84,7 +84,7 @@ export class DashboardComponent implements OnInit {
       investmentsEvents.forEach((investment) => {
         promises.push(this.buildInvestments(investment));
       });
-      
+
       Promise.all(promises).then(resolvedInvestments => {
         this.investments = resolvedInvestments;
         this.loadingService.hide();
