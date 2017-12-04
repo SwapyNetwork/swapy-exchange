@@ -26,15 +26,29 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
     return this.contract;
   }
 
-  public getEvents(eventUuid, eventName, contractAddress, cb) {
-    this.errorLogService.setParamValues([eventUuid, eventName, contractAddress, cb]);
-    this.getContract(contractAddress).getPastEvents(eventName, {
-      fromBlock: 0,
-      toBlock: 'latest'
-    }, (error, events) => {
-      cb(error, events);
-    });
+  public getConstants(address, constantNames: string[]) {
+    const contract = this.getContract(address);
+    const promises = [];
+    const contractObj = {};
+    constantNames.forEach(constant => {
+      promises.push(contract.methods[constant]().call().then(value => {
+        contractObj[constant] = value;
+      }));
+    })
+
+    return Promise.all(promises).then(resolved => (contractObj as any));
   }
+
+
+  // public getEvents(eventUuid, eventName, contractAddress, cb) {
+  //   this.errorLogService.setParamValues([eventUuid, eventName, contractAddress, cb]);
+  //   this.getContract(contractAddress).getPastEvents(eventName, {
+  //     fromBlock: 0,
+  //     toBlock: 'latest'
+  //   }, (error, events) => {
+  //     cb(error, events);
+  //   });
+  // }
 
   public withdrawFunds(contractAddress: string, success?: Function, error?: Function) {
     this.errorLogService.setParamValues([]);
