@@ -9,6 +9,7 @@ export class ProtocolAbstract {
   protected contract;
   protected abi;
   protected gas = 67000000;
+  protected gasPrice = 1;
 
   constructor(
     protected web3Service: Web3Service,
@@ -52,9 +53,10 @@ export class ProtocolAbstract {
         const tx = {
           from: this.getWallet().address,
           to: address,
-          nonce: nonce,
-          chainId: chainId,
+          nonce,
+          chainId,
           data: encoded,
+          gasPrice: web3.utils.toWei(this.gasPrice, 'gwei')
         } as any;
 
         //return web3.eth.estimateGas(tx).then(estimatedGas => {
