@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Invest } from '../../invest/invest.interface';
-import { OPEN, SOLD, PENDING, LOCKED, TX_AGREEMENT_PENDING,
-  TX_AGREED, TX_INVEST_PENDING, TX_INVESTED } from '../../../common/interfaces/offerAssetStatus.interface';
+import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED,
+  RETURNED, DELAYED_RETURN } from '../../../common/interfaces/offerAssetStatus.interface';
 import { LinkService } from '../../../common/services/link.service';
 import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
 import { ToastrService } from '../../../common/services/toastr.service';
@@ -21,11 +21,12 @@ export class InvestmentComponent implements OnInit {
   @Input() public investment: Invest;
   @Input() public collapsed: boolean;
   //
-  public LOCKED = LOCKED;
-  public TX_AGREEMENT_PENDING = TX_AGREEMENT_PENDING;
-  public TX_AGREED = TX_AGREED;
-  public TX_INVEST_PENDING = TX_INVEST_PENDING;
-  public TX_INVESTED = TX_INVESTED;
+
+  public AVAILABLE = AVAILABLE;
+  public PENDING_OWNER_AGREEMENT = PENDING_OWNER_AGREEMENT;
+  public INVESTED = INVESTED;
+  public RETURNED = RETURNED;
+  public DELAYED_RETURN = DELAYED_RETURN;
 
   public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
 
@@ -56,20 +57,20 @@ export class InvestmentComponent implements OnInit {
   public statusToString(status) {
     let statusString;
     switch (status) {
-      case this.LOCKED:
-        statusString = 'Pending ' + this.investment.companyAddress + '\'s confirmation';
+      case this.AVAILABLE:
+        statusString = '';
         break;
-      case this.TX_AGREEMENT_PENDING:
-        statusString = 'Pending Ethereum confirmation';
+      case this.PENDING_OWNER_AGREEMENT:
+        statusString = 'Pending credit company\'s confirmation';
         break;
-      case this.TX_AGREED:
-        statusString = 'Asset accepted by ' + this.investment.companyAddress;
+      case this.INVESTED:
+        statusString = 'Succesfully invested';
         break;
-      case this.TX_INVEST_PENDING:
-        statusString = 'Pending Ethereum confirmation';
+      case this.RETURNED:
+        statusString = 'Succesfully returned';
         break;
-      case this.TX_INVESTED:
-        statusString = 'Asset succesfully invested';
+      case this.DELAYED_RETURN:
+        statusString = 'Delayed return';
         break;
     }
 
@@ -82,40 +83,12 @@ export class InvestmentComponent implements OnInit {
     this.linkService.openLink(url);
   }
 
-  // public transferFunds(investment: any, asset: any) {
-  //   this.investService.transferFunds({
-  //     offerUuid: investment.offerUuid,
-  //     assetUuid: asset.uuid,
-  //     companyUuid: investment.companyUuid,
-  //   }).then(res => {
-  //     asset.status = this.TX_INVEST_PENDING;
-  //     const ethusd = 340.0;
-  //     const agreementTermsHash = '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed';
-  //     let value = asset.value / ethusd;
-  //     // Round to 18 decimals
-  //     value = Math.round(value * Math.pow(10, 18)) / Math.pow(10, 18);
-  //     this.errorLogService.setClassName('InvestmentComponent');
-  //     this.errorLogService.setFunctionName('transferFunds');
-  //     // Improve this call
-  //     this.walletService.getEthBalance().then((balance) => {
-  //       this.errorLogService.setBeforeETHbalance(balance);
-  //       // should be event.id
-  //       this.investmentAssetService.transferFunds((res as any).event.uuid, agreementTermsHash, asset.contractAddress, value, (success) => {
-  //         console.log(success);
-  //         this.toastrService.getInstance().success('Your transfer was mined by the Ethereum blockchain.');
-  //       }, (error) => {
-  //         // Improve this call
-  //         this.walletService.getEthBalance().then((currentBalance) => {
-  //           this.errorLogService.setAfterETHbalance(currentBalance);
-  //           this.errorLogService.setError(error);
-  //         });
-  //         console.log(error);
-  //         this.toastrService.getInstance().error(error.message);
-  //       });
-  //     });
-  //   }, err => {
-  //     console.log(err);
-  //   });
-  // }
+  public cancelInvestment(asset) {
+    this.investmentAssetService.cancelInvestment(asset.contractAddress, (success) => {
+      this.toastrService.getInstance().success('Cancel investment was mined in the Ethereum blockchain');
+    }, (error) => {
+      this.toastrService.getInstance().error(error.message);
+    })
+  }
 
 }

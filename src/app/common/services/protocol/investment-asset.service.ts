@@ -56,4 +56,10 @@ export class InvestmentAssetProtocolService extends ProtocolAbstract {
     super.signAndSendTransaction(encoded, contractAddress, this.web3Service.getInstance().utils.toWei(ethValue), success, error);
   }
 
+  public cancelInvestment(contractAddress: string, success?: Function, error?: Function) {
+    const encoded = this.getLibraryContract(this.assetLibraryAddress).methods.cancelInvestment().encodeABI();
+    super.signAndSendTransaction(encoded, contractAddress, null, success, error);
+
+  }
+
 }
