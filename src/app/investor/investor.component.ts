@@ -45,12 +45,16 @@ export class InvestorComponent implements OnInit {
         });
         assets = assets.reduce((last, current) => (last.concat(current)), []);
 
-        this.investedValue = (assets.filter(asset => Number(asset.status) === INVESTED || Number(asset.status) === RETURNED)
+        this.investedValue = (assets.filter(asset => Number(asset.status) >= INVESTED)
           .map(asset => Number(asset.fixedValue))
           .reduce((total, current) => (total + current), 0)) / 100;
         this.returnValue = (assets.filter(asset => Number(asset.status) === INVESTED)
           .map(asset => Number(asset.fixedValue) + Number(asset.fixedValue) * Number(asset.grossReturn / 10000))
           .reduce((total, current) => (total + current), 0)) / 100;
+        const assetsLength = assets.filter(asset => Number(asset.status) >= INVESTED).length;
+        this.averageReturn = ((assets.filter(asset => Number(asset.status) === INVESTED)
+          .map(asset => Number(asset.grossReturn))
+          .reduce((total, current) => (total + current), 0)) / 10000 / assetsLength).toFixed(4);
         this.assetsLength = assets.length;
       });
     });
