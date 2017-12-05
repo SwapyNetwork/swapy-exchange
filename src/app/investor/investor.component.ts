@@ -29,9 +29,42 @@ export class InvestorComponent implements OnInit {
     this.refreshStatusBar();
   };
 
-  refreshStatusBar(){
-    this.walletService.getEthBalance().then((balance) => {
-      this.balance = balance;
+  refreshStatusBar() {
+
+    this.exchangeProtocolService.getMyInvestments(this.walletService.getWallet().address, (error, investments) => {
+      const promises = [];
+      investments.forEach(investment => {
+        promises.push(this.getStatistics(investment));
+      });
+      Promise.all(promises).then(assets => {
+        console.log(assets);
+        this.walletService.getEthBalance().then((balance) => {
+          this.balance = balance;
+        });
+        assets = assets.reduce((last, current) => (last.concat(current)), []);
+
+        this.investedValue = (assets.map(asset => Number(asset.fixedValue))
+          .reduce((total, current) => (total + current), 0)) / 100;
+        this.assetsLength = assets.length;
+      });
     });
   };
+
+  getStatistics(investment) {
+    return new Promise ((resolve) => {
+      let assetObject = [];
+      investment.returnValues._assets.forEach((asset, index) => {
+        const constants = ['status', 'fixedValue', 'investor', 'grossReturn'];
+        this.assetService.getConstants(asset, constants).then(assetValues => {
+          assetObject.push(assetValues);
+          if (index === investment.returnValues._assets.length - 1) {
+            assetObject = assetObject.reduce((last, current) => (last.concat(current)), []);
+            assetObject = assetObject.filter(inv => inv.investor === this.walletService.getWallet().address);
+            resolve(assetObject);
+          }
+        });
+      });
+    });
+
+  }
 }

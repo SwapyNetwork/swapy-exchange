@@ -31,7 +31,6 @@ export class CreditCompanyComponent implements OnInit {
   refreshStatusBar() { /**@todo Refresh via websocket when a investment is done */
 
     this.exchangeProtocolService.getMyOffers(this.walletService.getWallet().address, (error, offers) => {
-      console.log(offers);
       const promises = [];
       offers.forEach(offer => {
         promises.push(this.getStatistics(offer));
