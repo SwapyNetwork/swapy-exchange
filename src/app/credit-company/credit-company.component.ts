@@ -29,21 +29,6 @@ export class CreditCompanyComponent implements OnInit {
   };
 
   refreshStatusBar() { /**@todo Refresh via websocket when a investment is done */
-    // this.creditCompanyService.getMyOffersInfos().then(
-    //   (data: any) => {
-    //     this.amountRequested = data.amountRequested;
-    //     this.amountRaised = data.amountRaised;
-    //     this.offersLength = data.offersLength;
-    //     this.walletService.getEthBalance().then((balance) => {
-    //       this.balance = balance;
-    //     }, (error) => {
-    //       console.error(error);
-    //     });
-    //   },
-    //   (error: any) => {
-    //     console.error(error);
-    //   }
-    // );
 
     this.exchangeProtocolService.getMyOffers(this.walletService.getWallet().address, (error, offers) => {
       console.log(offers);
@@ -52,12 +37,14 @@ export class CreditCompanyComponent implements OnInit {
         promises.push(this.getStatistics(offer));
       });
       Promise.all(promises).then(assetValues => {
-        console.log(assetValues);
+        this.walletService.getEthBalance().then((balance) => {
+          this.balance = balance;
+        });
         this.amountRequested = (assetValues.reduce((last, current) => (last.concat(current)), [])
           .map(values => Number(values.fixedValue))
           .reduce((total: number, current: number) => (total + current), 0)) / 100;
         this.amountRaised = (assetValues.reduce((last, current) => (last.concat(current)), [])
-          .filter(asset => asset.status === Number(INVESTED) || asset.status === Number(RETURNED))
+          .filter(asset => Number(asset.status) === INVESTED || Number(asset.status) === RETURNED)
           .map(values => Number(values.fixedValue))
           .reduce((total: number, current: number) => (total + current), 0)) / 100;
         this.offersLength = offers.length;
