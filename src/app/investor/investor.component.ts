@@ -4,6 +4,8 @@ import { InvestorService } from './investor.service';
 import { WalletService } from '../common/services/wallet.service';
 import { ExchangeProtocolService } from '../common/services/protocol/exchange.service';
 import { InvestmentAssetProtocolService as AssetService } from '../common/services/protocol/investment-asset.service';
+import { INVESTED, RETURNED } from '../common/interfaces/offerAssetStatus.interface';
+
 
 
 @Component({
@@ -43,7 +45,8 @@ export class InvestorComponent implements OnInit {
         });
         assets = assets.reduce((last, current) => (last.concat(current)), []);
 
-        this.investedValue = (assets.map(asset => Number(asset.fixedValue))
+        this.investedValue = (assets.filter(asset => Number(asset.status) === INVESTED || Number(asset.status) === RETURNED)
+          .map(asset => Number(asset.fixedValue))
           .reduce((total, current) => (total + current), 0)) / 100;
         this.assetsLength = assets.length;
       });
@@ -58,7 +61,7 @@ export class InvestorComponent implements OnInit {
         this.assetService.getConstants(asset, constants).then(assetValues => {
           assetObject.push(assetValues);
           if (index === investment.returnValues._assets.length - 1) {
-            assetObject = assetObject.reduce((last, current) => (last.concat(current)), []);
+            // assetObject = assetObject.reduce((last, current) => (last.concat(current)), []);
             assetObject = assetObject.filter(inv => inv.investor === this.walletService.getWallet().address);
             resolve(assetObject);
           }
