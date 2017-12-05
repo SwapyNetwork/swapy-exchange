@@ -48,6 +48,9 @@ export class InvestorComponent implements OnInit {
         this.investedValue = (assets.filter(asset => Number(asset.status) === INVESTED || Number(asset.status) === RETURNED)
           .map(asset => Number(asset.fixedValue))
           .reduce((total, current) => (total + current), 0)) / 100;
+        this.returnValue = (assets.filter(asset => Number(asset.status) === INVESTED)
+          .map(asset => Number(asset.fixedValue) + Number(asset.fixedValue) * Number(asset.grossReturn / 10000))
+          .reduce((total, current) => (total + current), 0)) / 100;
         this.assetsLength = assets.length;
       });
     });
