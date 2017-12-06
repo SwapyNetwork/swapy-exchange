@@ -42,7 +42,6 @@ export class InvestorComponent implements OnInit {
         promises.push(this.getStatistics(investment));
       });
       Promise.all(promises).then(assets => {
-        console.log(assets);
         this.walletService.getEthBalance().then((balance) => {
           this.balance = balance;
         });
@@ -85,14 +84,13 @@ export class InvestorComponent implements OnInit {
   getStatistics(investment) {
     return new Promise ((resolve) => {
       let assetObject = [];
-      investment.returnValues._assets.forEach((asset, index) => {
-        const constants = ['status', 'fixedValue', 'investor', 'grossReturn', 'paybackDays'];
-        this.assetService.getConstants(asset, constants).then(assetValues => {
-          this.web3Service.getInstance().eth.getBlock(investment.blockHash).then(block => {
+      this.web3Service.getInstance().eth.getBlock(investment.blockHash).then(block => {
+        investment.returnValues._assets.forEach((asset, index) => {
+          const constants = ['status', 'fixedValue', 'investor', 'grossReturn', 'paybackDays'];
+          this.assetService.getConstants(asset, constants).then(assetValues => {
             assetValues['investedIn'] = (new Date(block.timestamp * 1000));
             assetObject.push(assetValues);
             if (index === investment.returnValues._assets.length - 1) {
-              // assetObject = assetObject.reduce((last, current) => (last.concat(current)), []);
               assetObject = assetObject.filter(inv => inv.investor === this.walletService.getWallet().address);
               resolve(assetObject);
             }
