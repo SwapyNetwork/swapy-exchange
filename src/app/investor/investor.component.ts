@@ -22,6 +22,7 @@ export class InvestorComponent implements OnInit {
   public investedValue;
   public averageReturn;
   public returnValue;
+  public returnedValue;
   public averagePaybackPeriod;
   public balance;
 
@@ -50,13 +51,21 @@ export class InvestorComponent implements OnInit {
         this.investedValue = (assets.filter(asset => Number(asset.status) >= INVESTED)
           .map(asset => Number(asset.fixedValue))
           .reduce((total, current) => (total + current), 0)) / 100;
+
         this.returnValue = (assets.filter(asset => Number(asset.status) === INVESTED)
           .map(asset => Number(asset.fixedValue) + Number(asset.fixedValue) * Number(asset.grossReturn / 10000))
           .reduce((total, current) => (total + current), 0)) / 100;
+
+        this.returnedValue = (assets.filter(asset => Number(asset.status) >= RETURNED)
+          .map(asset => Number(asset.fixedValue) + Number(asset.fixedValue) * Number(asset.grossReturn / 10000))
+          .reduce((total, current) => (total + current), 0)) / 100;
+
         const assetsLength = assets.filter(asset => Number(asset.status) === INVESTED).length;
-        this.averageReturn = ((assets.filter(asset => Number(asset.status) === INVESTED)
+        this.averageReturn = (assets.filter(asset => Number(asset.status) === INVESTED)
           .map(asset => Number(asset.grossReturn))
-          .reduce((total, current) => (total + current), 0)) / 10000 / assetsLength).toFixed(4);
+          .reduce((total, current) => (total + current), 0));
+        this.averageReturn = this.averageReturn === 0 ? 0 : (this.averageReturn  / 10000 / assetsLength).toFixed(4);
+
         this.web3Service.getInstance().eth.getBlock('latest').then(block => {
           const now = block.timestamp * 1000;
           this.averagePaybackPeriod = assets.filter(asset => Number(asset.status) === INVESTED)
@@ -64,9 +73,10 @@ export class InvestorComponent implements OnInit {
               const returnDate = asset.investedIn.setMonth(asset.investedIn.getMonth() + asset.paybackDays / 30)
               return Math.floor((returnDate - now) / (24 * 3600 * 1000));
             })
-            .reduce((total, current) => (total + current), 0) / assetsLength;
-          console.log(this.averagePaybackPeriod);
+            .reduce((total, current) => (total + current), 0);
+            this.averagePaybackPeriod = this.averagePaybackPeriod === 0 ? 0 : this.averagePaybackPeriod  / assetsLength;
         });
+
         this.assetsLength = assets.length;
       });
     });

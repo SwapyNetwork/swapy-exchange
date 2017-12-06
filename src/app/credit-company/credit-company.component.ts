@@ -43,7 +43,7 @@ export class CreditCompanyComponent implements OnInit {
           .map(values => Number(values.fixedValue))
           .reduce((total: number, current: number) => (total + current), 0)) / 100;
         this.amountRaised = (assetValues.reduce((last, current) => (last.concat(current)), [])
-          .filter(asset => Number(asset.status) === INVESTED || Number(asset.status) === RETURNED)
+          .filter(asset => Number(asset.status) >= INVESTED)
           .map(values => Number(values.fixedValue))
           .reduce((total: number, current: number) => (total + current), 0)) / 100;
         this.offersLength = offers.length;
