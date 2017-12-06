@@ -47,6 +47,26 @@ export class InvestorComponent implements OnInit {
         });
         assets = assets.reduce((last, current) => (last.concat(current)), []);
 
+        this.investedValue = 0;
+        this.returnedValue = 0;
+        this.returnValue = 0;
+
+        // const t1 = performance.now();
+        // for (let index = 0; index < assets.length; index++) {
+        //   if (Number(assets[index].status) >= INVESTED) {
+        //     this.investedValue += Number(assets[index].fixedValue);
+        //   }
+        //   if (Number(assets[index].status) >= RETURNED) {
+        //     this.returnedValue += Number(assets[index].fixedValue) +
+        //       Number(assets[index].fixedValue) * Number(assets[index].grossReturn / 10000);
+        //   }
+        //   if (Number(assets[index].status) === INVESTED) {
+        //     this.returnValue += Number(assets[index].fixedValue) +
+        //       Number(assets[index].fixedValue) * Number(assets[index].grossReturn / 10000);
+        //   }
+        // }
+        // const t2 = performance.now();
+
         this.investedValue = (assets.filter(asset => Number(asset.status) >= INVESTED)
           .map(asset => Number(asset.fixedValue))
           .reduce((total, current) => (total + current), 0)) / 100;
@@ -58,6 +78,11 @@ export class InvestorComponent implements OnInit {
         this.returnedValue = (assets.filter(asset => Number(asset.status) >= RETURNED)
           .map(asset => Number(asset.fixedValue) + Number(asset.fixedValue) * Number(asset.grossReturn / 10000))
           .reduce((total, current) => (total + current), 0)) / 100;
+
+        // const t3 = performance.now();
+        //
+        // console.log('Part I => ' + (t2 - t1).toFixed(4));
+        // console.log('Part II => ' + (t3 - t2).toFixed(4));
 
         const assetsLength = assets.filter(asset => Number(asset.status) === INVESTED).length;
         this.averageReturn = (assets.filter(asset => Number(asset.status) === INVESTED)
@@ -86,9 +111,15 @@ export class InvestorComponent implements OnInit {
       let assetObject = [];
       this.web3Service.getInstance().eth.getBlock(investment.blockHash).then(block => {
         investment.returnValues._assets.forEach((asset, index) => {
-          const constants = ['status', 'fixedValue', 'investor', 'grossReturn', 'paybackDays'];
-          this.assetService.getConstants(asset, constants).then(assetValues => {
-            assetValues['investedIn'] = (new Date(block.timestamp * 1000));
+            this.assetService.getContract(asset).methods.getAsset().call().then(returned => {
+              const assetValues = {
+                status: returned[5],
+                fixedValue: returned[2],
+                investor: returned[6],
+                grossReturn: returned[4],
+                paybackDays: returned[3],
+                investedIn: new Date(block.timestamp * 1000)
+              };
             assetObject.push(assetValues);
             if (index === investment.returnValues._assets.length - 1) {
               assetObject = assetObject.filter(inv => inv.investor === this.walletService.getWallet().address);
@@ -98,6 +129,5 @@ export class InvestorComponent implements OnInit {
         });
       });
     });
-
   }
 }
