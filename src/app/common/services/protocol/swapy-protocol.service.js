@@ -3,34 +3,31 @@ import { Web3Service } from '../web3.service';
 import { WalletService } from '../wallet.service';
 import { ErrorLogService } from '../error-log.service';
 
+import * as SwapyExchange from '../../../../contracts/SwapyExchange.json';
+import * as AssetLibrary from '../../../../contracts/AssetLibrary.json';
+import * as InvestmentAsset from '../../../../contracts/InvestmentAsset.json';
+
 @Injectable()
-export class ProtocolAbstract {
+export class SwapyProtocol {
   protected web3;
   protected contract;
   protected abi;
-  protected gas = 67000000;
   protected gasPrice = 1;
 
-  constructor(
-    protected web3Service: Web3Service,
-    protected walletService: WalletService,
-    public errorLogService: ErrorLogService) {}
+  private SwapyExchangeContract;
+  private AssetLibraryContract;
+  private InvestmentAssetContract;
 
-  protected getWallet() {
-    return this.walletService.getWallet();
+  constructor(protected web3Service: Web3Service, protected walletService: WalletService, public errorLogService: ErrorLogService) {
+    const web3 = this.web3Service.getInstance();
+    this.SwapyExchangeContract = new web3.eth.Contract((SwapyExchange as any).abi, this.getAddressFromBuild(SwapyExchange));
+    this.AssetLibraryContract = new web3.eth.Contract((AssetLibrary as any).abi);
+    this.InvestmentAssetContract = new web3.eth.Contract((InvestmentAsset as any).abi);
   }
 
-  protected getAddressFromBuild(build: any) {
+  private getAddressFromBuild(build: any) {
     const buildKeys = Object.keys(build.networks);
     return build.networks[buildKeys[buildKeys.length - 1]].address;
-  }
-
-  public getContract(address) {
-    if (!this.contract) {
-      const web3 = this.web3Service.getInstance();
-      this.contract = new web3.eth.Contract(this.abi, address);
-    }
-    return this.contract;
   }
 
   public getConstants(address, constantNames: string[]) {
@@ -89,4 +86,14 @@ export class ProtocolAbstract {
       }
     });
   }
+
+  public async createOffer() {
+    this.SwapyExchangeContract
+  }
+
+  public async invest() {}
+  public async withdrawFunds() {}
+  public async refuseInvestment() {}
+  public async returnInvestment() {}
+  public async cancelInvestment() {}
 }

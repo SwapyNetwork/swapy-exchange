@@ -9,6 +9,7 @@ import * as SwapyExchange from '../../../../contracts/SwapyExchange.json';
 export class ExchangeProtocolService extends ProtocolAbstract {
   protected abi = (SwapyExchange as any).abi;
   protected address = super.getAddressFromBuild(SwapyExchange);
+  protected gasPrice = super.web3Service.getInstance()
 
   public getProtocolContract() {
     return super.getContract(this.address);
@@ -42,19 +43,20 @@ export class ExchangeProtocolService extends ProtocolAbstract {
     });
   }
 
-  public createOffer(payback: number, grossReturn: number, currency: string,
+  public async createOffer(payback: number, grossReturn: number, currency: string,
     fixedValue: number, offerTermsHash: string, assets: number[], success?: Function, error?: Function) {
       this.errorLogService.setParamValues([payback, grossReturn * 10000, currency, fixedValue * 100,
         this.web3Service.getInstance().utils.asciiToHex(offerTermsHash), assets]);
-      const encoded = this.getProtocolContract().methods
+      const encoded = await this.getProtocolContract().methods
         .createOffer(
           payback,
           grossReturn * 10000,
           currency,
           this.web3Service.getInstance().utils.asciiToHex(offerTermsHash),
           assets)
-        .encodeABI();
-      this.signAndSend(encoded, success, error);
+        .send({ from: super.getWallet().address });
+        console.log(encoded);
+    //  this.signAndSend(encoded, success, error);
   }
 
   public invest(assetAddress: string[], value: number, success?: Function, error?: Function) {
