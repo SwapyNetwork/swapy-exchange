@@ -9,7 +9,6 @@ import * as SwapyExchange from '../../../../contracts/SwapyExchange.json';
 export class ExchangeProtocolService extends ProtocolAbstract {
   protected abi = (SwapyExchange as any).abi;
   protected address = super.getAddressFromBuild(SwapyExchange);
-  protected gasPrice = super.web3Service.getInstance()
 
   public getProtocolContract() {
     return super.getContract(this.address);
@@ -54,7 +53,7 @@ export class ExchangeProtocolService extends ProtocolAbstract {
           currency,
           this.web3Service.getInstance().utils.asciiToHex(offerTermsHash),
           assets)
-        .send({ from: super.getWallet().address });
+        .send({ from: super.getWallet().address, value: 12345 });
         console.log(encoded);
     //  this.signAndSend(encoded, success, error);
   }

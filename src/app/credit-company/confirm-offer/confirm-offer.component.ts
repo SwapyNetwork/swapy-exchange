@@ -2,6 +2,7 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { I18nService } from '../../common/services/i18n.service';
 import { ExchangeProtocolService as ExchangeProtocol } from '../../common/services/protocol/exchange.service';
+import { SwapyProtocolService as SwapyProtocol } from '../../common/services/protocol/swapy-protocol.service';
 
 import { AddOfferService } from '../add-offer/add-offer.service';
 import { CreditCompanyComponent } from '../credit-company.component';
@@ -27,6 +28,7 @@ export class ConfirmOfferComponent implements OnInit {
     private i18nService: I18nService,
     private creditCompanyComponent: CreditCompanyComponent,
     private exchangeProtocol: ExchangeProtocol,
+    private swapyProtocol: SwapyProtocol,
     private toastrService: ToastrService,
     private pendingOfferService: PendingOfferService,
     private errorLogService: ErrorLogService,
@@ -42,7 +44,7 @@ export class ConfirmOfferComponent implements OnInit {
     }
   }
 
-  confirmOffer() {
+  async confirmOffer() {
     const offerTermsHash = '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed';
 
     const a = Math.ceil(this.offer.raisingAmount / 5 * 100);
@@ -51,25 +53,20 @@ export class ConfirmOfferComponent implements OnInit {
     this.errorLogService.setClassName('ConfirmOfferComponent');
     this.errorLogService.setFunctionName('confirmOffer');
     // Improve this call
-    this.walletService.getEthBalance().then((balance) => {
-      this.errorLogService.setBeforeETHbalance(balance);
-      this.exchangeProtocol
-        .createOffer(this.offer.paybackMonths * 30,
-          this.offer.grossReturn, 'USD', this.offer.raisingAmount, offerTermsHash, assetValues, (success) => {
-          console.log(success);
-          this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
-          this.pendingOfferService.setMessage('Your offer was mined by the Ethereum blockchain.');
-        }, (error) => {
-          // Improve this call
-          this.walletService.getEthBalance().then((currentBalance) => {
-            this.errorLogService.setAfterETHbalance(currentBalance);
-            this.errorLogService.setError(error);
-          });
-          console.log(error);
-          this.pendingOfferService.setErrorMessage(error.message);
-          this.toastrService.getInstance().error(this.pendingOfferService.getMessage());
-        });
-    });
+    try {
+      const offerTx = await this.swapyProtocol
+        .createOffer(this.offer.paybackMonths * 30, this.offer.grossReturn, 'USD', this.offer.raisingAmount, offerTermsHash, assetValues);
+      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+      this.pendingOfferService.setMessage('Your offer was mined by the Ethereum blockchain.');
+    } catch (error) {
+      this.walletService.getEthBalance().then((currentBalance) => {
+        this.errorLogService.setAfterETHbalance(currentBalance);
+        this.errorLogService.setError(error);
+      });
+      console.log(error);
+      this.pendingOfferService.setErrorMessage(error.message);
+      this.toastrService.getInstance().error(this.pendingOfferService.getMessage());
+    }
     this.creditCompanyComponent.refreshStatusBar();
 
     this.router.navigate(['/credit-company/raise/pending']);
