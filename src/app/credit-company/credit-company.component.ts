@@ -18,6 +18,7 @@ export class CreditCompanyComponent implements OnInit {
 
   public amountRequested;
   public amountRaised;
+  public amountReturned;
   public offersLength;
   public balance;
 
@@ -40,12 +41,14 @@ export class CreditCompanyComponent implements OnInit {
         this.walletService.getEthBalance().then((balance) => {
           this.balance = balance;
         });
-        this.amountRequested = (assetValues.reduce((last, current) => (last.concat(current)), [])
+        const assets = assetValues.reduce((last, current) => (last.concat(current)), []);
+        this.amountRequested = (assets.map(values => Number(values.fixedValue))
+          .reduce((total: number, current: number) => (total + current), 0)) / 100;
+        this.amountRaised = (assets.filter(asset => Number(asset.status) >= INVESTED)
           .map(values => Number(values.fixedValue))
           .reduce((total: number, current: number) => (total + current), 0)) / 100;
-        this.amountRaised = (assetValues.reduce((last, current) => (last.concat(current)), [])
-          .filter(asset => Number(asset.status) === INVESTED || Number(asset.status) === RETURNED)
-          .map(values => Number(values.fixedValue))
+        this.amountReturned = (assets.filter(asset => Number(asset.status) >= RETURNED)
+          .map(values => Number(values.fixedValue) + Number(values.fixedValue) * Number(values.grossReturn / 10000))
           .reduce((total: number, current: number) => (total + current), 0)) / 100;
         this.offersLength = offers.length;
       });
@@ -56,7 +59,7 @@ export class CreditCompanyComponent implements OnInit {
     return new Promise ((resolve) => {
       const assetObject = [];
       offer.returnValues._assets.forEach((asset, index) => {
-        const constants = ['status', 'fixedValue'];
+        const constants = ['status', 'fixedValue', 'grossReturn'];
         this.assetService.getConstants(asset, constants).then(assetValues => {
           assetObject.push(assetValues);
           if (index === offer.returnValues._assets.length - 1) {
