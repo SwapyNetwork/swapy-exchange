@@ -64,6 +64,6 @@ export class ExchangeProtocolService extends ProtocolAbstract {
     let ethValue = value / ethusd;
     // Round to 18 decimals
     ethValue = Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18);
-    super.signAndSendTransaction(encoded, this.address, this.web3Service.getInstance().utils.toWei(ethValue), success, error);
+    return super.signAndSendTransaction(encoded, this.address, this.web3Service.getInstance().utils.toWei(ethValue), success, error);
   }
 }

@@ -55,12 +55,12 @@ export class SwapyProtocolService {
 
   public async invest(assetAddress: string[], value: number) {
     const ethPrice = await this.getEthPrice();
-    console.log(ethPrice);
     const ethValue = value / (ethPrice as number);
     return this.SwapyExchangeContract.methods
       .invest(assetAddress)
       .send({
         from: this.walletService.getWallet().address,
+        gas: 400000,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei'),
         value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
       });

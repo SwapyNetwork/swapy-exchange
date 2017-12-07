@@ -56,7 +56,8 @@ export class DashboardComponent implements OnInit {
               newInvestment.totalAmount = assetValues[2] * investment.returnValues._assets.length / 100;
               newInvestment.grossReturn = assetValues[4] / 10000;
               newInvestment.creditCompanyAddress = assetValues[0];
-            } else if (index === investment.returnValues._assets.length - 1) {
+            }
+            if (index === investment.returnValues._assets.length - 1) {
               resolve(newInvestment);
             }
           });
