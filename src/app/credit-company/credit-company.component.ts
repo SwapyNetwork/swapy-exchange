@@ -19,6 +19,7 @@ export class CreditCompanyComponent implements OnInit {
   public amountRequested;
   public amountRaised;
   public amountReturned;
+  public amountToBeReturned;
   public offersLength;
   public balance;
 
@@ -48,6 +49,9 @@ export class CreditCompanyComponent implements OnInit {
           .map(values => Number(values.fixedValue))
           .reduce((total: number, current: number) => (total + current), 0)) / 100;
         this.amountReturned = (assets.filter(asset => Number(asset.status) >= RETURNED)
+          .map(values => Number(values.fixedValue) + Number(values.fixedValue) * Number(values.grossReturn / 10000))
+          .reduce((total: number, current: number) => (total + current), 0)) / 100;
+        this.amountToBeReturned = (assets.filter(asset => Number(asset.status) === INVESTED)
           .map(values => Number(values.fixedValue) + Number(values.fixedValue) * Number(values.grossReturn / 10000))
           .reduce((total: number, current: number) => (total + current), 0)) / 100;
         this.offersLength = offers.length;
