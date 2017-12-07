@@ -3,6 +3,7 @@ import { ViewEncapsulation } from '@angular/core';
 import { InvestorService } from './investor.service';
 import { WalletService } from '../common/services/wallet.service';
 import { Web3Service } from '../common/services/web3.service';
+import { LoadingService } from '../common/services/loading.service';
 import { ExchangeProtocolService } from '../common/services/protocol/exchange.service';
 import { InvestmentAssetProtocolService as AssetService } from '../common/services/protocol/investment-asset.service';
 import { INVESTED, RETURNED } from '../common/interfaces/offerAssetStatus.interface';
@@ -28,13 +29,14 @@ export class InvestorComponent implements OnInit {
 
   constructor(private investorService: InvestorService, private walletService: WalletService,
     private exchangeProtocolService: ExchangeProtocolService, private assetService: AssetService,
-    private web3Service: Web3Service) {}
+    private web3Service: Web3Service, private loadingService: LoadingService) {}
 
   ngOnInit() {
     this.refreshStatusBar();
   }
 
   refreshStatusBar() {
+    this.loadingService.show();
 
     this.exchangeProtocolService.getMyInvestments(this.walletService.getWallet().address, (error, investments) => {
       const promises = [];
@@ -99,6 +101,7 @@ export class InvestorComponent implements OnInit {
             })
             .reduce((total, current) => (total + current), 0);
             this.averagePaybackPeriod = this.averagePaybackPeriod === 0 ? 0 : this.averagePaybackPeriod  / assetsLength;
+            this.loadingService.hide();
         });
 
         this.assetsLength = assets.length;
