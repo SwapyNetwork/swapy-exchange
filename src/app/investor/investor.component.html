@@ -39,12 +39,17 @@
               <p class="sw-top-value">{{investedValue | currency:'USD':true:'.2'}}</p>
           </div>
           <div class="col-xs-6 col-sm-12 col-md-12">
-              <p class="sw-top-lable">Gross return expected</p>
+              <p class="sw-top-lable">Received gross return</p>
+              <p class="sw-top-value">{{returnedValue | currency:'USD':true:'.2'}}</p>
+
+          </div>
+          <div class="col-xs-6 col-sm-12 col-md-12">
+              <p class="sw-top-lable">Expected gross return</p>
               <p class="sw-top-value">{{returnValue | currency:'USD':true:'.2'}}</p>
 
           </div>
           <div class="col-xs-6 col-sm-12 col-md-12">
-              <p class="sw-top-lable">Average return expected</p>
+              <p class="sw-top-lable">Expected average return</p>
               <p class="sw-top-value">{{averageReturn | percent}}</p>
 
           </div>

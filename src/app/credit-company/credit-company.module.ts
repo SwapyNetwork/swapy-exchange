@@ -23,6 +23,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { TermsPageComponent } from './terms-page/terms-page.component';
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 import { OfferComponent } from './dashboard/offer/offer.component';
+import { DashboardService } from './dashboard/dashboard.service';
 
 @NgModule({
   imports: [
@@ -36,7 +37,7 @@ import { OfferComponent } from './dashboard/offer/offer.component';
   ],
   declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent, ConfirmOfferComponent,
     SuccessfulOfferComponent, PendingOfferComponent, ProfileComponent, TermsPageComponent, PrivacyPageComponent, OfferComponent],
-  providers: [LogoutService, AddOfferService, CreditCompanyService, PendingOfferService],
+  providers: [LogoutService, AddOfferService, CreditCompanyService, PendingOfferService, DashboardService],
   bootstrap: [CreditCompanyComponent]
 })
 export class CreditCompanyModule { }
