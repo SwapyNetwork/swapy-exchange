@@ -88,6 +88,20 @@ export class SwapyProtocolService {
       });
   }
 
-  public returnInvestment() {}
+  public async returnInvestment(contractAddress: string, value: number) {
+    const ethPrice = await this.getEthPrice();
+    const ethValue = value / (ethPrice as number);
+
+    this.AssetLibraryContract.options.address = contractAddress;
+    return this.AssetLibraryContract.methods
+      .returnInvestment()
+      .send({
+        from: this.walletService.getWallet().address,
+        gas: 100000,
+        gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei'),
+        value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
+      });
+  }
+
   public cancelInvestment() {}
 }

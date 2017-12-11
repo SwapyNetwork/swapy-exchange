@@ -85,13 +85,14 @@ export class OfferComponent implements OnInit {
     }
   }
 
-  public returnInvestment(asset) {
-    const value = asset.value * (1 + this.offer.grossReturn);
-    this.assetProtocol.returnInvestment(asset.contractAddress, value, (success) => {
-      this.toastrService.getInstance().success('Your investment return was mined by the Ethereum blockchain.');
-    }, (error) => {
+  public async returnInvestment(asset) {
+    try {
+      const value = asset.value * (1 + this.offer.grossReturn);
+      await this.swapyProtocol.returnInvestment(asset.contractAddress, value);
+      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+    } catch (error) {
       this.toastrService.getInstance().error(error.message);
-    });
+    }
   }
 
   public statusToString(status) {
