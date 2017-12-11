@@ -51,11 +51,11 @@ export class OfferDetailsComponent implements OnInit {
       for ( const assetAddress of this.offer.assetsAddress) {
         this.loadingService.show();
         const assetContract = this.assetService.getContract(assetAddress);
-        const constants = ['fixedValue', 'status'];
+        const constants = ['value', 'status'];
         this.assetService.getConstants(assetAddress, constants).then((assetObject) => {
           const asset = {
             contractAddress: assetAddress,
-            value: assetObject.fixedValue / 100,
+            value: assetObject.value / 100,
             status: assetObject.status
           } as any;
           assets.push(asset);

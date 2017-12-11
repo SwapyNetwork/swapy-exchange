@@ -41,6 +41,8 @@ export class DashboardService {
                 value: assetValues[2] / 100
               };
               newInvestment.assets.push(newAsset);
+            } else {
+              resolve(false);
             }
             if (!newInvestment.totalAmount) {
               newInvestment.paybackMonths = assetValues[3] / 30;
@@ -67,7 +69,7 @@ export class DashboardService {
         });
 
         Promise.all(promises).then(resolvedInvestments => {
-          this.investments = resolvedInvestments;
+          this.investments = resolvedInvestments.filter(investment => investment);
           resolve(this.investments);
           this.loadingService.hide();
         });
