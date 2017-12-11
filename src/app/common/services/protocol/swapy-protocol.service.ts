@@ -113,4 +113,18 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       });
   }
+
+  public get(event: string) {
+    return this.SwapyExchangeContract.getPastEvents(event, {
+      fromBlock: 0,
+      toBlock: 'latest'
+    });
+  }
+
+  public getAsset(contractAddress: string) {
+    this.InvestmentAssetContract.options.address = contractAddress;
+    return this.InvestmentAssetContract.methods
+      .getAsset()
+      .call();
+  }
 }

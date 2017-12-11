@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ExchangeProtocolService as ExchangeService } from '../../common/services/protocol/exchange.service';
 import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../common/services/protocol/investment-asset.service';
+import { SwapyProtocolService as SwapyProtocol } from '../../common/services/protocol/swapy-protocol.service';
 import { WalletService } from '../../common/services/wallet.service';
 import { Web3Service } from '../../common/services/web3.service';
 import { LoadingService } from '../../common/services/loading.service';
@@ -24,6 +25,7 @@ export class DashboardComponent implements OnInit {
     private loadingService: LoadingService,
     private toastr: ToastsManager, vcr: ViewContainerRef,
     private investmentAssetService: InvestmentAssetService,
+    private swapyProtocol: SwapyProtocol,
     private errorLogService: ErrorLogService) {
       this.toastr.setRootViewContainerRef(vcr);
     }
@@ -32,53 +34,76 @@ export class DashboardComponent implements OnInit {
     this.updateOffers();
   }
 
-  private factoryOffers(offer) {
-    return new Promise(resolve => {
-      this.web3Service.getInstance().eth.getBlock(offer.blockHash).then(block => {
-        const newOffer = {
-          assets: [],
-          companyAddress: offer.returnValues._from,
-          createdOn: (new Date(block.timestamp * 1000)).toISOString(),
-          paybackMonths: 0,
-          raisingAmount: 0,
-          grossReturn: 0,
-          walletAddress: offer.returnValues._from
-        };
-        offer.returnValues._assets.forEach(asset => {
-          const assetABI = this.investmentAssetService.getContract(asset);
-          assetABI.methods.getAsset().call().then(assetValues => {
-            const newAsset = {
-              contractAddress: asset,
-              investorWallet: assetValues[6],
-              status: assetValues[5],
-              value: assetValues[2] / 100
-            };
-            newOffer.assets.push(newAsset);
-            if (!newOffer.raisingAmount) {
-              newOffer.paybackMonths = assetValues[3] / 30;
-              newOffer.raisingAmount = assetValues[2] * offer.returnValues._assets.length / 100;
-              newOffer.grossReturn = assetValues[4] / 10000;
-            } else if (newOffer.assets.length === offer.returnValues._assets.length) {
-              resolve(newOffer);
-            }
-          });
-        })
-      });
-    });
+  private async getBlockTimestamp(blockHash: string) {
+    return (await this.web3Service.getInstance().eth.getBlock(blockHash)).timestamp
   }
 
-  updateOffers() {
-    this.loadingService.show();
-    this.exchangeService.getMyOffers(this.walletService.getWallet().address, (err, offers) => {
-      const promises = [];
-      offers.forEach(offer => {
-        promises.push(this.factoryOffers(offer));
-      });
+  private setOfferDetails(newOffer, assetValues, numberOfAssets) {
+    newOffer.paybackMonths = assetValues[3] / 30;
+    newOffer.raisingAmount = assetValues[2] * numberOfAssets / 100;
+    newOffer.grossReturn = assetValues[4] / 10000;
+  }
 
-      Promise.all(promises).then(resolvedOffers => {
-        this.offers = resolvedOffers;
-        this.loadingService.hide();
-      });
+  private async getAssetValues(assets: any[]): Promise<any[]> {
+    const promises = [];
+    assets.forEach(asset => {
+      promises.push(this.swapyProtocol.getAsset(asset));
+    });
+
+    return Promise.all(promises);
+  }
+
+  private async buildNewOffer(offer) {
+    const timestamp = await this.getBlockTimestamp(offer.blockHash);
+
+    return {
+      assets: [],
+      companyAddress: offer.returnValues._from,
+      createdOn: (new Date(timestamp * 1000)).toISOString(),
+      paybackMonths: 0,
+      raisingAmount: 0,
+      grossReturn: 0,
+      walletAddress: offer.returnValues._from
+    };
+  }
+
+  private buildNewAsset(offer, assetValues, index) {
+    return {
+      contractAddress: offer.returnValues._assets[index],
+      investorWallet: assetValues[6],
+      status: assetValues[5],
+      value: assetValues[2] / 100
+    };
+  }
+
+  private async factoryOffer(offer) {
+    const newOffer = await this.buildNewOffer(offer);
+
+    const assets = await this.getAssetValues(offer.returnValues._assets);
+
+    assets.forEach((assetValues, index) => {
+      newOffer.assets.push(this.buildNewAsset(offer, assetValues, index));
+      if (!newOffer.raisingAmount) {
+        this.setOfferDetails(newOffer, assetValues, offer.returnValues._assets.length);
+      }
+    });
+
+    return newOffer;
+  }
+
+  async updateOffers() {
+    this.loadingService.show();
+    const offers = await this.swapyProtocol.get('Offers')
+      .filter(offer => offer.returnValues._from.toLowerCase() === this.walletService.getWallet().address.toLowerCase());
+
+    const promises = [];
+    offers.forEach(offer => {
+      promises.push(this.factoryOffer(offer));
+    });
+
+    Promise.all(promises).then(resolvedOffers => {
+      this.offers = resolvedOffers;
+      this.loadingService.hide();
     });
   }
 }
