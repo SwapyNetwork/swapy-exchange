@@ -6,7 +6,7 @@ import { Web3Service } from '../common/services/web3.service';
 import { LoadingService } from '../common/services/loading.service';
 import { ExchangeProtocolService } from '../common/services/protocol/exchange.service';
 import { InvestmentAssetProtocolService as AssetService } from '../common/services/protocol/investment-asset.service';
-import { INVESTED, RETURNED } from '../common/interfaces/offerAssetStatus.interface';
+import { INVESTED, RETURNED, DELAYED_RETURN } from '../common/interfaces/offerAssetStatus.interface';
 import { DashboardService } from './dashboard/dashboard.service';
 
 
@@ -74,7 +74,8 @@ export class InvestorComponent implements OnInit {
     // }
     // const t2 = performance.now();
     //
-    this.investedValue = (assets.filter(asset => asset.status >= INVESTED)
+    this.investedValue = (assets.filter(asset => (asset.status === INVESTED ||
+      asset.status === RETURNED || asset.status === DELAYED_RETURN))
       .map(asset => asset.value)
       .reduce((total, current) => (total + current), 0));
 
@@ -82,7 +83,8 @@ export class InvestorComponent implements OnInit {
       .map(asset => asset.value + asset.value * asset.grossReturn)
       .reduce((total, current) => (total + current), 0);
 
-    this.returnedValue = assets.filter(asset => asset.status >= RETURNED)
+    this.returnedValue = assets.filter(asset => (asset.status === RETURNED ||
+      asset.status === DELAYED_RETURN))
       .map(asset => asset.value + asset.value * asset.grossReturn)
       .reduce((total, current) => (total + current), 0);
     //
