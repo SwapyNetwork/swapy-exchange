@@ -43,8 +43,8 @@ export class ExchangeProtocolService extends ProtocolAbstract {
   }
 
   public createOffer(payback: number, grossReturn: number, currency: string,
-    fixedValue: number, offerTermsHash: string, assets: number[], success?: Function, error?: Function) {
-      this.errorLogService.setParamValues([payback, grossReturn * 10000, currency, fixedValue * 100,
+    value: number, offerTermsHash: string, assets: number[], success?: Function, error?: Function) {
+      this.errorLogService.setParamValues([payback, grossReturn * 10000, currency, value * 100,
         this.web3Service.getInstance().utils.asciiToHex(offerTermsHash), assets]);
       const encoded = this.getProtocolContract().methods
         .createOffer(

@@ -49,7 +49,11 @@ export class DashboardService {
               newInvestment.creditCompanyAddress = assetValues[0];
             }
             if (index === investment.returnValues._assets.length - 1) {
-              resolve(newInvestment);
+              if (newInvestment.assets.length === 0) {
+                resolve(false);
+              } else {
+                resolve(newInvestment);
+              }
             }
           });
         });
@@ -67,7 +71,7 @@ export class DashboardService {
         });
 
         Promise.all(promises).then(resolvedInvestments => {
-          this.investments = resolvedInvestments;
+          this.investments = resolvedInvestments.filter(investments => investments);
           resolve(this.investments);
           this.loadingService.hide();
         });
