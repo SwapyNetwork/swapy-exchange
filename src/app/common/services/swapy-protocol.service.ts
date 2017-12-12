@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Web3Service } from '../web3.service';
-import { WalletService } from '../wallet.service';
-import { ErrorLogService } from '../error-log.service';
+import { Web3Service } from './web3.service';
+import { WalletService } from './wallet.service';
+import { ErrorLogService } from './error-log.service';
 
-import * as SwapyExchange from '../../../../contracts/SwapyExchange.json';
-import * as AssetLibrary from '../../../../contracts/AssetLibrary.json';
-import * as InvestmentAsset from '../../../../contracts/InvestmentAsset.json';
+import * as SwapyExchange from '../../../contracts/SwapyExchange.json';
+import * as AssetLibrary from '../../../contracts/AssetLibrary.json';
+import * as InvestmentAsset from '../../../contracts/InvestmentAsset.json';
 
 @Injectable()
 export class SwapyProtocolService {
@@ -126,5 +126,18 @@ export class SwapyProtocolService {
     return this.InvestmentAssetContract.methods
       .getAsset()
       .call();
+  }
+
+  public getAssetConstants(contractAddress: string, constantNames: string[]) {
+    this.InvestmentAssetContract.options.address = contractAddress;
+    const promises = [];
+    const contractObj = {};
+    constantNames.forEach(constant => {
+      promises.push(this.InvestmentAssetContract.methods[constant]().call().then(value => {
+        contractObj[constant] = value;
+      }));
+    })
+
+    return Promise.all(promises).then(resolved => (contractObj as any));
   }
 }

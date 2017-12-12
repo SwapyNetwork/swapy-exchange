@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { I18nService } from '../../common/services/i18n.service';
-import { ExchangeProtocolService as ExchangeProtocol } from '../../common/services/protocol/exchange.service';
-import { SwapyProtocolService as SwapyProtocol } from '../../common/services/protocol/swapy-protocol.service';
+import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 
 import { AddOfferService } from '../add-offer/add-offer.service';
 import { CreditCompanyComponent } from '../credit-company.component';
@@ -27,7 +26,6 @@ export class ConfirmOfferComponent implements OnInit {
     private router: Router,
     private i18nService: I18nService,
     private creditCompanyComponent: CreditCompanyComponent,
-    private exchangeProtocol: ExchangeProtocol,
     private swapyProtocol: SwapyProtocol,
     private toastrService: ToastrService,
     private pendingOfferService: PendingOfferService,

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { InvestService } from './../invest/invest.service';
-import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../common/services/protocol/investment-asset.service';
 import { ErrorLogService } from '../../common/services/error-log.service';
-import { ExchangeProtocolService as ExchangeService } from '../../common/services/protocol/exchange.service';
+import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 import { AGREE_INVESTMENT, TRANSFER_FUNDS } from '../../common/interfaces/events.interface';
 import { WalletService } from '../../common/services/wallet.service';
 import { Web3Service } from '../../common/services/web3.service';
@@ -19,65 +18,83 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private investService: InvestService,
-    private exchangeService: ExchangeService,
+    private swapyProtocol: SwapyProtocol,
     private errorLogService: ErrorLogService,
     private walletService: WalletService,
     private web3Service: Web3Service,
-    private loadingService: LoadingService,
-    private investmentAssetService: InvestmentAssetService) { }
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
     this.getMyInvestmentsFromBlockchain();
   }
 
-  buildInvestments(investment) {
-    return new Promise((resolve) => {
-      this.web3Service.getInstance().eth.getBlock(investment.blockHash).then(block => {
-        const newInvestment = {
-          investedIn: (new Date(block.timestamp * 1000)).toISOString(),
-          assets: [],
-          totalAmount: 0,
-          grossReturn: 0,
-          paybackMonths: 0,
-          creditCompanyAddress: null
-        };
-        investment.returnValues._assets.forEach((asset, index) => {
-          this.investmentAssetService.getContract(asset).methods.getAsset().call().then(assetValues => {
-            if (assetValues[6] === this.walletService.getWallet().address) {
-              const newAsset = {
-                contractAddress: asset,
-                status: Number(assetValues[5]),
-                value: assetValues[2] / 100
-              };
-              newInvestment.assets.push(newAsset);
-            }
-            if (!newInvestment.totalAmount) {
-              newInvestment.paybackMonths = assetValues[3] / 30;
-              newInvestment.totalAmount = assetValues[2] * investment.returnValues._assets.length / 100;
-              newInvestment.grossReturn = assetValues[4] / 10000;
-              newInvestment.creditCompanyAddress = assetValues[0];
-            }
-            if (index === investment.returnValues._assets.length - 1) {
-              resolve(newInvestment);
-            }
-          });
-        });
-      });
-    });
+  private async getBlockTimestamp(blockHash: string) {
+    return (await this.web3Service.getInstance().eth.getBlock(blockHash)).timestamp;
   }
 
-  getMyInvestmentsFromBlockchain() {
-    this.loadingService.show();
-    this.exchangeService.getMyInvestments(this.walletService.getWallet().address, (error, investmentsEvents) => {
-      const promises = [];
-      investmentsEvents.forEach((investment) => {
-        promises.push(this.buildInvestments(investment));
-      });
+  private async getAssetValues(assets: any[]): Promise<any[]> {
+    const promises = [];
+    assets.forEach(asset => {
+      promises.push(this.swapyProtocol.getAsset(asset));
+    });
 
-      Promise.all(promises).then(resolvedInvestments => {
-        this.investments = resolvedInvestments;
-        this.loadingService.hide();
-      });
-    })
+    return Promise.all(promises);
+  }
+
+  private setInvestmentDetails(newInvestment, assetValues, investment) {
+    newInvestment.paybackMonths = assetValues[3] / 30;
+    newInvestment.totalAmount = assetValues[2] * investment.returnValues._assets.length / 100;
+    newInvestment.grossReturn = assetValues[4] / 10000;
+    newInvestment.creditCompanyAddress = assetValues[0];
+  }
+
+  private async buildNewInvestment(investment) {
+    const timestamp = await this.getBlockTimestamp(investment.blockHash);
+
+    return {
+      investedIn: (new Date(timestamp * 1000)).toISOString(),
+      assets: [],
+      totalAmount: 0,
+      grossReturn: 0,
+      paybackMonths: 0,
+      creditCompanyAddress: null
+    };
+  }
+
+  async buildInvestment(investment) {
+    const newInvestment = await this.buildNewInvestment(investment);
+
+    const assets = await this.getAssetValues(investment.returnValues._assets);
+
+    assets.forEach(async (asset, index) => {
+      if (asset[6] === this.walletService.getWallet().address) {
+        newInvestment.assets.push({
+          contractAddress: investment.returnValues._assets[index],
+          status: Number(asset[5]),
+          value: asset[2] / 100
+        });
+      }
+
+      if (!newInvestment.totalAmount) {
+        this.setInvestmentDetails(newInvestment, asset, investment);
+      }
+    });
+
+    return newInvestment;
+  }
+
+  async getMyInvestmentsFromBlockchain() {
+    this.loadingService.show();
+    const investments = await this.swapyProtocol.get('Investments')
+      .filter(investment => investment.returnValues._investor.toLowerCase() === this.walletService.getWallet().address.toLowerCase());
+
+    const promises = [];
+    investments.forEach((investment) => {
+      promises.push(this.buildInvestment(investment));
+    });
+
+    const resolvedInvestments = await Promise.all(promises);
+    this.investments = resolvedInvestments;
+    this.loadingService.hide();
   }
 }

@@ -3,8 +3,7 @@ import { Invest } from '../../invest/invest.interface';
 import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED,
   RETURNED, DELAYED_RETURN } from '../../../common/interfaces/offerAssetStatus.interface';
 import { LinkService } from '../../../common/services/link.service';
-import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
-import { SwapyProtocolService as SwapyProtocol } from '../../../common/services/protocol/swapy-protocol.service';
+import { SwapyProtocolService as SwapyProtocol } from '../../../common/services/swapy-protocol.service';
 import { ToastrService } from '../../../common/services/toastr.service';
 import { InvestService } from '../../invest/invest.service';
 import { WalletService } from '../../../common/services/wallet.service';
@@ -32,7 +31,6 @@ export class InvestmentComponent implements OnInit {
   public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
 
   constructor(private linkService: LinkService,
-    private investmentAssetService: InvestmentAssetService,
     private swapyProtocol: SwapyProtocol,
     private investService: InvestService,
     private toastrService: ToastrService,

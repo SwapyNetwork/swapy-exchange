@@ -7,8 +7,6 @@ import { UserResponseInterface, INVESTOR, CREDIT_COMPANY } from '../../common/in
 
 import { I18nService } from '../../common/services/i18n.service';
 import { Web3Service } from '../../common/services/web3.service';
-import { ExchangeProtocolService } from '../../common/services/protocol/exchange.service';
-import { FinIdProtocolService } from '../../common/services/protocol/fin-id.service';
 import { WalletService } from '../../common/services/wallet.service';
 import { StorageService } from '../../common/services/storage.service';
 import { LogoutService } from '../../common/services/logout.service';
@@ -35,8 +33,6 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private web3Service: Web3Service,
     private wallet: WalletService,
-    private protocolService: ExchangeProtocolService,
-    private finIdService: FinIdProtocolService,
     private walletService: WalletService,
     private storageService: StorageService,
     public logoutService: LogoutService

@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { ExchangeProtocolService as ExchangeService } from '../../common/services/protocol/exchange.service';
-import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../common/services/protocol/investment-asset.service';
-import { SwapyProtocolService as SwapyProtocol } from '../../common/services/protocol/swapy-protocol.service';
+import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 import { WalletService } from '../../common/services/wallet.service';
 import { Web3Service } from '../../common/services/web3.service';
 import { LoadingService } from '../../common/services/loading.service';
@@ -19,12 +17,10 @@ export class DashboardComponent implements OnInit {
   public offers;
 
   constructor(
-    private exchangeService: ExchangeService,
     private walletService: WalletService,
     private web3Service: Web3Service,
     private loadingService: LoadingService,
     private toastr: ToastsManager, vcr: ViewContainerRef,
-    private investmentAssetService: InvestmentAssetService,
     private swapyProtocol: SwapyProtocol,
     private errorLogService: ErrorLogService) {
       this.toastr.setRootViewContainerRef(vcr);
@@ -35,7 +31,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private async getBlockTimestamp(blockHash: string) {
-    return (await this.web3Service.getInstance().eth.getBlock(blockHash)).timestamp
+    return (await this.web3Service.getInstance().eth.getBlock(blockHash)).timestamp;
   }
 
   private setOfferDetails(newOffer, assetValues, numberOfAssets) {
@@ -101,9 +97,8 @@ export class DashboardComponent implements OnInit {
       promises.push(this.factoryOffer(offer));
     });
 
-    Promise.all(promises).then(resolvedOffers => {
-      this.offers = resolvedOffers;
-      this.loadingService.hide();
-    });
+    const resolvedOffers = await Promise.all(promises);
+    this.offers = resolvedOffers;
+    this.loadingService.hide();
   }
 }

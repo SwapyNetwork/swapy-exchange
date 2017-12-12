@@ -5,8 +5,7 @@ import { ToastrService } from '../../../common/services/toastr.service';
 import { LinkService } from '../../../common/services/link.service';
 import { WalletService } from '../../../common/services/wallet.service';
 import { ErrorLogService } from '../../../common/services/error-log.service';
-import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
-import { SwapyProtocolService as SwapyProtocol } from '../../../common/services/protocol/swapy-protocol.service';
+import { SwapyProtocolService as SwapyProtocol } from '../../../common/services/swapy-protocol.service';
 import {
   AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, RETURNED,
   DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../../common/interfaces/offerAssetStatus.interface';
@@ -34,7 +33,7 @@ export class OfferComponent implements OnInit {
 
   public errorMessages: any[] = [];
 
-  constructor(private assetProtocol: InvestmentAssetService,
+  constructor(
     private swapyProtocol: SwapyProtocol,
     private toastrService: ToastrService,
     private i18nService: I18nService,

@@ -8,7 +8,7 @@ import { InvestService } from '../invest/invest.service';
 import {AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED,
   RETURNED, DELAYED_RETURN
 } from '../../common/interfaces/offerAssetStatus.interface';
-import { InvestmentAssetProtocolService as AssetService } from '../../common/services/protocol/investment-asset.service';
+import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 
 
 @Component({
@@ -35,8 +35,8 @@ export class OfferDetailsComponent implements OnInit {
 
 
   constructor(private offerService: OfferService, private activatedRoute: ActivatedRoute,
-    private router: Router, private investService: InvestService,
-    private assetService: AssetService, private loadingService: LoadingService) { }
+    private router: Router, private investService: InvestService, private swapyProtocol: SwapyProtocol,
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
     const offers = this.offerService.getCachedOffers();
@@ -44,25 +44,22 @@ export class OfferDetailsComponent implements OnInit {
       this.router.navigate(['/investor/offers']);
     }
     // subscribe to router event
-    this.activatedRoute.params.subscribe((params: Params) => {
+    this.activatedRoute.params.subscribe(async (params: Params) => {
+      this.loadingService.show();
       this.offerIndex = params['id'];
       this.offer = offers[this.offerIndex];
       const assets = [];
-      for ( const assetAddress of this.offer.assetsAddress) {
-        this.loadingService.show();
-        const assetContract = this.assetService.getContract(assetAddress);
-        const constants = ['fixedValue', 'status'];
-        this.assetService.getConstants(assetAddress, constants).then((assetObject) => {
-          const asset = {
-            contractAddress: assetAddress,
-            value: assetObject.fixedValue / 100,
-            status: assetObject.status
-          } as any;
-          assets.push(asset);
-          this.offer.assets = assets;
-          this.loadingService.hide();
-        });
+      for (const assetAddress of this.offer.assetsAddress) {
+        const assetObject = await this.swapyProtocol.getAssetConstants(assetAddress, ['fixedValue', 'status']);
+        const asset = {
+          contractAddress: assetAddress,
+          value: assetObject.fixedValue / 100,
+          status: assetObject.status
+        } as any;
+        assets.push(asset);
       }
+      this.offer.assets = assets;
+      this.loadingService.hide();
     });
   }
 

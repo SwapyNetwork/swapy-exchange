@@ -6,9 +6,7 @@ import { SuccessfulInvestmentService } from './../successful-investment/successf
 import { InvestorComponent } from './../investor.component';
 import { WalletService } from '../../common/services/wallet.service';
 import { ToastrService } from '../../common/services/toastr.service';
-import { InvestmentAssetProtocolService as AssetService } from '../../common/services/protocol/investment-asset.service';
-import { ExchangeProtocolService as ExchangeService } from '../../common/services/protocol/exchange.service';
-import { SwapyProtocolService as SwapyProtocol } from '../../common/services/protocol/swapy-protocol.service';
+import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 
 @Component({
   selector: 'app-invest',
@@ -25,8 +23,7 @@ export class InvestComponent implements OnInit {
   constructor(private investService: InvestService, private router: Router,
     private successfulInvestmentService: SuccessfulInvestmentService,
     private investorComponent: InvestorComponent, private walletService: WalletService,
-    private assetService: AssetService, private toastrService: ToastrService,
-    private exchangeService: ExchangeService, private swapyProtocol: SwapyProtocol) {
+    private toastrService: ToastrService, private swapyProtocol: SwapyProtocol) {
     this.wallet = this.walletService.getWallet();
   }
 
