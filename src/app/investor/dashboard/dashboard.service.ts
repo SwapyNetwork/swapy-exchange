@@ -41,8 +41,6 @@ export class DashboardService {
                 value: assetValues[2] / 100
               };
               newInvestment.assets.push(newAsset);
-            } else {
-              resolve(false);
             }
             if (!newInvestment.totalAmount) {
               newInvestment.paybackMonths = assetValues[3] / 30;
@@ -51,7 +49,11 @@ export class DashboardService {
               newInvestment.creditCompanyAddress = assetValues[0];
             }
             if (index === investment.returnValues._assets.length - 1) {
-              resolve(newInvestment);
+              if (newInvestment.assets.length === 0) {
+                resolve(false);
+              } else {
+                resolve(newInvestment);
+              }
             }
           });
         });
@@ -69,7 +71,7 @@ export class DashboardService {
         });
 
         Promise.all(promises).then(resolvedInvestments => {
-          this.investments = resolvedInvestments.filter(investment => investment);
+          this.investments = resolvedInvestments.filter(investments => investments);
           resolve(this.investments);
           this.loadingService.hide();
         });
