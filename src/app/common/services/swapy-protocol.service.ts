@@ -8,6 +8,8 @@ import * as SwapyExchange from '../../../contracts/SwapyExchange.json';
 import * as AssetLibrary from '../../../contracts/AssetLibrary.json';
 import * as InvestmentAsset from '../../../contracts/InvestmentAsset.json';
 
+import * as env from '../../../../env.json';
+
 @Injectable()
 export class SwapyProtocolService {
   protected web3;
@@ -28,8 +30,10 @@ export class SwapyProtocolService {
   }
 
   private getAddressFromBuild(build: any) {
-    const buildKeys = Object.keys(build.networks);
-    return build.networks[buildKeys[buildKeys.length - 1]].address;
+    let networkId;
+    const networkIds = Object.keys(build.networks);
+    (env as any).NETWORK_ID ? networkId = (env as any).NETWORK_ID : networkId = networkIds[networkIds.length - 1];
+    return build.networks[networkId].address;
   }
 
   private async getEthPrice() {
@@ -48,7 +52,6 @@ export class SwapyProtocolService {
         payback,
         grossReturn * 10000,
         currency,
-        this.web3.utils.asciiToHex(offerTermsHash),
         assets)
       .send({ from: this.walletService.getWallet().address, gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei') });
   }

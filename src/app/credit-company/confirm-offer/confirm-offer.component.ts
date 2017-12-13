@@ -50,6 +50,7 @@ export class ConfirmOfferComponent implements OnInit {
 
     this.errorLogService.setClassName('ConfirmOfferComponent');
     this.errorLogService.setFunctionName('confirmOffer');
+    this.router.navigate(['/credit-company/raise/pending']);
     // Improve this call
     try {
       const offerTx = await this.swapyProtocol
@@ -67,7 +68,6 @@ export class ConfirmOfferComponent implements OnInit {
     }
     this.creditCompanyComponent.refreshStatusBar();
 
-    this.router.navigate(['/credit-company/raise/pending']);
   }
 
 }
