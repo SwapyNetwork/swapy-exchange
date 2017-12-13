@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Invest } from '../../invest/invest.interface';
-import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED,
+import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT,
   RETURNED, DELAYED_RETURN } from '../../../common/interfaces/offerAssetStatus.interface';
 import { LinkService } from '../../../common/services/link.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../../common/services/swapy-protocol.service';
@@ -27,6 +27,8 @@ export class InvestmentComponent implements OnInit {
   public INVESTED = INVESTED;
   public RETURNED = RETURNED;
   public DELAYED_RETURN = DELAYED_RETURN;
+  public FOR_SALE = FOR_SALE;
+  public PENDING_INVESTOR_AGREEMENT = PENDING_INVESTOR_AGREEMENT;
 
   public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
 
@@ -68,6 +70,12 @@ export class InvestmentComponent implements OnInit {
         break;
       case this.RETURNED:
         statusString = 'Succesfully returned';
+        break;
+      case this.FOR_SALE:
+        statusString = 'For sale';
+        break;
+      case this.PENDING_INVESTOR_AGREEMENT:
+        statusString = 'Pending investor\'s confirmation';
         break;
       case this.DELAYED_RETURN:
         statusString = 'Delayed return';

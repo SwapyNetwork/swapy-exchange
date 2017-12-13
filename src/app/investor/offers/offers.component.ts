@@ -39,11 +39,11 @@ export class OffersComponent implements OnInit {
     for (const offerEvent of offers) {
       const contractVariables = offerEvent.returnValues;
 
-      const constants = ['fixedValue', 'paybackDays', 'grossReturn'];
+      const constants = ['value', 'paybackDays', 'grossReturn'];
       const asset = await this.swapyProtocol.getAssetConstants(contractVariables._assets[0], constants);
       const displayWalletAddress = this.getDisplayWalletAddress(contractVariables._from);
       const offer = {
-        raisingAmount: asset.fixedValue * 5 / 100, // Temp way of doing it. Getting all assets would take too long.
+        raisingAmount: asset.value * 5 / 100, // Temp way of doing it. Getting all assets would take too long.
         grossReturn: asset.grossReturn / 10000,
         paybackMonths: asset.paybackDays / 30,
         walletAddress: contractVariables._from,

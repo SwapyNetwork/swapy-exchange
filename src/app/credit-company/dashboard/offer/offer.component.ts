@@ -7,7 +7,7 @@ import { WalletService } from '../../../common/services/wallet.service';
 import { ErrorLogService } from '../../../common/services/error-log.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../../common/services/swapy-protocol.service';
 import {
-  AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, RETURNED,
+  AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
   DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../../common/interfaces/offerAssetStatus.interface';
 
 import * as env from '../../../../../env.json';
@@ -22,6 +22,8 @@ export class OfferComponent implements OnInit {
   public AVAILABLE = AVAILABLE;
   public PENDING_OWNER_AGREEMENT = PENDING_OWNER_AGREEMENT;
   public INVESTED = INVESTED;
+  public FOR_SALE = FOR_SALE;
+  public PENDING_INVESTOR_AGREEMENT = PENDING_INVESTOR_AGREEMENT;
   public RETURNED = RETURNED;
   public DELAYED_RETURN = DELAYED_RETURN;
   public PENDING_ETHEREUM_CONFIRMATION = PENDING_ETHEREUM_CONFIRMATION;
@@ -108,6 +110,12 @@ export class OfferComponent implements OnInit {
         break;
       case this.INVESTED:
         statusString = 'Successfully invested';
+        break;
+      case this.FOR_SALE:
+        statusString = 'For sale';
+        break;
+      case this.PENDING_INVESTOR_AGREEMENT:
+        statusString = 'Pending investor\'s confirmation';
         break;
       case this.RETURNED:
         statusString = 'Successfully returned';
