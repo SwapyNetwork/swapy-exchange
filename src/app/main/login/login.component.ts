@@ -10,6 +10,7 @@ import { Web3Service } from '../../common/services/web3.service';
 import { WalletService } from '../../common/services/wallet.service';
 import { StorageService } from '../../common/services/storage.service';
 import { LogoutService } from '../../common/services/logout.service';
+import { LoadingService } from '../../common/services/loading.service';
 import { Wallet } from '../../common/interfaces/wallet.interface';
 
 @Component({
@@ -35,7 +36,8 @@ export class LoginComponent implements OnInit {
     private wallet: WalletService,
     private walletService: WalletService,
     private storageService: StorageService,
-    public logoutService: LogoutService
+    public logoutService: LogoutService,
+    public loadingService: LoadingService
   ) {}
 
   ngOnInit() {
@@ -44,12 +46,15 @@ export class LoginComponent implements OnInit {
 
   private async checkAccount() {
     const self = this;
+    this.loadingService.show();
     this.account = await this.walletService.getCurrentAccount();
     setTimeout(async () => {
-      if (!this.account) {
+      if (!this.account || this.account.address === undefined) {
+        this.loadingService.hide();
         self.requireMetaMask = true;
         self.checkAccount();
       } else {
+        this.loadingService.hide();
         self.requireMetaMask = false;
       }
     }, 1000);
@@ -58,6 +63,7 @@ export class LoginComponent implements OnInit {
   login(userType) {
     if (this.agreedToTerms === true) {
       this.storageService.setItem('user', { wallet: this.account, type: userType });
+      this.storageService.setItem('acceptedTerms', this.agreedToTerms);
       this.router.navigate([this.solveRoute(userType)]);
     } else {
       this.errorMessages.push('You have to agree to Swapy\'s Terms of Service and Privacy Policy to proceed.');

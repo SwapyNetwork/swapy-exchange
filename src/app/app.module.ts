@@ -33,7 +33,7 @@ import { ErrorLogService } from './common/services/error-log.service';
     HttpClientModule,
     NgxElectronModule,
     BrowserAnimationsModule,
-    ToastModule.forRoot(),
+    ToastModule.forRoot()
   ],
   providers: [StorageService, HttpService, I18nService, LoadingService, LinkService, Web3Service,
     WalletService, SwapyProtocolService, LogoutService,
