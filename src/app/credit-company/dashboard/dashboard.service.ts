@@ -81,6 +81,8 @@ export class DashboardService {
     const offers = await this.swapyProtocol.get('Offers')
       .filter(offer => offer.returnValues._from.toLowerCase() === this.walletService.getWallet().address.toLowerCase());
 
+      console.log(offers)
+
     const promises = [];
     offers.forEach(offer => {
       promises.push(this.factoryOffer(offer));
