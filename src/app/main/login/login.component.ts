@@ -13,6 +13,8 @@ import { LogoutService } from '../../common/services/logout.service';
 import { LoadingService } from '../../common/services/loading.service';
 import { Wallet } from '../../common/interfaces/wallet.interface';
 
+const env = require('../../../../env.json');
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,10 +23,12 @@ import { Wallet } from '../../common/interfaces/wallet.interface';
 export class LoginComponent implements OnInit {
 
   public requireMetaMask;
+  public requireNetwork;
   public agreedToTerms;
   public account: Wallet;
   public errorMessages: string[] = [];
   private web3;
+  public env = env;
 
   public INVESTOR = INVESTOR;
   public CREDIT_COMPANY = CREDIT_COMPANY;
@@ -44,6 +48,19 @@ export class LoginComponent implements OnInit {
     this.checkAccount();
   }
 
+  public getNetworkName(networkId) {
+    switch (networkId) {
+      case '1':
+        return 'mainnet';
+      case '3':
+        return 'ropsten';
+      case '4':
+        return 'rinkeby';
+      default:
+        return 'unknown';
+    }
+  }
+
   private async checkAccount() {
     const self = this;
     this.loadingService.show();
@@ -53,8 +70,12 @@ export class LoginComponent implements OnInit {
         this.loadingService.hide();
         self.requireMetaMask = true;
         self.checkAccount();
+      } else if (this.account.network != env.NETWORK_ID) {
+        self.requireNetwork = true;
+        this.loadingService.hide();
       } else {
         this.loadingService.hide();
+        self.requireNetwork = false;
         self.requireMetaMask = false;
       }
     }, 1000);

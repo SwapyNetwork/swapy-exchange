@@ -16,8 +16,14 @@
   </a>
 </div>
 
-<div *ngIf="requireMetaMask === false" class="signin-metamask">
-  <p>Found address <b>{{account.address}}</b></p>
+<div *ngIf="requireNetwork" class="signin-metamask">
+  <p>We've noticed that you're connected to the network <b>{{getNetworkName(account.network)}}</b>.</p>
+
+  <p>This version of the app is using <b>{{env.NETWORK_NAME}}.</b> Please change it in your MetaMask </p>
+</div>
+
+<div *ngIf="requireMetaMask === false && requireNetwork === false" class="signin-metamask">
+  <p>Found address <b>{{account.address}}</b> at network <b>{{getNetworkName(account.network)}}</b></p>
 
   <div class="checkbox">
       <label>
