@@ -3,6 +3,8 @@ import { Web3Service } from '../../common/services/web3.service';
 import { LoadingService } from '../../common/services/loading.service';
 import { WalletService } from '../../common/services/wallet.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
+import { StorageService } from '../../common/services/storage.service';
+import { PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offerAssetStatus.interface';
 
 @Injectable()
 export class DashboardService {
@@ -13,6 +15,7 @@ export class DashboardService {
     private walletService: WalletService,
     private web3Service: Web3Service,
     private loadingService: LoadingService,
+    private storageService: StorageService,
     private swapyProtocol: SwapyProtocol,
   ) { }
 
@@ -54,10 +57,17 @@ export class DashboardService {
   }
 
   private buildNewAsset(offer, assetValues, index) {
+    const storagedStatus = this.storageService.getItem(offer.returnValues._assets[index]);
+    let status;
+    if (storagedStatus === null || storagedStatus !== Number(assetValues[5])) {
+      status = Number(assetValues[5]);
+    } else {
+      status = PENDING_ETHEREUM_CONFIRMATION;
+    }
     return {
       contractAddress: offer.returnValues._assets[index],
       investorWallet: assetValues[6],
-      status: assetValues[5],
+      status,
       value: assetValues[2] / 100
     };
   }

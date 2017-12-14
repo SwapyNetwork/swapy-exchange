@@ -20,8 +20,7 @@ export class LogoutService {
     public loadingService: LoadingService, private router: Router) {}
 
   logout() {
-    this.storageService.remove('acceptedTerms');
-    this.storageService.remove('user');
+    this.storageService.clear();
     this.router.navigate(['/']);
   }
 }

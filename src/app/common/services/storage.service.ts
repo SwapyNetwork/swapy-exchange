@@ -33,4 +33,8 @@ export class StorageService {
     return localStorage.removeItem(name);
   }
 
+  public clear() {
+    return localStorage.clear();
+  }
+
 }
