@@ -1,13 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Invest } from '../../invest/invest.interface';
 import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT,
-  RETURNED, DELAYED_RETURN } from '../../../common/interfaces/offerAssetStatus.interface';
+  RETURNED, DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../../common/interfaces/offerAssetStatus.interface';
 import { LinkService } from '../../../common/services/link.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../../common/services/swapy-protocol.service';
 import { ToastrService } from '../../../common/services/toastr.service';
 import { InvestService } from '../../invest/invest.service';
 import { WalletService } from '../../../common/services/wallet.service';
 import { ErrorLogService } from '../../../common/services/error-log.service';
+import { StorageService } from '../../../common/services/storage.service';
 
 import * as env from '../../../../../env.json';
 
@@ -29,6 +30,7 @@ export class InvestmentComponent implements OnInit {
   public DELAYED_RETURN = DELAYED_RETURN;
   public FOR_SALE = FOR_SALE;
   public PENDING_INVESTOR_AGREEMENT = PENDING_INVESTOR_AGREEMENT;
+  public PENDING_ETHEREUM_CONFIRMATION = PENDING_ETHEREUM_CONFIRMATION;
 
   public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
 
@@ -37,6 +39,7 @@ export class InvestmentComponent implements OnInit {
     private investService: InvestService,
     private toastrService: ToastrService,
     private errorLogService: ErrorLogService,
+    private storageService: StorageService,
     private walletService: WalletService) { }
 
   ngOnInit() {
@@ -80,6 +83,9 @@ export class InvestmentComponent implements OnInit {
       case this.DELAYED_RETURN:
         statusString = 'Delayed return';
         break;
+      case this.PENDING_ETHEREUM_CONFIRMATION:
+        statusString = 'Pending transaction confirmation';
+        break;
     }
 
     return statusString;
@@ -92,10 +98,16 @@ export class InvestmentComponent implements OnInit {
   }
 
   public async cancelInvestment(asset) {
+    const status = asset.status;
+    this.storageService.setItem(asset.contractAddress, status);
+    asset.status = PENDING_ETHEREUM_CONFIRMATION;
     try {
       await this.swapyProtocol.cancelInvestment(asset.contractAddress);
       this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+      this.storageService.getItem(asset.contractAddress);
     } catch (error) {
+      this.storageService.remove(asset.contractAddress);
+      asset.status = status;
       this.toastrService.getInstance().error(error.message);
     }
   }

@@ -4,6 +4,8 @@ import { WalletService } from '../../common/services/wallet.service';
 import { Web3Service } from '../../common/services/web3.service';
 import { ErrorLogService } from '../../common/services/error-log.service';
 import { LoadingService } from '../../common/services/loading.service';
+import { StorageService } from '../../common/services/storage.service';
+import { PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offerAssetStatus.interface';
 
 
 @Injectable()
@@ -15,6 +17,7 @@ export class DashboardService {
     private errorLogService: ErrorLogService,
     private walletService: WalletService,
     private web3Service: Web3Service,
+    private storageService: StorageService,
     private loadingService: LoadingService) { }
 
   public getCachedInvestments() {
@@ -61,9 +64,16 @@ export class DashboardService {
 
     assets.forEach(async (asset, index) => {
       if (asset[6] === this.walletService.getWallet().address) {
+        const storagedStatus = this.storageService.getItem(investment.returnValues._assets[index]);
+        let status;
+        if (storagedStatus === null || storagedStatus !== Number(asset[5])) {
+          status = Number(asset[5]);
+        } else {
+          status = PENDING_ETHEREUM_CONFIRMATION;
+        }
         newInvestment.assets.push({
           contractAddress: investment.returnValues._assets[index],
-          status: Number(asset[5]),
+          status,
           value: asset[2] / 100
         });
       }
