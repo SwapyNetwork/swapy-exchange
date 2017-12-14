@@ -76,6 +76,23 @@ export class DashboardService {
     return newInvestment;
   }
 
+  public deleteDuplicatedAssets(investments) {
+    for (let index = investments.length - 1; index >= 0; index--) {
+        investments[index].assets.forEach(asset => {
+          for (let i = index - 1; i >= 0; i--) {
+            investments[i].assets.forEach((prevAsset, prevIndex) => {
+              if (prevAsset.contractAddress.toLowerCase() === asset.contractAddress.toLowerCase()) {
+                investments[i].assets.splice(prevIndex, 1);
+              }
+          });
+        }
+      });
+    }
+
+    return investments.filter(investment => investment.assets.length > 0);
+
+  }
+
   async getMyInvestmentsFromBlockchain() {
     const investments = await this.swapyProtocol.get('Investments')
       .filter(investment => investment.returnValues._investor.toLowerCase() === this.walletService.getWallet().address.toLowerCase());
@@ -85,6 +102,7 @@ export class DashboardService {
       promises.push(this.buildInvestment(investment));
     });
     this.investments = await Promise.all(promises);
+    this.investments = this.deleteDuplicatedAssets(this.investments);
     return this.investments;
   }
 }
