@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import {ViewEncapsulation} from '@angular/core';  
+import { ViewEncapsulation } from '@angular/core';
+import { Router, NavigationStart } from '@angular/router';
+import { LoginService } from './login/login.service';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -9,4 +11,12 @@ import {ViewEncapsulation} from '@angular/core';
 })
 export class MainComponent {
   title = 'main';
+
+  constructor(private router: Router,  public loginService: LoginService) {
+    router.events.forEach((event) => {
+      if (event instanceof NavigationStart && event.url !== '/') {
+        this.loginService.verifyLogin();
+      }
+    });
+  }
 }

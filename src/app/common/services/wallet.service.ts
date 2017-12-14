@@ -12,14 +12,27 @@ export class WalletService {
 
   private web3;
   private wallet: Wallet = {} as Wallet;
+  private lastAddress: string;
   constructor(private web3Service: Web3Service,
     private errorLogService: ErrorLogService,
     public storageService: StorageService) {}
 
   public async getCurrentAccount() {
+    this.lastAddress = this.wallet.address || undefined;
     const accounts = await this.web3Service.getInstance().eth.getAccounts();
     this.wallet.address = accounts[0];
     return this.wallet;
+  }
+
+  public listenForAccountChanges() {
+    setInterval(async () => {
+      const account = await this.getCurrentAccount();
+      if (!account || account.address === undefined) {
+        console.log('no account found.');
+      } else if (account.address !== this.lastAddress) {
+        console.log('changed account.');
+      }
+    }, 1000);
   }
 
   getWallet() {

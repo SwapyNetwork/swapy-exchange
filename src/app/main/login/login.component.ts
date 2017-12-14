@@ -58,6 +58,7 @@ export class LoginComponent implements OnInit {
   login(userType) {
     if (this.agreedToTerms === true) {
       this.storageService.setItem('user', { wallet: this.account, type: userType });
+      this.storageService.setItem('acceptedTerms', this.agreedToTerms);
       this.router.navigate([this.solveRoute(userType)]);
     } else {
       this.errorMessages.push('You have to agree to Swapy\'s Terms of Service and Privacy Policy to proceed.');
