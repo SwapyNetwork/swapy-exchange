@@ -15,4 +15,5 @@ export interface Offer {
   assets: OfferAsset[];
   createdOn: string;
   contractAddress: string;
+  displayWalletAddress: string;
 };

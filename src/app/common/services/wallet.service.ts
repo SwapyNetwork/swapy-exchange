@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Web3Service } from './web3.service';
 import { StorageService } from './storage.service';
+import { LogoutService } from './logout.service';
 import { ErrorLogService } from './error-log.service';
 
 import { Wallet } from '../interfaces/wallet.interface';
@@ -12,14 +13,26 @@ export class WalletService {
 
   private web3;
   private wallet: Wallet = {} as Wallet;
+  private lastAddress: string;
   constructor(private web3Service: Web3Service,
     private errorLogService: ErrorLogService,
+    private logoutService: LogoutService,
     public storageService: StorageService) {}
 
   public async getCurrentAccount() {
+    this.lastAddress = this.wallet.address || undefined;
     const accounts = await this.web3Service.getInstance().eth.getAccounts();
     this.wallet.address = accounts[0];
     return this.wallet;
+  }
+
+  public listenForAccountChanges() {
+    setInterval(async () => {
+      const account = await this.getCurrentAccount();
+      if (!account || account.address === undefined || (account.address !== this.lastAddress && this.lastAddress !== undefined)) {
+        this.logoutService.logout();
+      }
+    }, 1000);
   }
 
   getWallet() {

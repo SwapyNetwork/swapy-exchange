@@ -10,7 +10,6 @@ import { LoginService } from './login/login.service';
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 import { TermsPageComponent } from './terms-page/terms-page.component';
 
-
 import { NavModule } from '../common/nav/nav.module';
 
 @NgModule({

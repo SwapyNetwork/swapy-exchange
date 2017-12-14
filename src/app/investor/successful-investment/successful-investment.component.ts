@@ -15,7 +15,7 @@ export class SuccessfulInvestmentComponent implements OnInit {
   private offerIndex: number;
   public walletAddress: string;
 
-  constructor(private successfulInvestmentService: SuccessfulInvestmentService, private investService: InvestService,
+  constructor(public successfulInvestmentService: SuccessfulInvestmentService, private investService: InvestService,
     private walletService: WalletService) { }
 
   ngOnInit() {
