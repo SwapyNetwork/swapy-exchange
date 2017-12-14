@@ -22,6 +22,7 @@ export class LogoutService {
   logout() {
     this.storageService.remove('accessToken');
     this.storageService.remove('user');
+    this.storageService.clear();
     this.router.navigate(['/']);
   }
 }

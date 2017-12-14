@@ -9,6 +9,7 @@ import { SwapyProtocolService as SwapyProtocol } from '../../../common/services/
 import {
   AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
   DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../../common/interfaces/offerAssetStatus.interface';
+import { StorageService } from '../../../common/services/storage.service';
 
 import * as env from '../../../../../env.json';
 
@@ -41,6 +42,7 @@ export class OfferComponent implements OnInit {
     private i18nService: I18nService,
     private linkService: LinkService,
     private walletService: WalletService,
+    private storageService: StorageService,
     private errorLogService: ErrorLogService) { }
 
   ngOnInit() { }
@@ -61,10 +63,15 @@ export class OfferComponent implements OnInit {
   }
 
   public async withdrawFunds(asset) {
+    const status = asset.status;
+    this.storageService.setItem(asset.contractAddress, status);
+    asset.status = PENDING_ETHEREUM_CONFIRMATION;
     try {
       await this.swapyProtocol.withdrawFunds(asset.contractAddress);
       this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
     } catch (error) {
+      this.storageService.remove(asset.contractAddress);
+      asset.status = status;
       this.walletService.getEthBalance().then((currentBalance) => {
         this.errorLogService.setAfterETHbalance(currentBalance);
         this.errorLogService.setError(error);
@@ -74,10 +81,15 @@ export class OfferComponent implements OnInit {
   }
 
   public async refuseInvestment(asset) {
+    const status = asset.status;
+    this.storageService.setItem(asset.contractAddress, status);
+    asset.status = PENDING_ETHEREUM_CONFIRMATION;
     try {
       await this.swapyProtocol.refuseInvestment(asset.contractAddress);
       this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
     } catch (error) {
+      this.storageService.remove(asset.contractAddress);
+      asset.status = status;
       this.walletService.getEthBalance().then((currentBalance) => {
         this.errorLogService.setAfterETHbalance(currentBalance);
         this.errorLogService.setError(error);
@@ -87,11 +99,16 @@ export class OfferComponent implements OnInit {
   }
 
   public async returnInvestment(asset) {
+    const status = asset.status;
+    this.storageService.setItem(asset.contractAddress, status);
+    asset.status = PENDING_ETHEREUM_CONFIRMATION;
     try {
       const value = asset.value * (1 + this.offer.grossReturn);
       await this.swapyProtocol.returnInvestment(asset.contractAddress, value);
       this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
     } catch (error) {
+      this.storageService.remove(asset.contractAddress);
+      asset.status = status;
       this.toastrService.getInstance().error(error.message);
     }
   }
@@ -100,7 +117,7 @@ export class OfferComponent implements OnInit {
     let statusString;
     switch (parseInt(status, 10)) {
       case this.PENDING_ETHEREUM_CONFIRMATION:
-        statusString = 'Pending Ethereum confirmation';
+        statusString = 'Pending transaction confirmation';
         break;
       case this.PENDING_OWNER_AGREEMENT:
         statusString = 'Pending agreement';
