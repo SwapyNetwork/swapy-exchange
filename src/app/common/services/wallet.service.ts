@@ -6,7 +6,7 @@ import { ErrorLogService } from './error-log.service';
 
 import { Wallet } from '../interfaces/wallet.interface';
 
-import * as ProviderFile from '../../../../env.json';
+import * as env from '../../../../env.json';
 
 @Injectable()
 export class WalletService {
@@ -22,14 +22,21 @@ export class WalletService {
   public async getCurrentAccount() {
     this.lastAddress = this.wallet.address || undefined;
     const accounts = await this.web3Service.getInstance().eth.getAccounts();
+    this.wallet.network = this.getCurrentNetwork();
     this.wallet.address = accounts[0];
     return this.wallet;
+  }
+
+  public getCurrentNetwork() {
+    return this.web3Service.getInstance().eth.currentProvider.publicConfigStore._state.networkVersion;
   }
 
   public listenForAccountChanges() {
     setInterval(async () => {
       const account = await this.getCurrentAccount();
-      if (!account || account.address === undefined || (account.address !== this.lastAddress && this.lastAddress !== undefined)) {
+      if (!account || account.address === undefined ||
+        (account.address !== this.lastAddress && this.lastAddress !== undefined) ||
+        account.network != (env as any).NETWORK_ID) {
         this.logoutService.logout();
       }
     }, 1000);
