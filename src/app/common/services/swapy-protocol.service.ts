@@ -4,11 +4,12 @@ import { Web3Service } from './web3.service';
 import { WalletService } from './wallet.service';
 import { ErrorLogService } from './error-log.service';
 
-import * as SwapyExchange from '../../../contracts/SwapyExchange.json';
-import * as AssetLibrary from '../../../contracts/AssetLibrary.json';
-import * as InvestmentAsset from '../../../contracts/InvestmentAsset.json';
+const env = require('../../../../env.json');
 
-import * as env from '../../../../env.json';
+const SwapyExchange = require(`../../../contracts/${(env as any).NETWORK_NAME}/SwapyExchange.json`);
+const AssetLibrary = require(`../../../contracts/${(env as any).NETWORK_NAME}/AssetLibrary.json`);
+const InvestmentAsset = require(`../../../contracts/${(env as any).NETWORK_NAME}/InvestmentAsset.json`);
+
 
 @Injectable()
 export class SwapyProtocolService {

@@ -18,7 +18,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "copy": "sh scripts/copy_contracts.sh"
+    "copy": "sh scripts/copy_contracts.sh",
+    "copy.rinkeby": "sh scripts/copy_contracts_rinkeby.sh",
+    "copy.ropsten": "sh scripts/copy_contracts_ropsten.sh"
   },
   "private": true,
   "dependencies": {
