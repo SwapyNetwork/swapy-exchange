@@ -16,25 +16,25 @@ export class NavComponent implements OnInit {
 
   public user: UserResponseInterface;
   public wallet: any;
-  public menu:any[];
-  public profileUrl:string = '';
-  public helpUrl:string = '';
-  public termsUrl:string = '';
-  public privacyUrl:string = '';
+  public menu: any[];
+  public profileUrl = '';
+  public helpUrl = '';
+  public termsUrl = '';
+  public privacyUrl = '';
 
   public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
 
   constructor(public logoutService: LogoutService, private storageService: StorageService,
     private walletService: WalletService, private linkService: LinkService, private router: Router) {
-    let user = this.storageService.getItem('user');
+    const user = this.storageService.getItem('user');
     this.user = user ? user : {};
     this.wallet = this.walletService.getWallet();
 
     switch (this.user.type) {
       case INVESTOR:
         this.menu = [
-          {url:"/investor/offers", label: "Invest"},
-          {url:"/investor", label: "Manage"}
+          { url: '/investor/offers', label: 'Invest' },
+          { url: '/investor', label: 'Manage' }
         ];
         this.profileUrl = '/investor/profile';
         this.helpUrl = '/investor/help';
@@ -43,8 +43,8 @@ export class NavComponent implements OnInit {
         break;
       case CREDIT_COMPANY:
         this.menu = [
-          {url:"/credit-company/raise", label: "Raise"},
-          {url:"/credit-company", label: "Manage"}
+          {url: '/credit-company/raise', label: 'Raise'},
+          {url: '/credit-company', label: 'Manage'}
         ];
         this.profileUrl = '/credit-company/profile';
         this.helpUrl = '/credit-company/help';
@@ -59,7 +59,11 @@ export class NavComponent implements OnInit {
     this.linkService.openLink(this.explorerUrl + address);
   }
 
-  ngOnInit() { }
+  public isWallet(val) {
+    return typeof val === 'object';
+  }
+
+  ngOnInit() {}
 
   // store state
   isIn = false;
@@ -67,12 +71,12 @@ export class NavComponent implements OnInit {
 
   // click handler
   public toggleState() {
-    let bool = this.isIn;
+    const bool = this.isIn;
     this.isIn = bool === false ? true : false;
   }
 
   public toggleSettingsDropdown() {
-    let bool = this.isSettingsOpen;
+    const bool = this.isSettingsOpen;
     this.isSettingsOpen = bool === false ? true : false;
   }
 

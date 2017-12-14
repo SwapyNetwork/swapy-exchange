@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { InvestService } from './../invest/invest.service';
-import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../common/services/protocol/investment-asset.service';
 import { ErrorLogService } from '../../common/services/error-log.service';
-import { ExchangeProtocolService as ExchangeService } from '../../common/services/protocol/exchange.service';
+import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 import { AGREE_INVESTMENT, TRANSFER_FUNDS } from '../../common/interfaces/events.interface';
 import { WalletService } from '../../common/services/wallet.service';
 import { Web3Service } from '../../common/services/web3.service';
@@ -18,18 +17,20 @@ import { InvestorComponent } from '../investor.component';
 export class DashboardComponent implements OnInit {
 
   public investments;
-
-  constructor(private dashboardService: DashboardService, private investorComponent: InvestorComponent) { }
+  constructor(private dashboardService: DashboardService,
+    private loadingService: LoadingService, private investorComponent: InvestorComponent) { }
 
   ngOnInit() {
     this.updateInvestments();
   }
 
   public updateInvestments() {
+    this.loadingService.show();
+
     this.dashboardService.getMyInvestmentsFromBlockchain().then(investments => {
       this.investments = investments;
       this.investorComponent.refreshStatusBar();
     })
+    this.loadingService.hide();
   }
-
 }

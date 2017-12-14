@@ -4,7 +4,6 @@ import { StorageService } from './storage.service';
 import { ErrorLogService } from './error-log.service';
 
 import { Wallet } from '../interfaces/wallet.interface';
-import { ElectronService } from 'ngx-electron';
 
 import * as ProviderFile from '../../../../env.json';
 
@@ -12,75 +11,33 @@ import * as ProviderFile from '../../../../env.json';
 export class WalletService {
 
   private web3;
-  private wallet: Wallet;
+  private wallet: Wallet = {} as Wallet;
   constructor(private web3Service: Web3Service,
-    private electronService: ElectronService,
     private errorLogService: ErrorLogService,
-    public storageService: StorageService) {
+    public storageService: StorageService) {}
 
-    this.electronService.ipcRenderer.on('create-wallet-error', (event, err) => {
-      // Error handling if the wallet creation fails;
-      console.log(err);
-    });
-  }
-
-  public createWallet() {
-    let wallet = {};
-    if ((ProviderFile as any).ENV === 'test') {
-      this.wallet = {
-        address: (ProviderFile as any).ADDRESS,
-        privateKey: (ProviderFile as any).PRIVATE_KEY,
-      };
-
-      wallet = {
-        address: this.wallet.address,
-        privateKey: this.wallet.privateKey,
-        user: this.getUserIdentification()
-      };
-    } else {
-      this.web3 = this.web3Service.getInstance();
-      let account;
-      account = this.web3.eth.accounts.create();
-      this.wallet = {
-        address: account.address,
-        privateKey: account.privateKey,
-      };
-
-
-      wallet = {
-        address: account.address,
-        privateKey: account.privateKey,
-        user: this.getUserIdentification()
-      };
-    }
-
-    // Save keys to local file
-    this.addWalletToWeb3(wallet);
-    this.electronService.ipcRenderer.send('create-wallet', wallet);
-  }
-
-  getWallet() {
-    if (!this.wallet) {
-      return this.electronService.ipcRenderer.sendSync('get-wallet', this.getUserIdentification());
-    }
+  public async getCurrentAccount() {
+    const accounts = await this.web3Service.getInstance().eth.getAccounts();
+    this.wallet.address = accounts[0];
     return this.wallet;
   }
 
-  addWalletToWeb3(wallet) {
-    this.web3Service.getInstance().eth.accounts.wallet.add(wallet);
+  getWallet() {
+    return this.wallet;
   }
 
   getUserIdentification() {
     // @todo Maybe change the way we identify a wallet. Currently it is the email without special chars.
-    return this.storageService.getItem('user').email.replace(/[^a-zA-Z0-9]/g, '');
+    return this.storageService.getItem('user');
   }
 
   delete() {
     this.wallet = null;
   }
 
-  getBalance() {
-    return this.web3Service.getInstance().eth.getBalance(this.getWallet().address);
+  async getBalance() {
+    const account = await this.getCurrentAccount();
+    return this.web3Service.getInstance().eth.getBalance(account.address);
   }
 
   getEthBalance() {

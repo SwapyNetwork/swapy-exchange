@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ViewEncapsulation} from '@angular/core';
-import { CreditCompanyService } from './credit-company.service';
+import { ViewEncapsulation } from '@angular/core';
 import { WalletService } from '../common/services/wallet.service';
 import { LoadingService } from '../common/services/loading.service';
-import { ExchangeProtocolService } from '../common/services/protocol/exchange.service';
-import { InvestmentAssetProtocolService as AssetService } from '../common/services/protocol/investment-asset.service';
 import { INVESTED, RETURNED, DELAYED_RETURN } from '../common/interfaces/offerAssetStatus.interface';
 import { DashboardService } from './dashboard/dashboard.service';
 
@@ -25,8 +22,8 @@ export class CreditCompanyComponent implements OnInit {
   public offersLength;
   public balance;
 
-  constructor(private creditCompanyService: CreditCompanyService, private walletService: WalletService,
-    private exchangeProtocolService: ExchangeProtocolService, private assetService: AssetService,
+
+  constructor(private walletService: WalletService,
     private loadingService: LoadingService, private dashboardService: DashboardService) {};
 
   ngOnInit() {

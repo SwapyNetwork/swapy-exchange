@@ -3,7 +3,7 @@ import { Invest } from '../../invest/invest.interface';
 import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT,
   RETURNED, DELAYED_RETURN } from '../../../common/interfaces/offerAssetStatus.interface';
 import { LinkService } from '../../../common/services/link.service';
-import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
+import { SwapyProtocolService as SwapyProtocol } from '../../../common/services/swapy-protocol.service';
 import { ToastrService } from '../../../common/services/toastr.service';
 import { InvestService } from '../../invest/invest.service';
 import { WalletService } from '../../../common/services/wallet.service';
@@ -33,7 +33,7 @@ export class InvestmentComponent implements OnInit {
   public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
 
   constructor(private linkService: LinkService,
-    private investmentAssetService: InvestmentAssetService,
+    private swapyProtocol: SwapyProtocol,
     private investService: InvestService,
     private toastrService: ToastrService,
     private errorLogService: ErrorLogService,
@@ -91,12 +91,12 @@ export class InvestmentComponent implements OnInit {
     this.linkService.openLink(url);
   }
 
-  public cancelInvestment(asset) {
-    this.investmentAssetService.cancelInvestment(asset.contractAddress, (success) => {
-      this.toastrService.getInstance().success('Cancel investment was mined in the Ethereum blockchain');
-    }, (error) => {
+  public async cancelInvestment(asset) {
+    try {
+      await this.swapyProtocol.cancelInvestment(asset.contractAddress);
+      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+    } catch (error) {
       this.toastrService.getInstance().error(error.message);
-    })
+    }
   }
-
 }

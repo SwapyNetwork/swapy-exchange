@@ -7,16 +7,14 @@ import * as ProviderFile from '../../../../env.json';
 export class Web3Service {
 
   private web3Ws: Web3;
-  private web3Http: Web3;
-  constructor() { }
+  constructor() {
+    this.init();
+  }
 
   public init() {
-    if ((<any>ProviderFile).ENV === 'test' && this.web3Ws == null) {
-      this.web3Http = new Web3(new Web3.providers.HttpProvider((<any>ProviderFile).TEST_RPC_PROVIDER));
-    } else if (this.web3Ws == null) {
-      this.web3Ws = new Web3(new Web3.providers.WebsocketProvider((<any>ProviderFile).WS_PROVIDER));
-      this.web3Http = new Web3(new Web3.providers.HttpProvider((<any>ProviderFile).HTTP_PROVIDER));
-    }
+    // if (this.web3Ws == null) {
+    //   this.web3Ws = new Web3(new Web3.providers.WebsocketProvider((<any>ProviderFile).WS_PROVIDER));
+    // }
   }
 
   private isOpen(connection) {
@@ -24,13 +22,17 @@ export class Web3Service {
   }
 
   public getInstance() {
-    if (this.web3Ws == null && this.web3Http == null) {
+    return (window as any).web3
+  }
+
+  public getWSInstance() {
+    if (this.web3Ws == null) {
       this.init();
     }
 
     if (this.web3Ws && this.isOpen(this.web3Ws.currentProvider.connection)) {
       return this.web3Ws;
     }
-    return this.web3Http;
+    return (window as any).web3;
   }
 }

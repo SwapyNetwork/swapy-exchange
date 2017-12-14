@@ -6,8 +6,7 @@ import { SuccessfulInvestmentService } from './../successful-investment/successf
 import { InvestorComponent } from './../investor.component';
 import { WalletService } from '../../common/services/wallet.service';
 import { ToastrService } from '../../common/services/toastr.service';
-import { InvestmentAssetProtocolService as AssetService } from '../../common/services/protocol/investment-asset.service';
-import { ExchangeProtocolService as ExchangeService } from '../../common/services/protocol/exchange.service';
+import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 
 @Component({
   selector: 'app-invest',
@@ -24,8 +23,7 @@ export class InvestComponent implements OnInit {
   constructor(private investService: InvestService, private router: Router,
     private successfulInvestmentService: SuccessfulInvestmentService,
     private investorComponent: InvestorComponent, private walletService: WalletService,
-    private assetService: AssetService, private toastrService: ToastrService,
-    private exchangeService: ExchangeService) {
+    private toastrService: ToastrService, private swapyProtocol: SwapyProtocol) {
     this.wallet = this.walletService.getWallet();
   }
 
@@ -44,17 +42,16 @@ export class InvestComponent implements OnInit {
     this.router.navigate(['investor/invest/success']);
   }
 
-  invest() {
-    const assetsAddress = this.investment.assets.map(asset => asset.contractAddress);
-    this.exchangeService.invest(assetsAddress, this.investment.totalAmount, (success) => {
+  async invest() {
+    try {
+      const assetsAddress = this.investment.assets.map(asset => asset.contractAddress);
+      await this.swapyProtocol.invest(assetsAddress, this.investment.totalAmount);
       this.toastrService.getInstance().success('Your investment was mined by the Ethereum blockchain.');
       this.successfulInvestmentService.setMessage('Your investment was mined by the Ethereum blockchain.');
-    }, (error) => {
+    } catch (error) {
       this.successfulInvestmentService.setErrorMessage(error.message);
       this.toastrService.getInstance().error(this.successfulInvestmentService.getMessage());
-    });
-
-
+    }
   }
 
 }

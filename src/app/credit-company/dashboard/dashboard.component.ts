@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { ExchangeProtocolService as ExchangeService } from '../../common/services/protocol/exchange.service';
-import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../common/services/protocol/investment-asset.service';
+import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 import { WalletService } from '../../common/services/wallet.service';
 import { Web3Service } from '../../common/services/web3.service';
 import { LoadingService } from '../../common/services/loading.service';
@@ -20,14 +19,12 @@ export class DashboardComponent implements OnInit {
   public offers;
 
   constructor(
-    private exchangeService: ExchangeService,
     private walletService: WalletService,
     private web3Service: Web3Service,
     private loadingService: LoadingService,
-    private toastr: ToastsManager, vcr: ViewContainerRef,
-    private investmentAssetService: InvestmentAssetService,
     private dashboardService: DashboardService,
     private creditCompanyComponent: CreditCompanyComponent,
+    private toastr: ToastsManager, vcr: ViewContainerRef,
     private errorLogService: ErrorLogService) {
       this.toastr.setRootViewContainerRef(vcr);
     }
@@ -36,11 +33,10 @@ export class DashboardComponent implements OnInit {
     this.updateOffers();
   }
 
-  public updateOffers() {
-    this.dashboardService.updateOffers().then(offers => {
-      this.offers = offers;
-      this.creditCompanyComponent.refreshStatusBar();
-    })
+  public async updateOffers() {
+    this.loadingService.show();
+    this.offers = await this.dashboardService.updateOffers();
+    this.creditCompanyComponent.refreshStatusBar();
+    this.loadingService.hide();
   }
-
 }

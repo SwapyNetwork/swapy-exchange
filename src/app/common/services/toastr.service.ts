@@ -4,8 +4,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 @Injectable()
 export class ToastrService {
 
-  constructor(private toastr: ToastsManager, private applicationRef: ApplicationRef) {
-  }
+  constructor(private toastr: ToastsManager, private applicationRef: ApplicationRef) {}
 
   getInstance() {
      // Getting viewContainerRef from App Component (so the toaster can appear anywhere)
@@ -13,5 +12,4 @@ export class ToastrService {
     this.toastr.setRootViewContainerRef(appVCR);
     return this.toastr;
   }
-
 }

@@ -14,8 +14,10 @@ export class ErrorLogService {
   }
 
   sendError() {
-    console.error(this.errorObject);
-    this.electronService.ipcRenderer.send('log-error', this.errorObject);
+    // @TODO Implement third party error log service
+    if ((window as any).isElectron) {
+      console.log('log-error', this.errorObject);
+    }
     this.delete();
   }
 

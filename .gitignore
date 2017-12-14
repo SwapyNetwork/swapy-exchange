@@ -48,4 +48,4 @@ UserInterfaceState.xcuserstate
 
 #Files
 env.json
-src/contracts
+src/contracts/ganache/*

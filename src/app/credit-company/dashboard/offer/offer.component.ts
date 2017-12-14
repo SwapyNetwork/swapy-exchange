@@ -5,7 +5,7 @@ import { ToastrService } from '../../../common/services/toastr.service';
 import { LinkService } from '../../../common/services/link.service';
 import { WalletService } from '../../../common/services/wallet.service';
 import { ErrorLogService } from '../../../common/services/error-log.service';
-import { InvestmentAssetProtocolService as InvestmentAssetService } from '../../../common/services/protocol/investment-asset.service';
+import { SwapyProtocolService as SwapyProtocol } from '../../../common/services/swapy-protocol.service';
 import {
   AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
   DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../../common/interfaces/offerAssetStatus.interface';
@@ -35,7 +35,8 @@ export class OfferComponent implements OnInit {
 
   public errorMessages: any[] = [];
 
-  constructor(private assetProtocol: InvestmentAssetService,
+  constructor(
+    private swapyProtocol: SwapyProtocol,
     private toastrService: ToastrService,
     private i18nService: I18nService,
     private linkService: LinkService,
@@ -59,39 +60,40 @@ export class OfferComponent implements OnInit {
     this.linkService.openLink(url);
   }
 
-  public withdrawFunds(asset) {
-    this.assetProtocol.withdrawFunds(asset.contractAddress, (success) => {
+  public async withdrawFunds(asset) {
+    try {
+      await this.swapyProtocol.withdrawFunds(asset.contractAddress);
       this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
-    }, (error) => {
-      // Improve this call
+    } catch (error) {
       this.walletService.getEthBalance().then((currentBalance) => {
         this.errorLogService.setAfterETHbalance(currentBalance);
         this.errorLogService.setError(error);
       });
       this.toastrService.getInstance().error(error.message);
-    });
+    }
   }
 
-  public refuseInvestment(asset) {
-    this.assetProtocol.refuseInvestment(asset.contractAddress, (success) => {
+  public async refuseInvestment(asset) {
+    try {
+      await this.swapyProtocol.refuseInvestment(asset.contractAddress);
       this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
-    }, (error) => {
-      // Improve this call
+    } catch (error) {
       this.walletService.getEthBalance().then((currentBalance) => {
         this.errorLogService.setAfterETHbalance(currentBalance);
         this.errorLogService.setError(error);
       });
       this.toastrService.getInstance().error(error.message);
-    });
+    }
   }
 
-  public returnInvestment(asset) {
-    const value = asset.value * (1 + this.offer.grossReturn);
-    this.assetProtocol.returnInvestment(asset.contractAddress, value, (success) => {
-      this.toastrService.getInstance().success('Your investment return was mined by the Ethereum blockchain.');
-    }, (error) => {
+  public async returnInvestment(asset) {
+    try {
+      const value = asset.value * (1 + this.offer.grossReturn);
+      await this.swapyProtocol.returnInvestment(asset.contractAddress, value);
+      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+    } catch (error) {
       this.toastrService.getInstance().error(error.message);
-    });
+    }
   }
 
   public statusToString(status) {

@@ -1,11 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ViewEncapsulation } from '@angular/core';
-import { InvestorService } from './investor.service';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { WalletService } from '../common/services/wallet.service';
 import { Web3Service } from '../common/services/web3.service';
 import { LoadingService } from '../common/services/loading.service';
-import { ExchangeProtocolService } from '../common/services/protocol/exchange.service';
-import { InvestmentAssetProtocolService as AssetService } from '../common/services/protocol/investment-asset.service';
 import { INVESTED, RETURNED, DELAYED_RETURN } from '../common/interfaces/offerAssetStatus.interface';
 import { DashboardService } from './dashboard/dashboard.service';
 
@@ -28,8 +24,7 @@ export class InvestorComponent implements OnInit {
   public averagePaybackPeriod;
   public balance;
 
-  constructor(private investorService: InvestorService, private walletService: WalletService,
-    private exchangeProtocolService: ExchangeProtocolService, private assetService: AssetService,
+  constructor(private walletService: WalletService,
     private web3Service: Web3Service, private loadingService: LoadingService, private dashboardService: DashboardService) {}
 
   ngOnInit() {
@@ -58,22 +53,6 @@ export class InvestorComponent implements OnInit {
     this.returnedValue = 0;
     this.returnValue = 0;
 
-    // const t1 = performance.now();
-    // for (let index = 0; index < assets.length; index++) {
-    //   if (Number(assets[index].status) >= INVESTED) {
-    //     this.investedValue += Number(assets[index].value);
-    //   }
-    //   if (Number(assets[index].status) >= RETURNED) {
-    //     this.returnedValue += Number(assets[index].value) +
-    //       Number(assets[index].value) * Number(assets[index].grossReturn / 10000);
-    //   }
-    //   if (Number(assets[index].status) === INVESTED) {
-    //     this.returnValue += Number(assets[index].value) +
-    //       Number(assets[index].value) * Number(assets[index].grossReturn / 10000);
-    //   }
-    // }
-    // const t2 = performance.now();
-    //
     this.investedValue = (assets.filter(asset => (asset.status === INVESTED ||
       asset.status === RETURNED || asset.status === DELAYED_RETURN))
       .map(asset => asset.value)
@@ -87,12 +66,7 @@ export class InvestorComponent implements OnInit {
       asset.status === DELAYED_RETURN))
       .map(asset => asset.value + asset.value * asset.grossReturn)
       .reduce((total, current) => (total + current), 0);
-    //
-    // // const t3 = performance.now();
-    // //
-    // // console.log('Part I => ' + (t2 - t1).toFixed(4));
-    // // console.log('Part II => ' + (t3 - t2).toFixed(4));
-    //
+
     const assetsLength = assets.filter(asset => Number(asset.status) === INVESTED).length;
     this.averageReturn = assets.filter(asset => Number(asset.status) === INVESTED)
       .map(asset => Number(asset.grossReturn))

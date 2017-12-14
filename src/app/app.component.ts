@@ -1,5 +1,6 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { LoadingService } from './common/services/loading.service';
+import Web3 from 'web3';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ export class AppComponent {
   title = 'app';
   loading = false;
 
-  constructor(public loadingService: LoadingService, public viewContainerRef: ViewContainerRef){
+  constructor(public loadingService: LoadingService, public viewContainerRef: ViewContainerRef) {
     this.loadingService.loadingShowed$.subscribe(
       showed => {this.loading = true}
     );
@@ -18,6 +19,10 @@ export class AppComponent {
     this.loadingService.loadingHid$.subscribe(
       hid => {this.loading = false}
     );
+
+    if (typeof (window as any).web3 !== 'undefined') {
+      (window as any).web3 = new Web3((window as any).web3.currentProvider);
+    }
   }
 
   showLoading() {

@@ -16,8 +16,8 @@ import { environment } from '../../../environments/environment';
 export class HttpService {
   private options: any;
 
-  constructor(public http: HttpClient, public router: Router, public storageService: StorageService, public loadingService: LoadingService) {
-  }
+  constructor(public http: HttpClient, public router: Router,
+    public storageService: StorageService, public loadingService: LoadingService) {}
 
   private appendHeaders() {
     const accessToken = this.storageService.getItem('accessToken');
@@ -105,5 +105,4 @@ export class HttpService {
     const url: string = environment.api + endpoint;
     return url;
   }
-
 }
