@@ -1,5 +1,6 @@
+import * as Raven from 'raven-js';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -22,6 +23,16 @@ import { ToastrService } from './common/services/toastr.service';
 import { CustomToastOption } from './common/CustomToastOption';
 import { ErrorLogService } from './common/services/error-log.service';
 
+Raven
+  .config('https://fc67f0275f004331983755e047272832@sentry.io/259958')
+  .install();
+
+export class RavenErrorHandler implements ErrorHandler {
+  handleError(err: any): void {
+    Raven.captureException(err);
+  }
+}
+
 @NgModule({
   declarations: [
     AppComponent
@@ -37,7 +48,8 @@ import { ErrorLogService } from './common/services/error-log.service';
   ],
   providers: [StorageService, HttpService, I18nService, LoadingService, LinkService, Web3Service,
     WalletService, SwapyProtocolService, LogoutService,
-    ToastrService, ErrorLogService, { provide: ToastOptions, useClass: CustomToastOption }],
+    ToastrService, ErrorLogService, { provide: ToastOptions, useClass: CustomToastOption },
+    { provide: ErrorHandler, useClass: RavenErrorHandler }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -33,7 +33,7 @@ export class SwapyProtocolService {
   private getAddressFromBuild(build: any) {
     let networkId;
     const networkIds = Object.keys(build.networks);
-    (env as any).NETWORK_ID ? networkId = (env as any).NETWORK_ID : networkId = networkIds[networkIds.length - 1];
+    (env as any).NETWORK_ID ? networkId = (env as any).NETWORK_ : networkId = networkIds[networkIds.length - 1];
     return build.networks[networkId].address;
   }
 
