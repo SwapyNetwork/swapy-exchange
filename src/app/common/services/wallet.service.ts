@@ -28,7 +28,11 @@ export class WalletService {
   }
 
   public getCurrentNetwork() {
-    return this.web3Service.getInstance().eth.currentProvider.publicConfigStore._state.networkVersion;
+    if (this.web3Service.getInstance().eth.currentProvider.publicConfigStore) {
+      return this.web3Service.getInstance().eth.currentProvider.publicConfigStore._state.networkVersion;
+    } else {
+      return false;
+    }
   }
 
   public listenForAccountChanges() {

@@ -8,13 +8,6 @@ export class Web3Service {
 
   private web3Ws: Web3;
   constructor() {
-    this.init();
-  }
-
-  public init() {
-    // if (this.web3Ws == null) {
-    //   this.web3Ws = new Web3(new Web3.providers.WebsocketProvider((<any>ProviderFile).WS_PROVIDER));
-    // }
   }
 
   private isOpen(connection) {
@@ -26,10 +19,6 @@ export class Web3Service {
   }
 
   public getWSInstance() {
-    if (this.web3Ws == null) {
-      this.init();
-    }
-
     if (this.web3Ws && this.isOpen(this.web3Ws.currentProvider.connection)) {
       return this.web3Ws;
     }

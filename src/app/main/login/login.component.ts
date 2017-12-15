@@ -63,20 +63,18 @@ export class LoginComponent implements OnInit {
 
   private async checkAccount() {
     const self = this;
-    this.loadingService.show();
     this.account = await this.walletService.getCurrentAccount();
     setTimeout(async () => {
       if (!this.account || this.account.address === undefined) {
-        this.loadingService.hide();
         self.requireMetaMask = true;
-        self.checkAccount();
       } else if (this.account.network != env.NETWORK_ID) {
         self.requireNetwork = true;
-        this.loadingService.hide();
       } else {
-        this.loadingService.hide();
         self.requireNetwork = false;
         self.requireMetaMask = false;
+      }
+      if (!this.storageService.getItem('acceptedTerms')) {
+        self.checkAccount();
       }
     }, 1000);
   }
