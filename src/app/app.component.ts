@@ -3,6 +3,8 @@ import { LoadingService } from './common/services/loading.service';
 import { WalletService } from './common/services/wallet.service';
 import Web3 from 'web3';
 
+import * as env from '../../env.json';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -24,6 +26,8 @@ export class AppComponent {
 
     if (typeof (window as any).web3 !== 'undefined') {
       (window as any).web3 = new Web3((window as any).web3.currentProvider);
+    } else {
+      (window as any).web3 = new Web3((env as any).HTTP_PROVIDER);
     }
 
     this.walletService.listenForAccountChanges();
