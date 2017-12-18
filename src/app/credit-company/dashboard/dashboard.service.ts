@@ -68,7 +68,8 @@ export class DashboardService {
       contractAddress: offer.returnValues._assets[index],
       investorWallet: assetValues[6],
       status,
-      value: assetValues[2] / 100
+      value: assetValues[2] / 100,
+      token: assetValues[9]
     };
   }
 
