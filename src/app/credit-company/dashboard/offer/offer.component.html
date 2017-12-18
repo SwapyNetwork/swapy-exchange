@@ -75,7 +75,7 @@
            <tr *ngFor="let asset of offer.assets, let i = index">
               <td>{{i + 1}}</td>
               <td>{{asset.value | currency:'USD':true:'.2'}}</td>
-              <td>{{asset.token}} <button class="btn sw-accept-decline sw-btn-ghost1" (click)="withdrawFunds(asset)"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></td>
+              <td>{{asset.token}} <button class="btn sw-accept-decline sw-btn-ghost1" (click)="supplyToken(asset, 100)"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></td>
               <td>{{statusToString(asset.status)}}</td>
               <td>{{asset.investorWallet ? '-' : asset.investorWallet }}</td>
               <td><span *ngIf="!asset.contractAddress">-</span><a *ngIf="asset.contractAddress" (click)="exploreContract(asset.contractAddress)">Explore</a></td>

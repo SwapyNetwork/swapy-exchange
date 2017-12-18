@@ -118,10 +118,10 @@ export class SwapyProtocolService {
       });
   }
 
-  public supplyToken(contractAddress: string, value: number) {
+  public supplyTokenFuel(contractAddress: string, value: number) {
     this.AssetLibraryContract.options.address = contractAddress;
     return this.AssetLibraryContract.methods
-      .supplyToken(value)
+      .supplyFuel(value)
       .send({
         from: this.walletService.getWallet().address,
         gas: 150000,
