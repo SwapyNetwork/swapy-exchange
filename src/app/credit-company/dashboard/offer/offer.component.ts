@@ -113,6 +113,16 @@ export class OfferComponent implements OnInit {
     }
   }
 
+  public async transferToken(asset, value) {
+    try {
+      await this.swapyProtocol.transferToken(asset.contractAddress, value);
+      this.toastrService.getInstance().success('Token succesfully transfered');
+      this.supplyTokenFuel(asset, value);
+    } catch (error) {
+      this.toastrService.getInstance().error(error.message);
+    }
+  }
+
   public async supplyTokenFuel(asset, value) {
     try {
       await this.swapyProtocol.supplyTokenFuel(asset.contractAddress, value);

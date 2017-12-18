@@ -9,6 +9,7 @@ const env = require('../../../../env.json');
 const SwapyExchange = require(`../../../contracts/${(env as any).NETWORK_NAME}/SwapyExchange.json`);
 const AssetLibrary = require(`../../../contracts/${(env as any).NETWORK_NAME}/AssetLibrary.json`);
 const InvestmentAsset = require(`../../../contracts/${(env as any).NETWORK_NAME}/InvestmentAsset.json`);
+const Token = require(`../../../contracts/${(env as any).NETWORK_NAME}/Token.json`);
 
 
 @Injectable()
@@ -21,6 +22,7 @@ export class SwapyProtocolService {
   private SwapyExchangeContract;
   private AssetLibraryContract;
   private InvestmentAssetContract;
+  private Token;
 
   constructor(protected web3Service: Web3Service, protected walletService: WalletService,
     public errorLogService: ErrorLogService, public http: HttpClient) {
@@ -28,6 +30,7 @@ export class SwapyProtocolService {
     this.SwapyExchangeContract = new this.web3.eth.Contract((SwapyExchange as any).abi, this.getAddressFromBuild(SwapyExchange));
     this.AssetLibraryContract = new this.web3.eth.Contract((AssetLibrary as any).abi);
     this.InvestmentAssetContract = new this.web3.eth.Contract((InvestmentAsset as any).abi);
+    this.Token = new this.web3.eth.Contract((Token as any).abi, this.getAddressFromBuild(Token));
   }
 
   private getAddressFromBuild(build: any) {
@@ -116,6 +119,16 @@ export class SwapyProtocolService {
         gas: 150000,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       });
+  }
+
+  public transferToken(contractAddress: string, value: number) {
+    return this.Token.methods
+      .transfer(contractAddress, value)
+      .send({
+        from: this.walletService.getWallet().address,
+        gas: 150000,
+        gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
+      })
   }
 
   public supplyTokenFuel(contractAddress: string, value: number) {
