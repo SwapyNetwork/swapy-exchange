@@ -1,7 +1,7 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { LoadingService } from './common/services/loading.service';
 import { WalletService } from './common/services/wallet.service';
-import Web3 from 'web3';
+import * as Web3 from 'web3';
 
 import * as env from '../../env.json';
 
