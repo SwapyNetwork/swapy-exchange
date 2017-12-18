@@ -11,6 +11,7 @@ import { WalletService } from '../../common/services/wallet.service';
 import { StorageService } from '../../common/services/storage.service';
 import { LogoutService } from '../../common/services/logout.service';
 import { LoadingService } from '../../common/services/loading.service';
+import { UportService } from '../../common/services/uport.service';
 import { Wallet } from '../../common/interfaces/wallet.interface';
 
 const env = require('../../../../env.json');
@@ -41,6 +42,7 @@ export class LoginComponent implements OnInit {
     private walletService: WalletService,
     private storageService: StorageService,
     public logoutService: LogoutService,
+    public uportService: UportService,
     public loadingService: LoadingService
   ) {}
 
@@ -87,6 +89,11 @@ export class LoginComponent implements OnInit {
     } else {
       this.errorMessages.push('You have to agree to Swapy\'s Terms of Service and Privacy Policy to proceed.');
     }
+  }
+
+  async uportLogin(userType) {
+    const user = await this.uportService.getUport().requestCredentials();
+    console.log(user);
   }
 
   private solveRoute(userType: number) {

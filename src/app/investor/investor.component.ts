@@ -5,8 +5,6 @@ import { LoadingService } from '../common/services/loading.service';
 import { INVESTED, RETURNED, DELAYED_RETURN } from '../common/interfaces/offerAssetStatus.interface';
 import { DashboardService } from './dashboard/dashboard.service';
 
-
-
 @Component({
   encapsulation: ViewEncapsulation.None,
   selector: 'investor-root',

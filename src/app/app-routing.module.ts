@@ -3,9 +3,9 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { MainModule } from './main/main.module';
 
 const routes: Routes = [
-    { path: '', loadChildren: 'app/main/main.module.ts#MainModule' },
-    { path: 'investor', loadChildren: 'app/investor/investor.module.ts#InvestorModule' },
-    { path: 'credit-company', loadChildren: 'app/credit-company/credit-company.module.ts#CreditCompanyModule' }
+    { path: '', loadChildren: 'app/main/main.module#MainModule' },
+    { path: 'investor', loadChildren: 'app/investor/investor.module#InvestorModule' },
+    { path: 'credit-company', loadChildren: 'app/credit-company/credit-company.module#CreditCompanyModule' }
 ];
 
 @NgModule({

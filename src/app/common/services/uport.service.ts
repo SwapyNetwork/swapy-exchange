@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Connect, SimpleSigner } from 'uport-connect';
 
-const Connect = require('uport-connect').Connect;
-const SimpleSigner = require('uport-conenct').SimpleSigner;
 const UPORT_CLIENT_ID = require('../../../../env.json').UPORT_CLIENT_ID;
 const UPORT_KEY = require('../../../../env.json').UPORT_KEY;
 
 @Injectable()
 export class UportService {
-  
+
   private uport: any;
 
   constructor() {

@@ -41,4 +41,4 @@ import { DashboardService } from './dashboard/dashboard.service';
   providers: [LogoutService, OfferService, InvestService, SuccessfulInvestmentService, DashboardService],
   bootstrap: [InvestorComponent]
 })
-export class InvestorModule { }
+export class InvestorModule {}
