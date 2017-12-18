@@ -40,7 +40,7 @@ export class WalletService {
       const account = await this.getCurrentAccount();
       if (!account || account.address === undefined ||
         (account.address !== this.lastAddress && this.lastAddress !== undefined) ||
-        account.network != (env as any).NETWORK_ID) {
+        (Number(account.network) !== Number((env as any).NETWORK_ID) && (env as any).ENV !== 'dev')) {
         this.logoutService.logout();
       }
     }, 1000);
