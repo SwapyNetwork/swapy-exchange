@@ -8,12 +8,7 @@
   "homepage": "https://swapy.network",
   "scripts": {
     "ng": "ng",
-    "start": "electron .",
-    "build.linux": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=linux --overwrite --out installers/ --ignore=\\src/ --icon=./src/assets/img/s-exchange.png --asar",
-    "build.windows": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=win32 --overwrite --out installers/ --ignore=\\src/ --asar --icon=./src/assets/img/s-exchange.ico",
-    "build.mac": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=darwin --overwrite --out installers/ --ignore=\\src/ --icon=./src/assets/img/s-exchange.icns --asar",
-    "deb64": "electron-installer-debian --config debian.json --arch amd64",
-    "watch": "(ng build --watch &) && npm start",
+    "start": "ng serve",
     "alpha": "ng serve --env=prod --host 0.0.0.0 --disable-host-check",
     "test": "ng test",
     "lint": "ng lint",
@@ -50,7 +45,7 @@
     "zone.js": "0.8.4"
   },
   "devDependencies": {
-    "@angular/cli": "1.4.2",
+    "@angular/cli": "^1.6.1",
     "@angular/compiler-cli": "^4.3.0",
     "@angular/language-service": "^4.3.0",
     "@types/jasmine": "~2.5.53",
