@@ -49,15 +49,15 @@ export class LoginComponent implements OnInit {
   }
 
   public getNetworkName(networkId) {
-    switch (networkId) {
-      case '1':
+    switch (Number(networkId)) {
+      case 1:
         return 'mainnet';
-      case '3':
+      case 3:
         return 'ropsten';
-      case '4':
+      case 4:
         return 'rinkeby';
       default:
-        return 'unknown';
+        return networkId > 5000 ? 'ganache' : 'unknown';
     }
   }
 
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
     setTimeout(async () => {
       if (!this.account || this.account.address === undefined) {
         self.requireMetaMask = true;
-      } else if (this.account.network != env.NETWORK_ID) {
+      } else if (Number(this.account.network) !== Number(env.NETWORK_ID) && env.ENV !== 'dev') {
         self.requireNetwork = true;
       } else {
         self.requireNetwork = false;
