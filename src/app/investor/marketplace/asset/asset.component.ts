@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { MarketplaceService } from '../marketplace.service';
 
 @Component({
   selector: 'asset-card',
@@ -9,9 +11,18 @@ export class AssetComponent implements OnInit {
 
   @Input() public asset;
   @Input() public assetIndex;
-  constructor() { }
+  constructor(
+    private router: Router,
+    private marketplaceService: MarketplaceService
+  ) { }
 
   ngOnInit() {
+  }
+
+  public buy(asset) {
+    this.marketplaceService.cacheAsset(asset);
+    this.router.navigate(['investor/marketplace/confirm-purchase']);
+
   }
 
 }

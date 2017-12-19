@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoadingService } from '../../common/services/loading.service';
+import { MarketplaceService } from './marketplace.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 
 @Component({
