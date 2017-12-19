@@ -76,7 +76,7 @@
                 <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == PENDING_OWNER_AGREEMENT)" (click) = "cancelInvestment(asset)">
                   <i class="fa fa-times" aria-hidden="true"></i>
                 </button>
-                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == FOR-SALE)" (click) = "cancelInvestment(asset)">
+                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == FOR_SALE)" (click) = "cancelSellOrder(asset)">
                   <i class="fa fa-times" aria-hidden="true"></i>
                 </button>
               </td>
