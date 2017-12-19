@@ -14,16 +14,16 @@ export class LoadingService {
 
   // Service message commands
   show() {
-    if (this.activeRequests === 0) {
-      this.loadingShowedSource.next();
-    }
-    this.activeRequests++;
+    // if (this.activeRequests === 0) {
+    //   this.loadingShowedSource.next();
+    // }
+    // this.activeRequests++;
   }
 
   hide() {
-    if (this.activeRequests === 1) {
-      this.loadingHidSource.next();
-    }
-    this.activeRequests--;
+    // if (this.activeRequests === 1) {
+    //   this.loadingHidSource.next();
+    // }
+    // this.activeRequests--;
   }
 }

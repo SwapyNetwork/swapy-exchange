@@ -21,15 +21,30 @@ export class WalletService {
 
   public async getCurrentAccount() {
     this.lastAddress = this.wallet.address || undefined;
-    const accounts = await this.web3Service.getInstance().eth.getAccounts();
-    this.wallet.network = this.getCurrentNetwork();
-    this.wallet.address = accounts[0];
-    return this.wallet;
+    let accounts;
+    if (this.storageService.getItem('uPort')) {
+      return new Promise((resolve, reject) => {
+        this.web3Service.getInstance(true).eth.getAccounts((err, acc) => {
+          if (err) {
+            reject(err);
+          }
+
+          accounts = acc;
+          this.wallet.address = accounts[0];
+          resolve(this.wallet);
+        })
+      });
+    } else {
+      accounts = await this.web3Service.getInstance(false).eth.getAccounts();
+      this.wallet.network = this.getCurrentNetwork();
+      this.wallet.address = accounts[0];
+      return this.wallet;
+    }
   }
 
   public getCurrentNetwork() {
-    if (this.web3Service.getInstance().eth.currentProvider.publicConfigStore) {
-      return this.web3Service.getInstance().eth.currentProvider.publicConfigStore._state.networkVersion;
+    if (this.web3Service.getInstance(false).eth.currentProvider.publicConfigStore) {
+      return this.web3Service.getInstance(false).eth.currentProvider.publicConfigStore._state.networkVersion;
     } else {
       return false;
     }
@@ -37,10 +52,11 @@ export class WalletService {
 
   public listenForAccountChanges() {
     setInterval(async () => {
-      const account = await this.getCurrentAccount();
-      if (!account || account.address === undefined ||
+      const account: any = await this.getCurrentAccount();
+      if ((!account || account.address === undefined ||
         (account.address !== this.lastAddress && this.lastAddress !== undefined) ||
-        (Number(account.network) !== Number((env as any).NETWORK_ID) && (env as any).ENV !== 'dev')) {
+        (Number(account.network) !== Number((env as any).NETWORK_ID) && (env as any).ENV !== 'dev')) &&
+        !this.storageService.getItem('uPort')) {
         this.logoutService.logout();
       }
     }, 1000);
@@ -60,14 +76,14 @@ export class WalletService {
   }
 
   async getBalance() {
-    const account = await this.getCurrentAccount();
-    return this.web3Service.getInstance().eth.getBalance(account.address);
+    const account: any = await this.getCurrentAccount();
+    return this.web3Service.getInstance(false).eth.getBalance(account.address);
   }
 
   getEthBalance() {
     return new Promise((resolve, reject) => {
       this.getBalance().then((balance) => {
-        const ethBalance = this.web3Service.getInstance().utils.fromWei(balance, 'ether');
+        const ethBalance = this.web3Service.getInstance(false).utils.fromWei(balance, 'ether');
         resolve(ethBalance);
       }, (error) => {
         this.errorLogService.setClassName('WalletService');

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { UportService } from './uport.service';
 import Web3 from 'web3';
 
 import * as ProviderFile from '../../../../env.json';
@@ -7,15 +8,15 @@ import * as ProviderFile from '../../../../env.json';
 export class Web3Service {
 
   private web3Ws: Web3;
-  constructor() {
+  constructor(private uportService: UportService) {
   }
 
   private isOpen(connection) {
     return connection.readyState === connection.OPEN;
   }
 
-  public getInstance() {
-    return (window as any).web3
+  public getInstance(uPort) {
+    return uPort ? this.uportService.getWeb3() : (window as any).web3;
   }
 
   public getWSInstance() {

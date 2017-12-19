@@ -47,7 +47,9 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.checkAccount();
+    // this.checkAccount();
+    this.requireNetwork = false;
+    this.requireMetaMask = false;
   }
 
   public getNetworkName(networkId) {
@@ -65,7 +67,7 @@ export class LoginComponent implements OnInit {
 
   private async checkAccount() {
     const self = this;
-    this.account = await this.walletService.getCurrentAccount();
+    (this.account as any) = await this.walletService.getCurrentAccount();
     setTimeout(async () => {
       if (!this.account || this.account.address === undefined) {
         self.requireMetaMask = true;
@@ -81,9 +83,14 @@ export class LoginComponent implements OnInit {
     }, 1000);
   }
 
-  login(userType) {
+  login(userType, user) {
     if (this.agreedToTerms === true) {
-      this.storageService.setItem('user', { wallet: this.account, type: userType });
+      if (user) {
+        user.type = userType;
+        this.storageService.setItem('uPort', true);
+        this.walletService.getCurrentAccount();
+      }
+      this.storageService.setItem('user', user || { wallet: this.account, type: userType });
       this.storageService.setItem('acceptedTerms', this.agreedToTerms);
       this.router.navigate([this.solveRoute(userType)]);
     } else {
@@ -92,11 +99,20 @@ export class LoginComponent implements OnInit {
   }
 
   async uportLogin(userType) {
-    const user = await this.uportService.getUport().requestCredentials({
-      requested: ['name', 'phone', 'country'],
-      notifications: true // We want this if we want to recieve credentials
-    });
-    console.log(user);
+    try {
+      const user = await this.uportService.getUport().requestCredentials({
+        requested: ['name', 'phone', 'country'],
+        notifications: true // We want this if we want to recieve credentials
+      });
+
+      if (user) {
+        (window as any).uportWeb3 = this.uportService.getWeb3();
+        this.login(CREDIT_COMPANY, user);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   private solveRoute(userType: number) {

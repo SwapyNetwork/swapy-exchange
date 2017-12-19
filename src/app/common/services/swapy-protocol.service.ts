@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Web3Service } from './web3.service';
 import { WalletService } from './wallet.service';
 import { ErrorLogService } from './error-log.service';
+import { StorageService } from './storage.service';
 
 const env = require('../../../../env.json');
 
@@ -14,6 +15,7 @@ const InvestmentAsset = require(`../../../contracts/${(env as any).NETWORK_NAME}
 @Injectable()
 export class SwapyProtocolService {
   protected web3;
+  protected uportWeb3;
   protected gasPrice = 1;
 
   protected ethPriceProvider = 'https://api.coinmarketcap.com/v1/ticker/ethereum/';
@@ -22,12 +24,24 @@ export class SwapyProtocolService {
   private AssetLibraryContract;
   private InvestmentAssetContract;
 
-  constructor(protected web3Service: Web3Service, protected walletService: WalletService,
+  private SwapyExchangeContractUport;
+  private AssetLibraryContractUport;
+  private InvestmentAssetContractUport;
+
+  constructor(protected web3Service: Web3Service, protected walletService: WalletService, protected storageService: StorageService,
     public errorLogService: ErrorLogService, public http: HttpClient) {
-    this.web3 = this.web3Service.getInstance();
+    this.web3 = this.web3Service.getInstance(false);
     this.SwapyExchangeContract = new this.web3.eth.Contract((SwapyExchange as any).abi, this.getAddressFromBuild(SwapyExchange));
     this.AssetLibraryContract = new this.web3.eth.Contract((AssetLibrary as any).abi);
     this.InvestmentAssetContract = new this.web3.eth.Contract((InvestmentAsset as any).abi);
+
+    if (this.storageService.getItem('uPort')) {
+      this.uportWeb3 = this.web3Service.getInstance(this.storageService.getItem('uPort'));
+      const SwapyExchangeContractABI = this.uportWeb3.eth.contract((SwapyExchange as any).abi);
+      this.SwapyExchangeContractUport = SwapyExchangeContractABI.at(this.getAddressFromBuild(SwapyExchange));
+      this.AssetLibraryContractUport = this.uportWeb3.eth.contract((AssetLibrary as any).abi);
+      this.InvestmentAssetContractUport = this.uportWeb3.eth.contract((InvestmentAsset as any).abi);
+    }
   }
 
   private getAddressFromBuild(build: any) {
@@ -47,7 +61,58 @@ export class SwapyProtocolService {
     });
   }
 
-  public createOffer(payback: number, grossReturn: number, currency: string, value: number, offerTermsHash: string, assets: number[]) {
+    // Callback handler for whether it was mined or not
+  private waitForMined = (txHash, response, pendingCB, successCB) => {
+    if (response.blockNumber) {
+      successCB()
+    } else {
+      pendingCB()
+        this.pollingLoop(txHash, response, pendingCB, successCB)
+    }
+  }
+
+  // Recursive polling to do continuous checks for when the transaction was mined
+  private pollingLoop = (txHash, response, pendingCB, successCB) => {
+    const self = this;
+    setTimeout(function () {
+      this.web3.eth.getTransaction(txHash, (error, response) => {
+        if (error) { throw error }
+          if (response === null) {
+            response = { blockNumber: null }
+          } // Some ETH nodes do not return pending tx
+          self.waitForMined(txHash, response, pendingCB, successCB)
+      })
+    }, 1000) // check again in one sec.
+  }
+
+  public createOfferUport(payback: number, grossReturn: number, currency: string, value: number, offerTermsHash: string, assets: number[]) {
+    return new Promise((resolve, reject) => {
+      this.SwapyExchangeContractUport
+      .createOffer(payback,
+        grossReturn * 10000,
+        currency,
+        assets,
+        (error, txHash) => {
+          if (error) {
+            reject(error);
+          }
+          this.waitForMined(txHash, { blockNumber: null }, // see next area
+            function pendingCB () {
+              // Signal to the user you're still waiting
+              // for a block confirmation
+            },
+            function successCB (data) {
+              resolve(data);
+              // Great Success!
+              // Likely you'll call some eventPublisherMethod(txHash, data)
+            }
+          )
+      })
+    })
+  }
+
+  public createOfferMetamask(payback: number, grossReturn: number,
+    currency: string, value: number, offerTermsHash: string, assets: number[]) {
     return this.SwapyExchangeContract.methods
       .createOffer(
         payback,
@@ -55,6 +120,11 @@ export class SwapyProtocolService {
         currency,
         assets)
       .send({ from: this.walletService.getWallet().address, gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei') });
+  }
+
+  public createOffer(payback: number, grossReturn: number, currency: string, value: number, offerTermsHash: string, assets: number[]) {
+    return this.storageService.getItem('uPort') ? this.createOfferUport(payback, grossReturn, currency, value, offerTermsHash, assets) :
+      this.createOfferMetamask(payback, grossReturn, currency, value, offerTermsHash, assets);
   }
 
   public async invest(assetAddress: string[], value: number) {

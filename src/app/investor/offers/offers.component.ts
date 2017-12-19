@@ -25,7 +25,7 @@ export class OffersComponent implements OnInit {
     private swapyProtocol: SwapyProtocol) { }
 
   ngOnInit() {
-    this.web3 = this.web3Service.getInstance();
+    this.web3 = this.web3Service.getInstance(false);
     this.getOffersFromBlockchain();
   }
 

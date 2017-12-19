@@ -72,7 +72,7 @@ export class InvestorComponent implements OnInit {
 
     this.averageReturn = this.averageReturn === 0 ? 0 : (this.averageReturn / assetsLength).toFixed(4);
 
-    this.web3Service.getInstance().eth.getBlock('latest').then(block => {
+    this.web3Service.getInstance(false).eth.getBlock('latest').then(block => {
       const now = block.timestamp * 1000;
       this.averagePaybackPeriod = assets.filter(asset => Number(asset.status) === INVESTED)
         .map(asset => {
