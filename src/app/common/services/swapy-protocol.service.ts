@@ -119,9 +119,8 @@ export class SwapyProtocolService {
   }
 
   public sellAsset(contractAddress: string, value: number) {
-    this.AssetLibraryContract.options.address = contractAddress;
-    return this.AssetLibraryContract.methods
-      .sell(value)
+    return this.SwapyExchangeContract.methods
+      .sellAsset(contractAddress, value)
       .send({
         from: this.walletService.getWallet().address,
         gas: 150000,

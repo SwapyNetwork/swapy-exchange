@@ -1,3 +1,38 @@
-<p>
-  marketplace works!
-</p>
+<!-- ///////////////////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////   MAIN Content  ////////////////////////////////////// -->
+<!-- ///////////////////////////////////////////////////////////////////////////////// -->
+<div class="sw-scrollbar2">
+    <div class="row">
+      <!-- Page name, Search Bar -->
+      <div class="col-xs-4 col-sm-4 col-md-4">
+        <p class="sw-page-name">Marketplace</p>
+      </div>
+      <!-- <div class="col-xs-6 col-sm-6 col-md-6 sw-search-bar">
+       <div class="input-group" id="search-bar">
+        <input type="text" class="form-control sw-search-bar" placeholder="Search offers">
+        <span class="input-group-btn">
+           <button class="btn btn-default sw-search-bar-icon" type="button"><i class="fa fa-search"></i></button>
+        </span>
+       </div>
+      </div> -->
+
+      <!-- <div class="col-xs-2 col-sm-2 col-md-2 sw-search-button">
+           <a href="#" id="swapy-button"><img class="sw-btn1" src="assets/img/swapy-button.png" alt="Swapy search"></a>
+           <a href="#" id="swapy-button2"><img class="sw-btn2" src="assets/img/swapy-button2.png" alt="Swapy search"></a>
+
+      </div> -->
+    </div> <!-- END Page name, Search Bar  -->
+
+    <div class="row"><!-- //////////// MAIN Content //////////// -->
+      <div *ngIf="offers" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
+         <p class="sw-title-outside-box">Assets for sale</p>
+
+          <!-- <offer-card *ngFor="let asset of assets; let assetIndex = index" [asset]="asset" [assetIndex]="assetIndex"></offer-card> -->
+
+      </div>
+
+      <div *ngIf="assets.length === 0" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
+         <p class="sw-title-outside-box">Sorry! No assets found.</p>
+      </div>
+    </div><!-- END MAIN Content  -->
+</div>

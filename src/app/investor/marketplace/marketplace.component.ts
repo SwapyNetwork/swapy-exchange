@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MarketplaceComponent implements OnInit {
 
+  public assets = [];
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public async getAssetsForSale() {
   }
 
 }
