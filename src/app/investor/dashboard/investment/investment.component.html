@@ -65,6 +65,7 @@
               <th>Status</th>
               <th>Contract</th>
               <th>Cancel</th>
+              <th>Sell</th>
             </tr>
             <tr *ngFor="let asset of investment.assets, let i = index">
               <td>{{i + 1}}</td>
@@ -74,6 +75,14 @@
               <td>
                 <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == PENDING_OWNER_AGREEMENT)" (click) = "cancelInvestment(asset)">
                   <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == FOR-SALE)" (click) = "cancelInvestment(asset)">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+              </td>
+              <td>
+                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.status == INVESTED" (click)="sellAsset(asset)">
+                  <i class="fa fa-check" aria-hidden="true"></i>
                 </button>
               </td>
             </tr>

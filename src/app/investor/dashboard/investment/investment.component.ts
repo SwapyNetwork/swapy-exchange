@@ -111,4 +111,20 @@ export class InvestmentComponent implements OnInit {
       this.toastrService.getInstance().error(error.message);
     }
   }
+
+  public async sellAsset(asset) {
+    const status = asset.status;
+    this.storageService.setItem(asset.contractAddress, status);
+    asset.status = PENDING_ETHEREUM_CONFIRMATION;
+    try {
+      const value = asset.value * 100;
+      await this.swapyProtocol.sellAsset(asset.contractAddress, value);
+      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+      this.storageService.getItem(asset.contractAddress);
+    } catch (error) {
+      this.storageService.remove(asset.contractAddress);
+      asset.status = status;
+      this.toastrService.getInstance().error(error.message);
+    }
+  }
 }
