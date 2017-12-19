@@ -92,7 +92,10 @@ export class LoginComponent implements OnInit {
   }
 
   async uportLogin(userType) {
-    const user = await this.uportService.getUport().requestCredentials();
+    const user = await this.uportService.getUport().requestCredentials({
+      requested: ['name', 'phone', 'country'],
+      notifications: true // We want this if we want to recieve credentials
+    });
     console.log(user);
   }
 

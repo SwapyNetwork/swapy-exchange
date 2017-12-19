@@ -25,9 +25,9 @@ export class AppComponent {
     );
 
     if (typeof (window as any).web3 !== 'undefined') {
-      (window as any).web3 = new Web3((window as any).web3.currentProvider);
+      (window as any).web3 = new (Web3 as any)((window as any).web3.currentProvider);
     } else {
-      (window as any).web3 = new Web3((env as any).HTTP_PROVIDER);
+      (window as any).web3 = new (Web3 as any)((env as any).HTTP_PROVIDER);
     }
 
     this.walletService.listenForAccountChanges();

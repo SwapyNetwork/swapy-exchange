@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Connect, SimpleSigner } from 'uport-connect';
+import { Connect, SimpleSigner } from 'uport-connect'
 
 const UPORT_CLIENT_ID = require('../../../../env.json').UPORT_CLIENT_ID;
 const UPORT_KEY = require('../../../../env.json').UPORT_KEY;
@@ -11,10 +11,9 @@ export class UportService {
 
   constructor() {
     this.uport = new Connect('SwapyExchange', {
-        clientId: UPORT_CLIENT_ID,
-        network: 'rinkeby',
-        signer: SimpleSigner(UPORT_KEY)
-    })
+      clientId: UPORT_CLIENT_ID,
+      signer: SimpleSigner(UPORT_KEY)
+    });
   }
 
   public getUport() {
