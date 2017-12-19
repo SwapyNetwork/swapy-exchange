@@ -24,6 +24,7 @@ import { InvestService } from './invest/invest.service';
 import { SuccessfulInvestmentService } from './successful-investment/successful-investment.service';
 import { InvestmentComponent } from './dashboard/investment/investment.component';
 import { DashboardService } from './dashboard/dashboard.service';
+import { MarketplaceComponent } from './marketplace/marketplace.component';
 
 @NgModule({
   imports: [
@@ -37,7 +38,7 @@ import { DashboardService } from './dashboard/dashboard.service';
   ],
   declarations: [InvestorComponent, OffersComponent, DashboardComponent, OfferComponent,
     OfferDetailsComponent, CreditCompanyComponent, TermsPageComponent, PrivacyPageComponent, ProfileComponent,
-    InvestComponent, SuccessfulInvestmentComponent, InvestmentComponent],
+    InvestComponent, SuccessfulInvestmentComponent, InvestmentComponent, MarketplaceComponent],
   providers: [LogoutService, OfferService, InvestService, SuccessfulInvestmentService, DashboardService],
   bootstrap: [InvestorComponent]
 })
