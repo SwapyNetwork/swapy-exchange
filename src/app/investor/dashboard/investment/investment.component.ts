@@ -22,6 +22,7 @@ export class InvestmentComponent implements OnInit {
   @Input() public investment: Invest;
   @Input() public collapsed: boolean;
   //
+  private walletAddress;
 
   public AVAILABLE = AVAILABLE;
   public PENDING_OWNER_AGREEMENT = PENDING_OWNER_AGREEMENT;
@@ -43,6 +44,7 @@ export class InvestmentComponent implements OnInit {
     private walletService: WalletService) { }
 
   ngOnInit() {
+    this.walletAddress = this.walletService.getWallet().address.toLowerCase();
   }
 
   public toggleCollapse() {
@@ -78,7 +80,7 @@ export class InvestmentComponent implements OnInit {
         statusString = 'For sale';
         break;
       case this.PENDING_INVESTOR_AGREEMENT:
-        statusString = 'Pending your confirmation to sell';
+        statusString = 'Pending confirmation to sell';
         break;
       case this.DELAYED_RETURN:
         statusString = 'Delayed return';

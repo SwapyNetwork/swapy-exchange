@@ -73,15 +73,15 @@
               <td>{{statusToString(asset.status)}}</td>
               <td><span *ngIf="!asset.contractAddress">-</span><a *ngIf="asset.contractAddress" (click)="exploreContract(asset.contractAddress)">Explore</a></td>
               <td>
-                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == PENDING_OWNER_AGREEMENT)" (click) = "cancelInvestment(asset)">
+                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == PENDING_OWNER_AGREEMENT && asset.investor == walletAddress)" (click) = "cancelInvestment(asset)">
                   <i class="fa fa-times" aria-hidden="true"></i>
                 </button>
-                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == FOR_SALE)" (click) = "cancelSellOrder(asset)">
+                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == FOR_SALE && asset.investor == walletAddress)" (click) = "cancelSellOrder(asset)">
                   <i class="fa fa-times" aria-hidden="true"></i>
                 </button>
               </td>
               <td>
-                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.status == INVESTED" (click)="sellAsset(asset)">
+                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.status == INVESTED && asset.investor == walletAddress" (click)="sellAsset(asset)">
                   <i class="fa fa-check" aria-hidden="true"></i>
                 </button>
               </td>

@@ -63,7 +63,7 @@ export class DashboardService {
     const assets = await this.getAssetValues(investment.returnValues._assets);
 
     assets.forEach(async (asset, index) => {
-      if (asset[6] === this.walletService.getWallet().address) {
+      if (asset[6] === this.walletService.getWallet().address || asset[10] === this.walletService.getWallet().address) {
         const storagedStatus = this.storageService.getItem(investment.returnValues._assets[index]);
         let status;
         if (storagedStatus === null || storagedStatus !== Number(asset[5])) {
@@ -74,7 +74,8 @@ export class DashboardService {
         newInvestment.assets.push({
           contractAddress: investment.returnValues._assets[index],
           status,
-          value: asset[2] / 100
+          value: asset[2] / 100,
+          investor: asset[6]
         });
       }
 
@@ -104,10 +105,15 @@ export class DashboardService {
   }
 
   async getMyInvestmentsFromBlockchain() {
-    const investments = await this.swapyProtocol.get('Investments')
+    let investments = await this.swapyProtocol.get('Investments')
       .filter(investment => investment.returnValues._investor.toLowerCase() === this.walletService.getWallet().address.toLowerCase());
-
+    const bought = await this.swapyProtocol.get('Bought')
+      .filter(investment => investment.returnValues._buyer.toLowerCase() === this.walletService.getWallet().address.toLowerCase());
     const promises = [];
+    bought.forEach(asset => {
+      asset.returnValues._assets = [asset.returnValues._asset];
+    })
+    investments = investments.concat(bought);
     investments.forEach((investment) => {
       promises.push(this.buildInvestment(investment));
     });
