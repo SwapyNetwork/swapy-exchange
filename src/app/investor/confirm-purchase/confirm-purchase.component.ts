@@ -24,7 +24,7 @@ export class ConfirmPurchaseComponent implements OnInit {
 
   public async confirmPurchase() {
     try {
-      await this.swapyProtocol.buyAsset(this.asset.address);
+      await this.swapyProtocol.buyAsset(this.asset.address, this.asset.value);
       this.toastrService.getInstance().success('Purchase requested');
     } catch (error) {
       this.toastrService.getInstance().error(error.message);

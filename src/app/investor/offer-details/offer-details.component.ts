@@ -5,8 +5,8 @@ import { Offer } from '../../common/interfaces/offer.interface';
 import { LoadingService } from '../../common/services/loading.service';
 import { Invest } from '../invest/invest.interface';
 import { InvestService } from '../invest/invest.service';
-import {AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED,
-  RETURNED, DELAYED_RETURN
+import {AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT,
+  RETURNED, DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION
 } from '../../common/interfaces/offerAssetStatus.interface';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 
@@ -23,6 +23,9 @@ export class OfferDetailsComponent implements OnInit {
   public INVESTED = INVESTED;
   public RETURNED = RETURNED;
   public DELAYED_RETURN = DELAYED_RETURN;
+  public FOR_SALE = FOR_SALE;
+  public PENDING_INVESTOR_AGREEMENT = PENDING_INVESTOR_AGREEMENT;
+  public PENDING_ETHEREUM_CONFIRMATION = PENDING_ETHEREUM_CONFIRMATION;
 
   public offer;
 
@@ -95,11 +98,11 @@ export class OfferDetailsComponent implements OnInit {
       case this.INVESTED:
         statusString = 'Sold';
         break;
+      case this.FOR_SALE:
+      case this.PENDING_INVESTOR_AGREEMENT:
       case this.RETURNED:
-        statusString = 'Unavailable';
-        break;
       case this.DELAYED_RETURN:
-        statusString = 'Delayed';
+        statusString = 'Unavailable';
         break;
     }
 

@@ -139,13 +139,17 @@ export class SwapyProtocolService {
       });
   }
 
-  public buyAsset(contractAddress: string) {
+  public async buyAsset(contractAddress: string, value: number) {
+    const ethPrice = await this.getEthPrice();
+    const ethValue = value / (ethPrice as number);
+
     return this.SwapyExchangeContract.methods
       .buyAsset(contractAddress)
       .send({
         from: this.walletService.getWallet().address,
         gas: 150000,
-        gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
+        gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei'),
+        value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
       });
   }
 
