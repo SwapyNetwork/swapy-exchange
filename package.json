@@ -19,7 +19,6 @@
     "build": "webpack",
     "pree2e": "webdriver-manager update --standalone false --gecko false --quiet"
   },
-  "private": true,
   "dependencies": {
     "angular2-text-mask": "8.0.2",
     "bootstrap": "3.3.5",
@@ -62,6 +61,7 @@
     "css-loader": "^0.28.1",
     "cssnano": "^3.10.0",
     "debug": "^3.1.0",
+    "electron": "^1.7.8",
     "exports-loader": "^0.6.3",
     "file-loader": "^1.1.5",
     "html-webpack-plugin": "^2.29.0",
@@ -77,6 +77,7 @@
     "klaw": "^2.1.0",
     "less-loader": "^4.0.5",
     "ngx-electron": "^1.0.4",
+    "npm": "^5.4.2",
     "postcss-loader": "^2.0.8",
     "postcss-url": "^7.1.2",
     "protractor": "~5.1.2",
