@@ -63,7 +63,8 @@ export class DashboardService {
     const assets = await this.getAssetValues(investment.returnValues._assets);
 
     assets.forEach(async (asset, index) => {
-      if (asset[6] === this.walletService.getWallet().address || asset[10] === this.walletService.getWallet().address) {
+      if (asset[6].toLowerCase() === this.walletService.getWallet().address.toLowerCase() ||
+          asset[10].toLowerCase() === this.walletService.getWallet().address.toLowerCase()) {
         const storagedStatus = this.storageService.getItem(investment.returnValues._assets[index]);
         let status;
         if (storagedStatus === null || storagedStatus !== Number(asset[5])) {
@@ -75,7 +76,7 @@ export class DashboardService {
           contractAddress: investment.returnValues._assets[index],
           status,
           value: asset[2] / 100,
-          investor: asset[6]
+          investor: asset[6].toLowerCase()
         });
       }
 

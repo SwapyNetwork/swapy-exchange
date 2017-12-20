@@ -79,6 +79,12 @@
                 <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == FOR_SALE && asset.investor == walletAddress)" (click) = "cancelSellOrder(asset)">
                   <i class="fa fa-times" aria-hidden="true"></i>
                 </button>
+                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == PENDING_INVESTOR_AGREEMENT && asset.investor != walletAddress)" (click) = "cancelSale(asset)">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == PENDING_INVESTOR_AGREEMENT && asset.investor == walletAddress)">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
               </td>
               <td>
                 <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.status == INVESTED && asset.investor == walletAddress" (click)="sellAsset(asset)">
