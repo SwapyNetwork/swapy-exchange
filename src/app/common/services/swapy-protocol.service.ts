@@ -127,7 +127,34 @@ export class SwapyProtocolService {
       this.createOfferMetamask(payback, grossReturn, currency, value, offerTermsHash, assets);
   }
 
-  public async invest(assetAddress: string[], value: number) {
+  public async investUport(assetAddress: string[], value: number) {
+    const ethPrice = await this.getEthPrice();
+    const ethValue = value / (ethPrice as number);
+
+    return new Promise((resolve, reject) => {
+      this.SwapyExchangeContractUport
+      .invest(assetAddress, {
+        value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
+      }, (error, txHash) => {
+        if (error) {
+          reject(error);
+        }
+        this.waitForMined(txHash, { blockNumber: null }, // see next area
+          function pendingCB () {
+            // Signal to the user you're still waiting
+            // for a block confirmation
+          },
+          function successCB (data) {
+            resolve(data);
+            // Great Success!
+            // Likely you'll call some eventPublisherMethod(txHash, data)
+          }
+        )
+      })
+    })
+  }
+
+  public async investMetamask(assetAddress: string[], value: number) {
     const ethPrice = await this.getEthPrice();
     const ethValue = value / (ethPrice as number);
     return this.SwapyExchangeContract.methods
@@ -138,6 +165,11 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei'),
         value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
       });
+  }
+
+  public invest(assetAddress: string[], value: number) {
+    return this.storageService.getItem('uPort') ? this.investUport(assetAddress, value) :
+    this.investMetamask(assetAddress, value);
   }
 
   public withdrawFunds(contractAddress: string) {
