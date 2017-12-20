@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { LoadingService } from '../../common/services/loading.service';
 import { MarketplaceService } from './marketplace.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
+import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT,
+  RETURNED, DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offerAssetStatus.interface';
+
 
 @Component({
   selector: 'app-marketplace',
@@ -35,7 +38,7 @@ export class MarketplaceComponent implements OnInit {
         const assetAddress = forSaleEvent.returnValues._asset;
         const assetValue = forSaleEvent.returnValues._value;
         const investor = forSaleEvent.returnValues._investor;
-        const assetConstants = await this.swapyProtocol.getAssetConstants(assetAddress, ['grossReturn', 'paybackDays']);
+        const assetConstants = await this.swapyProtocol.getAssetConstants(assetAddress, ['grossReturn', 'paybackDays', 'status']);
         const asset = {
           address: assetAddress,
           displayAddress: this.getDisplayWalletAddress(assetAddress),
@@ -44,7 +47,9 @@ export class MarketplaceComponent implements OnInit {
           paybackMonths: assetConstants.paybackDays / 30,
           value: assetValue / 100
         };
-        this.assets.push(asset);
+        if (Number(assetConstants.status) === FOR_SALE) {
+          this.assets.push(asset);
+        }
       });
 
       this.loadingService.hide();

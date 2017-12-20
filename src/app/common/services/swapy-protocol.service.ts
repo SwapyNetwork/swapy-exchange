@@ -139,6 +139,16 @@ export class SwapyProtocolService {
       });
   }
 
+  public buyAsset(contractAddress: string) {
+    return this.SwapyExchangeContract.methods
+      .buyAsset(contractAddress)
+      .send({
+        from: this.walletService.getWallet().address,
+        gas: 150000,
+        gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
+      });
+  }
+
   public get(event: string) {
     return this.SwapyExchangeContract.getPastEvents(event, {
       fromBlock: 0,

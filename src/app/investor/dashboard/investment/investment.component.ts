@@ -78,7 +78,7 @@ export class InvestmentComponent implements OnInit {
         statusString = 'For sale';
         break;
       case this.PENDING_INVESTOR_AGREEMENT:
-        statusString = 'Pending investor\'s confirmation';
+        statusString = 'Pending your confirmation to sell';
         break;
       case this.DELAYED_RETURN:
         statusString = 'Delayed return';
@@ -103,7 +103,7 @@ export class InvestmentComponent implements OnInit {
     asset.status = PENDING_ETHEREUM_CONFIRMATION;
     try {
       await this.swapyProtocol.cancelInvestment(asset.contractAddress);
-      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+      this.toastrService.getInstance().success('Investment cancelled');
       this.storageService.getItem(asset.contractAddress);
     } catch (error) {
       this.storageService.remove(asset.contractAddress);
@@ -119,7 +119,7 @@ export class InvestmentComponent implements OnInit {
     try {
       const value = asset.value * 100;
       await this.swapyProtocol.sellAsset(asset.contractAddress, value);
-      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+      this.toastrService.getInstance().success('Asset inserted into the Marketplace');
       this.storageService.getItem(asset.contractAddress);
     } catch (error) {
       this.storageService.remove(asset.contractAddress);
@@ -134,7 +134,7 @@ export class InvestmentComponent implements OnInit {
     asset.status = PENDING_ETHEREUM_CONFIRMATION;
     try {
       await this.swapyProtocol.cancelSellOrder(asset.contractAddress);
-      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+      this.toastrService.getInstance().success('Asset deleted of the Marketplace');
       this.storageService.getItem(asset.contractAddress);
     } catch (error) {
       this.storageService.remove(asset.contractAddress);
