@@ -6,6 +6,8 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { MainComponent } from './main.component';
 import { MainRoutingModule } from './main-routing.module';
 import { LoginComponent } from './login/login.component';
+import { SelectLoginComponent } from './select-login/select-login.component';
+import { UportLoginComponent } from './uport-login/uport-login.component';
 import { LoginService } from './login/login.service';
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 import { TermsPageComponent } from './terms-page/terms-page.component';
@@ -20,7 +22,14 @@ import { NavModule } from '../common/nav/nav.module';
     NavModule,
     TextMaskModule
   ],
-  declarations: [MainComponent, LoginComponent, PrivacyPageComponent, TermsPageComponent],
+  declarations: [
+    MainComponent,
+    LoginComponent,
+    SelectLoginComponent,
+    UportLoginComponent,
+    PrivacyPageComponent,
+    TermsPageComponent
+  ],
   providers: [LoginService],
   bootstrap: [MainComponent]
 })

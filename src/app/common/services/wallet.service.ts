@@ -51,18 +51,19 @@ export class WalletService {
   }
 
   public listenForAccountChanges() {
-    setInterval(async () => {
+    (window as any).listenForAccountChanges = setInterval(async () => {
       const account: any = await this.getCurrentAccount();
       if ((!account || account.address === undefined ||
         (account.address !== this.lastAddress && this.lastAddress !== undefined) ||
         (Number(account.network) !== Number((env as any).NETWORK_ID) && (env as any).ENV !== 'dev')) &&
         !this.storageService.getItem('uPort')) {
-        this.logoutService.logout();
+        this.logoutService.logoutMetamask();
       }
     }, 1000);
   }
 
   getWallet() {
+    if (!this.wallet.address) { this.logoutService.logout(); }
     return this.wallet;
   }
 

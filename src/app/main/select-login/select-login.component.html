@@ -1,0 +1,18 @@
+<img src="assets/img/swapy-logo.jpg" alt="swapy logo">
+
+<div *ngIf="errorMessages.length > 0">
+  <div *ngFor="let message of errorMessages" class="alert alert-danger">
+    {{message}}
+  </div>
+</div>
+
+<div>
+  <div class="checkbox">
+      <label>
+        <input type="checkbox" name="agreedToTerms" [(ngModel)]="agreedToTerms"/>I agree to Swapy's<a routerLink="/terms-of-service"> Terms of Service</a> and<a routerLink="/privacy-policy"> Privacy Policy.</a>
+      </label>
+  </div>
+
+  <button class="sw-button sw-btn-ghost1" (click)="selectLogin(METAMASK)">Sign in with MetaMask</button>
+  <button class="sw-button sw-btn-ghost1" (click)="selectLogin(UPORT)">Sign in with uPort</button>
+</div>

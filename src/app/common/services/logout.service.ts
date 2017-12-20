@@ -21,6 +21,13 @@ export class LogoutService {
 
   logout() {
     this.storageService.clear();
+    clearInterval((window as any).listenForAccountChanges);
     this.router.navigate(['/']);
+  }
+
+  logoutMetamask() {
+    this.storageService.clear();
+    clearInterval((window as any).listenForAccountChanges);
+    this.router.navigate(['/metamask']);
   }
 }

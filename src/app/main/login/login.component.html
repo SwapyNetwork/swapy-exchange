@@ -25,13 +25,6 @@
 <div *ngIf="requireMetaMask === false && requireNetwork === false" class="signin-metamask">
   <p>Found address <b>{{account.address}}</b> at network <b>{{getNetworkName(account.network)}}</b></p>
 
-  <div class="checkbox">
-      <label>
-        <input type="checkbox" name="agreedToTerms" [(ngModel)]="agreedToTerms"/>I agree to Swapy's<a routerLink="/terms-of-service"> Terms of Service</a> and<a routerLink="/privacy-policy"> Privacy Policy.</a>
-      </label>
-  </div>
-
   <button class="sw-button sw-btn-ghost1" (click)="login(CREDIT_COMPANY)">Sign in as a Credit Company</button>
   <button class="sw-button sw-btn-ghost1" (click)="login(INVESTOR)">Sign in as an Investor</button>
-  <button class="sw-button sw-btn-ghost1" (click)="uportLogin(INVESTOR)">Sign in with Uport</button>
 </div>
