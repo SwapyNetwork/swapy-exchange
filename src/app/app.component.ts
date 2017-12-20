@@ -1,7 +1,6 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { LoadingService } from './common/services/loading.service';
 import { StorageService } from './common/services/storage.service';
-import { WalletService } from './common/services/wallet.service';
 import * as Web3 from 'web3';
 
 import * as env from '../../env.json';
@@ -15,8 +14,7 @@ export class AppComponent {
   title = 'app';
   loading = false;
 
-  constructor(public loadingService: LoadingService, private storageService: StorageService,
-    public walletService: WalletService, public viewContainerRef: ViewContainerRef) {
+  constructor(public loadingService: LoadingService, private storageService: StorageService, public viewContainerRef: ViewContainerRef) {
     this.loadingService.loadingShowed$.subscribe(
       showed => {this.loading = true}
     );
@@ -31,8 +29,6 @@ export class AppComponent {
       (window as any).web3 = new (Web3 as any)((env as any).HTTP_PROVIDER);
     }
 
-    // @TODO fix this
-    // this.walletService.listenForAccountChanges();
   }
 
   showLoading() {

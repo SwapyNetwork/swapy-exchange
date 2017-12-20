@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
 
   public requireMetaMask;
   public requireNetwork;
-  public agreedToTerms;
   public account: Wallet;
   public errorMessages: string[] = [];
   private web3;
@@ -47,9 +46,8 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.checkAccount();
-    this.requireNetwork = false;
-    this.requireMetaMask = false;
+    this.checkAccount();
+    this.walletService.listenForAccountChanges();
   }
 
   public getNetworkName(networkId) {
@@ -84,18 +82,8 @@ export class LoginComponent implements OnInit {
   }
 
   login(userType, user) {
-    if (this.agreedToTerms === true) {
-      if (user) {
-        user.type = userType;
-        this.storageService.setItem('uPort', true);
-        this.walletService.getCurrentAccount();
-      }
-      this.storageService.setItem('user', user || { wallet: this.account, type: userType });
-      this.storageService.setItem('acceptedTerms', this.agreedToTerms);
-      this.router.navigate([this.solveRoute(userType)]);
-    } else {
-      this.errorMessages.push('You have to agree to Swapy\'s Terms of Service and Privacy Policy to proceed.');
-    }
+    this.storageService.setItem('user', { wallet: this.account, type: userType });
+    this.router.navigate([this.solveRoute(userType)]);
   }
 
   async uportLogin(userType) {

@@ -1,0 +1,12 @@
+<img src="assets/img/swapy-logo.jpg" alt="swapy logo">
+
+<div *ngIf="errorMessages.length > 0">
+  <div *ngFor="let message of errorMessages" class="alert alert-danger">
+    {{message}}
+  </div>
+</div>
+
+<div>
+  <button class="sw-button sw-btn-ghost1" (click)="login(CREDIT_COMPANY)">Sign in as a Credit Company</button>
+  <button class="sw-button sw-btn-ghost1" (click)="login(INVESTOR)">Sign in as an Investor</button>
+</div>
