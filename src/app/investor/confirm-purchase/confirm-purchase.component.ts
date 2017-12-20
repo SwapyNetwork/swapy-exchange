@@ -18,4 +18,8 @@ export class ConfirmPurchaseComponent implements OnInit {
     this.asset = this.marketplaceService.getCachedAsset();
   }
 
+  public async confirmPurchase() {
+
+  }
+
 }

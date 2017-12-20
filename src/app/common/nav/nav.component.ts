@@ -34,8 +34,8 @@ export class NavComponent implements OnInit {
       case INVESTOR:
         this.menu = [
           { url: '/investor/offers', label: 'Invest' },
-          { url: '/investor', label: 'Manage' },
-          { url: '/investor/marketplace', label: 'Marketplace' }
+          { url: '/investor/marketplace', label: 'Marketplace' },
+          { url: '/investor', label: 'Manage' }
         ];
         this.profileUrl = '/investor/profile';
         this.helpUrl = '/investor/help';
