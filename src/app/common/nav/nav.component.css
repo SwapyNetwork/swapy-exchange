@@ -1,0 +1,20 @@
+.user-avatar {
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-top: 2px;
+    object-fit: cover;
+}
+.user-name {
+    color: white;
+    margin-left: 5px;
+    margin-top: 2px;
+}
+.navbar {
+    min-height: 47px !important;
+}
+.nav-address {
+    padding: 0px;
+}

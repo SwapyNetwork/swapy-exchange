@@ -39,11 +39,12 @@ export class UportLoginComponent implements OnInit {
   async uportLogin() {
     try {
       const user = await this.uportService.getUport().requestCredentials({
-        requested: ['name', 'phone', 'country'],
+        requested: ['name', 'phone', 'country', 'avatar'],
         notifications: true // We want this if we want to recieve credentials
       });
 
       if (user) {
+        user.avatar = user.avatar ? user.avatar.uri : 'assets/img/unknown-user.png';
         this.storageService.setItem('user', user);
         (window as any).uportWeb3 = this.uportService.getWeb3();
       }

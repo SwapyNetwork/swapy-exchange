@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+
+import { StorageService } from '../../common/services/storage.service';
+
 const sha1 = require('sha1');
 
 @Injectable()
@@ -7,12 +10,18 @@ export class PendingOfferService {
   private message: string;
   private error;
 
-  constructor() {
+  constructor(private storageService: StorageService) {
     this.message = null;
   }
 
   getMessage() {
-    return this.message;
+    let message: string;
+    if (this.storageService.getItem('uPort')) {
+      message = 'Please confirm the transaction card in your uPort mobile app'
+    }else {
+      message = this.message;
+    }
+    return message;
   }
 
   getError() {

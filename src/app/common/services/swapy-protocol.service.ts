@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Web3Service } from './web3.service';
 import { WalletService } from './wallet.service';
+import { ToastrService } from './toastr.service';
 import { ErrorLogService } from './error-log.service';
 import { StorageService } from './storage.service';
 
@@ -28,7 +29,10 @@ export class SwapyProtocolService {
   private AssetLibraryContractUport;
   private InvestmentAssetContractUport;
 
-  constructor(protected web3Service: Web3Service, protected walletService: WalletService, protected storageService: StorageService,
+  constructor(protected toastrService: ToastrService,
+    protected web3Service: Web3Service,
+    protected walletService: WalletService,
+    protected storageService: StorageService,
     public errorLogService: ErrorLogService, public http: HttpClient) {
     this.web3 = this.web3Service.getInstance(false);
     this.SwapyExchangeContract = new this.web3.eth.Contract((SwapyExchange as any).abi, this.getAddressFromBuild(SwapyExchange));
@@ -86,6 +90,7 @@ export class SwapyProtocolService {
   }
 
   public createOfferUport(payback: number, grossReturn: number, currency: string, value: number, offerTermsHash: string, assets: number[]) {
+    const self = this;
     return new Promise((resolve, reject) => {
       this.SwapyExchangeContractUport
       .createOffer(payback,
@@ -96,11 +101,9 @@ export class SwapyProtocolService {
           if (error) {
             reject(error);
           }
+          this.toastrService.getInstance().success('Your fundraising offer is being processed by the Ethereum blockchain.');
           this.waitForMined(txHash, { blockNumber: null }, // see next area
-            function pendingCB () {
-              // Signal to the user you're still waiting
-              // for a block confirmation
-            },
+            function pendingCB () { },
             function successCB (data) {
               resolve(data);
               // Great Success!
@@ -139,6 +142,7 @@ export class SwapyProtocolService {
         if (error) {
           reject(error);
         }
+        this.toastrService.getInstance().success('Your investment is being processed by the Ethereum blockchain.');
         this.waitForMined(txHash, { blockNumber: null }, // see next area
           function pendingCB () {
             // Signal to the user you're still waiting
@@ -190,6 +194,7 @@ export class SwapyProtocolService {
         if (error) {
           reject(error);
         }
+        this.toastrService.getInstance().success('Your withdrawal request is being processed by the Ethereum blockchain.');
         this.waitForMined(txHash, { blockNumber: null }, // see next area
           function pendingCB () {
             // Signal to the user you're still waiting
@@ -229,6 +234,7 @@ export class SwapyProtocolService {
         if (error) {
           reject(error);
         }
+        this.toastrService.getInstance().success('Your refusement is being processed by the Ethereum blockchain.');
         this.waitForMined(txHash, { blockNumber: null }, // see next area
           function pendingCB () {
             // Signal to the user you're still waiting
@@ -277,6 +283,7 @@ export class SwapyProtocolService {
         if (error) {
           reject(error);
         }
+        this.toastrService.getInstance().success('Your investment return is being processed by the Ethereum blockchain.');
         this.waitForMined(txHash, { blockNumber: null }, // see next area
           function pendingCB () {
             // Signal to the user you're still waiting
@@ -306,6 +313,7 @@ export class SwapyProtocolService {
         if (error) {
           reject(error);
         }
+        this.toastrService.getInstance().success('Your cancelment is being processed by the Ethereum blockchain.');
         this.waitForMined(txHash, { blockNumber: null }, // see next area
           function pendingCB () {
             // Signal to the user you're still waiting

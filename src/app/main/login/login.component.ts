@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(userType, user) {
-    this.storageService.setItem('user', { wallet: this.account, type: userType });
+    this.storageService.setItem('user', { wallet: this.account, type: userType, name: 'Anonymous', avatar: 'assets/img/unknown-user.png'});
     this.router.navigate([this.solveRoute(userType)]);
   }
 
