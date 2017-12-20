@@ -63,7 +63,7 @@ export class DashboardService {
     const assets = await this.getAssetValues(investment.returnValues._assets);
 
     assets.forEach(async (asset, index) => {
-      if (asset[6] === this.walletService.getWallet().address) {
+      if (asset[6].toLowerCase() === this.walletService.getWallet().address.toLowerCase()) {
         const storagedStatus = this.storageService.getItem(investment.returnValues._assets[index]);
         let status;
         if (storagedStatus === null || storagedStatus !== Number(asset[5])) {
@@ -106,7 +106,6 @@ export class DashboardService {
   async getMyInvestmentsFromBlockchain() {
     const investments = await this.swapyProtocol.get('Investments')
       .filter(investment => investment.returnValues._investor.toLowerCase() === this.walletService.getWallet().address.toLowerCase());
-
     const promises = [];
     investments.forEach((investment) => {
       promises.push(this.buildInvestment(investment));

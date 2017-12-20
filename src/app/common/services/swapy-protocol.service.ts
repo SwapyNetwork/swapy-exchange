@@ -172,7 +172,7 @@ export class SwapyProtocolService {
     this.investMetamask(assetAddress, value);
   }
 
-  public withdrawFunds(contractAddress: string) {
+  public async withdrawFundsMetamask(contractAddress: string) {
     this.AssetLibraryContract.options.address = contractAddress;
     return this.AssetLibraryContract.methods
       .withdrawFunds()
@@ -182,8 +182,35 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       });
   }
+  public async withdrawFundsUport(contractAddress: string) {
+    const assetLibraryContractUport = await this.AssetLibraryContractUport.at(contractAddress);
+    return new Promise((resolve, reject) => {
+      assetLibraryContractUport
+      .withdrawFunds((error, txHash) => {
+        if (error) {
+          reject(error);
+        }
+        this.waitForMined(txHash, { blockNumber: null }, // see next area
+          function pendingCB () {
+            // Signal to the user you're still waiting
+            // for a block confirmation
+          },
+          function successCB (data) {
+            resolve(data);
+            // Great Success!
+            // Likely you'll call some eventPublisherMethod(txHash, data)
+          }
+        )
+      })
+    })
+  }
 
-  public refuseInvestment(contractAddress: string) {
+  public withdrawFunds(contractAddress: string) {
+    return this.storageService.getItem('uPort') ? this.withdrawFundsUport(contractAddress) :
+    this.withdrawFundsMetamask(contractAddress);
+  }
+
+  public refuseInvestmentMetamask(contractAddress: string) {
     this.AssetLibraryContract.options.address = contractAddress;
     return this.AssetLibraryContract.methods
       .refuseInvestment()
@@ -194,7 +221,35 @@ export class SwapyProtocolService {
       });
   }
 
-  public async returnInvestment(contractAddress: string, value: number) {
+  public async refuseInvestmentUport(contractAddress: string) {
+    const assetLibraryContractUport = await this.AssetLibraryContractUport.at(contractAddress);
+    return new Promise((resolve, reject) => {
+      assetLibraryContractUport
+      .refuseInvestment((error, txHash) => {
+        if (error) {
+          reject(error);
+        }
+        this.waitForMined(txHash, { blockNumber: null }, // see next area
+          function pendingCB () {
+            // Signal to the user you're still waiting
+            // for a block confirmation
+          },
+          function successCB (data) {
+            resolve(data);
+            // Great Success!
+            // Likely you'll call some eventPublisherMethod(txHash, data)
+          }
+        )
+      })
+    })
+  }
+
+  public refuseInvestment(contractAddress: string) {
+    return this.storageService.getItem('uPort') ? this.refuseInvestmentUport(contractAddress) :
+    this.refuseInvestmentMetamask(contractAddress);
+  }
+
+  public async returnInvestmentMetamask(contractAddress: string, value: number) {
     const ethPrice = await this.getEthPrice();
     const ethValue = value / (ethPrice as number);
 
@@ -209,7 +264,64 @@ export class SwapyProtocolService {
       });
   }
 
-  public cancelInvestment(contractAddress: string) {
+  public async returnInvestmentUport(contractAddress: string, value: number) {
+    const ethPrice = await this.getEthPrice();
+    const ethValue = value / (ethPrice as number);
+
+    const assetLibraryContractUport = await this.AssetLibraryContractUport.at(contractAddress);
+    return new Promise((resolve, reject) => {
+      assetLibraryContractUport
+      .returnInvestment({
+        value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
+      }, (error, txHash) => {
+        if (error) {
+          reject(error);
+        }
+        this.waitForMined(txHash, { blockNumber: null }, // see next area
+          function pendingCB () {
+            // Signal to the user you're still waiting
+            // for a block confirmation
+          },
+          function successCB (data) {
+            resolve(data);
+            // Great Success!
+            // Likely you'll call some eventPublisherMethod(txHash, data)
+          }
+        )
+      })
+    })
+  }
+
+  public async returnInvestment(contractAddress: string, value: number) {
+    return this.storageService.getItem('uPort') ? this.returnInvestmentUport(contractAddress, value) :
+    this.returnInvestmentMetamask(contractAddress, value);
+  }
+
+
+  public async cancelInvestmentUport(contractAddress: string) {
+    const assetLibraryContractUport = await this.AssetLibraryContractUport.at(contractAddress);
+    return new Promise((resolve, reject) => {
+      assetLibraryContractUport
+      .cancelInvestment((error, txHash) => {
+        if (error) {
+          reject(error);
+        }
+        this.waitForMined(txHash, { blockNumber: null }, // see next area
+          function pendingCB () {
+            // Signal to the user you're still waiting
+            // for a block confirmation
+          },
+          function successCB (data) {
+            resolve(data);
+            // Great Success!
+            // Likely you'll call some eventPublisherMethod(txHash, data)
+          }
+        )
+      })
+    })
+  }
+
+  public cancelInvestmentMetamask(contractAddress: string) {
     this.AssetLibraryContract.options.address = contractAddress;
     return this.AssetLibraryContract.methods
       .cancelInvestment()
@@ -218,6 +330,11 @@ export class SwapyProtocolService {
         gas: 150000,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       });
+  }
+
+  public async cancelInvestment(contractAddress: string) {
+    return this.storageService.getItem('uPort') ? this.cancelInvestmentUport(contractAddress) :
+    this.cancelInvestmentMetamask(contractAddress);
   }
 
   public get(event: string) {
