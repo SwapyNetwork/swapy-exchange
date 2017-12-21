@@ -37,31 +37,34 @@ export class DashboardService {
     return Promise.all(promises);
   }
 
-  private setInvestmentDetails(newInvestment, assetValues, investment) {
+  private setInvestmentDetails(newInvestment, assetValues) {
     newInvestment.paybackMonths = assetValues[3] / 30;
-    newInvestment.totalAmount = assetValues[2] * investment.returnValues._assets.length / 100;
+    newInvestment.totalAmount = assetValues[2] * newInvestment.assets.length / 100;
     newInvestment.grossReturn = assetValues[4] / 10000;
     newInvestment.creditCompanyAddress = assetValues[0];
   }
 
-  private async buildNewInvestment(investment) {
+  private async buildNewInvestment(investment, assetValues) {
     const timestamp = await this.getBlockTimestamp(investment.blockHash);
 
     return {
-      investedIn: (new Date(timestamp * 1000)).toISOString(),
+      boughtAt: (new Date(timestamp * 1000)).toISOString(),
+      investedAt: (new Date(assetValues[0][8] * 1000)).toISOString(),
       assets: [],
       totalAmount: 0,
       grossReturn: 0,
       paybackMonths: 0,
-      creditCompanyAddress: null
+      creditCompanyAddress: null,
+      type: investment.event
     };
   }
 
   async buildInvestment(investment) {
-    const newInvestment = await this.buildNewInvestment(investment);
-
     const assets = await this.getAssetValues(investment.returnValues._assets);
 
+    const newInvestment = await this.buildNewInvestment(investment, assets);
+
+    let myAsset;
     assets.forEach(async (asset, index) => {
       if (asset[6].toLowerCase() === this.walletService.getWallet().address.toLowerCase() ||
           asset[10].toLowerCase() === this.walletService.getWallet().address.toLowerCase()) {
@@ -76,14 +79,18 @@ export class DashboardService {
           contractAddress: investment.returnValues._assets[index],
           status,
           value: asset[2] / 100,
-          investor: asset[6].toLowerCase()
+          boughtValue: asset[11] / 100,
+          investor: asset[6].toLowerCase(),
+          buyer: asset[10].toLowerCase()
         });
-      }
 
-      if (!newInvestment.totalAmount) {
-        this.setInvestmentDetails(newInvestment, asset, investment);
+        myAsset = asset;
       }
     });
+
+    if (myAsset) {
+      this.setInvestmentDetails(newInvestment, myAsset);
+    }
 
     return newInvestment;
   }

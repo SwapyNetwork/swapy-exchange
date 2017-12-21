@@ -48,7 +48,7 @@ export class OfferComponent implements OnInit {
   ngOnInit() { }
 
   public calculatePaybackDate(asset) {
-    const paybackDate = new Date(asset.investedIn);
+    const paybackDate = new Date(asset.investedAt);
     paybackDate.setMonth(paybackDate.getMonth() + this.offer.paybackMonths);
     return paybackDate;
   }

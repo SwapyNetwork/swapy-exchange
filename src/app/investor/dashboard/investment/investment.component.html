@@ -22,11 +22,13 @@
         <div class="col-sm-4 col-md-4">
             <a href="credit-company-profile.html"><p class="sw-box-text sw-blue1">{{investment.companyName}}</p></a>
             <p class="sw-box-text">Contract term: {{investment.paybackMonths}} months</p>
-            <p class="sw-box-text">Since {{investment.investedIn | date: 'yyyy-MM-dd'}}</p><hr>
+            <p class="sw-box-text">Originally invested: {{investment.investedAt | date: 'yyyy-MM-dd'}}</p>
+            <p class="sw-box-text">Bought in: {{investment.boughtAt | date: 'yyyy-MM-dd'}}</p><hr>
 
         </div>
         <div class="col-sm-4 col-md-4">
-            <p class="sw-box-text">Investment: {{investment.totalAmount | currency:'USD':true:'.2' }}</p>
+            <p class="sw-box-text" *ngIf="investment.type == 'Bought'">Investment: {{(investment.assets[0].boughtValue || investment.totalAmount) | currency:'USD':true:'.2' }}</p>
+            <p class="sw-box-text" *ngIf="investment.type == 'Investments'">Investment: {{investment.totalAmount | currency:'USD':true:'.2' }}</p>
             <p class="sw-box-text">Gross return: {{calculateReturnAmount() | currency:'USD':true:'.2' }}</p>
             <p class="sw-box-text">Return date: <span class="sw-blue1">{{calculatePaybackDate() | date: 'yyyy-MM-dd'}}</span></p>
             <!-- <p class="sw-box-text">Performance: <span class="sw-high">High / No Delay</span></p> -->
@@ -61,7 +63,7 @@
           <table class="table table-hover">
             <tr class="active">
               <th>Asset</th>
-              <th>Value</th>
+              <th>Original value</th>
               <th>Status</th>
               <th>Contract</th>
               <th>Cancel</th>

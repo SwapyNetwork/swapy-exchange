@@ -60,7 +60,7 @@ export class InvestmentComponent implements OnInit {
   }
 
   public calculatePaybackDate() {
-    const paybackDate = new Date(this.investment.investedIn);
+    const paybackDate = new Date(this.investment.investedAt);
     paybackDate.setMonth(paybackDate.getMonth() + this.investment.paybackMonths);
     return paybackDate;
   }

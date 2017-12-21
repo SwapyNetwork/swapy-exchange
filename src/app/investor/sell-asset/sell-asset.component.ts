@@ -30,7 +30,6 @@ export class SellAssetComponent implements OnInit {
 
   ngOnInit() {
     this.asset = this.sellAssetService.getCachedAsset();
-    console.log(this.asset);
   }
 
   public sellAsset() {
