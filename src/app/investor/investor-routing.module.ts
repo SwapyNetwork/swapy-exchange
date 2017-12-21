@@ -12,6 +12,7 @@ import { InvestComponent } from './invest/invest.component';
 import { SuccessfulInvestmentComponent } from './successful-investment/successful-investment.component';
 import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { ConfirmPurchaseComponent } from './confirm-purchase/confirm-purchase.component';
+import { SellAssetComponent } from './sell-asset/sell-asset.component';
 
 const routes: Routes = [
   {
@@ -27,7 +28,8 @@ const routes: Routes = [
       { path: 'invest', component: InvestComponent },
       { path: 'invest/success', component: SuccessfulInvestmentComponent },
       { path: 'marketplace', component: MarketplaceComponent },
-      { path: 'marketplace/confirm-purchase', component: ConfirmPurchaseComponent }
+      { path: 'marketplace/confirm-purchase', component: ConfirmPurchaseComponent },
+      { path: 'sell', component: SellAssetComponent }
     ]
   }
 ];

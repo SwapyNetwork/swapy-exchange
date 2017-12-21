@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Invest } from '../../invest/invest.interface';
 import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT,
   RETURNED, DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../../common/interfaces/offerAssetStatus.interface';
@@ -9,6 +10,7 @@ import { InvestService } from '../../invest/invest.service';
 import { WalletService } from '../../../common/services/wallet.service';
 import { ErrorLogService } from '../../../common/services/error-log.service';
 import { StorageService } from '../../../common/services/storage.service';
+import { SellAssetService } from '../../sell-asset/sell-asset.service';
 
 import * as env from '../../../../../env.json';
 
@@ -41,6 +43,8 @@ export class InvestmentComponent implements OnInit {
     private toastrService: ToastrService,
     private errorLogService: ErrorLogService,
     private storageService: StorageService,
+    private sellAssetService: SellAssetService,
+    private router: Router,
     private walletService: WalletService) { }
 
   ngOnInit() {
@@ -114,20 +118,9 @@ export class InvestmentComponent implements OnInit {
     }
   }
 
-  public async sellAsset(asset) {
-    const status = asset.status;
-    this.storageService.setItem(asset.contractAddress, status);
-    asset.status = PENDING_ETHEREUM_CONFIRMATION;
-    try {
-      const value = asset.value * 100;
-      await this.swapyProtocol.sellAsset(asset.contractAddress, value);
-      this.toastrService.getInstance().success('Asset inserted into the Marketplace');
-      this.storageService.getItem(asset.contractAddress);
-    } catch (error) {
-      this.storageService.remove(asset.contractAddress);
-      asset.status = status;
-      this.toastrService.getInstance().error(error.message);
-    }
+  public sellAsset(asset) {
+    this.sellAssetService.cacheAsset(asset);
+    this.router.navigate(['investor/sell']);
   }
 
   public async cancelSellOrder(asset) {
