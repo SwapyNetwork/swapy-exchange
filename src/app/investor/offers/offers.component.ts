@@ -40,18 +40,22 @@ export class OffersComponent implements OnInit {
 
       offers.forEach(async offerEvent => {
         const contractVariables = offerEvent.returnValues;
-        const constants = ['value', 'paybackDays', 'grossReturn'];
-        const asset = await this.swapyProtocol.getAssetConstants(contractVariables._assets[0], constants);
-        const displayWalletAddress = this.getDisplayWalletAddress(contractVariables._from);
-        const offer = {
-          raisingAmount: asset.value * 5 / 100, // Temp way of doing it. Getting all assets would take too long.
-          grossReturn: asset.grossReturn / 10000,
-          paybackMonths: asset.paybackDays / 30,
-          walletAddress: contractVariables._from,
-          displayWalletAddress: displayWalletAddress,
-          assetsAddress: contractVariables._assets
-        } as any;
-        this.offers.push(offer);
+        const constants = ['value', 'paybackDays', 'grossReturn', 'status'];
+        const assets = contractVariables._assets;
+        const asset = await this.swapyProtocol.getAssetConstants(assets[0], constants);
+        if (Number(asset.status) === 0) {
+          const displayWalletAddress = this.getDisplayWalletAddress(contractVariables._from);
+          const offer = {
+            raisingAmount: asset.value * contractVariables._assets.length / 100, // Temp way of doing it. Getting all assets would take too long.
+            grossReturn: asset.grossReturn / 10000,
+            paybackMonths: asset.paybackDays / 30,
+            walletAddress: contractVariables._from,
+            displayWalletAddress: displayWalletAddress,
+            assetsAddress: contractVariables._assets,
+            availableAssets: contractVariables._assets.length
+          } as any;
+          this.offers.push(offer);
+        }
         this.offerService.cacheOffers(this.offers);
       });
       this.loadingService.hide();
