@@ -47,9 +47,9 @@
 
               </div>
               <div class="col-xs-4 col-sm-4 col-md-4">
-                  <p class="sw-box-text">5 Assets of</p>
-                  <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"> </i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i>
-                  <p class="sw-box-text">{{offer.raisingAmount/5 | currency}}</p>
+                  <p class="sw-box-text">{{offer.assets.length}} asset of</p>
+                  <i class="fa fa-circle sw-blue1" aria-hidden="true"></i>
+                  <p class="sw-box-text">{{offer.raisingAmount/offer.assets.length | currency}}</p>
 
               </div>
             </div>
