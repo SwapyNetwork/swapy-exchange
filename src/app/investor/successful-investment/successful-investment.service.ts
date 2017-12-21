@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 const sha1 = require('sha1');
 
 @Injectable()

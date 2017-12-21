@@ -103,7 +103,7 @@ export class InvestmentComponent implements OnInit {
     asset.status = PENDING_ETHEREUM_CONFIRMATION;
     try {
       await this.swapyProtocol.cancelInvestment(asset.contractAddress);
-      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+      this.toastrService.getInstance().success('Your cancelment was mined by the Ethereum blockchain.');
       this.storageService.getItem(asset.contractAddress);
     } catch (error) {
       this.storageService.remove(asset.contractAddress);

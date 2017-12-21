@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { WalletService } from '../../common/services/wallet.service';
+import { StorageService } from '../../common/services/storage.service';
 import { PendingOfferService } from './pending-offer.service';
 
 @Component({
@@ -14,10 +15,14 @@ export class PendingOfferComponent implements OnInit {
   public message: string;
 
   constructor(private walletService: WalletService, private router: Router,
-    public pendingOfferService: PendingOfferService) {}
+    public pendingOfferService: PendingOfferService, private storageService: StorageService) {}
 
   ngOnInit() {
-    this.pendingOfferService.setMessage(null);
+    let message: string = null;
+    if (this.storageService.getItem('uPort')) {
+      message = 'Please confirm the transaction card in your uPort mobile app'
+    }
+    this.pendingOfferService.setMessage(message);
     this.walletAddress = this.walletService.getWallet().address;
   }
 

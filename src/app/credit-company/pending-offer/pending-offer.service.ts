@@ -10,18 +10,12 @@ export class PendingOfferService {
   private message: string;
   private error;
 
-  constructor(private storageService: StorageService) {
+  constructor() {
     this.message = null;
   }
 
   getMessage() {
-    let message: string;
-    if (this.storageService.getItem('uPort')) {
-      message = 'Please confirm the transaction card in your uPort mobile app'
-    }else {
-      message = this.message;
-    }
-    return message;
+    return this.message;
   }
 
   getError() {
