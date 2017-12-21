@@ -10,16 +10,19 @@ export class UportService {
   private uport: any;
 
   constructor() {
-    this.uport = new Connect('SwapyExchange', {
-      clientId: UPORT_CLIENT_ID,
-      signer: SimpleSigner(UPORT_KEY)
-    });
+    this.newUportConnection();
   }
 
   public getUport() {
     return this.uport;
   }
 
+  public newUportConnection () {
+    this.uport = new Connect('SwapyExchange', {
+      clientId: UPORT_CLIENT_ID,
+      signer: SimpleSigner(UPORT_KEY)
+    });
+  }
   public getWeb3() {
     return this.uport.getWeb3();
   }

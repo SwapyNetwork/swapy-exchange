@@ -32,7 +32,8 @@ export class UportLoginComponent implements OnInit {
     public uportService: UportService,
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.uportService.newUportConnection();
     this.uportLogin();
   }
 
@@ -62,7 +63,7 @@ export class UportLoginComponent implements OnInit {
       this.walletService.getCurrentAccount();
       this.router.navigate([this.solveRoute(userType)]);
     } else {
-      this.errorMessages.push('You have to connect your uPort to proceed. Check your phone to see if there\'s any uPort request there');
+      this.errorMessages = ['You have to connect your uPort to proceed. Check your phone to see if there\'s any uPort request there'];
     }
   }
 
