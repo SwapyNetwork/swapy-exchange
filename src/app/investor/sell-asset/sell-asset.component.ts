@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SellAssetService } from './sell-asset.service'
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
@@ -23,7 +24,8 @@ export class SellAssetComponent implements OnInit {
   });
 
   constructor(
-    private sellAssetService: SellAssetService
+    private sellAssetService: SellAssetService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -34,6 +36,7 @@ export class SellAssetComponent implements OnInit {
   public sellAsset() {
     this.asset.sellValue = parseFloat(this.value.replace(/[^0-9.]/g, ''));
     this.sellAssetService.cacheAsset(this.asset);
+    this.router.navigate(['investor/sell/confirm-sale'])
   }
 
 }
