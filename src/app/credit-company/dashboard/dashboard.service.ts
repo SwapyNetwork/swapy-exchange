@@ -69,7 +69,8 @@ export class DashboardService {
       investorWallet: assetValues[6],
       status,
       value: assetValues[2] / 100,
-      token: assetValues[9]
+      token: assetValues[9],
+      paybackMonths: assetValues[3] / 30
     };
   }
 
