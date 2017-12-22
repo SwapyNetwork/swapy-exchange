@@ -13,8 +13,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "copy": "sh scripts/copy_contracts.sh",
-    "copy.rinkeby": "sh scripts/copy_contracts_rinkeby.sh",
-    "copy.ropsten": "sh scripts/copy_contracts_ropsten.sh"
+    "copy.electron": "sh scripts/copy_contracts_electron.sh"
   },
   "dependencies": {
     "@angular/animations": "4.3.0",
