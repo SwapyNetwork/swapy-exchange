@@ -75,32 +75,13 @@ export class LoginComponent implements OnInit {
         self.requireNetwork = false;
         self.requireMetaMask = false;
       }
-      if (!this.storageService.getItem('acceptedTerms')) {
-        self.checkAccount();
-      }
+      self.checkAccount();
     }, 1000);
   }
 
   login(userType, user) {
     this.storageService.setItem('user', { wallet: this.account, type: userType, name: 'Anonymous', avatar: 'assets/img/unknown-user.png'});
     this.router.navigate([this.solveRoute(userType)]);
-  }
-
-  async uportLogin(userType) {
-    try {
-      const user = await this.uportService.getUport().requestCredentials({
-        requested: ['name', 'phone', 'country'],
-        notifications: true // We want this if we want to recieve credentials
-      });
-
-      if (user) {
-        (window as any).uportWeb3 = this.uportService.getWeb3();
-        this.login(CREDIT_COMPANY, user);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-
   }
 
   private solveRoute(userType: number) {
