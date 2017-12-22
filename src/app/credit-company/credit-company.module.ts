@@ -23,6 +23,8 @@ import { TermsPageComponent } from './terms-page/terms-page.component';
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 import { OfferComponent } from './dashboard/offer/offer.component';
 import { DashboardService } from './dashboard/dashboard.service';
+import { SupplyTokenComponent } from './supply-token/supply-token.component';
+import { SupplyTokenService } from './supply-token/supply-token.service';
 
 @NgModule({
   imports: [
@@ -35,8 +37,9 @@ import { DashboardService } from './dashboard/dashboard.service';
     TextMaskModule
   ],
   declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent, ConfirmOfferComponent,
-    SuccessfulOfferComponent, PendingOfferComponent, ProfileComponent, TermsPageComponent, PrivacyPageComponent, OfferComponent],
-  providers: [LogoutService, AddOfferService, PendingOfferService, DashboardService],
+    SuccessfulOfferComponent, PendingOfferComponent, ProfileComponent, TermsPageComponent, PrivacyPageComponent,
+    OfferComponent, SupplyTokenComponent],
+  providers: [LogoutService, AddOfferService, PendingOfferService, DashboardService, SupplyTokenService],
   bootstrap: [CreditCompanyComponent]
 })
 export class CreditCompanyModule {}

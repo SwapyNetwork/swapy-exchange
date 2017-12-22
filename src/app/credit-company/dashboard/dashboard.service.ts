@@ -5,7 +5,7 @@ import { WalletService } from '../../common/services/wallet.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 import { StorageService } from '../../common/services/storage.service';
 import { PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
-import { VALUE, PAYBACKDAYS, GROSSRETURN, STATUS, INVESTOR } from '../../common/interfaces/asset-parameters.interface';
+import { VALUE, PAYBACKDAYS, GROSSRETURN, STATUS, INVESTOR, TOKENFUEL } from '../../common/interfaces/asset-parameters.interface';
 
 @Injectable()
 export class DashboardService {
@@ -69,7 +69,9 @@ export class DashboardService {
       contractAddress: offer.returnValues._assets[index],
       investorWallet: assetValues[INVESTOR],
       status,
-      value: assetValues[VALUE] / 100
+      value: assetValues[VALUE] / 100,
+      token: assetValues[TOKENFUEL],
+      paybackMonths: assetValues[PAYBACKDAYS] / 30
     };
   }
 

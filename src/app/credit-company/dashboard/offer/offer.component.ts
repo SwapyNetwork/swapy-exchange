@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Offer } from '../../../common/interfaces/offer.interface';
 import { I18nService } from '../../../common/services/i18n.service';
 import { ToastrService } from '../../../common/services/toastr.service';
@@ -10,6 +11,7 @@ import {
   AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
   DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../../common/interfaces/offer-asset-status.interface';
 import { StorageService } from '../../../common/services/storage.service';
+import { SupplyTokenService } from '../../supply-token/supply-token.service';
 
 import * as env from '../../../../../env.json';
 
@@ -43,6 +45,8 @@ export class OfferComponent implements OnInit {
     private linkService: LinkService,
     private walletService: WalletService,
     private storageService: StorageService,
+    private supplyTokenService: SupplyTokenService,
+    private router: Router,
     private errorLogService: ErrorLogService) { }
 
   ngOnInit() { }
@@ -111,6 +115,11 @@ export class OfferComponent implements OnInit {
       asset.status = status;
       this.toastrService.getInstance().error(error.message);
     }
+  }
+
+  public async transferToken(asset) {
+    this.supplyTokenService.cacheAsset(asset);
+    this.router.navigate(['credit-company/supply-token']);
   }
 
   public statusToString(status) {

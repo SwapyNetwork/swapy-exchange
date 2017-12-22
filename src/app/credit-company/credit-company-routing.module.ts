@@ -10,6 +10,7 @@ import { PendingOfferComponent } from './pending-offer/pending-offer.component';
 import { TermsPageComponent } from './terms-page/terms-page.component';
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SupplyTokenComponent } from './supply-token/supply-token.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'raise/confirm', component: ConfirmOfferComponent },
       { path: 'raise/success', component: SuccessfulOfferComponent },
       { path: 'raise/pending', component: PendingOfferComponent },
+      { path: 'supply-token', component: SupplyTokenComponent },
       { path: 'terms-of-service', component: TermsPageComponent },
       { path: 'privacy-policy', component: PrivacyPageComponent },
       { path: 'profile', component: ProfileComponent },
