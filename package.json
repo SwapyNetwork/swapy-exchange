@@ -1,9 +1,8 @@
 {
-  "name": "swapy-exchange-electron",
-  "productName": "Swapy Alpha",
-  "version": "0.0.0",
-  "license": "Copyright",
-  "main": "main.js",
+  "name": "swapy-exchange",
+  "productName": "Swapy Exchange Alpha",
+  "version": "0.0.2",
+  "license": "Apache 2.0",
   "description": "Swapy Exchange Alpha Version",
   "homepage": "https://swapy.network",
   "scripts": {
@@ -14,10 +13,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "copy": "sh scripts/copy_contracts.sh",
-    "copy.rinkeby": "sh scripts/copy_contracts_rinkeby.sh",
-    "copy.ropsten": "sh scripts/copy_contracts_ropsten.sh"
+    "copy.electron": "sh scripts/copy_contracts_electron.sh"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "4.3.0",
     "@angular/common": "4.3.0",
@@ -66,6 +63,6 @@
     "ts-node": "~3.0.4",
     "tslint": "~5.3.2",
     "typescript": "~2.3.3",
-    "uglify-js": "github:mishoo/UglifyJS2#harmony"
+    "uglify-es": "3.2.2"
   }
 }

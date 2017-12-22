@@ -48,4 +48,5 @@ UserInterfaceState.xcuserstate
 
 #Files
 env.json
-src/contracts/ganache/*
+src/contracts/ganache/*.json
+docker/Dockerfile
