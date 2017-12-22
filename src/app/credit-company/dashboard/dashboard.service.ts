@@ -24,7 +24,7 @@ export class DashboardService {
   }
 
   private async getBlockTimestamp(blockHash: string) {
-    return (await this.web3Service.getInstance(false).eth.getBlock(blockHash)).timestamp;
+    return (await this.web3Service.getInstance().eth.getBlock(blockHash)).timestamp;
   }
 
   private setOfferDetails(newOffer, assetValues, numberOfAssets) {

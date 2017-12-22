@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Web3Service } from './web3.service';
+import { UportService } from './uport.service';
 import { StorageService } from './storage.service';
 import { LogoutService } from './logout.service';
 import { ErrorLogService } from './error-log.service';
@@ -17,14 +18,15 @@ export class WalletService {
   constructor(private web3Service: Web3Service,
     private errorLogService: ErrorLogService,
     private logoutService: LogoutService,
-    public storageService: StorageService) {}
+    public storageService: StorageService,
+    public uportService: UportService) {}
 
   public async getCurrentAccount() {
     this.lastAddress = this.wallet.address || undefined;
     let accounts;
     if (this.storageService.getItem('uPort')) {
       return new Promise((resolve, reject) => {
-        this.web3Service.getInstance(true).eth.getAccounts((err, acc) => {
+        this.uportService.getWeb3().eth.getAccounts((err, acc) => {
           if (err) {
             reject(err);
           }
@@ -35,7 +37,7 @@ export class WalletService {
         })
       });
     } else {
-      accounts = await this.web3Service.getInstance(false).eth.getAccounts();
+      accounts = await this.web3Service.getInstance().eth.getAccounts();
       this.wallet.network = this.getCurrentNetwork();
       this.wallet.address = accounts[0];
       return this.wallet;
@@ -43,8 +45,8 @@ export class WalletService {
   }
 
   public getCurrentNetwork() {
-    if (this.web3Service.getInstance(false).eth.currentProvider.publicConfigStore) {
-      return this.web3Service.getInstance(false).eth.currentProvider.publicConfigStore._state.networkVersion;
+    if (this.web3Service.getInstance().eth.currentProvider.publicConfigStore) {
+      return this.web3Service.getInstance().eth.currentProvider.publicConfigStore._state.networkVersion;
     } else {
       return false;
     }
@@ -78,13 +80,13 @@ export class WalletService {
 
   async getBalance() {
     const account: any = await this.getCurrentAccount();
-    return this.web3Service.getInstance(false).eth.getBalance(account.address);
+    return this.web3Service.getInstance().eth.getBalance(account.address);
   }
 
   getEthBalance() {
     return new Promise((resolve, reject) => {
       this.getBalance().then((balance) => {
-        const ethBalance = this.web3Service.getInstance(false).utils.fromWei(balance, 'ether');
+        const ethBalance = this.web3Service.getInstance().utils.fromWei(balance, 'ether');
         resolve(ethBalance);
       }, (error) => {
         this.errorLogService.setClassName('WalletService');

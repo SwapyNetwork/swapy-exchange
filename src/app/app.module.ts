@@ -17,6 +17,11 @@ import { LinkService } from './common/services/link.service';
 import { Web3Service } from './common/services/web3.service';
 import { WalletService } from './common/services/wallet.service';
 import { SwapyProtocolService } from './common/services/swapy-protocol.service';
+import { UportProtocolService } from './common/services/uportProtocol.service';
+import { Web3ProtocolService } from './common/services/web3Protocol.service';
+import { ProtocolFactory } from './common/services/protocol.factory.service';
+import { ProtocolEventsService } from './common/services/protocolEvents.service';
+import { PriceService } from './common/services/price.service';
 import { LogoutService } from './common/services/logout.service';
 import { NgxElectronModule } from 'ngx-electron';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -41,8 +46,9 @@ import { UportService } from './common/services/uport.service';
     ToastModule.forRoot()
   ],
   providers: [StorageService, HttpService, I18nService, LoadingService, LinkService, Web3Service,
-    WalletService, SwapyProtocolService, LogoutService, UportService,
-    ToastrService, ErrorLogService, { provide: ToastOptions, useClass: CustomToastOption }],
+    WalletService, SwapyProtocolService, UportProtocolService, Web3ProtocolService, ProtocolFactory, ProtocolEventsService,
+    PriceService, LogoutService, UportService, ToastrService, ErrorLogService,
+    { provide: ToastOptions, useClass: CustomToastOption }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
