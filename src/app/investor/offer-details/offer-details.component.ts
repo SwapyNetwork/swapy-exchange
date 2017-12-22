@@ -7,7 +7,7 @@ import { Invest } from '../invest/invest.interface';
 import { InvestService } from '../invest/invest.service';
 import {AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT,
   RETURNED, DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION
-} from '../../common/interfaces/offerAssetStatus.interface';
+} from '../../common/interfaces/offer-asset-status.interface';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 
 

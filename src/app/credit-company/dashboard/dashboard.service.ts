@@ -4,7 +4,8 @@ import { LoadingService } from '../../common/services/loading.service';
 import { WalletService } from '../../common/services/wallet.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 import { StorageService } from '../../common/services/storage.service';
-import { PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offerAssetStatus.interface';
+import { PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
+import { VALUE, PAYBACKDAYS, GROSSRETURN, STATUS, INVESTOR } from '../../common/interfaces/asset-parameters.interface';
 
 @Injectable()
 export class DashboardService {
@@ -28,9 +29,9 @@ export class DashboardService {
   }
 
   private setOfferDetails(newOffer, assetValues, numberOfAssets) {
-    newOffer.paybackMonths = assetValues[3] / 30;
-    newOffer.raisingAmount = assetValues[2] * numberOfAssets / 100;
-    newOffer.grossReturn = assetValues[4] / 10000;
+    newOffer.paybackMonths = assetValues[PAYBACKDAYS] / 30;
+    newOffer.raisingAmount = assetValues[VALUE] * numberOfAssets / 100;
+    newOffer.grossReturn = assetValues[GROSSRETURN] / 10000;
   }
 
   private async getAssetValues(assets: any[]): Promise<any[]> {
@@ -57,18 +58,18 @@ export class DashboardService {
   }
 
   private buildNewAsset(offer, assetValues, index) {
-    const storagedStatus = this.storageService.getItem(offer.returnValues._assets[index]);
+    const storedStatus = this.storageService.getItem(offer.returnValues._assets[index]);
     let status;
-    if (storagedStatus === null || storagedStatus !== Number(assetValues[5])) {
-      status = Number(assetValues[5]);
+    if (storedStatus === null || storedStatus !== Number(assetValues[STATUS])) {
+      status = Number(assetValues[STATUS]);
     } else {
       status = PENDING_ETHEREUM_CONFIRMATION;
     }
     return {
       contractAddress: offer.returnValues._assets[index],
-      investorWallet: assetValues[6],
+      investorWallet: assetValues[INVESTOR],
       status,
-      value: assetValues[2] / 100
+      value: assetValues[VALUE] / 100
     };
   }
 
