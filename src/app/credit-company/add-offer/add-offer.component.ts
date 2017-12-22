@@ -51,10 +51,8 @@ export class AddOfferComponent implements OnInit {
     const raisingAmount = parseFloat(this.amount.replace(/[^0-9.]/g, ''));
     const assets = [];
 
-    // For now it's fixed in 5 assets of the same value. Later on, the company will be able to choose the assets' values
-    for (let i = 0; i < 5; i++) {
-      assets.push({value: parseFloat((raisingAmount / 5).toFixed(2))});
-    }
+    // For now it's fixed in 1 asset. Later on, the company will be able to choose the assets' values
+    assets.push({value: parseFloat((raisingAmount).toFixed(2))});
 
     const offer = {
       raisingAmount,
