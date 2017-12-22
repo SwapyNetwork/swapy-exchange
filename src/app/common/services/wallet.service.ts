@@ -55,10 +55,10 @@ export class WalletService {
   public listenForAccountChanges() {
     (window as any).listenForAccountChanges = setInterval(async () => {
       const account: any = await this.getCurrentAccount();
-      if ((!account || account.address === undefined ||
+      if (((!account || account.address === undefined) && this.storageService.getItem('user')) ||
         (account.address !== this.lastAddress && this.lastAddress !== undefined) ||
-        (Number(account.network) !== Number((env as any).NETWORK_ID) && (env as any).ENV !== 'dev')) &&
-        !this.storageService.getItem('uPort')) {
+        (Number(account.network) !== Number((env as any).NETWORK_ID) && (env as any).ENV !== 'dev') && !this.storageService.getItem('uPort')
+      ) {
         this.logoutService.logoutMetamask();
       }
     }, 1000);
