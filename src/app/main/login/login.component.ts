@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
-import { LoginResponseModel } from './login-response.model';
-import { UserResponseInterface, INVESTOR, CREDIT_COMPANY } from '../../common/interfaces/user-response.interface';
+import { INVESTOR, CREDIT_COMPANY } from '../../common/interfaces/user-type.interface';
 
 import { I18nService } from '../../common/services/i18n.service';
 import { Web3Service } from '../../common/services/web3.service';

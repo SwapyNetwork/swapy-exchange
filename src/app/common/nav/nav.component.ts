@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { LogoutService } from '../services/logout.service';
 import { StorageService } from '../services/storage.service';
 import { WalletService } from '../services/wallet.service';
-import { UserResponseInterface, INVESTOR, CREDIT_COMPANY } from '../interfaces/user-response.interface';
+import { INVESTOR, CREDIT_COMPANY } from '../interfaces/user-type.interface';
 import * as env from '../../../../env.json';
 import { LinkService } from '../services/link.service';
 
@@ -14,7 +14,7 @@ import { LinkService } from '../services/link.service';
 })
 export class NavComponent implements OnInit {
 
-  public user: UserResponseInterface;
+  public user: any;
   public wallet: any;
   public menu: any[];
   public profileUrl = '';
@@ -34,6 +34,7 @@ export class NavComponent implements OnInit {
       case INVESTOR:
         this.menu = [
           { url: '/investor/offers', label: 'Invest' },
+          { url: '/investor/marketplace', label: 'Marketplace' },
           { url: '/investor', label: 'Manage' }
         ];
         this.profileUrl = '/investor/profile';

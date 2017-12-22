@@ -5,7 +5,6 @@ import { Web3Service } from '../../common/services/web3.service';
 import { LoadingService } from '../../common/services/loading.service';
 import { ErrorLogService } from '../../common/services/error-log.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { AGREE_INVESTMENT, TRANSFER_FUNDS, CREATE_OFFER } from '../../common/interfaces/events.interface';
 import { DashboardService } from './dashboard.service';
 import { CreditCompanyComponent } from '../credit-company.component';
 

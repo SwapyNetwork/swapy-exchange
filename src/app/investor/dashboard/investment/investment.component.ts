@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Invest } from '../../invest/invest.interface';
 import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT,
-  RETURNED, DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../../common/interfaces/offerAssetStatus.interface';
+  RETURNED, DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../../common/interfaces/offer-asset-status.interface';
 import { LinkService } from '../../../common/services/link.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../../common/services/swapy-protocol.service';
 import { ToastrService } from '../../../common/services/toastr.service';
@@ -9,6 +10,7 @@ import { InvestService } from '../../invest/invest.service';
 import { WalletService } from '../../../common/services/wallet.service';
 import { ErrorLogService } from '../../../common/services/error-log.service';
 import { StorageService } from '../../../common/services/storage.service';
+import { SellAssetService } from '../../sell-asset/sell-asset.service';
 
 import * as env from '../../../../../env.json';
 
@@ -22,6 +24,7 @@ export class InvestmentComponent implements OnInit {
   @Input() public investment: Invest;
   @Input() public collapsed: boolean;
   //
+  private walletAddress;
 
   public AVAILABLE = AVAILABLE;
   public PENDING_OWNER_AGREEMENT = PENDING_OWNER_AGREEMENT;
@@ -40,9 +43,12 @@ export class InvestmentComponent implements OnInit {
     private toastrService: ToastrService,
     private errorLogService: ErrorLogService,
     private storageService: StorageService,
+    private sellAssetService: SellAssetService,
+    private router: Router,
     private walletService: WalletService) { }
 
   ngOnInit() {
+    this.walletAddress = this.walletService.getWallet().address.toLowerCase();
   }
 
   public toggleCollapse() {
@@ -54,7 +60,7 @@ export class InvestmentComponent implements OnInit {
   }
 
   public calculatePaybackDate() {
-    const paybackDate = new Date(this.investment.investedIn);
+    const paybackDate = new Date(this.investment.investedAt);
     paybackDate.setMonth(paybackDate.getMonth() + this.investment.paybackMonths);
     return paybackDate;
   }
@@ -78,7 +84,7 @@ export class InvestmentComponent implements OnInit {
         statusString = 'For sale';
         break;
       case this.PENDING_INVESTOR_AGREEMENT:
-        statusString = 'Pending investor\'s confirmation';
+        statusString = 'Pending confirmation to sell';
         break;
       case this.DELAYED_RETURN:
         statusString = 'Delayed return';
@@ -103,7 +109,72 @@ export class InvestmentComponent implements OnInit {
     asset.status = PENDING_ETHEREUM_CONFIRMATION;
     try {
       await this.swapyProtocol.cancelInvestment(asset.contractAddress);
-      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+      this.toastrService.getInstance().success('Investment cancelled');
+      this.storageService.getItem(asset.contractAddress);
+    } catch (error) {
+      this.storageService.remove(asset.contractAddress);
+      asset.status = status;
+      this.toastrService.getInstance().error(error.message);
+    }
+  }
+
+  public sellAsset(asset) {
+    this.sellAssetService.cacheAsset(asset);
+    this.router.navigate(['investor/sell']);
+  }
+
+  public async cancelSellOrder(asset) {
+    const status = asset.status;
+    this.storageService.setItem(asset.contractAddress, status);
+    asset.status = PENDING_ETHEREUM_CONFIRMATION;
+    try {
+      await this.swapyProtocol.cancelSellOrder(asset.contractAddress);
+      this.toastrService.getInstance().success('Asset deleted of the Marketplace');
+      this.storageService.getItem(asset.contractAddress);
+    } catch (error) {
+      this.storageService.remove(asset.contractAddress);
+      asset.status = status;
+      this.toastrService.getInstance().error(error.message);
+    }
+  }
+
+  public async cancelSale(asset) {
+    const status = asset.status;
+    this.storageService.setItem(asset.contractAddress, status);
+    asset.status = PENDING_ETHEREUM_CONFIRMATION;
+    try {
+      await this.swapyProtocol.cancelSale(asset.contractAddress);
+      this.toastrService.getInstance().success('Purchase request cancelled');
+      this.storageService.getItem(asset.contractAddress);
+    } catch (error) {
+      this.storageService.remove(asset.contractAddress);
+      asset.status = status;
+      this.toastrService.getInstance().error(error.message);
+    }
+  }
+
+  public async refuseSale(asset) {
+    const status = asset.status;
+    this.storageService.setItem(asset.contractAddress, status);
+    asset.status = PENDING_ETHEREUM_CONFIRMATION;
+    try {
+      await this.swapyProtocol.refuseSale(asset.contractAddress);
+      this.toastrService.getInstance().success('Purchase request cancelled');
+      this.storageService.getItem(asset.contractAddress);
+    } catch (error) {
+      this.storageService.remove(asset.contractAddress);
+      asset.status = status;
+      this.toastrService.getInstance().error(error.message);
+    }
+  }
+
+  public async acceptSale(asset) {
+    const status = asset.status;
+    this.storageService.setItem(asset.contractAddress, status);
+    asset.status = PENDING_ETHEREUM_CONFIRMATION;
+    try {
+      await this.swapyProtocol.acceptSale(asset.contractAddress);
+      this.toastrService.getInstance().success('Asset sold');
       this.storageService.getItem(asset.contractAddress);
     } catch (error) {
       this.storageService.remove(asset.contractAddress);

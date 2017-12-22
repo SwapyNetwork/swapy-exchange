@@ -5,8 +5,9 @@ import { Web3Service } from '../../common/services/web3.service';
 import { ErrorLogService } from '../../common/services/error-log.service';
 import { LoadingService } from '../../common/services/loading.service';
 import { StorageService } from '../../common/services/storage.service';
-import { PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offerAssetStatus.interface';
-
+import { INVESTED, PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
+import { OWNER, VALUE, PAYBACKDAYS, GROSSRETURN, STATUS,
+  INVESTOR, INVESTEDAT, SELLDATA_BUYER, SELLDATA_VALUE, BOUGHTVALUE } from '../../common/interfaces/asset-parameters.interface';
 
 @Injectable()
 export class DashboardService {
@@ -37,51 +38,61 @@ export class DashboardService {
     return Promise.all(promises);
   }
 
-  private setInvestmentDetails(newInvestment, assetValues, investment) {
-    newInvestment.paybackMonths = assetValues[3] / 30;
-    newInvestment.totalAmount = assetValues[2] * investment.returnValues._assets.length / 100;
-    newInvestment.grossReturn = assetValues[4] / 10000;
-    newInvestment.creditCompanyAddress = assetValues[0];
+  private setInvestmentDetails(newInvestment, assetValues) {
+    newInvestment.paybackMonths = assetValues[PAYBACKDAYS] / 30;
+    newInvestment.totalAmount = assetValues[VALUE] * newInvestment.assets.length / 100;
+    newInvestment.grossReturn = assetValues[GROSSRETURN] / 10000;
+    newInvestment.creditCompanyAddress = assetValues[OWNER];
   }
 
-  private async buildNewInvestment(investment) {
+  private async buildNewInvestment(investment, assetValues) {
     const timestamp = await this.getBlockTimestamp(investment.blockHash);
 
     return {
-      investedIn: (new Date(timestamp * 1000)).toISOString(),
+      boughtAt: (new Date(timestamp * 1000)).toISOString(),
+      investedAt: (new Date(assetValues[0][INVESTEDAT] * 1000)).toISOString(),
       assets: [],
       totalAmount: 0,
       grossReturn: 0,
       paybackMonths: 0,
-      creditCompanyAddress: null
+      creditCompanyAddress: null,
+      type: investment.event
     };
   }
 
   async buildInvestment(investment) {
-    const newInvestment = await this.buildNewInvestment(investment);
-
     const assets = await this.getAssetValues(investment.returnValues._assets);
 
+    const newInvestment = await this.buildNewInvestment(investment, assets);
+
+    let myAsset;
     assets.forEach(async (asset, index) => {
-      if (asset[6] === this.walletService.getWallet().address) {
-        const storagedStatus = this.storageService.getItem(investment.returnValues._assets[index]);
+      if (asset[INVESTOR].toLowerCase() === this.walletService.getWallet().address.toLowerCase() ||
+          asset[SELLDATA_BUYER].toLowerCase() === this.walletService.getWallet().address.toLowerCase()) {
+        const storedStatus = this.storageService.getItem(investment.returnValues._assets[index]);
         let status;
-        if (storagedStatus === null || storagedStatus !== Number(asset[5])) {
-          status = Number(asset[5]);
+        if (storedStatus === null || storedStatus !== Number(asset[STATUS])) {
+          status = Number(asset[STATUS]);
         } else {
           status = PENDING_ETHEREUM_CONFIRMATION;
         }
         newInvestment.assets.push({
           contractAddress: investment.returnValues._assets[index],
           status,
-          value: asset[2] / 100
+          value: asset[VALUE] / 100,
+          boughtValue: asset[INVESTOR].toLowerCase() === this.walletService.getWallet().address.toLowerCase() ?
+            asset[BOUGHTVALUE] / 100 : asset[SELLDATA_VALUE] / 100 ,
+          investor: asset[INVESTOR].toLowerCase(),
+          buyer: asset[SELLDATA_BUYER].toLowerCase()
         });
-      }
 
-      if (!newInvestment.totalAmount) {
-        this.setInvestmentDetails(newInvestment, asset, investment);
+        myAsset = asset;
       }
     });
+
+    if (myAsset) {
+      this.setInvestmentDetails(newInvestment, myAsset);
+    }
 
     return newInvestment;
   }
@@ -104,10 +115,15 @@ export class DashboardService {
   }
 
   async getMyInvestmentsFromBlockchain() {
-    const investments = await this.swapyProtocol.get('Investments')
+    let investments = await this.swapyProtocol.get('Investments')
       .filter(investment => investment.returnValues._investor.toLowerCase() === this.walletService.getWallet().address.toLowerCase());
-
+    const bought = await this.swapyProtocol.get('Bought')
+      .filter(investment => investment.returnValues._buyer.toLowerCase() === this.walletService.getWallet().address.toLowerCase());
     const promises = [];
+    bought.forEach(asset => {
+      asset.returnValues._assets = [asset.returnValues._asset];
+    })
+    investments = investments.concat(bought);
     investments.forEach((investment) => {
       promises.push(this.buildInvestment(investment));
     });

@@ -1,5 +1,5 @@
 #!/bin/bash
-rm src/contracts/ganache/*
-cp ../swapy-exchange-protocol/build/contracts/SwapyExchange.json src/contracts/ganache
-cp ../swapy-exchange-protocol/build/contracts/InvestmentAsset.json src/contracts/ganache
-cp ../swapy-exchange-protocol/build/contracts/AssetLibrary.json src/contracts/ganache
+rm src/contracts/$1/*
+cp ../swapy-exchange-protocol/build/contracts/SwapyExchange.json src/contracts/$1
+cp ../swapy-exchange-protocol/build/contracts/InvestmentAsset.json src/contracts/$1
+cp ../swapy-exchange-protocol/build/contracts/AssetLibrary.json src/contracts/$1

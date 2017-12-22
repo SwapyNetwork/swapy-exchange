@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { InvestService } from './../invest/invest.service';
 import { ErrorLogService } from '../../common/services/error-log.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
-import { AGREE_INVESTMENT, TRANSFER_FUNDS } from '../../common/interfaces/events.interface';
 import { WalletService } from '../../common/services/wallet.service';
 import { Web3Service } from '../../common/services/web3.service';
 import { LoadingService } from '../../common/services/loading.service';

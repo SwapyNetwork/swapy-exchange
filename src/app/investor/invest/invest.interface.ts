@@ -10,6 +10,6 @@ export interface Invest {
   totalAmount: number;
   grossReturn: number;
   paybackMonths: number;
-  investedIn: Date;
+  investedAt: Date;
   assets: InvestAsset[];
 }

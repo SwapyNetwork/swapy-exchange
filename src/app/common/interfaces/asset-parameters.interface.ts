@@ -1,0 +1,13 @@
+export const OWNER = 0;
+export const CURRENCY = 1;
+export const VALUE = 2;
+export const PAYBACKDAYS = 3;
+export const GROSSRETURN = 4;
+export const STATUS = 5;
+export const INVESTOR = 6;
+export const PROTOCOLVERSION = 7;
+export const INVESTEDAT = 8;
+export const TOKENFUEL = 9;
+export const SELLDATA_BUYER = 10;
+export const SELLDATA_VALUE = 11;
+export const BOUGHTVALUE = 12;

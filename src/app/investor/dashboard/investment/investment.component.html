@@ -22,11 +22,13 @@
         <div class="col-sm-4 col-md-4">
             <a href="credit-company-profile.html"><p class="sw-box-text sw-blue1">{{investment.companyName}}</p></a>
             <p class="sw-box-text">Contract term: {{investment.paybackMonths}} months</p>
-            <p class="sw-box-text">Since {{investment.investedIn | date: 'yyyy-MM-dd'}}</p><hr>
+            <p class="sw-box-text">Originally invested: {{investment.investedAt | date: 'yyyy-MM-dd'}}</p>
+            <p class="sw-box-text">Bought in: {{investment.boughtAt | date: 'yyyy-MM-dd'}}</p><hr>
 
         </div>
         <div class="col-sm-4 col-md-4">
-            <p class="sw-box-text">Investment: {{investment.totalAmount | currency:'USD':true:'.2' }}</p>
+            <p class="sw-box-text" *ngIf="investment.type == 'Bought'">Investment: {{(investment.assets[0].boughtValue || investment.totalAmount) | currency:'USD':true:'.2' }}</p>
+            <p class="sw-box-text" *ngIf="investment.type == 'Investments'">Investment: {{investment.totalAmount | currency:'USD':true:'.2' }}</p>
             <p class="sw-box-text">Gross return: {{calculateReturnAmount() | currency:'USD':true:'.2' }}</p>
             <p class="sw-box-text">Return date: <span class="sw-blue1">{{calculatePaybackDate() | date: 'yyyy-MM-dd'}}</span></p>
             <!-- <p class="sw-box-text">Performance: <span class="sw-high">High / No Delay</span></p> -->
@@ -61,10 +63,11 @@
           <table class="table table-hover">
             <tr class="active">
               <th>Asset</th>
-              <th>Value</th>
+              <th>Original value</th>
               <th>Status</th>
               <th>Contract</th>
               <th>Cancel</th>
+              <th>Sell</th>
             </tr>
             <tr *ngFor="let asset of investment.assets, let i = index">
               <td>{{i + 1}}</td>
@@ -72,8 +75,25 @@
               <td>{{statusToString(asset.status)}}</td>
               <td><span *ngIf="!asset.contractAddress">-</span><a *ngIf="asset.contractAddress" (click)="exploreContract(asset.contractAddress)">Explore</a></td>
               <td>
-                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == PENDING_OWNER_AGREEMENT)" (click) = "cancelInvestment(asset)">
+                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == PENDING_OWNER_AGREEMENT && asset.investor == walletAddress)" (click)="cancelInvestment(asset)">
                   <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == FOR_SALE && asset.investor == walletAddress)" (click)="cancelSellOrder(asset)">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == PENDING_INVESTOR_AGREEMENT && asset.investor != walletAddress)" (click)="cancelSale(asset)">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == PENDING_INVESTOR_AGREEMENT && asset.investor == walletAddress)" (click)="refuseSale(asset)">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+              </td>
+              <td>
+                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.status == INVESTED && asset.investor == walletAddress" (click)="sellAsset(asset)">
+                  <i class="fa fa-check" aria-hidden="true"></i>
+                </button>
+                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.status == PENDING_INVESTOR_AGREEMENT && asset.investor == walletAddress" (click)="acceptSale(asset)">
+                  <i class="fa fa-check" aria-hidden="true"></i>
                 </button>
               </td>
             </tr>
