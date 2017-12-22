@@ -193,6 +193,14 @@ export class SwapyProtocolService {
     });
   }
 
+  public getAssetEvent(contractAddress: string, event: string) {
+    this.AssetLibraryContract.options.address = contractAddress;
+    return this.AssetLibraryContract.getPastEvents(event, {
+      fromBlock: 0,
+      toBlock: 'latest'
+    });
+  }
+
   public getAsset(contractAddress: string) {
     this.InvestmentAssetContract.options.address = contractAddress;
     return this.InvestmentAssetContract.methods

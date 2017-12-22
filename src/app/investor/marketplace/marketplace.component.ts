@@ -31,6 +31,16 @@ export class MarketplaceComponent implements OnInit {
     return `${address.substring(0, 8)}...${address.substring(address.length - 8)}`
   }
 
+  private deleteDuplicatedAssets(assets) {
+    for (let index = assets.length - 2; index >= 0; index--) {
+      if (assets[assets.length - 1].address === assets[index].address && assets.length !== 1) {
+        assets.splice(index, 1);
+      }
+    }
+
+    return assets;
+  }
+
   public async getAssetsForSale() {
     this.loadingService.show();
     try {
@@ -52,8 +62,10 @@ export class MarketplaceComponent implements OnInit {
         };
         if (Number(assetConstants.status) === FOR_SALE && investor != this.walletService.getWallet().address.toLowerCase()) {
           this.assets.push(asset);
+          this.assets = this.deleteDuplicatedAssets(this.assets);
         }
       });
+
 
       this.loadingService.hide();
 

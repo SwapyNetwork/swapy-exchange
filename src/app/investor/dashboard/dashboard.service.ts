@@ -5,7 +5,7 @@ import { Web3Service } from '../../common/services/web3.service';
 import { ErrorLogService } from '../../common/services/error-log.service';
 import { LoadingService } from '../../common/services/loading.service';
 import { StorageService } from '../../common/services/storage.service';
-import { PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offerAssetStatus.interface';
+import { INVESTED, PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offerAssetStatus.interface';
 
 
 @Injectable()
@@ -79,7 +79,7 @@ export class DashboardService {
           contractAddress: investment.returnValues._assets[index],
           status,
           value: asset[2] / 100,
-          boughtValue: asset[11] / 100,
+          boughtValue: asset[6].toLowerCase() === this.walletService.getWallet().address.toLowerCase() ? asset[12] / 100 : asset[11] / 100 ,
           investor: asset[6].toLowerCase(),
           buyer: asset[10].toLowerCase()
         });

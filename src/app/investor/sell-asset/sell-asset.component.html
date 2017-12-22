@@ -30,13 +30,15 @@
 
             <div class="row">
               <div class="col-xs-4 col-sm-4 col-md-4">
+                  <p class="sw-box-text sw-confirmation-col-left" *ngIf="asset.boughtValue">Original value:</p>
                   <p class="sw-box-text sw-confirmation-col-left">Current value:</p>
                   <p class="sw-box-text sw-confirmation-col-left">Gross return rate:</p>
                   <p class="sw-box-text sw-confirmation-col-left">Contract term:</p>
 
               </div>
               <div class="col-xs-4 col-sm-4 col-md-4">
-                  <p class="sw-box-text">{{asset.value | currency}}</p>
+                  <p class="sw-box-text" *ngIf="asset.boughtValue">{{asset.value | currency}}</p>
+                  <p class="sw-box-text">{{(asset.boughtValue || asset.value) | currency}}</p>
                   <p class="sw-box-text">{{asset.grossReturn | percent}}</p>
                   <p class="sw-box-text">{{asset.paybackDays / 30}} months</p>
                   <!-- <p class="sw-box-text">8 x</p> -->
