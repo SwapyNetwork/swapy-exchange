@@ -9,7 +9,7 @@ import { ErrorLogService } from '../../../common/services/error-log.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../../common/services/swapy-protocol.service';
 import {
   AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
-  DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../../common/interfaces/offerAssetStatus.interface';
+  DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../../common/interfaces/offer-asset-status.interface';
 import { StorageService } from '../../../common/services/storage.service';
 import { SupplyTokenService } from '../../supply-token/supply-token.service';
 
@@ -52,7 +52,7 @@ export class OfferComponent implements OnInit {
   ngOnInit() { }
 
   public calculatePaybackDate(asset) {
-    const paybackDate = new Date(asset.investedIn);
+    const paybackDate = new Date(asset.investedAt);
     paybackDate.setMonth(paybackDate.getMonth() + this.offer.paybackMonths);
     return paybackDate;
   }
@@ -141,13 +141,13 @@ export class OfferComponent implements OnInit {
         statusString = 'For sale';
         break;
       case this.PENDING_INVESTOR_AGREEMENT:
-        statusString = 'Pending investor\'s confirmation';
+        statusString = 'Pending investor\'s confirmation to sell';
         break;
       case this.RETURNED:
         statusString = 'Successfully returned';
         break;
       case this.DELAYED_RETURN:
-        statusString = 'Delayed';
+        statusString = 'Delayed return';
         break;
     }
     return statusString;

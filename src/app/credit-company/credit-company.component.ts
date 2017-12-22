@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core';
 import { WalletService } from '../common/services/wallet.service';
 import { LoadingService } from '../common/services/loading.service';
-import { INVESTED, RETURNED, DELAYED_RETURN } from '../common/interfaces/offerAssetStatus.interface';
+import { INVESTED, RETURNED, DELAYED_RETURN } from '../common/interfaces/offer-asset-status.interface';
 import { DashboardService } from './dashboard/dashboard.service';
 
 

@@ -3,7 +3,7 @@ interface OfferAsset {
   investorWallet: string;
   contractAddress: string;
   status: string | number;
-  investedIn: Date;
+  investedAt: Date;
 };
 
 export interface Offer {

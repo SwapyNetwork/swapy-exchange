@@ -29,8 +29,8 @@ export class OffersComponent implements OnInit {
     this.getOffersFromBlockchain();
   }
 
-  private getDisplayWalletAddress(walletAddress: string) {
-    return `${walletAddress.substring(0, 8)}...${walletAddress.substring(walletAddress.length - 8)}`
+  private getDisplayWalletAddress(address: string) {
+    return `${address.substring(0, 8)}...${address.substring(address.length - 8)}`
   }
 
   async getOffersFromBlockchain() {

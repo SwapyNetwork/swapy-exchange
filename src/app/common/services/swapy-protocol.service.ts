@@ -132,9 +132,77 @@ export class SwapyProtocolService {
   }
 
   public supplyTokenFuel(contractAddress: string, value: number) {
+  this.AssetLibraryContract.options.address = contractAddress;
+  return this.AssetLibraryContract.methods
+    .supplyFuel(value)
+    .send({
+      from: this.walletService.getWallet().address,
+      gas: 150000,
+      gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
+    });
+  }
+
+  public sellAsset(contractAddress: string, value: number) {
+    return this.SwapyExchangeContract.methods
+      .sellAsset(contractAddress, value)
+      .send({
+        from: this.walletService.getWallet().address,
+        gas: 150000,
+        gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
+      });
+  }
+
+  public cancelSellOrder(contractAddress: string) {
     this.AssetLibraryContract.options.address = contractAddress;
     return this.AssetLibraryContract.methods
-      .supplyFuel(value)
+      .cancelSellOrder()
+      .send({
+        from: this.walletService.getWallet().address,
+        gas: 150000,
+        gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
+      });
+  }
+
+  public async buyAsset(contractAddress: string, value: number) {
+    const ethPrice = await this.getEthPrice();
+    const ethValue = value / (ethPrice as number);
+
+    return this.SwapyExchangeContract.methods
+      .buyAsset(contractAddress)
+      .send({
+        from: this.walletService.getWallet().address,
+        gas: 150000,
+        gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei'),
+        value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
+      });
+  }
+
+  public cancelSale(contractAddress: string) {
+    this.AssetLibraryContract.options.address = contractAddress;
+    return this.AssetLibraryContract.methods
+      .cancelSale()
+      .send({
+        from: this.walletService.getWallet().address,
+        gas: 150000,
+        gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
+      });
+  }
+
+  public refuseSale(contractAddress: string) {
+    this.AssetLibraryContract.options.address = contractAddress;
+    return this.AssetLibraryContract.methods
+      .refuseSale()
+      .send({
+        from: this.walletService.getWallet().address,
+        gas: 150000,
+        gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
+      });
+  }
+
+  public acceptSale(contractAddress: string) {
+    this.AssetLibraryContract.options.address = contractAddress;
+    return this.AssetLibraryContract.methods
+      .acceptSale()
       .send({
         from: this.walletService.getWallet().address,
         gas: 150000,
@@ -144,6 +212,14 @@ export class SwapyProtocolService {
 
   public get(event: string) {
     return this.SwapyExchangeContract.getPastEvents(event, {
+      fromBlock: 0,
+      toBlock: 'latest'
+    });
+  }
+
+  public getAssetEvent(contractAddress: string, event: string) {
+    this.AssetLibraryContract.options.address = contractAddress;
+    return this.AssetLibraryContract.getPastEvents(event, {
       fromBlock: 0,
       toBlock: 'latest'
     });

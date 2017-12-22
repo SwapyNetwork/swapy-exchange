@@ -24,6 +24,13 @@ import { InvestService } from './invest/invest.service';
 import { SuccessfulInvestmentService } from './successful-investment/successful-investment.service';
 import { InvestmentComponent } from './dashboard/investment/investment.component';
 import { DashboardService } from './dashboard/dashboard.service';
+import { MarketplaceComponent } from './marketplace/marketplace.component';
+import { AssetComponent } from './marketplace/asset/asset.component';
+import { ConfirmPurchaseComponent } from './confirm-purchase/confirm-purchase.component';
+import { MarketplaceService } from './marketplace/marketplace.service';
+import { SellAssetComponent } from './sell-asset/sell-asset.component';
+import { SellAssetService } from './sell-asset/sell-asset.service';
+import { ConfirmSaleComponent } from './confirm-sale/confirm-sale.component';
 
 @NgModule({
   imports: [
@@ -37,8 +44,10 @@ import { DashboardService } from './dashboard/dashboard.service';
   ],
   declarations: [InvestorComponent, OffersComponent, DashboardComponent, OfferComponent,
     OfferDetailsComponent, CreditCompanyComponent, TermsPageComponent, PrivacyPageComponent, ProfileComponent,
-    InvestComponent, SuccessfulInvestmentComponent, InvestmentComponent],
-  providers: [LogoutService, OfferService, InvestService, SuccessfulInvestmentService, DashboardService],
+    InvestComponent, SuccessfulInvestmentComponent, InvestmentComponent, MarketplaceComponent, AssetComponent,
+    ConfirmPurchaseComponent, SellAssetComponent, ConfirmSaleComponent],
+  providers: [LogoutService, OfferService, InvestService, SuccessfulInvestmentService, DashboardService,
+    MarketplaceService, SellAssetService],
   bootstrap: [InvestorComponent]
 })
 export class InvestorModule { }

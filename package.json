@@ -13,8 +13,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "copy": "sh scripts/copy_contracts.sh",
-    "copy.rinkeby": "sh scripts/copy_contracts_rinkeby.sh",
-    "copy.ropsten": "sh scripts/copy_contracts_ropsten.sh"
+    "copy.electron": "sh scripts/copy_contracts_electron.sh"
   },
   "dependencies": {
     "@angular/animations": "4.3.0",
@@ -39,7 +38,7 @@
     "sha1": "^1.1.1",
     "swarm-js": "^0.1.36",
     "text-mask-addons": "3.6.0",
-    "web3": "^1.0.0-beta.17",
+    "web3": "1.0.0-beta.17",
     "zone.js": "0.8.4"
   },
   "devDependencies": {

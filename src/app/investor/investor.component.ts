@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { WalletService } from '../common/services/wallet.service';
 import { Web3Service } from '../common/services/web3.service';
 import { LoadingService } from '../common/services/loading.service';
-import { INVESTED, RETURNED, DELAYED_RETURN } from '../common/interfaces/offerAssetStatus.interface';
+import { INVESTED, RETURNED, DELAYED_RETURN } from '../common/interfaces/offer-asset-status.interface';
 import { DashboardService } from './dashboard/dashboard.service';
 
 
@@ -44,7 +44,7 @@ export class InvestorComponent implements OnInit {
       investment.assets.forEach(asset => {
         asset['grossReturn'] = investment.grossReturn;
         asset['paybackDays'] = investment.paybackMonths * 30;
-        asset['investedIn'] = new Date(investment.investedIn)
+        asset['investedAt'] = new Date(investment.investedAt)
       });
       assets = assets.concat(investment.assets);
     })
@@ -78,7 +78,7 @@ export class InvestorComponent implements OnInit {
       const now = block.timestamp * 1000;
       this.averagePaybackPeriod = assets.filter(asset => Number(asset.status) === INVESTED)
         .map(asset => {
-          const returnDate = asset.investedIn.setMonth(asset.investedIn.getMonth() + asset.paybackDays / 30)
+          const returnDate = asset.investedAt.setMonth(asset.investedAt.getMonth() + asset.paybackDays / 30)
           return Math.floor((returnDate - now) / (24 * 3600 * 1000));
         })
         .reduce((total, current) => (total + current), 0);

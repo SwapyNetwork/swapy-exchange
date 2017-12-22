@@ -1,0 +1,23 @@
+<div class=" col-md-4"> <!-- Start Contract -->
+  <div class="sw-box">
+    <div class="row">
+      <div class="col-xs-8 col-sm-8 col-md-8">
+        <p class="sw-wallet-number">{{asset.displayAddress}}</p>
+      </div>
+      <div class="col-xs-4 col-sm-4 col-md-4">
+        <img src="assets/img/swapy-logo4.png" alt="Swapy logo">
+      </div>
+    </div>
+
+    <p class="sw-box-text">Original value</p>
+    <p class="sw-box-title">{{asset.originalValue | currency:'USD':false:'.0-2'}}</p>
+    <p class="sw-box-text">Value</p>
+    <p class="sw-box-title">{{asset.value | currency:'USD':false:'.0-2'}}</p>
+    <p class="sw-box-text">Gross return rate</p>
+    <p class="sw-box-title">{{asset.grossReturn | percent}}</p>
+    <p class="sw-box-text">Contract term</p>
+    <p class="sw-box-title">{{asset.paybackMonths}} months</p>
+    <br>
+    <a class="sw-button sw-btn-ghost1" (click)="buy(asset)">Buy</a>
+  </div>
+</div> <!-- END Contract -->

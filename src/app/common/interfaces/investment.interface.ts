@@ -12,6 +12,6 @@ export interface Investment {
   totalAmount: number;
   roi: number;
   paybackMonths: number;
-  investedIn: Date;
+  investedAt: Date;
   assets: InvestmentAsset[];
 };
