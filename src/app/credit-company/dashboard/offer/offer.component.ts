@@ -72,7 +72,7 @@ export class OfferComponent implements OnInit {
     asset.status = PENDING_ETHEREUM_CONFIRMATION;
     try {
       await this.swapyProtocol.withdrawFunds(asset.contractAddress);
-      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+      this.toastrService.getInstance().success('Transaction finished.');
     } catch (error) {
       this.storageService.remove(asset.contractAddress);
       asset.status = status;
@@ -90,7 +90,7 @@ export class OfferComponent implements OnInit {
     asset.status = PENDING_ETHEREUM_CONFIRMATION;
     try {
       await this.swapyProtocol.refuseInvestment(asset.contractAddress);
-      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+      this.toastrService.getInstance().success('Investment refused.');
     } catch (error) {
       this.storageService.remove(asset.contractAddress);
       asset.status = status;
@@ -109,7 +109,7 @@ export class OfferComponent implements OnInit {
     try {
       const value = asset.value * (1 + this.offer.grossReturn);
       await this.swapyProtocol.returnInvestment(asset.contractAddress, value);
-      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
+      this.toastrService.getInstance().success('Investment refused.');
     } catch (error) {
       this.storageService.remove(asset.contractAddress);
       asset.status = status;
