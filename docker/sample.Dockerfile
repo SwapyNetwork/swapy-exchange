@@ -46,4 +46,4 @@ RUN mkdir ./www && \
     npm install
 EXPOSE 4200
 WORKDIR ${SWAPY_HOME}/www/swapy-exchange
-CMD npm start
+CMD npm run start.dev
