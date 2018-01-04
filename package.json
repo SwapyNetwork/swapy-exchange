@@ -9,6 +9,7 @@
     "ng": "ng",
     "start": "ng serve",
     "alpha": "ng serve --env=prod --host 0.0.0.0 --disable-host-check",
+    "start.dev": "ng serve --host 0.0.0.0 --disable-host-check",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
