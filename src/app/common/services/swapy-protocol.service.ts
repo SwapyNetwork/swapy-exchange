@@ -123,7 +123,7 @@ export class SwapyProtocolService {
 
   public transferToken(contractAddress: string, value: number) {
     return this.Token.methods
-      .transfer(contractAddress, value)
+      .approve(contractAddress, value)
       .send({
         from: this.walletService.getWallet().address,
         gas: 150000,

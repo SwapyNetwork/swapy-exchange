@@ -38,10 +38,10 @@ export class SupplyTokenComponent implements OnInit {
 
   public async transferToken() {
     this.router.navigate(['/credit-company/raise/pending']);
-    this.amount = parseFloat(this.amount.replace(/[^0-9.]/g, ''));
+    this.amount = parseFloat(this.amount.replace(/[^0-9.]/g, '')) * Math.pow(10, 18);
     try {
       setTimeout(() => {
-        this.pendingOfferService.setMessage('Wait for transaction and then supply it(another transaction will be required).');
+        this.pendingOfferService.setMessage('Wait for transaction and then supply it (another transaction will be required).');
       }, 10)
       await this.swapyProtocol.transferToken(this.asset.contractAddress, this.amount);
       this.toastrService.getInstance().success('You transfered the token, please supply it now.');
