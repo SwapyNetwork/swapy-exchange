@@ -182,4 +182,19 @@ export class InvestmentComponent implements OnInit {
       this.toastrService.getInstance().error(error.message);
     }
   }
+
+  public async requireToken(asset) {
+    const status = asset.status;
+    this.storageService.setItem(asset.contractAddress, status);
+    asset.status = PENDING_ETHEREUM_CONFIRMATION;
+    try {
+      await this.swapyProtocol.requireToken(asset.contractAddress);
+      this.toastrService.getInstance().success('Tokens received');
+      this.storageService.getItem(asset.contractAddress);
+    } catch (error) {
+      this.storageService.remove(asset.contractAddress);
+      asset.status = status;
+      this.toastrService.getInstance().error(error.message);
+    }
+  }
 }
