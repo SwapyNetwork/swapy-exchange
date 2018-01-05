@@ -72,7 +72,7 @@ export class InvestmentComponent implements OnInit {
   public async isReturnDelayed() {
     const investedAt = new Date(this.investment.assets[0].investedAt);
     const latestBlock = (await this.web3Service.getInstance().eth.getBlock('latest'));
-    const now = new Date(latestBlock.timestamp) as any;
+    const now = new Date(latestBlock.timestamp * 1000) as any;
     this.delayed = now.valueOf() > investedAt.setDate(investedAt.getDate() + this.investment.paybackMonths * 30).valueOf() ? true : false;
   }
 
