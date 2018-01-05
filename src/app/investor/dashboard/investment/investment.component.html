@@ -66,6 +66,7 @@
               <th>Original value</th>
               <th>Status</th>
               <th>Contract</th>
+              <th>Token</th>
               <th>Cancel</th>
               <th>Sell</th>
               <th>Require token</th>
@@ -75,6 +76,7 @@
               <td>{{asset.value | currency:'USD':true:'.2'}}</td>
               <td>{{statusToString(asset.status)}}</td>
               <td><span *ngIf="!asset.contractAddress">-</span><a *ngIf="asset.contractAddress" (click)="exploreContract(asset.contractAddress)">Explore</a></td>
+              <td>{{asset.token}}</td>
               <td>
                 <button class="btn sw-accept-decline sw-btn-danger" *ngIf="(asset.status == PENDING_OWNER_AGREEMENT && asset.investor == walletAddress)" (click)="cancelInvestment(asset)">
                   <i class="fa fa-times" aria-hidden="true"></i>
