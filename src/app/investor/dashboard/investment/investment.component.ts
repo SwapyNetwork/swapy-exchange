@@ -194,7 +194,7 @@ export class InvestmentComponent implements OnInit {
     } catch (error) {
       this.storageService.remove(asset.contractAddress);
       asset.status = status;
-      this.toastrService.getInstance().error(error.message);
+      this.toastrService.getInstance().error('Not eligible to receive SWAPY Tokens. Investment return is not delayed yet.');
     }
   }
 }
