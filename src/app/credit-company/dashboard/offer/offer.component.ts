@@ -109,7 +109,7 @@ export class OfferComponent implements OnInit {
     try {
       const value = asset.value * (1 + this.offer.grossReturn);
       await this.swapyProtocol.returnInvestment(asset.contractAddress, value);
-      this.toastrService.getInstance().success('Investment refused.');
+      this.toastrService.getInstance().success('Investment returned.');
     } catch (error) {
       this.storageService.remove(asset.contractAddress);
       asset.status = status;

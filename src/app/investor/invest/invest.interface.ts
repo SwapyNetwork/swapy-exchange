@@ -1,5 +1,6 @@
 interface InvestAsset {
   value: number;
+  investedAt: Date;
 }
 
 export interface Invest {

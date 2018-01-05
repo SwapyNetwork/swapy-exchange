@@ -7,7 +7,7 @@ import { LoadingService } from '../../common/services/loading.service';
 import { StorageService } from '../../common/services/storage.service';
 import { INVESTED, PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
 import { OWNER, VALUE, PAYBACKDAYS, GROSSRETURN, STATUS,
-  INVESTOR, INVESTEDAT, SELLDATA_BUYER, SELLDATA_VALUE, BOUGHTVALUE } from '../../common/interfaces/asset-parameters.interface';
+  INVESTOR, INVESTEDAT, SELLDATA_BUYER, SELLDATA_VALUE, BOUGHTVALUE, TOKENFUEL } from '../../common/interfaces/asset-parameters.interface';
 
 @Injectable()
 export class DashboardService {
@@ -83,6 +83,7 @@ export class DashboardService {
           boughtValue: asset[INVESTOR].toLowerCase() === this.walletService.getWallet().address.toLowerCase() ?
             asset[BOUGHTVALUE] / 100 : asset[SELLDATA_VALUE] / 100 ,
           investor: asset[INVESTOR].toLowerCase(),
+          token: asset[TOKENFUEL] / Math.pow(10, 18),
           buyer: asset[SELLDATA_BUYER].toLowerCase()
         });
 
