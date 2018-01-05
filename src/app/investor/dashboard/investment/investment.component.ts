@@ -10,6 +10,7 @@ import { InvestService } from '../../invest/invest.service';
 import { WalletService } from '../../../common/services/wallet.service';
 import { ErrorLogService } from '../../../common/services/error-log.service';
 import { StorageService } from '../../../common/services/storage.service';
+import { Web3Service } from '../../../common/services/web3.service';
 import { SellAssetService } from '../../sell-asset/sell-asset.service';
 
 import * as env from '../../../../../env.json';
@@ -25,6 +26,7 @@ export class InvestmentComponent implements OnInit {
   @Input() public collapsed: boolean;
   //
   private walletAddress;
+  private delayed: boolean;
 
   public AVAILABLE = AVAILABLE;
   public PENDING_OWNER_AGREEMENT = PENDING_OWNER_AGREEMENT;
@@ -45,10 +47,12 @@ export class InvestmentComponent implements OnInit {
     private storageService: StorageService,
     private sellAssetService: SellAssetService,
     private router: Router,
+    private web3Service: Web3Service,
     private walletService: WalletService) { }
 
   ngOnInit() {
     this.walletAddress = this.walletService.getWallet().address.toLowerCase();
+    this.isReturnDelayed();
   }
 
   public toggleCollapse() {
@@ -63,6 +67,13 @@ export class InvestmentComponent implements OnInit {
     const paybackDate = new Date(this.investment.investedAt);
     paybackDate.setMonth(paybackDate.getMonth() + this.investment.paybackMonths);
     return paybackDate;
+  }
+
+  public async isReturnDelayed() {
+    const investedAt = new Date(this.investment.assets[0].investedAt);
+    const latestBlock = (await this.web3Service.getInstance().eth.getBlock('latest'));
+    const now = new Date(latestBlock.timestamp) as any;
+    this.delayed = now.valueOf() > investedAt.setDate(investedAt.getDate() + this.investment.paybackMonths * 30).valueOf() ? true : false;
   }
 
   public statusToString(status) {
