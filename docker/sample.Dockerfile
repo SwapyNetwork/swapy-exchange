@@ -6,9 +6,9 @@ ENV SWAPY_FAUCET_REPOSITORY https://github.com/swapynetwork/swapy-test-faucet
 ENV SWAPY_PROTOCOL_VERSION master
 ENV SWAPY_FAUCET_VERSION master
 
-ENV WALLET_MNEMONIC "twelve words mnemonic ... potato bread coconut pencil"
-ENV DEV_NETWORK_ID "number"
-ENV TOKEN_ADDRESS "0xSomeHexAddress"
+ENV WALLET_MNEMONIC "twelve words mnemonic ... potato bread coconut"
+ENV DEV_NETWORK_ID ".."
+ENV TOKEN_ADDRESS "someHexadecimalAddress"
 
 ENV SWAPY_USER swapy
 ENV SWAPY_PASSWORD 123456
@@ -27,23 +27,34 @@ RUN useradd -ms /bin/bash ${SWAPY_USER} && \
 USER ${SWAPY_USER}
 WORKDIR ${SWAPY_HOME}
 
-# Clone and build Swapy Test Faucet
+# Clone, build and run Swapy Test Faucet
 RUN mkdir ./www && \
     export PATH=${SWAPY_HOME}/.npm-global/bin:$PATH && \
-    export WALLET_MNEMONIC=${WALLET_MNEMONIC} && \
-    export DEV_NETWORK_ID=${DEV_NETWORK_ID} && \
     cd ./www && \
     git clone ${SWAPY_FAUCET_REPOSITORY} && \
     cd ./swapy-test-faucet && \
     git checkout ${SWAPY_FAUCET_VERSION} && \
     npm install
 
-# Clone and build Swapy Exchange Protocol
-RUN export TOKEN_ADDRESS=${TOKEN_ADDRESS} && \
-    cd ./www && \
+# Clone, build and run Swapy Exchange Protocol
+RUN cd ./www && \
     git clone ${SWAPY_PROTOCOL_REPOSITORY} && \
     cd ./swapy-exchange-protocol && \
     git checkout ${SWAPY_PROTOCOL_VERSION} && \
-    npm install 
-    
+    npm install
+
+# Create a file with commands to be run when the container start 
+RUN cd ./www && \
+    printf 'cd swapy-test-faucet &&\ 
+            npm run testrpc &\
+            cd swapy-test-faucet &&\
+            npm run migrate.test.hard &&\
+            cd ../swapy-exchange-protocol &&\
+            npm run migrate.dev.hard &&\
+            while true; do sleep 2; done' >> start.sh    
+
+WORKDIR ${SWAPY_HOME}/www
+
 EXPOSE 8545
+
+CMD sh start.sh
