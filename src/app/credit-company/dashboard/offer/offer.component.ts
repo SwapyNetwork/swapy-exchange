@@ -74,13 +74,7 @@ export class OfferComponent implements OnInit {
       await this.swapyProtocol.withdrawFunds(asset.contractAddress);
       this.toastrService.getInstance().success('Transaction finished.');
     } catch (error) {
-      this.storageService.remove(asset.contractAddress);
-      asset.status = status;
-      this.walletService.getEthBalance().then((currentBalance) => {
-        this.errorLogService.setAfterETHbalance(currentBalance);
-        this.errorLogService.setError(error);
-      });
-      this.toastrService.getInstance().error(error.message);
+      this.onError(error, asset, status);
     }
   }
 
@@ -92,13 +86,7 @@ export class OfferComponent implements OnInit {
       await this.swapyProtocol.refuseInvestment(asset.contractAddress);
       this.toastrService.getInstance().success('Investment refused.');
     } catch (error) {
-      this.storageService.remove(asset.contractAddress);
-      asset.status = status;
-      this.walletService.getEthBalance().then((currentBalance) => {
-        this.errorLogService.setAfterETHbalance(currentBalance);
-        this.errorLogService.setError(error);
-      });
-      this.toastrService.getInstance().error(error.message);
+      this.onError(error, asset, status);
     }
   }
 
@@ -111,7 +99,15 @@ export class OfferComponent implements OnInit {
       await this.swapyProtocol.returnInvestment(asset.contractAddress, value);
       this.toastrService.getInstance().success('Investment returned.');
     } catch (error) {
-      this.storageService.remove(asset.contractAddress);
+      this.onError(error, asset, status);
+    }
+  }
+
+  private onError(error, asset, status) {
+    this.storageService.remove(asset.contractAddress);
+    if (error.message === '699e7c6d81ba58075ee84cf2a640c18a409efcba') { // 50 blocks later and transaction has not being mined yet.
+      this.toastrService.getInstance().error('Transaction is still being mined. Checkout later to see if the transaction was successful');
+    } else {
       asset.status = status;
       this.toastrService.getInstance().error(error.message);
     }
