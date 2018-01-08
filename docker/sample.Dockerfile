@@ -8,7 +8,6 @@ ENV SWAPY_FAUCET_VERSION master
 
 ENV WALLET_MNEMONIC "twelve words mnemonic ... potato bread coconut"
 ENV DEV_NETWORK_ID ".."
-ENV TOKEN_ADDRESS "someHexadecimalAddress"
 
 ENV SWAPY_USER swapy
 ENV SWAPY_PASSWORD 123456
@@ -48,7 +47,9 @@ RUN cd ./www && \
     printf 'cd swapy-test-faucet &&\ 
             npm run testrpc &\
             cd swapy-test-faucet &&\
-            npm run migrate.test.hard &&\
+            faucetMigration="$(npm run migrate.test.hard)" &&\
+            tokenAddress="$(echo ${faucetMigration} | cut -d"&" -f6)" &&\
+            export TOKEN_ADDRESS=${tokenAddress} &&\
             cd ../swapy-exchange-protocol &&\
             npm run migrate.dev.hard &&\
             while true; do sleep 2; done' >> start.sh    
@@ -58,3 +59,5 @@ WORKDIR ${SWAPY_HOME}/www
 EXPOSE 8545
 
 CMD sh start.sh
+
+
