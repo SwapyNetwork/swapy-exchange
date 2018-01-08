@@ -109,6 +109,16 @@ export class InvestmentComponent implements OnInit {
 
   }
 
+  private onError(error, asset, status) {
+    this.storageService.remove(asset.contractAddress);
+    if (error.message === '699e7c6d81ba58075ee84cf2a640c18a409efcba') { // 50 blocks later and transaction has not being mined yet.
+      this.toastrService.getInstance().error('Transaction is still being mined. Check it out later to see if the transaction was mined');
+    } else {
+      asset.status = status;
+      this.toastrService.getInstance().error(error.message);
+    }
+  }
+
   public exploreContract(address: string) {
     const url = this.explorerUrl + address;
     this.linkService.openLink(url);
@@ -123,9 +133,7 @@ export class InvestmentComponent implements OnInit {
       this.toastrService.getInstance().success('Investment cancelled');
       this.storageService.getItem(asset.contractAddress);
     } catch (error) {
-      this.storageService.remove(asset.contractAddress);
-      asset.status = status;
-      this.toastrService.getInstance().error(error.message);
+      this.onError(error, asset, status);
     }
   }
 
@@ -143,9 +151,7 @@ export class InvestmentComponent implements OnInit {
       this.toastrService.getInstance().success('Asset deleted of the Marketplace');
       this.storageService.getItem(asset.contractAddress);
     } catch (error) {
-      this.storageService.remove(asset.contractAddress);
-      asset.status = status;
-      this.toastrService.getInstance().error(error.message);
+      this.onError(error, asset, status);
     }
   }
 
@@ -158,9 +164,7 @@ export class InvestmentComponent implements OnInit {
       this.toastrService.getInstance().success('Purchase request cancelled');
       this.storageService.getItem(asset.contractAddress);
     } catch (error) {
-      this.storageService.remove(asset.contractAddress);
-      asset.status = status;
-      this.toastrService.getInstance().error(error.message);
+      this.onError(error, asset, status);
     }
   }
 
@@ -173,9 +177,7 @@ export class InvestmentComponent implements OnInit {
       this.toastrService.getInstance().success('Purchase request cancelled');
       this.storageService.getItem(asset.contractAddress);
     } catch (error) {
-      this.storageService.remove(asset.contractAddress);
-      asset.status = status;
-      this.toastrService.getInstance().error(error.message);
+      this.onError(error, asset, status);
     }
   }
 
@@ -188,9 +190,7 @@ export class InvestmentComponent implements OnInit {
       this.toastrService.getInstance().success('Asset sold');
       this.storageService.getItem(asset.contractAddress);
     } catch (error) {
-      this.storageService.remove(asset.contractAddress);
-      asset.status = status;
-      this.toastrService.getInstance().error(error.message);
+      this.onError(error, asset, status);
     }
   }
 
@@ -204,8 +204,12 @@ export class InvestmentComponent implements OnInit {
       this.storageService.getItem(asset.contractAddress);
     } catch (error) {
       this.storageService.remove(asset.contractAddress);
-      asset.status = status;
-      this.toastrService.getInstance().error('Not eligible to receive SWAPY Tokens. Investment return is not delayed yet.');
+      if (error.message === '699e7c6d81ba58075ee84cf2a640c18a409efcba') { // 50 blocks later and transaction has not being mined yet.
+        this.toastrService.getInstance().error('Transaction is still being mined. Check it out later to see if the transaction was mined');
+      } else {
+        asset.status = status;
+        this.toastrService.getInstance().error('Not eligible to receive SWAPY Tokens. Investment return is not delayed yet.');
+      }
     }
   }
 }
