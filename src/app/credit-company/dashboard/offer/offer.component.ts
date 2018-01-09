@@ -15,6 +15,8 @@ import { SupplyTokenService } from '../../supply-token/supply-token.service';
 
 import * as env from '../../../../../env.json';
 
+const sha1 = require('sha1');
+
 @Component({
   selector: 'app-dashboard-offer',
   templateUrl: './offer.component.html',
@@ -74,13 +76,7 @@ export class OfferComponent implements OnInit {
       await this.swapyProtocol.withdrawFunds(asset.contractAddress);
       this.toastrService.getInstance().success('Transaction finished.');
     } catch (error) {
-      this.storageService.remove(asset.contractAddress);
-      asset.status = status;
-      this.walletService.getEthBalance().then((currentBalance) => {
-        this.errorLogService.setAfterETHbalance(currentBalance);
-        this.errorLogService.setError(error);
-      });
-      this.toastrService.getInstance().error(error.message);
+      this.onError(error, asset, status);
     }
   }
 
@@ -92,13 +88,7 @@ export class OfferComponent implements OnInit {
       await this.swapyProtocol.refuseInvestment(asset.contractAddress);
       this.toastrService.getInstance().success('Investment refused.');
     } catch (error) {
-      this.storageService.remove(asset.contractAddress);
-      asset.status = status;
-      this.walletService.getEthBalance().then((currentBalance) => {
-        this.errorLogService.setAfterETHbalance(currentBalance);
-        this.errorLogService.setError(error);
-      });
-      this.toastrService.getInstance().error(error.message);
+      this.onError(error, asset, status);
     }
   }
 
@@ -111,7 +101,15 @@ export class OfferComponent implements OnInit {
       await this.swapyProtocol.returnInvestment(asset.contractAddress, value);
       this.toastrService.getInstance().success('Investment returned.');
     } catch (error) {
-      this.storageService.remove(asset.contractAddress);
+      this.onError(error, asset, status);
+    }
+  }
+
+  private onError(error, asset, status) {
+    this.storageService.remove(asset.contractAddress);
+    if (sha1(error.message) === '699e7c6d81ba58075ee84cf2a640c18a409efcba') { // 50 blocks later and transaction has not being mined yet.
+      this.toastrService.getInstance().error('Transaction is still being mined. Check it out later to see if the transaction was mined');
+    } else {
       asset.status = status;
       this.toastrService.getInstance().error(error.message);
     }
