@@ -37,6 +37,7 @@
                   <p class="sw-box-text sw-confirmation-col-left">Value:</p>
                   <p class="sw-box-text sw-confirmation-col-left">Gross return rate:</p>
                   <p class="sw-box-text sw-confirmation-col-left">Contract term:</p>
+                  <p class="sw-box-text sw-confirmation-col-left">Return on:</p>
 
               </div>
               <div class="col-xs-4 col-sm-4 col-md-4">
@@ -44,6 +45,8 @@
                   <p class="sw-box-text">{{asset.value | currency}}</p>
                   <p class="sw-box-text">{{asset.grossReturn | percent}}</p>
                   <p class="sw-box-text">{{asset.paybackMonths}} months</p>
+                  <p class="sw-box-text">{{asset.returnOn | date: 'yyyy-MM-dd'}}</p>
+
 
               </div>
             </div>

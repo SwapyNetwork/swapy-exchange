@@ -17,11 +17,17 @@ export class AssetComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.calculateReturn();
   }
 
-  public buy(asset) {
+  private buy(asset) {
     this.marketplaceService.cacheAsset(asset);
     this.router.navigate(['investor/marketplace/confirm-purchase']);
+  }
+
+  private calculateReturn() {
+    const investedAt = new Date(this.asset.investedAt * 1000);
+    this.asset.returnOn = investedAt.setMonth(investedAt.getMonth() + this.asset.paybackMonths)
   }
 
 }
