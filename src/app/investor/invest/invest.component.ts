@@ -37,7 +37,6 @@ export class InvestComponent implements OnInit {
   }
 
   confirmInvestment() {
-    this.successfulInvestmentService.cleanMessages();
     this.invest();
     this.router.navigate(['investor/invest/success']);
   }
