@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { WalletService } from '../common/services/wallet.service';
 import { Web3Service } from '../common/services/web3.service';
 import { LoadingService } from '../common/services/loading.service';
+import { SwapyProtocolService as SwapyProtocol } from '../common/services/swapy-protocol.service';
 import { PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
   DELAYED_RETURN } from '../common/interfaces/offer-asset-status.interface';
 import { DashboardService } from './dashboard/dashboard.service';
@@ -25,8 +26,12 @@ export class InvestorComponent implements OnInit {
   public averagePaybackPeriod;
   public balance;
 
-  constructor(private walletService: WalletService,
-    private web3Service: Web3Service, private loadingService: LoadingService, private dashboardService: DashboardService) {}
+  constructor(
+    private walletService: WalletService,
+    private web3Service: Web3Service,
+    private loadingService: LoadingService,
+    private swapyProtocol: SwapyProtocol,
+    private dashboardService: DashboardService) {}
 
   ngOnInit() {
     // this.refreshStatusBar();
@@ -38,6 +43,22 @@ export class InvestorComponent implements OnInit {
     this.walletService.getEthBalance().then((balance) => {
       this.balance = balance;
     });
+
+    let forSaleEvents = await this.swapyProtocol.get('ForSale');
+    forSaleEvents = forSaleEvents.filter(event =>
+      event.returnValues._investor.toLowerCase() === this.walletService.getWallet().address.toLowerCase());
+    console.log(forSaleEvents);
+
+    let receivedGR = 0;
+
+    forSaleEvents.forEach(async event => {
+      const withdrawal = await this.swapyProtocol.getAssetEvent(event.returnValues._asset, 'Withdrawal');
+      event = [event].concat(withdrawal);
+      event.sort((a, b) => (a.blockNumber < b.blockNumber) ? -1 : (a.blockNumber > b.blockNumber ? 1 : 0));
+      console.log(event);
+      
+    });
+
 
     const investments = this.dashboardService.getCachedInvestments();
     let assets = [];
