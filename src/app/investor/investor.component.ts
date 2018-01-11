@@ -46,6 +46,7 @@ export class InvestorComponent implements OnInit {
         asset['grossReturn'] = investment.grossReturn;
         asset['paybackDays'] = investment.paybackMonths * 30;
         asset['investedAt'] = new Date(investment.investedAt)
+        asset['currentValue'] = asset.boughtValue || asset.value;
       });
       assets = assets.concat(investment.assets);
     })
@@ -56,7 +57,7 @@ export class InvestorComponent implements OnInit {
 
     this.investedValue = (assets.filter(asset => (
       Number(asset.status) >= PENDING_OWNER_AGREEMENT && Number(asset.status) <= DELAYED_RETURN))
-      .map(asset => asset.value)
+      .map(asset => asset.currentValue)
       .reduce((total, current) => (total + current), 0));
 
     this.returnValue = assets.filter(asset => (
