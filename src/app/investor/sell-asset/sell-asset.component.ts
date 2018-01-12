@@ -10,8 +10,8 @@ import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 })
 export class SellAssetComponent implements OnInit {
 
-  private asset;
-  private value: string;
+  public asset;
+  public value: string;
 
   public amountMask = createNumberMask({
     prefix: 'US$ ',

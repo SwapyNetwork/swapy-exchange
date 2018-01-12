@@ -12,7 +12,7 @@ import { SuccessfulInvestmentService } from './../successful-investment/successf
 })
 export class ConfirmPurchaseComponent implements OnInit {
 
-  private asset;
+  public asset;
   constructor(
     private marketplaceService: MarketplaceService,
     private swapyProtocol: SwapyProtocol,

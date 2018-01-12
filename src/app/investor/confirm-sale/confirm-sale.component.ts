@@ -15,7 +15,7 @@ import { SuccessfulInvestmentService } from './../successful-investment/successf
 })
 export class ConfirmSaleComponent implements OnInit {
 
-  private asset;
+  public asset;
 
   constructor(
     private toastrService: ToastrService,
