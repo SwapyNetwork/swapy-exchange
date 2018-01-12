@@ -12,5 +12,7 @@ export interface Invest {
   grossReturn: number;
   paybackMonths: number;
   investedAt: Date;
+  boughtAt: Date;
+  type: string
   assets: InvestAsset[];
 }

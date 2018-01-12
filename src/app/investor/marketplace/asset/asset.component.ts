@@ -20,12 +20,12 @@ export class AssetComponent implements OnInit {
     this.calculateReturn();
   }
 
-  private buy(asset) {
+  public buy(asset) {
     this.marketplaceService.cacheAsset(asset);
     this.router.navigate(['investor/marketplace/confirm-purchase']);
   }
 
-  private calculateReturn() {
+  public calculateReturn() {
     const investedAt = new Date(this.asset.investedAt * 1000);
     this.asset.returnOn = investedAt.setMonth(investedAt.getMonth() + this.asset.paybackMonths)
   }
