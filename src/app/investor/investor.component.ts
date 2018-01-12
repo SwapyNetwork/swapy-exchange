@@ -44,21 +44,31 @@ export class InvestorComponent implements OnInit {
       this.balance = balance;
     });
 
+    this.investedValue = 0;
+    this.returnedValue = 0;
+    this.returnValue = 0;
+
     let forSaleEvents = await this.swapyProtocol.get('ForSale');
+    // console.log(forSaleEvents);
     forSaleEvents = forSaleEvents.filter(event =>
       event.returnValues._investor.toLowerCase() === this.walletService.getWallet().address.toLowerCase());
-    console.log(forSaleEvents);
 
-    let receivedGR = 0;
-
-    forSaleEvents.forEach(async event => {
-      const withdrawal = await this.swapyProtocol.getAssetEvent(event.returnValues._asset, 'Withdrawal');
-      event = [event].concat(withdrawal);
-      event.sort((a, b) => (a.blockNumber < b.blockNumber) ? -1 : (a.blockNumber > b.blockNumber ? 1 : 0));
-      console.log(event);
-      
-    });
-
+    for (const forSaleEvent of forSaleEvents){
+      const withdrawal = await this.swapyProtocol.getAssetEvent(forSaleEvent.returnValues._asset, 'Withdrawal');
+      const events = [forSaleEvent].concat(withdrawal);
+      events.sort((a, b) => (a.blockNumber < b.blockNumber) ? -1 : (a.blockNumber > b.blockNumber ? 1 : 0));
+      const indexFS = events.map(event => event.event).indexOf('ForSale');
+      if (events.length >= indexFS + 1) {
+        if (events[indexFS + 1].event === 'Withdrawal') {
+          const investor = events[indexFS].returnValues._investor.toLowerCase();
+          const owner = events[indexFS + 1].returnValues._owner.toLowerCase();
+          if (investor === owner) {
+            this.returnedValue += Number(events[indexFS].returnValues._value) / 100;
+          }
+        }
+      }
+      console.log(events);
+    }
 
     const investments = this.dashboardService.getCachedInvestments();
     let assets = [];
@@ -72,10 +82,6 @@ export class InvestorComponent implements OnInit {
       assets = assets.concat(investment.assets);
     })
 
-    this.investedValue = 0;
-    this.returnedValue = 0;
-    this.returnValue = 0;
-
     this.investedValue = (assets.filter(asset => (
       Number(asset.status) >= PENDING_OWNER_AGREEMENT && Number(asset.status) <= DELAYED_RETURN))
       .map(asset => asset.currentValue)
@@ -86,7 +92,7 @@ export class InvestorComponent implements OnInit {
       .map(asset => asset.value + asset.value * asset.grossReturn)
       .reduce((total, current) => (total + current), 0);
 
-    this.returnedValue = assets.filter(asset => (Number(asset.status) === RETURNED ||
+    this.returnedValue += assets.filter(asset => (Number(asset.status) === RETURNED ||
       Number(asset.status) === DELAYED_RETURN))
       .map(asset => asset.value + asset.value * asset.grossReturn)
       .reduce((total, current) => (total + current), 0);
