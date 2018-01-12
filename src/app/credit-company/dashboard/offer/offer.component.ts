@@ -133,13 +133,9 @@ export class OfferComponent implements OnInit {
         statusString = 'Available';
         break;
       case this.INVESTED:
-        statusString = 'Successfully invested';
-        break;
       case this.FOR_SALE:
-        statusString = 'For sale';
-        break;
       case this.PENDING_INVESTOR_AGREEMENT:
-        statusString = 'Pending investor\'s confirmation to sell';
+        statusString = 'Successfully invested';
         break;
       case this.RETURNED:
         statusString = 'Successfully returned';

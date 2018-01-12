@@ -50,7 +50,8 @@ export class MarketplaceComponent implements OnInit {
         const assetAddress = forSaleEvent.returnValues._asset;
         const assetValue = forSaleEvent.returnValues._value;
         const investor = forSaleEvent.returnValues._investor.toLowerCase();
-        const assetConstants = await this.swapyProtocol.getAssetConstants(assetAddress, ['grossReturn', 'paybackDays', 'status', 'value']);
+        const constants = ['grossReturn', 'paybackDays', 'status', 'value', 'investedAt'];
+        const assetConstants = await this.swapyProtocol.getAssetConstants(assetAddress, constants);
         const asset = {
           address: assetAddress,
           displayAddress: this.getDisplayWalletAddress(assetAddress),
@@ -58,9 +59,10 @@ export class MarketplaceComponent implements OnInit {
           grossReturn: assetConstants.grossReturn / 10000,
           paybackMonths: assetConstants.paybackDays / 30,
           originalValue: assetConstants.value / 100,
-          value: assetValue / 100
+          value: assetValue / 100,
+          investedAt: assetConstants.investedAt
         };
-        if (Number(assetConstants.status) === FOR_SALE && investor != this.walletService.getWallet().address.toLowerCase()) {
+        if (Number(assetConstants.status) === FOR_SALE && investor !== this.walletService.getWallet().address.toLowerCase()) {
           this.assets.push(asset);
           this.assets = this.deleteDuplicatedAssets(this.assets);
         }
