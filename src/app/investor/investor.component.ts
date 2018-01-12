@@ -48,8 +48,8 @@ export class InvestorComponent implements OnInit {
     this.returnedValue = 0;
     this.returnValue = 0;
 
+    const ForSale = await this.swapyProtocol.get('ForSale');
     let forSaleEvents = await this.swapyProtocol.get('ForSale');
-    // console.log(forSaleEvents);
     forSaleEvents = forSaleEvents.filter(event =>
       event.returnValues._investor.toLowerCase() === this.walletService.getWallet().address.toLowerCase());
 
@@ -58,7 +58,7 @@ export class InvestorComponent implements OnInit {
       const events = [forSaleEvent].concat(withdrawal);
       events.sort((a, b) => (a.blockNumber < b.blockNumber) ? -1 : (a.blockNumber > b.blockNumber ? 1 : 0));
       const indexFS = events.map(event => event.event).indexOf('ForSale');
-      if (events.length >= indexFS + 1) {
+      if (events.length > indexFS + 1) {
         if (events[indexFS + 1].event === 'Withdrawal') {
           const investor = events[indexFS].returnValues._investor.toLowerCase();
           const owner = events[indexFS + 1].returnValues._owner.toLowerCase();
@@ -66,8 +66,32 @@ export class InvestorComponent implements OnInit {
             this.returnedValue += Number(events[indexFS].returnValues._value) / 100;
           }
         }
+
+        if (indexFS === 1) {
+          const value = (await this.swapyProtocol.getAssetConstants(events[indexFS].returnValues._asset, ['value'])).value;
+          this.investedValue += Number(value) / 100;
+        } else {
+          let sliced = events.slice(1, indexFS)
+          sliced = sliced.concat(ForSale.filter(forSale => forSale.returnValues._asset.toLowerCase() === forSaleEvent.returnValues._asset.toLowerCase()));
+          sliced.sort((a, b) => (a.blockNumber < b.blockNumber) ? -1 : (a.blockNumber > b.blockNumber ? 1 : 0));
+          let indexW = sliced.map(event => event.event).indexOf('Withdrawal');
+          while (sliced.map(event => event.event).indexOf('Withdrawal') !== -1) {
+            indexW = sliced.map(event => event.event).indexOf('Withdrawal');
+            let index = indexW - 1;
+            while (sliced[index].returnValues._investor.toLowerCase() !== sliced[indexW].returnValues._owner.toLowerCase() &&
+              sliced[indexW].returnValues._investor.toLowerCase() !== this.walletService.getWallet().address.toLowerCase()) {
+              index--;
+            }
+
+            if (sliced[index].returnValues._investor.toLowerCase() === sliced[indexW].returnValues._owner.toLowerCase() &&
+              sliced[indexW].returnValues._investor.toLowerCase() === this.walletService.getWallet().address.toLowerCase()) {
+              this.investedValue += sliced[index].returnValues._value / 100;
+            }
+            
+            sliced = sliced.slice(indexW + 1);
+          }
+        }
       }
-      console.log(events);
     }
 
     const investments = this.dashboardService.getCachedInvestments();
@@ -82,7 +106,7 @@ export class InvestorComponent implements OnInit {
       assets = assets.concat(investment.assets);
     })
 
-    this.investedValue = (assets.filter(asset => (
+    this.investedValue += (assets.filter(asset => (
       Number(asset.status) >= PENDING_OWNER_AGREEMENT && Number(asset.status) <= DELAYED_RETURN))
       .map(asset => asset.currentValue)
       .reduce((total, current) => (total + current), 0));
