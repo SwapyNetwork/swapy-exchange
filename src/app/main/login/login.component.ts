@@ -22,6 +22,7 @@ const env = require('../../../../env.json');
 export class LoginComponent implements OnInit {
 
   public requireMetaMask;
+  public isElectron;
   public requireNetwork;
   public agreedToTerms;
   public account: Wallet;
@@ -41,10 +42,16 @@ export class LoginComponent implements OnInit {
     private storageService: StorageService,
     public logoutService: LogoutService,
     public loadingService: LoadingService
-  ) {}
+  ) {
+    this.isElectron = (window as any).isElectron;
+  }
 
   ngOnInit() {
     this.checkAccount();
+  }
+
+  public triggerMetamaskPopup() {
+    (window as any).chrome.ipcRenderer.send('open-metamask-popup');
   }
 
   public getNetworkName(networkId) {
