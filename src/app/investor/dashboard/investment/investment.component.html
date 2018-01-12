@@ -100,7 +100,7 @@
                 </button>
               </td>
               <td>
-                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.status == INVESTED && asset.investor == walletAddress && asset.token && isReturnDelayed(asset)" (click)="requireToken(asset)">
+                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="(asset.status == INVESTED && asset.investor == walletAddress && asset.token && delayed[i])" (click)="requireToken(asset)">
                   <i class="fa fa-check" aria-hidden="true"></i>
                 </button>
               </td>

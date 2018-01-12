@@ -28,6 +28,7 @@ export class InvestmentComponent implements OnInit {
   @Input() public collapsed: boolean;
   //
   private walletAddress;
+  private delayed = [];
 
   public AVAILABLE = AVAILABLE;
   public PENDING_OWNER_AGREEMENT = PENDING_OWNER_AGREEMENT;
@@ -52,6 +53,7 @@ export class InvestmentComponent implements OnInit {
     private walletService: WalletService) { }
 
   ngOnInit() {
+    this.isReturnDelayed();
     this.walletAddress = this.walletService.getWallet().address.toLowerCase();
   }
 
@@ -69,11 +71,16 @@ export class InvestmentComponent implements OnInit {
     return paybackDate;
   }
 
-  public async isReturnDelayed(asset) {
-    const investedAt = new Date(asset.investedAt);
+  public async isReturnDelayed() {
     const latestBlock = (await this.web3Service.getInstance().eth.getBlock('latest'));
     const now = new Date(latestBlock.timestamp * 1000) as any;
-    return now.valueOf() > investedAt.setDate(investedAt.getDate() + this.investment.paybackMonths * 30).valueOf() ? true : false;
+    this.delayed = [];
+    this.investment.assets.forEach(asset => {
+      const investedAt = new Date(asset.investedAt);
+      this.delayed.push(
+        now.valueOf() > investedAt.setDate(investedAt.getDate() + this.investment.paybackMonths * 30).valueOf() ? true : false
+      );
+    });
   }
 
   public statusToString(status) {

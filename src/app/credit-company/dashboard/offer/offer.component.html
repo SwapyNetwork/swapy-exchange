@@ -85,7 +85,7 @@
                 <button class="btn sw-accept-decline sw-btn-danger" *ngIf="asset.status == PENDING_OWNER_AGREEMENT" (click)="refuseInvestment(asset)"><i class="fa fa-times" aria-hidden="true"></i></button>
               </td>
               <td>
-                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.status == INVESTED" (click)="returnInvestment(asset)"><i class="fa fa-check" aria-hidden="true"></i></button>
+                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="(asset.status == INVESTED || asset.status == FOR_SALE || asset.status == PENDING_INVESTOR_AGREEMENT)" (click)="returnInvestment(asset)"><i class="fa fa-check" aria-hidden="true"></i></button>
               </td>
            </tr>
         </table>
