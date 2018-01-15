@@ -21,6 +21,7 @@ export class SuccessfulInvestmentComponent implements OnInit {
   ngOnInit() {
     this.offerIndex = this.investService.getCachedOfferIndex();
     this.walletAddress = this.walletService.getWallet().address;
+    this.successfulInvestmentService.cleanMessages();
   }
 
 }

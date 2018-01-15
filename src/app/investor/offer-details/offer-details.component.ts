@@ -53,11 +53,12 @@ export class OfferDetailsComponent implements OnInit {
       this.offer = offers[this.offerIndex];
       const assets = [];
       for (const assetAddress of this.offer.assetsAddress) {
-        const assetObject = await this.swapyProtocol.getAssetConstants(assetAddress, ['value', 'status']);
+        const assetObject = await this.swapyProtocol.getAssetConstants(assetAddress, ['value', 'status', 'tokenFuel']);
         const asset = {
           contractAddress: assetAddress,
           value: assetObject.value / 100,
-          status: assetObject.status
+          status: assetObject.status,
+          token: assetObject.tokenFuel / Math.pow(10, 18)
         } as any;
         assets.push(asset);
       }

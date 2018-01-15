@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core';
 import { WalletService } from '../common/services/wallet.service';
 import { LoadingService } from '../common/services/loading.service';
-import { INVESTED, RETURNED, DELAYED_RETURN } from '../common/interfaces/offer-asset-status.interface';
+import { INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
+  DELAYED_RETURN } from '../common/interfaces/offer-asset-status.interface';
 import { DashboardService } from './dashboard/dashboard.service';
 
 
@@ -48,6 +49,8 @@ export class CreditCompanyComponent implements OnInit {
     this.amountRequested = (assets.map(values => values.value)
       .reduce((total: number, current: number) => (total + current), 0));
     this.amountRaised = (assets.filter(asset => (asset.status === INVESTED ||
+      asset.status === FOR_SALE ||
+      asset.status === PENDING_INVESTOR_AGREEMENT ||
       asset.status === RETURNED ||
       asset.status === DELAYED_RETURN))
       .map(values => values.value)
@@ -55,7 +58,8 @@ export class CreditCompanyComponent implements OnInit {
     this.amountReturned = (assets.filter(asset => (asset.status === RETURNED || asset.status === DELAYED_RETURN))
       .map(values => values.value + values.value * values.grossReturn)
       .reduce((total: number, current: number) => (total + current), 0));
-    this.amountToBeReturned = (assets.filter(asset => asset.status === INVESTED)
+    this.amountToBeReturned = (assets.filter(asset =>
+      (asset.status === INVESTED || asset.status === FOR_SALE || asset.status === PENDING_INVESTOR_AGREEMENT))
       .map(values => values.value + values.value * values.grossReturn)
       .reduce((total: number, current: number) => (total + current), 0));
     this.offersLength = offers.length;

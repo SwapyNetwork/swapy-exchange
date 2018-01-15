@@ -17,6 +17,8 @@
     <p class="sw-box-title">{{asset.grossReturn | percent}}</p>
     <p class="sw-box-text">Contract term</p>
     <p class="sw-box-title">{{asset.paybackMonths}} months</p>
+    <p class="sw-box-text">Return on</p>
+    <p class="sw-box-title">{{asset.returnOn | date: 'yyyy-MM-dd'}}</p>
     <br>
     <a class="sw-button sw-btn-ghost1" (click)="buy(asset)">Buy</a>
   </div>
