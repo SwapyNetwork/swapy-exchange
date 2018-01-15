@@ -13,9 +13,9 @@ import {
 import { StorageService } from '../../../common/services/storage.service';
 import { SupplyTokenService } from '../../supply-token/supply-token.service';
 
-import * as env from '../../../../../env.json';
+const env = require('../../../../../env.json');
+import * as sha1 from 'sha1';
 
-const sha1 = require('sha1');
 
 @Component({
   selector: 'app-dashboard-offer',

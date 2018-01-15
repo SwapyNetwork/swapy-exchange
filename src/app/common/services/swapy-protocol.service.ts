@@ -85,13 +85,14 @@ export class SwapyProtocolService {
         grossReturn * 10000,
         currency,
         assets)
-      .send({ from: this.walletService.getWallet().address, gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei') })
-        .on('transactionHash', (hash) => {
-          this.handleOnTransactionHash(hash);
-        })
-        .on('error', (error) => {
-          this.handleOnError(error);
-        });
+      .send({
+        from: this.walletService.getWallet().address, gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
+      }).on('transactionHash', (hash) => {
+        this.handleOnTransactionHash(hash);
+      })
+      .on('error', (error) => {
+        this.handleOnError(error);
+      });
   }
 
   public async invest(assetAddress: string[], value: number) {
@@ -106,7 +107,8 @@ export class SwapyProtocolService {
         value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
-      }).on('error', (error) => {
+      })
+      .on('error', (error) => {
         this.handleOnError(error);
       });
   }
@@ -121,7 +123,8 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
-      }).on('error', (error) => {
+      })
+      .on('error', (error) => {
         this.handleOnError(error);
       });
   }
@@ -136,7 +139,8 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
-      }).on('error', (error) => {
+      })
+      .on('error', (error) => {
         this.handleOnError(error);
       });
   }
@@ -155,7 +159,8 @@ export class SwapyProtocolService {
         value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
-      }).on('error', (error) => {
+      })
+      .on('error', (error) => {
         this.handleOnError(error);
       });
   }
@@ -170,21 +175,23 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
-      }).on('error', (error) => {
+      })
+      .on('error', (error) => {
         this.handleOnError(error);
       });
   }
 
   public transferToken(contractAddress: string, value: number) {
     return this.Token.methods
-      .transfer(contractAddress, value)
+      .approve(contractAddress, value)
       .send({
         from: this.walletService.getWallet().address,
         gas: 150000,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
-      }).on('error', (error) => {
+      })
+      .on('error', (error) => {
         this.handleOnError(error);
       });
   }
@@ -199,7 +206,8 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
-      }).on('error', (error) => {
+      })
+      .on('error', (error) => {
         this.handleOnError(error);
       });
   }
@@ -213,7 +221,8 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
-      }).on('error', (error) => {
+      })
+      .on('error', (error) => {
         this.handleOnError(error);
       });
   }
@@ -228,7 +237,8 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
-      }).on('error', (error) => {
+      })
+      .on('error', (error) => {
         this.handleOnError(error);
       });
   }
@@ -246,7 +256,8 @@ export class SwapyProtocolService {
         value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
-      }).on('error', (error) => {
+      })
+      .on('error', (error) => {
         this.handleOnError(error);
       });
   }
@@ -261,7 +272,8 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
-      }).on('error', (error) => {
+      })
+      .on('error', (error) => {
         this.handleOnError(error);
       });
   }
@@ -276,7 +288,8 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
-      }).on('error', (error) => {
+      })
+      .on('error', (error) => {
         this.handleOnError(error);
       });
   }
@@ -291,7 +304,24 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
-      }).on('error', (error) => {
+      })
+      .on('error', (error) => {
+        this.handleOnError(error);
+      });
+  }
+
+  public requireToken(contractAddress: string) {
+    this.AssetLibraryContract.options.address = contractAddress;
+    return this.AssetLibraryContract.methods
+      .requireTokenFuel()
+      .send({
+        from: this.walletService.getWallet().address,
+        gas: 150000,
+        gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
+      }).on('transactionHash', (hash) => {
+        this.handleOnTransactionHash(hash);
+      })
+      .on('error', (error) => {
         this.handleOnError(error);
       });
   }

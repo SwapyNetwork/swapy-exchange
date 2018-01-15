@@ -4,7 +4,7 @@ import { LogoutService } from '../services/logout.service';
 import { StorageService } from '../services/storage.service';
 import { WalletService } from '../services/wallet.service';
 import { INVESTOR, CREDIT_COMPANY } from '../interfaces/user-type.interface';
-import * as env from '../../../../env.json';
+const env = require('../../../../env.json');
 import { LinkService } from '../services/link.service';
 
 @Component({

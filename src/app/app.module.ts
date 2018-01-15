@@ -14,7 +14,6 @@ import { Web3Service } from './common/services/web3.service';
 import { WalletService } from './common/services/wallet.service';
 import { SwapyProtocolService } from './common/services/swapy-protocol.service';
 import { LogoutService } from './common/services/logout.service';
-import { NgxElectronModule } from 'ngx-electron';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { ToastOptions } from 'ng2-toastr';
@@ -31,7 +30,6 @@ import { ErrorLogService } from './common/services/error-log.service';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgxElectronModule,
     BrowserAnimationsModule,
     ToastModule.forRoot()
   ],

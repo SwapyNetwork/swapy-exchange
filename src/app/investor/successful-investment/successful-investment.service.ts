@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-const sha1 = require('sha1');
+import * as sha1 from 'sha1';
 
 @Injectable()
 export class SuccessfulInvestmentService {

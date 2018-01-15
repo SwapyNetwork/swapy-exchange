@@ -13,9 +13,9 @@ import { StorageService } from '../../../common/services/storage.service';
 import { Web3Service } from '../../../common/services/web3.service';
 import { SellAssetService } from '../../sell-asset/sell-asset.service';
 
-import * as env from '../../../../../env.json';
+const env = require('../../../../../env.json');
 
-const sha1 = require('sha1');
+import * as sha1 from 'sha1';
 
 @Component({
   selector: 'app-dashboard-investment',

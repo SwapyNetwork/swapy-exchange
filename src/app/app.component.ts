@@ -3,9 +3,7 @@ import { LoadingService } from './common/services/loading.service';
 import { WalletService } from './common/services/wallet.service';
 import * as Web3 from 'web3';
 
-import * as env from '../../env.json';
-const EventEmitter2 = require('eventemitter2').EventEmitter2;
-
+const env = require('../../env.json');
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,15 +16,6 @@ export class AppComponent {
   constructor(public loadingService: LoadingService,
     public walletService: WalletService, public viewContainerRef: ViewContainerRef) {
 
-      const server = new EventEmitter2({
-        wildcard: true,
-        maxListeners: 20,
-        verboseMemoryLeak: false
-      });
-
-      server.on('newUnapprovedTx', function(value1, value2) {
-        console.log(value1, value2);
-      })
     this.loadingService.loadingShowed$.subscribe(
       showed => {this.loading = true}
     );

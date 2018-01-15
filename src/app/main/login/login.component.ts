@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   public account: Wallet;
   public errorMessages: string[] = [];
   private web3;
-  public env = env;
+  public env: any = env;
 
   public INVESTOR = INVESTOR;
   public CREDIT_COMPANY = CREDIT_COMPANY;
@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
     setTimeout(async () => {
       if (!this.account || this.account.address === undefined) {
         self.requireMetaMask = true;
-      } else if (Number(this.account.network) !== Number(env.NETWORK_ID) && env.ENV !== 'dev') {
+      } else if (Number(this.account.network) !== Number(this.env.NETWORK_ID) && this.env.ENV !== 'dev') {
         self.requireNetwork = true;
       } else {
         self.requireNetwork = false;
