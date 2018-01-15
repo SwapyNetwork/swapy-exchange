@@ -270,7 +270,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 1319,
+          "SourceUnit": 1350,
           "absolutePath": "/home/adriel/Development/swapy-exchange-protocol/contracts/investment/InvestmentAsset.sol",
           "file": "./investment/InvestmentAsset.sol",
           "scope": 358,
@@ -289,7 +289,7 @@
             null
           ],
           "contractDependencies": [
-            1318
+            1349
           ],
           "contractKind": "contract",
           "documentation": null,
@@ -1404,7 +1404,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1998,
+                                  "referencedDeclaration": 2029,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -2100,7 +2100,7 @@
                                             "attributes": {
                                               "contractScope": null,
                                               "name": "InvestmentAsset",
-                                              "referencedDeclaration": 1318,
+                                              "referencedDeclaration": 1349,
                                               "type": "contract InvestmentAsset"
                                             },
                                             "id": 191,
@@ -2132,7 +2132,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2029,
+                                          "referencedDeclaration": 2060,
                                           "type": "contract SwapyExchange",
                                           "value": "this"
                                         },
@@ -2158,7 +2158,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 1998,
+                                              "referencedDeclaration": 2029,
                                               "type": "msg",
                                               "value": "msg"
                                             },
@@ -2504,7 +2504,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1998,
+                                  "referencedDeclaration": 2029,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -2748,7 +2748,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2001,
+                                      "referencedDeclaration": 2032,
                                       "type": "function (bool) pure",
                                       "value": "require"
                                     },
@@ -2956,7 +2956,7 @@
                                                   "overloadedDeclarations": [
                                                     null
                                                   ],
-                                                  "referencedDeclaration": 1992,
+                                                  "referencedDeclaration": 2023,
                                                   "type": "function () pure returns (bytes32)",
                                                   "value": "keccak256"
                                                 },
@@ -3009,7 +3009,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 1998,
+                                              "referencedDeclaration": 2029,
                                               "type": "msg",
                                               "value": "msg"
                                             },
@@ -3109,7 +3109,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1998,
+                                  "referencedDeclaration": 2029,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -3154,7 +3154,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1998,
+                                  "referencedDeclaration": 2029,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -3347,7 +3347,7 @@
                             "attributes": {
                               "contractScope": null,
                               "name": "InvestmentAsset",
-                              "referencedDeclaration": 1318,
+                              "referencedDeclaration": 1349,
                               "type": "contract InvestmentAsset"
                             },
                             "id": 280,
@@ -3385,7 +3385,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1318,
+                              "referencedDeclaration": 1349,
                               "type": "type(contract InvestmentAsset)",
                               "value": "InvestmentAsset"
                             },
@@ -3445,7 +3445,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2001,
+                              "referencedDeclaration": 2032,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -3486,7 +3486,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1998,
+                                      "referencedDeclaration": 2029,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -3527,7 +3527,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "investor",
-                                      "referencedDeclaration": 1158,
+                                      "referencedDeclaration": 1189,
                                       "type": "function () view external returns (address)"
                                     },
                                     "children": [
@@ -3598,7 +3598,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2001,
+                              "referencedDeclaration": 2032,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -3721,7 +3721,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 1992,
+                                          "referencedDeclaration": 2023,
                                           "type": "function () pure returns (bytes32)",
                                           "value": "keccak256"
                                         },
@@ -3847,7 +3847,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1998,
+                                  "referencedDeclaration": 2029,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -4070,7 +4070,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1998,
+                              "referencedDeclaration": 2029,
                               "type": "msg",
                               "value": "msg"
                             },
@@ -4116,7 +4116,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2001,
+                              "referencedDeclaration": 2032,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -4295,7 +4295,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 1992,
+                                          "referencedDeclaration": 2023,
                                           "type": "function () pure returns (bytes32)",
                                           "value": "keccak256"
                                         },
@@ -4348,7 +4348,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1998,
+                                      "referencedDeclaration": 2029,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -4438,7 +4438,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1998,
+                                  "referencedDeclaration": 2029,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -4483,7 +4483,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1998,
+                                  "referencedDeclaration": 2029,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -4561,9 +4561,14 @@
     "3": {
       "events": {},
       "links": {},
-      "address": "0x9f10e6f11d7580aae4a6e645ed3b0e9b575d59fc"
+      "address": "0x7a3ddeac1d6f21373622d98206785c6d2b49f922"
+    },
+    "5850": {
+      "events": {},
+      "links": {},
+      "address": "0xdbad3efb70d3c4571f8fb1517c05ac7f07032f4c"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-01-04T14:13:00.522Z"
+  "updatedAt": "2018-01-15T17:05:34.428Z"
 }
