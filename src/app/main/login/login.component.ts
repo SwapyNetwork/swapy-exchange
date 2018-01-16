@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
   public errorMessages: string[] = [];
   private web3;
   public env: any = env;
+  private firstLoad: any = true;
 
   public INVESTOR = INVESTOR;
   public CREDIT_COMPANY = CREDIT_COMPANY;
@@ -78,6 +79,10 @@ export class LoginComponent implements OnInit {
       } else {
         self.requireNetwork = false;
         self.requireMetaMask = false;
+      }
+      if (this.firstLoad) {
+        this.firstLoad = false;
+        this.loadingService.hide();
       }
       if (!this.storageService.getItem('acceptedTerms')) {
         self.checkAccount();

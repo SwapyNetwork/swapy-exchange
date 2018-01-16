@@ -24,6 +24,8 @@ export class AppComponent {
       hid => {this.loading = false}
     );
 
+    this.loadingService.show();
+
     if (typeof (window as any).web3 !== 'undefined') {
       (window as any).web3 = new Web3((window as any).web3.currentProvider);
     } else {
