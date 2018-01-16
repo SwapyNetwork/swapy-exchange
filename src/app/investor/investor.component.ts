@@ -47,7 +47,7 @@ export class InvestorComponent implements OnInit {
     this.investedValue = 0;
     this.returnedValue = 0;
     this.returnValue = 0;
-
+    const txInvested = [];
     const ForSale = await this.swapyProtocol.get('ForSale');
     let forSaleEvents = await this.swapyProtocol.get('ForSale');
     forSaleEvents = forSaleEvents.filter(event =>
@@ -71,7 +71,7 @@ export class InvestorComponent implements OnInit {
           const value = (await this.swapyProtocol.getAssetConstants(events[indexFS].returnValues._asset, ['value'])).value;
           this.investedValue += Number(value) / 100;
         } else {
-          let sliced = events.slice(1, indexFS)
+          let sliced = events.slice(1, indexFS);
           sliced = sliced.concat(ForSale.filter(forSale => forSale.returnValues._asset.toLowerCase() === forSaleEvent.returnValues._asset.toLowerCase()));
           sliced.sort((a, b) => (a.blockNumber < b.blockNumber) ? -1 : (a.blockNumber > b.blockNumber ? 1 : 0));
           let indexW = sliced.map(event => event.event).indexOf('Withdrawal');
@@ -84,7 +84,9 @@ export class InvestorComponent implements OnInit {
             }
 
             if (sliced[index].returnValues._investor.toLowerCase() === sliced[indexW].returnValues._owner.toLowerCase() &&
-              sliced[indexW].returnValues._investor.toLowerCase() === this.walletService.getWallet().address.toLowerCase()) {
+              sliced[indexW].returnValues._investor.toLowerCase() === this.walletService.getWallet().address.toLowerCase() &&
+              txInvested.indexOf(sliced[index].transactionHash) === -1) {
+              txInvested.push(sliced[index].transactionHash);
               this.investedValue += sliced[index].returnValues._value / 100;
             }
             
