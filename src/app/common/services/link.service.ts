@@ -7,9 +7,9 @@ export class LinkService {
 
   public openLink(link: string) {
     if ((window as any).isElectron) {
-      // window.chrome.ipcRendere;
+      (window as any).chrome.ipcRenderer.send('open-link', link);
     } else {
-      window.open(link, '_blank');
+      (window as any).open(link, '_blank');
     }
   }
 }
