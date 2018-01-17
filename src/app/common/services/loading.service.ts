@@ -24,6 +24,8 @@ export class LoadingService {
     if (this.activeRequests === 1) {
       this.loadingHidSource.next();
     }
-    this.activeRequests--;
+    if (this.activeRequests > 0) {
+      this.activeRequests--;
+    }
   }
 }

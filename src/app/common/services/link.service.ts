@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ElectronService } from 'ngx-electron';
 
 @Injectable()
 export class LinkService {
 
-  constructor(private electronService: ElectronService) {}
+  constructor() {}
 
   public openLink(link: string) {
     if ((window as any).isElectron) {
-      this.electronService.shell.openExternal(link);
+      (window as any).chrome.ipcRenderer.send('open-link', link);
     } else {
-      window.open(link, '_blank');
+      (window as any).open(link, '_blank');
     }
   }
 }

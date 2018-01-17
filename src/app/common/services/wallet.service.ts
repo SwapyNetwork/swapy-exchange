@@ -6,7 +6,7 @@ import { ErrorLogService } from './error-log.service';
 
 import { Wallet } from '../interfaces/wallet.interface';
 
-import * as env from '../../../../env.json';
+const env = require('../../../../env.json');
 
 @Injectable()
 export class WalletService {

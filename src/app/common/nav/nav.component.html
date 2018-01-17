@@ -23,6 +23,9 @@
         <li *ngFor="let item of menu">
           <a [routerLink]="item.url" class="sw-box-text">{{item.label}}</a>
         </li>
+        <li *ngIf="isElectron" (click)="triggerMetamaskPopup()">
+          <img src="assets/img/icon-32.png" alt="MetaMask logo" />
+        </li>
         <!-- <li><a [routerLink]="['/investor']" class="sw-box-text">Manage</a></li> -->
         <!-- <li><a routerLink="/notifications"><i class="fa fa-lg fa-bell-o" aria-hidden="true" title="Notifications"></i><span class="badge sw-badge"></span></a></li> -->
         <li class="dropdown" [ngClass]="{ 'open': isSettingsOpen }" (click)="toggleSettingsDropdown()">

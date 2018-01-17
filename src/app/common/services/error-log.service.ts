@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ElectronService } from 'ngx-electron';
-
 @Injectable()
 export class ErrorLogService {
 
   private errorObject: any;
-  constructor(private electronService: ElectronService) {
+  constructor() {
     this.errorObject = {};
   }
 

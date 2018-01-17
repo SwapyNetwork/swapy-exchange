@@ -6,13 +6,21 @@
   </div>
 </div>
 
-<div *ngIf="requireMetaMask" class="signin-metamask">
+<div *ngIf="requireMetaMask === true && isElectron == false" class="signin-metamask">
   <p>We didn't find any Ethereum account. Please make sure you have MetaMask running.</p>
 
   <p>If you don't have it, download it here.</p>
 
   <a href="https://metamask.io/" target="_blank">
     <img src="assets/img/download-metamask.png" alt="metamask download image" class="metamask">
+  </a>
+</div>
+
+<div *ngIf="requireMetaMask === true && isElectron == true" class="signin-metamask">
+  <p>We didn't find any Ethereum account. Click the icon below to connect your MetaMask account.</p>
+
+  <a (click)="triggerMetamaskPopup()">
+    <img src="assets/img/icon-64.png" alt="MetaMask popup" class="metamask">
   </a>
 </div>
 

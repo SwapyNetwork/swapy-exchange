@@ -4,7 +4,7 @@ import { LogoutService } from '../services/logout.service';
 import { StorageService } from '../services/storage.service';
 import { WalletService } from '../services/wallet.service';
 import { INVESTOR, CREDIT_COMPANY } from '../interfaces/user-type.interface';
-import * as env from '../../../../env.json';
+const env = require('../../../../env.json');
 import { LinkService } from '../services/link.service';
 
 @Component({
@@ -21,11 +21,13 @@ export class NavComponent implements OnInit {
   public helpUrl = '';
   public termsUrl = '';
   public privacyUrl = '';
+  public isElectron;
 
   public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
 
   constructor(public logoutService: LogoutService, private storageService: StorageService,
     private walletService: WalletService, private linkService: LinkService, private router: Router) {
+    this.isElectron = (window as any).isElectron;
     const user = this.storageService.getItem('user');
     this.user = user ? user : {};
     this.wallet = this.walletService.getWallet();
@@ -54,6 +56,10 @@ export class NavComponent implements OnInit {
         break;
     }
 
+  }
+
+  public triggerMetamaskPopup() {
+    (window as any).chrome.ipcRenderer.send('open-metamask-popup');
   }
 
   public openWalletInExplorer(address: string) {

@@ -22,12 +22,14 @@ const env = require('../../../../env.json');
 export class LoginComponent implements OnInit {
 
   public requireMetaMask;
+  public isElectron;
   public requireNetwork;
   public agreedToTerms;
   public account: Wallet;
   public errorMessages: string[] = [];
   private web3;
-  public env = env;
+  public env: any = env;
+  private firstLoad: any = true;
 
   public INVESTOR = INVESTOR;
   public CREDIT_COMPANY = CREDIT_COMPANY;
@@ -41,10 +43,16 @@ export class LoginComponent implements OnInit {
     private storageService: StorageService,
     public logoutService: LogoutService,
     public loadingService: LoadingService
-  ) {}
+  ) {
+    this.isElectron = (window as any).isElectron;
+  }
 
   ngOnInit() {
     this.checkAccount();
+  }
+
+  public triggerMetamaskPopup() {
+    (window as any).chrome.ipcRenderer.send('open-metamask-popup');
   }
 
   public getNetworkName(networkId) {
@@ -66,11 +74,15 @@ export class LoginComponent implements OnInit {
     setTimeout(async () => {
       if (!this.account || this.account.address === undefined) {
         self.requireMetaMask = true;
-      } else if (Number(this.account.network) !== Number(env.NETWORK_ID) && env.ENV !== 'dev') {
+      } else if (Number(this.account.network) !== Number(this.env.NETWORK_ID) && this.env.ENV !== 'dev') {
         self.requireNetwork = true;
       } else {
         self.requireNetwork = false;
         self.requireMetaMask = false;
+      }
+      if (this.firstLoad) {
+        this.firstLoad = false;
+        this.loadingService.hide();
       }
       if (!this.storageService.getItem('acceptedTerms')) {
         self.checkAccount();

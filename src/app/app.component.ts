@@ -3,8 +3,7 @@ import { LoadingService } from './common/services/loading.service';
 import { WalletService } from './common/services/wallet.service';
 import * as Web3 from 'web3';
 
-import * as env from '../../env.json';
-
+const env = require('../../env.json');
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,6 +15,7 @@ export class AppComponent {
 
   constructor(public loadingService: LoadingService,
     public walletService: WalletService, public viewContainerRef: ViewContainerRef) {
+
     this.loadingService.loadingShowed$.subscribe(
       showed => {this.loading = true}
     );
@@ -24,10 +24,16 @@ export class AppComponent {
       hid => {this.loading = false}
     );
 
+    this.loadingService.show();
+
     if (typeof (window as any).web3 !== 'undefined') {
       (window as any).web3 = new Web3((window as any).web3.currentProvider);
     } else {
-      (window as any).web3 = new Web3((env as any).HTTP_PROVIDER);
+      (window as any).web3 = new Web3(new Web3.providers.HttpProvider((env as any).HTTP_PROVIDER));
+    }
+
+    if ((window as any).chrome) {
+      (window as any).isElectron = true;
     }
 
     this.walletService.listenForAccountChanges();
