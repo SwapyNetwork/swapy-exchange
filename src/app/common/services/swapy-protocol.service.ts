@@ -17,7 +17,7 @@ export class SwapyProtocolService {
   protected web3;
   protected gasPrice = 1;
 
-  protected ethPriceProvider = 'https://api.coinmarketcap.com/v1/ticker/ethereum/';
+  protected ethPriceProvider = 'https://api.infura.io/v1/ticker/ethusd';
 
   private SwapyExchangeContract;
   private AssetLibraryContract;
@@ -71,7 +71,7 @@ export class SwapyProtocolService {
   private async getEthPrice() {
     return new Promise((resolve, reject) => {
       this.http.get(this.ethPriceProvider).subscribe(data => {
-        resolve(data[0].price_usd);
+        resolve((data as any).bid);
       }, error => {
         resolve(440.0);
       });

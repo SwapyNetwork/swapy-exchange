@@ -6,7 +6,7 @@
   </div>
 </div>
 
-<div *ngIf="requireMetaMask === true && isElectron == false" class="signin-metamask">
+<div *ngIf="requireMetaMask === true && !isElectron" class="signin-metamask">
   <p>We didn't find any Ethereum account. Please make sure you have MetaMask running.</p>
 
   <p>If you don't have it, download it here.</p>

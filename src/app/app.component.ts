@@ -32,7 +32,7 @@ export class AppComponent {
       (window as any).web3 = new Web3(new Web3.providers.HttpProvider((env as any).HTTP_PROVIDER));
     }
 
-    if ((window as any).chrome) {
+    if ((window as any).chrome.ipcRenderer) {
       (window as any).isElectron = true;
     }
 
