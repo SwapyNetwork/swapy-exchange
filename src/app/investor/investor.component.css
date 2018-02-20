@@ -2,5 +2,18 @@
 @import '../common/buttons.css';
 
 .icon {
-	margin: 20px;
+	margin: 25px;
 }
+
+.sw-fiat-funds-value {
+    font-weight: 400;
+    font-size: 14px;
+    margin: 15px 0px 0px 0px;
+    padding: 0px 10px 0px 0px;
+    border-right: 0px solid #888;
+}
+.left-border {
+    margin: 10px 0px;
+    border-left: 1px solid #888;
+}
+

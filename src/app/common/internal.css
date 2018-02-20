@@ -62,7 +62,7 @@ body {
 /* //////////////////////////////// TOP WHITE BAR ////////////////////////////////*/
 .sw-top {
   background-color: #fff;
-  height: 115px;
+  height: 125px;
   padding: 35px 0px 0px 0px;
   text-align: center;
 }
@@ -92,10 +92,10 @@ body {
 }
 .sw-funds-value {
     font-weight: 400;
-    font-size: 24px;
+    font-size: 16px;
     margin: 13px 0px 0px 0px;
-    padding: 0px 50px 0px 0px;
-    border-right: 1px solid #888;
+    padding: 0px 5px 0px 0px;
+    border-right: 0px solid #888;
 }
 .sw-funds-add {
     font-weight: 400;
