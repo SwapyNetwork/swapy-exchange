@@ -1,2 +1,6 @@
 @import "../common/internal.css";
 @import '../common/buttons.css';
+
+.icon {
+	margin: 20px;
+}
