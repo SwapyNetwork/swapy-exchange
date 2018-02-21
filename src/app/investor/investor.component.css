@@ -5,13 +5,21 @@
 	margin: 25px;
 }
 
-.sw-fiat-funds-value {
-    font-weight: 500;
+.sw-fiat-value {
     font-size: 14px;
-    margin: 15px 0px 0px 0px;
+    margin: 13px 0px 0px 0px;
     padding: 0px 10px 0px 0px;
     border-right: 0px solid #888;
 }
+
+.sw-usd-funds-value {
+    font-weight: 300;
+}
+
+.sw-index-value {
+    font-weight: 400;
+}
+
 .left-border {
     margin: 10px 0px;
     border-left: 1px solid #888;
