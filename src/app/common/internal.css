@@ -234,8 +234,8 @@ body {
     background-color: #FFF;
     border: 1px solid #d8d8d8;
     border-radius: 3px;
-    padding: 15px 20px;
-    margin: 0 0 15px 0;
+    padding: 20px;
+    margin: 15px 0;
     text-align: left;
     box-shadow: rgba(0,0,0,0.2) 0 5px 0px 0;
     -webkit-box-shadow: rgba(0,0,0,0.2) 0 5px 5px 0;
@@ -261,6 +261,10 @@ body {
     overflow-x: hidden;
 }
 
+.center {
+  text-align: center;
+}
+
 /* ////////////////////// Titles /////////////// */
 .sw-box-title {
     font-weight: 500;
@@ -284,8 +288,9 @@ body {
 }
 /* ////////////////////// Text styles /////////////// */
 .sw-box-text {
-    font-weight: 300 !important;
+    font-weight: 400 !important;
     font-size: 14px;
+    color: #4a4a4a;
 }
 .sw-box-text a {
     color: #333;
