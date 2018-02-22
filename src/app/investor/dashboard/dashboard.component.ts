@@ -16,8 +16,11 @@ import { InvestorComponent } from '../investor.component';
 export class DashboardComponent implements OnInit {
 
   public investments;
-  constructor(private dashboardService: DashboardService,
-    private loadingService: LoadingService, private investorComponent: InvestorComponent) { }
+  constructor(
+    private dashboardService: DashboardService,
+    private loadingService: LoadingService,
+    private investorComponent: InvestorComponent
+  ) { }
 
   ngOnInit() {
     this.updateInvestments();
@@ -28,7 +31,7 @@ export class DashboardComponent implements OnInit {
 
     this.dashboardService.getMyInvestmentsFromBlockchain().then(investments => {
       this.investments = investments;
-      this.investorComponent.refreshStatusBar();
+      this.investorComponent.refreshBalance();
     })
     this.loadingService.hide();
   }

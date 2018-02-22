@@ -6,6 +6,7 @@ import { SwapyProtocolService as SwapyProtocol } from '../common/services/swapy-
 import { PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
   DELAYED_RETURN } from '../common/interfaces/offer-asset-status.interface';
 import { DashboardService } from './dashboard/dashboard.service';
+import { Router } from '@angular/router';
 
 
 
@@ -31,19 +32,39 @@ export class InvestorComponent implements OnInit {
     private web3Service: Web3Service,
     private loadingService: LoadingService,
     private swapyProtocol: SwapyProtocol,
+    private router: Router,
     private dashboardService: DashboardService) {}
 
   ngOnInit() {
     // this.refreshStatusBar();
   }
 
-  public async refreshStatusBar() {
+  public async refresh() {
+    this.loadingService.show();
+    const url = this.router.url.split('/').slice(1);
+    if (url[0] === 'investor') {
+      if (url.length === 1) {
+        // update investor Manage page
+      } else if (url[url.length - 1] === 'marketplace') {
+        // update investor Marketplace page
+      } else if (url[url.length - 1] === 'offers') {
+        // update investor Invest page
+      }
+    } else {
+
+    }
+    this.loadingService.hide();
+  }
+
+  public async refreshBalance() {
     this.loadingService.show();
 
     this.walletService.getEthBalance().then((balance) => {
       this.balance = balance;
+      this.loadingService.hide();
     });
 
+    /*
     this.investedValue = 0;
     this.returnedValue = 0;
     this.returnValue = 0;
@@ -144,5 +165,7 @@ export class InvestorComponent implements OnInit {
     this.averagePaybackPeriod = this.averagePaybackPeriod === 0 ? 0 : Math.round(this.averagePaybackPeriod  / assetsLength);
     this.loadingService.hide();
     this.assetsLength = assets.length;
+    */
   };
+
 }
