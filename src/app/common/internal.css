@@ -233,13 +233,24 @@ body {
 .sw-box {
     background-color: #FFF;
     border: 1px solid #d8d8d8;
-    border-radius: 3px;
+    border-radius: 10px;
     padding: 20px;
     margin: 15px 0;
     text-align: left;
     box-shadow: rgba(0,0,0,0.2) 0 5px 0px 0;
     -webkit-box-shadow: rgba(0,0,0,0.2) 0 5px 5px 0;
     -moz-box-shadow: rgba(0,0,0,0.2) 0 5px 5px 0;
+}
+.sw-box:hover {
+    background-color: #FFF;
+    border: 1px solid #adb4bc;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 15px 0;
+    text-align: left;
+    box-shadow: rgba(0,0,0,0.2) 0 10px 10px 0;
+    -webkit-box-shadow: rgba(0,0,0,0.2) 0 10px 10px 0;
+    -moz-box-shadow: rgba(0,0,0,0.2) 0 10px 10px 0;
 }
 .sw-box p {
     margin: 0 0 1px;
@@ -252,7 +263,7 @@ body {
     font-style: italic;
 }
 .sw-blue1 {
-    color: #00adef;
+    color: #00aeef;
 }
 .sw-scrollbar2 {
     height: calc(100vh - 115px) !important; /*Height value is defined by 100% of screen height size minus 235px*/
@@ -281,7 +292,7 @@ body {
     padding: 0 0 10px 0;
     font-weight: 400;
     font-size: 18px;
-    color: #00adef;
+    color: #00aeef;
 }
 .panel-title a:focus, a:hover {
     text-decoration: none !important;
@@ -297,7 +308,7 @@ body {
     text-decoration: none;
 }
 .sw-box-text a:focus, a:hover {
-    color: #00adef;
+    color: #00aeef;
 }
 /* ////////////////////// STAR full & empty /////////////////////// */
 .sw-star-full {
@@ -308,7 +319,7 @@ body {
 }
 /* ////////////////////// Performance: High, Medium, Low - COLORS /////////////// */
 .sw-high {
-    color: #00adef;
+    color: #00aeef;
     font-weight: 500;
 }
 .sw-medium {
@@ -367,8 +378,8 @@ body {
     font-weight: 300;
 }
 .sw-btn-ghost1 {
-    background-color: #00adef;
-    border: 1px solid #00adef;
+    background-color: #00aeef;
+    border: 1px solid #00aeef;
     color: #FFF;
     padding: 10px 10px;
 

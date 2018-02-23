@@ -11,8 +11,8 @@
     width: 100%;
 }
 .sw-btn-ghost1 {
-    background-color: #00adef;
-    border: 1px solid #00adef;
+    background-color: #00aeef;
+    border: 1px solid #00aeef;
     color: #FFF;
     padding: 10px 10px;
 
@@ -29,13 +29,13 @@
 }
 .sw-btn-ghost2 {
     background-color: #FFF;
-    border: 1px solid #00adef;
-    color: #00adef;
+    border: 1px solid #00aeef;
+    color: #00aeef;
     padding: 10px 10px;
 }
 .sw-btn-ghost2:hover {
-    background-color: #00adef;
-    border: 1px solid #00adef;
+    background-color: #00aeef;
+    border: 1px solid #00aeef;
     color: #FFF;
     padding: 10px 10px;
     text-decoration: none;
