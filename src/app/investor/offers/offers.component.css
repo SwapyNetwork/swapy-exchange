@@ -16,7 +16,7 @@
     font-weight: 500;
     font-size: 12px;
 }
-.sw-button {
+.sw-button-add-funds {
     border-radius: 300px;
     padding: 0 0 15px 0;
     margin: -10px 20px 0 0;
@@ -27,7 +27,7 @@
     font-weight: 300;
     width: 90%;
 }
-.sw-btn-ghost1 {
+.sw-btn-add-funds {
     font-weight: 500;
     background-color: #eebe4c;
     border: 1px solid #eebe4c;
@@ -35,7 +35,7 @@
     padding: 10px 10px;
 
 }
-.sw-btn-ghost1:hover {
+.sw-btn-add-funds:hover {
     background-color: #ffcf5d;
     border: 1px solid #ffcf5d;
     color: #FFF;

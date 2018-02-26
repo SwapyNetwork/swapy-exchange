@@ -15,3 +15,47 @@
     text-decoration: line-through;
 }
 @media only screen and (max-width: 765px){ .sw-assets { border-right: transparent;} }
+
+.sw-title-outside-box {
+    font-weight: 400;
+    font-size: 18px;
+    color: #4a4a4a;
+    padding: 0 0 15px 0;
+    border-bottom: 3px solid #eebe4c
+}
+.sw-description-outside-box {
+    font-weight: 300;
+    font-size: 18px;
+    color: #4a4a4a;
+    padding: 0 0 15px 0;
+}
+.sw-contract-number {
+    font-weight: 500;
+    font-size: 12px;
+}
+.sw-button-add-funds {
+    border-radius: 300px;
+    padding: 0 0 15px 0;
+    margin: -10px 20px 0 0;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+    width: 90%;
+}
+.sw-btn-add-funds {
+    font-weight: 500;
+    background-color: #eebe4c;
+    border: 1px solid #eebe4c;
+    color: #FFF;
+    padding: 10px 10px;
+
+}
+.sw-btn-add-funds:hover {
+    background-color: #ffcf5d;
+    border: 1px solid #ffcf5d;
+    color: #FFF;
+    padding: 10px 10px;
+    text-decoration: none;
+}
