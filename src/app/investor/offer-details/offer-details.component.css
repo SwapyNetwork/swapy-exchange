@@ -59,3 +59,8 @@
     padding: 10px 10px;
     text-decoration: none;
 }
+.sw-circle {
+	background-color: #333;
+    color: #FFF;
+	width: 20px;
+}
