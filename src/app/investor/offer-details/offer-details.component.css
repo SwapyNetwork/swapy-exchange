@@ -60,7 +60,37 @@
     text-decoration: none;
 }
 .sw-circle {
-	background-color: #333;
+    display: inline-block;
+    border-radius: 100px;
+    line-height: 0;
+    text-align: center;
+    font-size: 18px;
+    left: 50%;
+    top: 50%;
+    width: 40px;
+    height: 40px;
+    margin-left: 5px;
+}
+.sw-circle-unavailable {
+    background-color: #f8f8f8;
+    color: #00aeef;
+    font-weight: 700;
+    margin-top: 10px;  
+    padding-top: 19px;  
+}
+.sw-circle-available {
+    background-color: #f8f8f8;
+    color: #f8f8f8;
+    margin-top: 10px;  
+    padding-top: 19px;
+}
+.sw-circle-selected {
+    background-color: #00aeef;
     color: #FFF;
-	width: 20px;
+    margin-top: 5px;  
+    padding-top: 11px; 
+}
+.sw-asset-description {
+	margin-top: 15px;
+	color: #00aeef;
 }
