@@ -94,3 +94,10 @@
 	margin-top: 15px;
 	color: #00aeef;
 }
+.sw-company-box {
+	margin: 10px 30px 0 30px;
+}
+.sw-company-description {
+	text-align: justify;
+	margin: 10px 0;
+}
