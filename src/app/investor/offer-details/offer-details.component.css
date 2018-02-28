@@ -101,3 +101,11 @@
 	text-align: justify;
 	margin: 10px 0;
 }
+hr {
+	height: 1px;
+	margin: 10px 0;
+	background-color: #4a4a4a;
+}
+.sw-number-details {
+	text-align: right;
+}
