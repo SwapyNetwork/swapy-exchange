@@ -4,7 +4,7 @@
 }
 .sw-assets-total {
     font-weight: 500;
-    font-size: 21px;
+    font-size: 22px;
     padding-top: 15px; 
     color: #00aeef; 
 }
@@ -107,9 +107,10 @@ hr {
 	background-color: #4a4a4a;
 }
 .sw-company-assets-details {
-	font-size: 22px;
+	font-size: 18px;
 }
 .sw-number-details {
 	text-align: right;
 	font-weight: 500;
+	font-size: 22px;
 }

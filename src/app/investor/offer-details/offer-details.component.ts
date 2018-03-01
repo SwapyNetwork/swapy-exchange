@@ -68,7 +68,8 @@ export class OfferDetailsComponent implements OnInit {
   }
 
   getSelectedAssets() {
-    return this.offer.assets.filter((asset, index) => this.assets[index] === true);
+    return this.offer.assets;
+    // return this.offer.assets.filter((asset, index) => this.assets[index] === true);
   }
 
   setTotalAssetsValue() {
@@ -112,6 +113,7 @@ export class OfferDetailsComponent implements OnInit {
   }
 
   invest() {
+
     if (this.validateInput()) {
 
       const invest = {
