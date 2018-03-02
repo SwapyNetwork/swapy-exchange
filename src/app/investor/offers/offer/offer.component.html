@@ -23,9 +23,11 @@
 
     <br>
     <div class="sw-box-text center">
-      <p>Average collateral: <span class="sw-blue1">3 SWAPY</span></p>
-      <i class="fa fa-minus fa-2x sw-blue1" aria-hidden="true"></i> <i class="fa fa-minus fa-2x sw-blue1" aria-hidden="true"> </i> <i class="fa fa-minus fa-2x sw-blue1" aria-hidden="true"></i> <i class="fa fa-minus fa-2x" aria-hidden="true"></i> <i class="fa fa-minus fa-2x" aria-hidden="true"></i>
-      <p> 3 Asset(s) Available </p>
+      <p>Average collateral: <span class="sw-blue1">{{offer.averageCollateral}} SWAPY</span></p>
+      <span *ngFor="let status of offer.status">
+        <i [ngClass]="{'fa fa-minus fa-2x': true, 'sw-blue1': status == AVAILABLE}" aria-hidden="true"></i>
+      </span>
+      <p> {{availableAssets()}} Asset(s) Available </p>
     </div>
   </div>
 </div> <!-- END Contract -->

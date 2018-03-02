@@ -29,10 +29,6 @@ export class OffersComponent implements OnInit {
     this.getOffersFromBlockchain();
   }
 
-  private getDisplayWalletAddress(address: string) {
-    return `${address.substring(0, 8)}...${address.substring(address.length - 8)}`
-  }
-
   async getOffersFromBlockchain() {
     this.loadingService.show();
     try {
@@ -40,15 +36,24 @@ export class OffersComponent implements OnInit {
 
       offers.forEach(async offerEvent => {
         const contractVariables = offerEvent.returnValues;
-        const constants = ['value', 'paybackDays', 'grossReturn'];
-        const asset = await this.swapyProtocol.getAssetConstants(contractVariables._assets[0], constants);
-        const displayWalletAddress = this.getDisplayWalletAddress(contractVariables._from);
+        let constants = ['paybackDays', 'grossReturn'];
+        const offerAsset = await this.swapyProtocol.getAssetConstants(contractVariables._assets[0], constants);
+        constants = ['value', 'status', 'tokenFuel'];
+        const assets = [];
+        for (const asset of contractVariables._assets) {
+          let assetValues = await this.swapyProtocol.getAssetConstants(asset, constants);
+          assets.push(assetValues);          
+        }
+        // const asset = await this.swapyProtocol.getAssetConstants(contractVariables._assets[0], constants);
+        const totalTokens = assets.map(asset => asset.tokenFuel).reduce((current, total) => Number(current) + Number(total));
+        const raisingAmount = assets.map(asset => asset.value).reduce((current, total) => Number(current) + Number(total));
         const offer = {
-          raisingAmount: asset.value * 5 / 100, // Temp way of doing it. Getting all assets would take too long.
-          grossReturn: asset.grossReturn / 10000,
-          paybackMonths: asset.paybackDays / 30,
+          raisingAmount: raisingAmount / 100,
+          grossReturn: offerAsset.grossReturn / 10000,
+          paybackMonths: offerAsset.paybackDays / 30,
+          status: assets.map(asset => asset.status),
+          averageCollateral: totalTokens / assets.length / Math.pow(10, 18),
           walletAddress: contractVariables._from,
-          displayWalletAddress: displayWalletAddress,
           assetsAddress: contractVariables._assets
         } as any;
         this.offers.push(offer);
