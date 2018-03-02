@@ -241,17 +241,6 @@ body {
     -webkit-box-shadow: rgba(0,0,0,0.2) 0 5px 5px 0;
     -moz-box-shadow: rgba(0,0,0,0.2) 0 5px 5px 0;
 }
-.sw-box:hover {
-    background-color: #FFF;
-    border: 1px solid #adb4bc;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 15px 0;
-    text-align: left;
-    box-shadow: rgba(0,0,0,0.2) 0 10px 10px 0;
-    -webkit-box-shadow: rgba(0,0,0,0.2) 0 10px 10px 0;
-    -moz-box-shadow: rgba(0,0,0,0.2) 0 10px 10px 0;
-}
 .sw-box p {
     margin: 0 0 1px;
 }
