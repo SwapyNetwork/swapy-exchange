@@ -360,4 +360,10 @@ export class SwapyProtocolService {
 
     return Promise.all(promises).then(resolved => (contractObj as any));
   }
+
+  public async getTokenBalance() {
+    return this.Token.methods
+    .balanceOf(this.walletService.getWallet().address)
+    .call();
+  }
 }

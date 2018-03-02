@@ -26,6 +26,7 @@ export class InvestorComponent implements OnInit {
   public returnedValue;
   public averagePaybackPeriod;
   public balance;
+  public tokenBalance;
 
   constructor(
     private walletService: WalletService,
@@ -59,10 +60,10 @@ export class InvestorComponent implements OnInit {
   public async refreshBalance() {
     this.loadingService.show();
 
-    this.walletService.getEthBalance().then((balance) => {
-      this.balance = balance;
-      this.loadingService.hide();
-    });
+    this.tokenBalance = (await this.swapyProtocol.getTokenBalance()) / Math.pow(10, 18);
+    this.balance = await this.walletService.getEthBalance();
+    
+    this.loadingService.hide();
 
     /*
     this.investedValue = 0;

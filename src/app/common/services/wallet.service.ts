@@ -64,7 +64,7 @@ export class WalletService {
     return this.web3Service.getInstance().eth.getBalance(account.address);
   }
 
-  getEthBalance() {
+  async getEthBalance() {
     return new Promise((resolve, reject) => {
       this.getBalance().then((balance) => {
         const ethBalance = this.web3Service.getInstance().utils.fromWei(balance, 'ether');
