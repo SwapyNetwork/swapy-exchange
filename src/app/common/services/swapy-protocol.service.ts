@@ -68,12 +68,12 @@ export class SwapyProtocolService {
     return build.networks[networkId].address;
   }
 
-  private async getEthPrice() {
+  public async getEthPrice() {
     return new Promise((resolve, reject) => {
       this.http.get(this.ethPriceProvider).subscribe(data => {
         resolve((data as any).bid);
       }, error => {
-        resolve(440.0);
+        reject();
       });
     });
   }
