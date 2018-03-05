@@ -44,7 +44,6 @@ export class OffersComponent implements OnInit {
           let assetValues = await this.swapyProtocol.getAssetConstants(asset, constants);
           assets.push(assetValues);          
         }
-        // const asset = await this.swapyProtocol.getAssetConstants(contractVariables._assets[0], constants);
         const totalTokens = assets.map(asset => asset.tokenFuel).reduce((current, total) => Number(current) + Number(total));
         const raisingAmount = assets.map(asset => asset.value).reduce((current, total) => Number(current) + Number(total));
         const offer = {
@@ -57,8 +56,8 @@ export class OffersComponent implements OnInit {
           assetsAddress: contractVariables._assets
         } as any;
         this.offers.push(offer);
-        this.offerService.cacheOffers(this.offers);
       });
+      this.offerService.cacheOffers(this.offers);
       this.loadingService.hide();
     } catch (err) {
       this.loadingService.hide();

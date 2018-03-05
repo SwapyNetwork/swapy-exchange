@@ -42,13 +42,13 @@ export class OfferDetailsComponent implements OnInit {
     private loadingService: LoadingService) { }
 
   ngOnInit() {
+    this.loadingService.show();
     const offers = this.offerService.getCachedOffers();
     if (!offers) {
       this.router.navigate(['/investor/offers']);
     }
     // subscribe to router event
     this.activatedRoute.params.subscribe(async (params: Params) => {
-      this.loadingService.show();
       this.offerIndex = params['id'];
       this.offer = offers[this.offerIndex];
       const assets = [];

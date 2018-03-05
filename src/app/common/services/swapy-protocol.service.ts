@@ -73,7 +73,7 @@ export class SwapyProtocolService {
       this.http.get(this.ethPriceProvider).subscribe(data => {
         resolve((data as any).bid);
       }, error => {
-        reject();
+        reject(840);
       });
     });
   }
