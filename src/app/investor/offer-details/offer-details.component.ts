@@ -90,6 +90,7 @@ export class OfferDetailsComponent implements OnInit {
     const status = this.offer.status[index];
     if (status == AVAILABLE || status == -2) {
       this.offer.status[index] = status == AVAILABLE ? -2 : AVAILABLE;
+      this.setTotalAssetsValue();
     }
   }
 
