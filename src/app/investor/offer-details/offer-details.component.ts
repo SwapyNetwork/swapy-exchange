@@ -63,6 +63,7 @@ export class OfferDetailsComponent implements OnInit {
         } as any;
         assets.push(asset);
       }
+      this.offer.status = assets.map(asset => asset.status);
       this.offer.assets = assets;
       this.loadingService.hide();
     });

@@ -42,9 +42,9 @@
 
             <div class="row sw-investment-info">
               <div class="col-xs-8 col-sm-8 col-md-8 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
-                  <p class="sw-box-text">Asset 1: <span class="sw-blue1">USD5,000 - Collateral 3 SWAPY</span></p>
-                  <p class="sw-box-text">Asset 2: <span class="sw-blue1">USD5,000 - Collateral 3 SWAPY</span></p>
-                  <p class="sw-box-text">Asset 3: <span class="sw-blue1">USD5,000 - Collateral 3 SWAPY</span></p>
+                  <p *ngFor="let asset of investment.assets; let i = index" class="sw-box-text">
+                    Asset {{i + 1}}: <span class="sw-blue1">{{asset.value | currency:'USD':false:'.0-2'}} - {{collateralToString(i)}}</span>
+                  </p>
                   <p class="sw-box-text">Gross return rate: 
                     <span class="sw-blue1">{{investment.grossReturn | percent}}</span>
                   </p>

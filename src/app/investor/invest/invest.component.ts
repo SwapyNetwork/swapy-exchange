@@ -35,6 +35,13 @@ export class InvestComponent implements OnInit {
     this.assetIndex = 0;
     this.offerIndex = this.investService.getCachedOfferIndex();
   }
+  collateralToString(index) {
+    const token = this.investment.assets[index].token;
+    if (token > 0) {
+      return `Collateral ${token} SWAPY`;
+    }
+    return 'No collateral;'
+  }
 
   confirmInvestment() {
     this.invest();
