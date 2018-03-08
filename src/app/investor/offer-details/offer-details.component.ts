@@ -36,7 +36,7 @@ export class OfferDetailsComponent implements OnInit {
 
   public errorMessages: string[] = [];
 
-  public collateral: string = "Hover over an asset";
+  public collateral = 'Hover over an asset';
 
   constructor(private offerService: OfferService, private activatedRoute: ActivatedRoute,
     private router: Router, private investService: InvestService, private swapyProtocol: SwapyProtocol,
@@ -73,9 +73,9 @@ export class OfferDetailsComponent implements OnInit {
     //   this.offer.status[index] = -2;
     // }
 
-    let tokenCollateral = this.offer.assets[index].token;
+    const tokenCollateral = this.offer.assets[index].token;
     if (Number(tokenCollateral) === 0) {
-      this.collateral = "No collateral";
+      this.collateral = 'No collateral';
     } else {
       this.collateral = `Asset collateral ${tokenCollateral} SWAPY`;
     }
@@ -83,12 +83,12 @@ export class OfferDetailsComponent implements OnInit {
 
   mouseLeave(index) {
     // this.offer.status[index] = AVAILABLE;
-    this.collateral = "Hover over an asset";
+    this.collateral = 'Hover over an asset';
   }
 
   selectAsset(index) {
-    let status = this.offer.status[index];
-    if(status == AVAILABLE || status == -2) {
+    const status = this.offer.status[index];
+    if (status == AVAILABLE || status == -2) {
       this.offer.status[index] = status == AVAILABLE ? -2 : AVAILABLE;
     }
   }
