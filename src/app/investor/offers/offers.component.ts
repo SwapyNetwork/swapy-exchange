@@ -34,15 +34,16 @@ export class OffersComponent implements OnInit {
     try {
       const offers = await this.swapyProtocol.get('Offers');
 
-      offers.forEach(async offerEvent => {
+      for (const offerEvent of offers){
+
         const contractVariables = offerEvent.returnValues;
         let constants = ['paybackDays', 'grossReturn'];
         const offerAsset = await this.swapyProtocol.getAssetConstants(contractVariables._assets[0], constants);
         constants = ['value', 'status', 'tokenFuel'];
         const assets = [];
         for (const asset of contractVariables._assets) {
-          let assetValues = await this.swapyProtocol.getAssetConstants(asset, constants);
-          assets.push(assetValues);          
+          const assetValues = await this.swapyProtocol.getAssetConstants(asset, constants);
+          assets.push(assetValues);
         }
         const totalTokens = assets.map(asset => asset.tokenFuel).reduce((current, total) => Number(current) + Number(total));
         const raisingAmount = assets.map(asset => asset.value).reduce((current, total) => Number(current) + Number(total));
@@ -56,7 +57,7 @@ export class OffersComponent implements OnInit {
           assetsAddress: contractVariables._assets
         } as any;
         this.offers.push(offer);
-      });
+      };
       this.offerService.cacheOffers(this.offers);
       this.loadingService.hide();
     } catch (err) {
