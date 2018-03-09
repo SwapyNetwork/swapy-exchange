@@ -39,7 +39,7 @@ export class InvestorComponent implements OnInit {
     private dashboardService: DashboardService) {}
 
   ngOnInit() {
-    // this.refreshStatusBar();
+    this.refreshBalance();
   }
 
   public async refresh() {

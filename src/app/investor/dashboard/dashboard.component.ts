@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { InvestService } from './../invest/invest.service';
 import { ErrorLogService } from '../../common/services/error-log.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
@@ -19,11 +20,18 @@ export class DashboardComponent implements OnInit {
   constructor(
     private dashboardService: DashboardService,
     private loadingService: LoadingService,
-    private investorComponent: InvestorComponent
+    private walletService: WalletService,
+    private investorComponent: InvestorComponent,
+    private router: Router
   ) { }
 
-  ngOnInit() {
-    this.updateInvestments();
+  async ngOnInit() {
+    const ethBalance = await this.walletService.getEthBalance();
+    if (ethBalance !== 0) {
+      this.router.navigate(['/investor/add-funds']);
+    } else {
+      this.updateInvestments();
+    }
   }
 
   public updateInvestments() {
