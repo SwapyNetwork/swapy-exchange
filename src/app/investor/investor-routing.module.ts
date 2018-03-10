@@ -15,6 +15,7 @@ import { ConfirmPurchaseComponent } from './confirm-purchase/confirm-purchase.co
 import { SellAssetComponent } from './sell-asset/sell-asset.component';
 import { ConfirmSaleComponent } from './confirm-sale/confirm-sale.component';
 import { AddFundsComponent } from './add-funds/add-funds.component';
+import { AddFundsChildComponent } from './add-funds/add-funds-child/add-funds-child.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
     children: [
       { path: '', component: DashboardComponent },
       { path: 'add-funds', component: AddFundsComponent },
+      { path: 'add-funds/child', component: AddFundsChildComponent },
       { path: 'offer/:id', component: OfferDetailsComponent },
       { path: 'credit-company/:id', component: CreditCompanyComponent },
       { path: 'offers', component: OffersComponent },

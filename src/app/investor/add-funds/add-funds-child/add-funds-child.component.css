@@ -1,0 +1,49 @@
+.sw-title-outside-box {
+    font-weight: 400;
+    font-size: 16px;
+    color: #4a4a4a;
+    padding: 0 0 15px 0;
+    margin-left: 20px;
+    width: 100%;
+}
+.sw-border-dark-orange {
+    border-bottom: 3px solid #eb9739;
+}
+.sw-border-light-orange {
+    border-bottom: 3px solid #eebe4c;
+}
+.sw-border-light-green {
+    border-bottom: 3px solid #b1d432;
+}
+.sw-border-light-blue {
+    border-bottom: 3px solid #00aeef;
+}
+.sw-fade-color {
+    font-weight: 200;
+}
+.sw-title {
+    padding-top: 30px;
+    font-size: 32px;
+    font-weight: 500;
+}
+img {
+    width: 100%;
+}
+.sw-add-funds-description {
+    font-size: 26px;
+    font-weight: 400;
+    padding-bottom: 50px;
+}
+.sw-address-description {
+    padding-top: 20px;
+    font-size: 20px;
+    font-weight: 500;        
+}
+.sw-wallet-address {
+    font-size: 12px;
+    font-weight: 500;    
+}
+.sw-side-borders {
+    border-right: 1px solid;
+    border-left: 1px solid;
+}
