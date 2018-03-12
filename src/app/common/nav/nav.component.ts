@@ -35,6 +35,7 @@ export class NavComponent implements OnInit {
     switch (this.user.type) {
       case INVESTOR:
         this.menu = [
+          { url: '/investor/add-funds/child', label: 'Add funds' },
           { url: '/investor/offers', label: 'Invest' },
           { url: '/investor/marketplace', label: 'Marketplace' },
           { url: '/investor', label: 'Manage' }
