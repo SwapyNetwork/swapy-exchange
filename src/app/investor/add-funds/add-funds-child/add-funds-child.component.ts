@@ -8,13 +8,13 @@ import { WalletService } from '../../../common/services/wallet.service';
 })
 export class AddFundsChildComponent implements OnInit {
 
-  public address;
+  public wallet;
   constructor(
     private walletService: WalletService
   ) { }
 
   async ngOnInit() {
-    this.address = await this.walletService.getWallet().address;
+    this.wallet = await this.walletService.getWallet();
   }
 
 }
