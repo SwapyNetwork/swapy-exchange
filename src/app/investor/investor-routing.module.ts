@@ -16,6 +16,7 @@ import { SellAssetComponent } from './sell-asset/sell-asset.component';
 import { ConfirmSaleComponent } from './confirm-sale/confirm-sale.component';
 import { AddFundsComponent } from './add-funds/add-funds.component';
 import { AddFundsChildComponent } from './add-funds/add-funds-child/add-funds-child.component';
+import { StartInvestingComponent } from './start-investing/start-investing.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
     component: InvestorComponent,
     children: [
       { path: '', component: DashboardComponent },
+      { path: 'start-investing', component: StartInvestingComponent },
       { path: 'add-funds', component: AddFundsComponent },
       { path: 'add-funds/child', component: AddFundsChildComponent },
       { path: 'offer/:id', component: OfferDetailsComponent },

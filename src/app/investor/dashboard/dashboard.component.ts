@@ -27,20 +27,21 @@ export class DashboardComponent implements OnInit {
 
   async ngOnInit() {
     const ethBalance = await this.walletService.getEthBalance();
-    if (ethBalance !== 0) {
+    if (ethBalance === 0) {
       this.router.navigate(['/investor/add-funds']);
     } else {
-      this.updateInvestments();
+      await this.updateInvestments();
+      if (this.investments.length === 0) {
+        this.router.navigate(['/investor/start-investing']);
+      }
     }
   }
 
-  public updateInvestments() {
+  public async updateInvestments() {
     this.loadingService.show();
 
-    this.dashboardService.getMyInvestmentsFromBlockchain().then(investments => {
-      this.investments = investments;
-      this.investorComponent.refreshBalance();
-    })
+    this.investments = await this.dashboardService.getMyInvestmentsFromBlockchain()
+    this.investorComponent.refreshBalance();
     this.loadingService.hide();
   }
 }
