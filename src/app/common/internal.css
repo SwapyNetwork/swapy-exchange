@@ -5,7 +5,7 @@ nav {
 body {
   padding-top: 0px;
   font-family: 'Roboto', sans-serif, helvetica;
-  background-color: #fff;
+  background-color: #fff !important;
   color: #4a4a4a;
 }
 

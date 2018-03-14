@@ -27,48 +27,32 @@
       <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 center sw-top-bar-info">
         <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Total invested <p class="sw-value-font ">USD550,000</p></div>
         <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Expected gross return <p class="sw-value-font sw-blue1">USD550,000</p></div>
-        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-received-gr-border"> Received gross return <p class="sw-value-font sw-green">USD550,000</p></div>
+        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-inline-left-border"> Received gross return <p class="sw-value-font sw-green">USD550,000</p></div>
         <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Assets <p class="sw-value-font sw-blue1">7</p></div>
-        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Next return on <p class="sw-value-font sw-blue1">11 jul 2018</p></div>
+        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-inline-left-border"> Next return on <p class="sw-value-font sw-blue1">11 jul 2018</p></div>
         <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Expected <p class="sw-value-font ">USD550,000</p></div>
       </div>      
     </div>
 
     <div class="row"> <!-- //////////// MAIN Content //////////// -->
-      <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
-
-          <div class="col-md-12"> <!-- Start  -->
-            <div class="sw-box">
-            <div class="row">
-
-              <div class="col-sm-12 col-md-12">
-
-            <div class="row">
-              <div class="col-sm-12 col-md-12">
-                <p class="sw-title-blue-right">Investments</p>
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"> <!-- Accordion-->
-  <app-dashboard-investment *ngFor="let investment of investments; let collapsed = first" [investment]="investment" [collapsed]="collapsed"></app-dashboard-investment>
-  <div *ngIf="investments?.length === 0" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
-    <hr>
-    <p class="sw-title-outside-box">You do not have any investments. Invest now by selecting the 'Invest' option on menu bar.</p>
-  </div>
-</div><!-- END Accordion-->
-
-
-
-              </div>
-            </div>
-
-             </div>
-            </div>
-
-          </div>
-          </div> <!-- END  -->
-
+      <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 sw-bottom-border">
+        <div class="col-xs-1 col-sm-1 col-md-1">Amount invested</div>
+        <div class="col-xs-1 col-sm-1 col-md-1">Expected gross return</div>
+        <div class="col-xs-1 col-sm-1 col-md-1">Gross return</div>
+        <div class="col-xs-1 col-sm-1 col-md-1">Terms (Months)</div>
+        <div class="col-xs-1 col-sm-1 col-md-1">Collateral (SWAPY)</div>
+        <div class="col-xs-1 col-sm-1 col-md-1">Return on</div>
+        <div class="col-xs-2 col-sm-2 col-md-2">Credit Company (Issuer)</div>
+        <div class="col-xs-2 col-sm-2 col-md-2">Asset Progress</div>
+        <div class="col-xs-1 col-sm-1 col-md-1">Status</div>
+        <div class="col-xs-1 col-sm-1 col-md-1">Actions</div>
       </div>
+
+        <!-- <app-dashboard-investment *ngFor="let investment of investments; let collapsed = first" [investment]="investment" [collapsed]="collapsed"></app-dashboard-investment> -->
+
     </div><!-- END MAIN Content  -->
 
-      </div> <!-- END col 10  -->
+  </div>
 <!-- ///////////////////////////////////////////////////////////////////////////////// -->
 <!-- //////////////////////////  END MAIN Content  /////////////////////////////////// -->
 <!-- ///////////////////////////////////////////////////////////////////////////////// -->
