@@ -4,7 +4,7 @@
     font-size: 18px;
     color: #4a4a4a;
     padding: 0 0 15px 0;
-    border-bottom: 3px solid #eebe4c
+    border-bottom: 3px solid #b1d432
 }
 .sw-description-outside-box {
     font-weight: 300;
@@ -12,7 +12,7 @@
     color: #4a4a4a;
     padding: 0 0 15px 0;
 }
-.sw-button-add-funds {
+.sw-button {
     border-radius: 300px;
     padding: 0 0 15px 0;
     margin: -10px 20px 0 0;
@@ -23,7 +23,7 @@
     font-weight: 300;
     width: 90%;
 }
-.sw-btn-add-funds {
+.sw-btn-sell-assets {
     font-weight: 500;
     background-color: #eebe4c;
     border: 1px solid #eebe4c;
@@ -31,10 +31,25 @@
     padding: 10px 10px;
 
 }
-.sw-btn-add-funds:hover {
+.sw-btn-sell-assets:hover {
     background-color: #ffcf5d;
     border: 1px solid #ffcf5d;
     color: #FFF;
+    padding: 10px 10px;
+    text-decoration: none;
+}
+.sw-btn-cancel {
+    font-weight: 500;
+    background-color: #fff;
+    border: 1px solid #eebe4c;
+    color: #eebe4c;
+    padding: 10px 10px;
+
+}
+.sw-btn-cancel:hover {
+    background-color: #fff;
+    border: 1px solid #ffcf5d;
+    color: #eebe4c;
     padding: 10px 10px;
     text-decoration: none;
 }
