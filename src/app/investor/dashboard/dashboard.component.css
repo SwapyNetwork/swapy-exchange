@@ -53,3 +53,23 @@
     padding: 10px 10px;
     text-decoration: none;
 }
+.sw-top-bar-info {
+	padding: 20px 0 20px 0; 
+	margin-top: 20px; 
+	margin-bottom: 20px; 
+    border: 1px solid #d8d8d8;
+}
+.sw-info-font {
+	font-size: 16px;
+	font-weight: 400;
+}
+.sw-value-font {
+	font-size: 20px;
+	font-weight: 500;
+}
+.sw-green {
+	color: #b1d432;
+}
+.sw-received-gr-border {
+    border-left: 2px solid #d8d8d8;
+}
