@@ -19,7 +19,7 @@
     border-bottom: 3px solid #00aeef;
 }
 .sw-fade-color {
-    font-weight: 200;
+    opacity: 0.4;
 }
 .sw-title {
     padding-top: 30px;
