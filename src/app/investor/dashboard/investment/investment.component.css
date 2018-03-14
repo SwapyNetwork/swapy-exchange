@@ -1,0 +1,27 @@
+
+.sw-assets {
+	padding: 10px 0 0 0;
+	text-align: center;
+}
+.sw-circle {
+    display: inline-block;
+    border-radius: 100px;
+    line-height: 0;
+    text-align: center;
+    font-size: 18px;
+    left: 50%;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+}
+.sw-circle-available {
+    background-color: #f8f8f8;
+    color: #f8f8f8; 
+    padding-top: 19px;
+}
+.sw-circle-selected {
+    background-color: #00aeef;
+    color: #FFF;
+    padding-top: 11px; 
+}

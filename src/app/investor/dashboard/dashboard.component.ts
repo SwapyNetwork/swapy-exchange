@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
   public async updateInvestments() {
     this.loadingService.show();
 
-    this.investments = await this.dashboardService.getMyInvestmentsFromBlockchain()
+    this.investments = await this.dashboardService.getMyInvestmentsFromBlockchain();
     this.investorComponent.refreshBalance();
     this.loadingService.hide();
   }
