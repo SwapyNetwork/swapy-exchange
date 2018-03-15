@@ -72,15 +72,15 @@
     margin-left: 5px;
 }
 .sw-circle-unavailable {
-    background-color: #f8f8f8;
+    background-color: #e3e3e3;
     color: #00aeef;
     font-weight: 700;
     margin-top: 10px;  
     padding-top: 19px;  
 }
 .sw-circle-available {
-    background-color: #f8f8f8;
-    color: #f8f8f8;
+    background-color: #e3e3e3;
+    color: #e3e3e3;
     margin-top: 10px;  
     padding-top: 19px;
 }

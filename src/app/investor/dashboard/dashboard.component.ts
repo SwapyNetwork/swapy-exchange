@@ -16,7 +16,7 @@ import { InvestorComponent } from '../investor.component';
 })
 export class DashboardComponent implements OnInit {
 
-  public investments;
+  public assets;
   constructor(
     private dashboardService: DashboardService,
     private loadingService: LoadingService,
@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['/investor/add-funds']);
     } else {
       await this.updateInvestments();
-      if (this.investments.length === 0) {
+      if (this.assets.length === 0) {
         this.router.navigate(['/investor/start-investing']);
       }
     }
@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
   public async updateInvestments() {
     this.loadingService.show();
 
-    this.investments = await this.dashboardService.getMyInvestmentsFromBlockchain();
+    this.assets = await this.dashboardService.getMyInvestmentsFromBlockchain();
     this.investorComponent.refreshBalance();
     this.loadingService.hide();
   }

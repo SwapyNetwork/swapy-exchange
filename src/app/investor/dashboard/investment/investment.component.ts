@@ -24,11 +24,12 @@ import * as sha1 from 'sha1';
 })
 export class InvestmentComponent implements OnInit {
 
-  @Input() public investment: Invest;
+  @Input() public asset;
   @Input() public collapsed: boolean;
   //
   private walletAddress;
   private delayed = [];
+  private selected = false;
 
   public AVAILABLE = AVAILABLE;
   public PENDING_OWNER_AGREEMENT = PENDING_OWNER_AGREEMENT;
@@ -53,34 +54,42 @@ export class InvestmentComponent implements OnInit {
     private walletService: WalletService) { }
 
   ngOnInit() {
-    this.isReturnDelayed();
+    // this.isReturnDelayed();
     this.walletAddress = this.walletService.getWallet().address.toLowerCase();
   }
 
-  public toggleCollapse() {
-    this.collapsed = !this.collapsed;
-  }
-
   public calculateReturnAmount() {
-    return this.investment.totalAmount * (1 + this.investment.grossReturn);
+    return this.asset.value * (1 + this.asset.grossReturn);
   }
 
   public calculatePaybackDate() {
-    const paybackDate = new Date(this.investment.investedAt);
-    paybackDate.setMonth(paybackDate.getMonth() + this.investment.paybackMonths);
+    const paybackDate = new Date(this.asset.investedAt);
+    paybackDate.setMonth(paybackDate.getMonth() + this.asset.paybackMonths);
     return paybackDate;
   }
 
-  public async isReturnDelayed() {
-    const latestBlock = (await this.web3Service.getInstance().eth.getBlock('latest'));
-    const now = new Date(latestBlock.timestamp * 1000) as any;
-    this.delayed = [];
-    this.investment.assets.forEach(asset => {
-      const investedAt = new Date(asset.investedAt);
-      this.delayed.push(
-        now.valueOf() > investedAt.setDate(investedAt.getDate() + this.investment.paybackMonths * 30).valueOf() ? true : false
-      );
-    });
+  public calculateAssetProgression() {
+    const paybackDate = new Date(this.asset.investedAt);
+    const now = new Date();
+    const monthsDiff = (now.getFullYear() * 12 + now.getMonth()) - (paybackDate.getFullYear() * 12 + paybackDate.getMonth());
+    return monthsDiff;
+
+  }
+
+  // public async isReturnDelayed() {
+  //   const latestBlock = (await this.web3Service.getInstance().eth.getBlock('latest'));
+  //   const now = new Date(latestBlock.timestamp * 1000) as any;
+  //   this.delayed = [];
+  //   this.investment.assets.forEach(asset => {
+  //     const investedAt = new Date(asset.investedAt);
+  //     this.delayed.push(
+  //       now.valueOf() > investedAt.setDate(investedAt.getDate() + this.investment.paybackMonths * 30).valueOf() ? true : false
+  //     );
+  //   });
+  // }
+
+  selectAsset() {
+    this.selected = !this.selected;
   }
 
   public statusToString(status) {
@@ -90,19 +99,19 @@ export class InvestmentComponent implements OnInit {
         statusString = '';
         break;
       case this.PENDING_OWNER_AGREEMENT:
-        statusString = 'Pending credit company\'s confirmation';
+        statusString = 'Waiting';
         break;
       case this.INVESTED:
-        statusString = 'Succesfully invested';
+        statusString = 'Invested';
         break;
       case this.RETURNED:
-        statusString = 'Succesfully returned';
+        statusString = 'Returned';
         break;
       case this.FOR_SALE:
         statusString = 'For sale';
         break;
       case this.PENDING_INVESTOR_AGREEMENT:
-        statusString = 'Pending confirmation to sell';
+        statusString = 'Waiting';
         break;
       case this.DELAYED_RETURN:
         statusString = 'Delayed return';

@@ -64,6 +64,7 @@ export class DashboardService {
     const assets = await this.getAssetValues(investment.returnValues._assets);
 
     const newInvestment = await this.buildNewInvestment(investment, assets);
+    const timestamp = await this.getBlockTimestamp(investment.blockHash);
 
     let myAsset;
     assets.forEach(async (asset, index) => {
@@ -81,10 +82,19 @@ export class DashboardService {
           status,
           value: asset[VALUE] / 100,
           boughtValue: asset[INVESTOR].toLowerCase() === this.walletService.getWallet().address.toLowerCase() ?
-            asset[BOUGHTVALUE] / 100 : asset[SELLDATA_VALUE] / 100 ,
+            asset[BOUGHTVALUE] / 100 : asset[SELLDATA_VALUE] / 100,
           investor: asset[INVESTOR].toLowerCase(),
           token: asset[TOKENFUEL] / Math.pow(10, 18),
-          buyer: asset[SELLDATA_BUYER].toLowerCase()
+          buyer: asset[SELLDATA_BUYER].toLowerCase(),
+
+
+          paybackMonths: asset[PAYBACKDAYS] / 30,
+          grossReturn: asset[GROSSRETURN] / 10000,
+          creditCompanyAddress: asset[OWNER],
+          boughtAt: (new Date(timestamp * 1000)).toISOString(),
+          investedAt: (new Date(asset[INVESTEDAT] * 1000)).toISOString(),
+          type: investment.event
+
         });
 
         myAsset = asset;
@@ -130,6 +140,10 @@ export class DashboardService {
     });
     this.investments = await Promise.all(promises);
     this.investments = this.deleteDuplicatedAssets(this.investments);
-    return this.investments;
+    let assets = [];
+    this.investments.forEach(investment => {
+      assets = assets.concat(investment.assets);
+    });
+    return assets;
   }
 }
