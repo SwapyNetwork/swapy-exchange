@@ -34,6 +34,7 @@ import { ConfirmSaleComponent } from './confirm-sale/confirm-sale.component';
 import { AddFundsComponent } from './add-funds/add-funds.component';
 import { AddFundsChildComponent } from './add-funds/add-funds-child/add-funds-child.component';
 import { StartInvestingComponent } from './start-investing/start-investing.component';
+import { CancelAssetComponent } from './cancel-asset/cancel-asset.component';
 
 @NgModule({
   imports: [
@@ -48,7 +49,7 @@ import { StartInvestingComponent } from './start-investing/start-investing.compo
   declarations: [InvestorComponent, OffersComponent, DashboardComponent, OfferComponent,
     OfferDetailsComponent, CreditCompanyComponent, TermsPageComponent, PrivacyPageComponent, ProfileComponent,
     InvestComponent, SuccessfulInvestmentComponent, InvestmentComponent, MarketplaceComponent, AssetComponent,
-    ConfirmPurchaseComponent, SellAssetComponent, ConfirmSaleComponent, AddFundsComponent, AddFundsChildComponent, StartInvestingComponent],
+    ConfirmPurchaseComponent, SellAssetComponent, ConfirmSaleComponent, AddFundsComponent, AddFundsChildComponent, StartInvestingComponent, CancelAssetComponent],
   providers: [LogoutService, OfferService, InvestService, SuccessfulInvestmentService, DashboardService,
     MarketplaceService, SellAssetService],
   bootstrap: [InvestorComponent]
