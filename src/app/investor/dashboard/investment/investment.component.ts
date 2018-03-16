@@ -24,12 +24,11 @@ import * as sha1 from 'sha1';
 })
 export class InvestmentComponent implements OnInit {
 
-  @Input() public asset;
+  @Input() public assets;
   @Input() public collapsed: boolean;
   //
   private walletAddress;
   private delayed = [];
-  private selected = false;
 
   public AVAILABLE = AVAILABLE;
   public PENDING_OWNER_AGREEMENT = PENDING_OWNER_AGREEMENT;
@@ -58,25 +57,25 @@ export class InvestmentComponent implements OnInit {
     this.walletAddress = this.walletService.getWallet().address.toLowerCase();
   }
 
-  public calculateReturnAmount() {
-    return this.asset.value * (1 + this.asset.grossReturn);
+  public calculateReturnAmount(asset) {
+    return asset.value * (1 + asset.grossReturn);
   }
 
-  public calculatePaybackDate() {
-    const paybackDate = new Date(this.asset.investedAt);
-    paybackDate.setMonth(paybackDate.getMonth() + this.asset.paybackMonths);
+  public calculatePaybackDate(asset) {
+    const paybackDate = new Date(asset.investedAt);
+    paybackDate.setMonth(paybackDate.getMonth() + asset.paybackMonths);
     return paybackDate;
   }
 
-  public calculateAssetProgression() {
-    const paybackDate = new Date(this.asset.investedAt);
+  public calculateAssetProgression(asset) {
+    const paybackDate = new Date(asset.investedAt);
     const now = new Date();
     const monthsDiff = (now.getFullYear() * 12 + now.getMonth()) - (paybackDate.getFullYear() * 12 + paybackDate.getMonth());
     return monthsDiff;
   }
 
-   public porcentageProgression() {
-     const porcentage = this.calculateAssetProgression() * 100 / this.asset.paybackMonths;
+   public porcentageProgression(asset) {
+     const porcentage = this.calculateAssetProgression(asset) * 100 / asset.paybackMonths;
      return Math.floor(porcentage / 5) * 5;
    }
 
@@ -92,8 +91,23 @@ export class InvestmentComponent implements OnInit {
   //   });
   // }
 
-  selectAsset() {
-    this.selected = !this.selected;
+  public selectAsset(assetToSelect) {
+    assetToSelect.selected = assetToSelect.selected === 0 ? 1 : 0;
+    const count = this.assets.filter(asset => asset.selected === 1).length;
+    if (count === 1) {
+      this.assets.forEach(asset => {
+        if (asset.status !== assetToSelect.status) {
+          asset.selected = -1;
+        }
+      });
+    } else {
+      if (count === 0) {
+        this.assets.forEach(asset => {
+          asset.selected = 0;
+        });
+      }
+    }
+
   }
 
   public statusToString(status) {

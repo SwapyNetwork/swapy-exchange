@@ -93,7 +93,8 @@ export class DashboardService {
           creditCompanyAddress: asset[OWNER],
           boughtAt: (new Date(timestamp * 1000)).toISOString(),
           investedAt: (new Date(asset[INVESTEDAT] * 1000)).toISOString(),
-          type: investment.event
+          type: investment.event,
+          selected: 0
 
         });
 

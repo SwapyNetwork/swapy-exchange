@@ -26,6 +26,12 @@
     color: #FFF;
     padding-top: 7px; 
 }
+.sw-circle-unavailable {
+    background-color: #e3e3e3;
+    color: #00aeef;
+    font-weight: 700;
+    padding-top: 16px;  
+}
 .sw-orange {
     color: #eebe4c;
 }
