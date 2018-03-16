@@ -12,6 +12,7 @@ import { OWNER, VALUE, PAYBACKDAYS, GROSSRETURN, STATUS,
 @Injectable()
 export class DashboardService {
   public investments;
+  public selectedAssets;
 
   constructor(
     private swapyProtocol: SwapyProtocol,
@@ -146,5 +147,13 @@ export class DashboardService {
       assets = assets.concat(investment.assets);
     });
     return assets;
+  }
+
+  public setSelectedAssets(assets) {
+    this.selectedAssets = assets;
+  }
+
+  public getSelectedAssets() {
+    return this.selectedAssets;
   }
 }

@@ -12,6 +12,7 @@ import { ErrorLogService } from '../../../common/services/error-log.service';
 import { StorageService } from '../../../common/services/storage.service';
 import { Web3Service } from '../../../common/services/web3.service';
 import { SellAssetService } from '../../sell-asset/sell-asset.service';
+import { DashboardService } from '../dashboard.service';
 
 const env = require('../../../../../env.json');
 
@@ -50,6 +51,7 @@ export class InvestmentComponent implements OnInit {
     private sellAssetService: SellAssetService,
     private router: Router,
     private web3Service: Web3Service,
+    private dashboardService: DashboardService,
     private walletService: WalletService) { }
 
   ngOnInit() {
@@ -107,6 +109,8 @@ export class InvestmentComponent implements OnInit {
         });
       }
     }
+
+    this.dashboardService.setSelectedAssets(this.assets.filter(asset => asset.selected === 1));
 
   }
 

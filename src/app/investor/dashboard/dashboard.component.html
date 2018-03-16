@@ -15,12 +15,14 @@
       <div class="col-xs-2 col-sm-2 col-md-2">
         <p class="sw-description-outside-box">Manage your investments</p>
       </div>
-      <div class="col-xs-2 col-sm-2 col-md-2" role="button">
-        <a class="sw-button sw-btn-cancel">Cancel</a>
-      </div>
-      <div class="col-xs-2 col-sm-2 col-md-2" role="button">
-        <a class="sw-button sw-btn-sell-assets">Sell assets</a>
-      </div>
+      <div *ngIf="checkSelectedAssets().length">        
+        <div *ngIf="handleButtons() == PENDING_OWNER_AGREEMENT" class="col-xs-2 col-sm-2 col-md-2" role="button">
+          <a class="sw-button sw-btn-cancel">Cancel</a>
+        </div>
+        <div *ngIf="handleButtons() == INVESTED" class="col-xs-2 col-sm-2 col-md-2" role="button">
+          <a class="sw-button sw-btn-sell-assets">Sell assets</a>
+        </div>
+      </div> 
     </div>
 
     <div class="row">

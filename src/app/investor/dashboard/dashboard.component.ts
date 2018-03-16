@@ -8,6 +8,9 @@ import { Web3Service } from '../../common/services/web3.service';
 import { LoadingService } from '../../common/services/loading.service';
 import { DashboardService } from './dashboard.service';
 import { InvestorComponent } from '../investor.component';
+import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT,
+  RETURNED, DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +20,17 @@ import { InvestorComponent } from '../investor.component';
 export class DashboardComponent implements OnInit {
 
   public assets;
+  public selectedAssets;
+
+  public AVAILABLE = AVAILABLE;
+  public PENDING_OWNER_AGREEMENT = PENDING_OWNER_AGREEMENT;
+  public INVESTED = INVESTED;
+  public RETURNED = RETURNED;
+  public DELAYED_RETURN = DELAYED_RETURN;
+  public FOR_SALE = FOR_SALE;
+  public PENDING_INVESTOR_AGREEMENT = PENDING_INVESTOR_AGREEMENT;
+  public PENDING_ETHEREUM_CONFIRMATION = PENDING_ETHEREUM_CONFIRMATION;
+
   constructor(
     private dashboardService: DashboardService,
     private loadingService: LoadingService,
@@ -44,4 +58,18 @@ export class DashboardComponent implements OnInit {
     this.investorComponent.refreshBalance();
     this.loadingService.hide();
   }
+
+  public handleButtons() {
+    this.selectedAssets = this.dashboardService.getSelectedAssets();
+    return this.selectedAssets[0].status;
+  }
+
+  public checkSelectedAssets() {
+    if (this.dashboardService.getSelectedAssets() === undefined) {
+      return 0;
+    }
+    return this.dashboardService.getSelectedAssets();
+  }
+
+
 }
