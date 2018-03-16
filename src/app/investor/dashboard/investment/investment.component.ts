@@ -73,8 +73,12 @@ export class InvestmentComponent implements OnInit {
     const now = new Date();
     const monthsDiff = (now.getFullYear() * 12 + now.getMonth()) - (paybackDate.getFullYear() * 12 + paybackDate.getMonth());
     return monthsDiff;
-
   }
+
+   public porcentageProgression() {
+     const porcentage = this.calculateAssetProgression() * 100 / this.asset.paybackMonths;
+     return Math.floor(porcentage / 5) * 5;
+   }
 
   // public async isReturnDelayed() {
   //   const latestBlock = (await this.web3Service.getInstance().eth.getBlock('latest'));
@@ -108,7 +112,7 @@ export class InvestmentComponent implements OnInit {
         statusString = 'Returned';
         break;
       case this.FOR_SALE:
-        statusString = 'For sale';
+        statusString = 'On sale';
         break;
       case this.PENDING_INVESTOR_AGREEMENT:
         statusString = 'Waiting';
