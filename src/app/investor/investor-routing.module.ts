@@ -17,6 +17,7 @@ import { ConfirmSaleComponent } from './confirm-sale/confirm-sale.component';
 import { AddFundsComponent } from './add-funds/add-funds.component';
 import { AddFundsChildComponent } from './add-funds/add-funds-child/add-funds-child.component';
 import { StartInvestingComponent } from './start-investing/start-investing.component';
+import { CancelAssetComponent } from './cancel-asset/cancel-asset.component';
 
 const routes: Routes = [
   {
@@ -37,7 +38,8 @@ const routes: Routes = [
       { path: 'marketplace', component: MarketplaceComponent },
       { path: 'marketplace/confirm-purchase', component: ConfirmPurchaseComponent },
       { path: 'sell', component: SellAssetComponent },
-      { path: 'sell/confirm-sale', component: ConfirmSaleComponent }
+      { path: 'sell/confirm-sale', component: ConfirmSaleComponent },
+      { path: 'cancel-asset', component: CancelAssetComponent },
     ]
   }
 ];
