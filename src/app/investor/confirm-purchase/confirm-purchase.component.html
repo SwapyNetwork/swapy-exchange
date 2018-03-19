@@ -8,70 +8,22 @@
       </div>
     </div> <!-- END Page name, Search Bar  -->
 
+    <div class="row">
+      <div class="col-xs-2 col-xs-offset-3 col-sm-2 col-sm-offset-3 col-md-2 col-md-offset-3">
+         <p class="sw-title-outside-box">Marketplace</p>        
+      </div>
+      <div class="col-xs-4 col-sm-4 col-md-4">
+         <p class="sw-description-outside-box">Buy asset</p>        
+      </div>
+    </div>
+
     <div class="row"> <!-- //////////// MAIN Content //////////// -->
-      <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
-
-          <div class=" col-md-12"> <!-- Start  -->
-            <div class="sw-box">
-            <div class="row sw-box-space">
-
-              <div class="col-sm-12 col-md-12">
-                <div class="row">
-                  <div class="col-sm-10 col-md-10">
-                     <p class="sw-box-title">Do you confirm your purchase?</p>
-                     <!-- <p class="sw-box-text sw-blue1"><a href="#">Contract &nbsp; <i class="fa fa-file-text-o" aria-hidden="true"></i></a></p> -->
-
-
-                  </div>
-
-                  <div class="col-sm-2 col-md-2 sw-company-logo-right">
-                     <a><img src="assets/img/noImage.png" alt="meu credito app logo"></a>
-                  </div>
-
-                </div>
-                <hr>
-
-              <div class="row">
-              <div class="col-xs-4 col-sm-4 col-md-4">
-                  <p class="sw-box-text sw-confirmation-col-left">Address:</p>
-                  <p class="sw-box-text sw-confirmation-col-left">Value:</p>
-                  <p class="sw-box-text sw-confirmation-col-left">Gross return rate:</p>
-                  <p class="sw-box-text sw-confirmation-col-left">Contract term:</p>
-                  <p class="sw-box-text sw-confirmation-col-left">Return on:</p>
-
-              </div>
-              <div class="col-xs-4 col-sm-4 col-md-4">
-                  <p class="sw-box-text">{{asset.address}}</p>
-                  <p class="sw-box-text">{{asset.value | currency}}</p>
-                  <p class="sw-box-text">{{asset.grossReturn | percent}}</p>
-                  <p class="sw-box-text">{{asset.paybackMonths}} months</p>
-                  <p class="sw-box-text">{{asset.returnOn | date: 'yyyy-MM-dd'}}</p>
-
-
-              </div>
-            </div>
-                  <br>
-              <div class="row">
-                <div class=" col-sm-4 col-md-4">
-                </div>
-                <div class="col-sm-4 col-md-4">
-                  <a class="sw-button sw-btn-ghost2" routerLink="/investor/marketplace">Back</a>
-                </div>
-                <div class=" col-sm-4 col-md-4">
-                  <a class="sw-button sw-btn-ghost1" (click)="confirmPurchase()">Confirm</a>
-                </div>
-              </div>
-
-             </div>
-            </div>
-
-          </div>
-          </div> <!-- END  -->
+      <div class="col-sm-7 col-sm-offset-1 col-md-7 col-md-offset-1">
 
       </div>
-    </div><!-- END MAIN Content  -->
+    </div>
 
-</div> <!-- END col 10  -->
+</div>
 <!-- ///////////////////////////////////////////////////////////////////////////////// -->
 <!-- //////////////////////////  END MAIN Content  /////////////////////////////////// -->
 <!-- ///////////////////////////////////////////////////////////////////////////////// -->

@@ -1,4 +1,9 @@
-
+.sw-no-offers {
+    font-weight: 300;
+    font-size: 18px;
+    text-align: center;
+    padding: 0 0 15px 0;
+}
 .sw-title-outside-box {
     font-weight: 400;
     font-size: 18px;
