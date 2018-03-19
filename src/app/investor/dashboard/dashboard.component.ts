@@ -40,6 +40,7 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.dashboardService.setSelectedAssets([]);
     const ethBalance = await this.walletService.getEthBalance();
     if (ethBalance === 0) {
       this.router.navigate(['/investor/add-funds']);

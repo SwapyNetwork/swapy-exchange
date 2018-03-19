@@ -76,10 +76,10 @@ export class InvestmentComponent implements OnInit {
     return monthsDiff;
   }
 
-   public porcentageProgression(asset) {
-     const porcentage = this.calculateAssetProgression(asset) * 100 / asset.paybackMonths;
-     return Math.floor(porcentage / 5) * 5;
-   }
+  public porcentageProgression(asset) {
+    const porcentage = this.calculateAssetProgression(asset) * 100 / asset.paybackMonths;
+    return Math.floor(porcentage / 5) * 5;
+  }
 
   // public async isReturnDelayed() {
   //   const latestBlock = (await this.web3Service.getInstance().eth.getBlock('latest'));

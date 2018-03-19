@@ -23,7 +23,7 @@
     font-weight: 300;
     width: 90%;
 }
-.sw-btn-sell-assets {
+.sw-btn-orange {
     font-weight: 500;
     background-color: #eebe4c;
     border: 1px solid #eebe4c;
@@ -31,14 +31,14 @@
     padding: 10px 10px;
 
 }
-.sw-btn-sell-assets:hover {
+.sw-btn-orange:hover {
     background-color: #ffcf5d;
     border: 1px solid #ffcf5d;
     color: #fff;
     padding: 10px 10px;
     text-decoration: none;
 }
-.sw-btn-cancel {
+.sw-btn-white {
     font-weight: 500;
     background-color: #fff;
     border: 1px solid #eebe4c;
@@ -46,7 +46,7 @@
     padding: 10px 10px;
 
 }
-.sw-btn-cancel:hover {
+.sw-btn-white:hover {
     background-color: #fff;
     border: 1px solid #ffcf5d;
     color: #eebe4c;

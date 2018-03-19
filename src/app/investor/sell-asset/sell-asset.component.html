@@ -1,83 +1,79 @@
 <div class="sw-scrollbar2">
   <div class="row"> <!--  Page name -->
     <div class="col-xs-4 col-sm-4 col-md-4">
-      <p class="sw-page-name">Sell asset</p>
+      <p class="sw-page-name">Sell assets</p>
     </div>
   </div> <!-- END Page name  -->
-
-
-  <div class="row"> <!-- //////////// MAIN Content //////////// -->
-    <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
-
-        <div class=" col-md-12"> <!-- Start  -->
-          <div class="sw-box">
-          <div class="row sw-box-space">
-
-            <div class="col-sm-12 col-md-12">
-              <form #raiseForm="ngForm" (submit)="sellAsset()">
-              `<div class="row">
-                <div class="col-sm-10 col-md-10">
-                   <p class="sw-box-title">Sell asset</p>
-                   <p class="sw-box-text">Set a new value to this asset</p>
-                </div>
-
-                <div class="col-sm-2 col-md-2 sw-company-logo-right">
-                   <a><img src="assets/img/noImage.png" alt="meu credito app logo"></a>
-                </div>
-
-              </div>
-              <hr>
-
-            <div class="row">
-              <div class="col-xs-4 col-sm-4 col-md-4">
-                  <p class="sw-box-text sw-confirmation-col-left" *ngIf="asset.boughtValue">Original value:</p>
-                  <p class="sw-box-text sw-confirmation-col-left">Current value:</p>
-                  <p class="sw-box-text sw-confirmation-col-left">Gross return rate:</p>
-                  <p class="sw-box-text sw-confirmation-col-left">Contract term:</p>
-
-              </div>
-              <div class="col-xs-4 col-sm-4 col-md-4">
-                  <p class="sw-box-text" *ngIf="asset.boughtValue">{{asset.value | currency}}</p>
-                  <p class="sw-box-text">{{(asset.boughtValue || asset.value) | currency}}</p>
-                  <p class="sw-box-text">{{asset.grossReturn | percent}}</p>
-                  <p class="sw-box-text">{{asset.paybackDays / 30}} months</p>
-                  <!-- <p class="sw-box-text">8 x</p> -->
-
-              </div>
-            </div>
-            <br/>
-            <br/>
-
-            <div class="row">
-            <div class="col-sm-4 col-md-4">
-
-               <div class="form-group">
-                  <label for="inputFundraising"><span class="sw-box-text">Asset value</span></label>
-                  <input type="tel" class="form-control" placeholder="Set asset value (US$)" value="10" name="value" [(ngModel)]="value" [textMask]="{mask: amountMask}" #valueInput="ngModel" required>
-               </div>
-
-            </div>
-          </div>
-            <div *ngIf="valueInput.errors && (valueInput.touched || valueInput.dirty)" class="alert alert-danger">
-                Asset value amount is required.
-            </div>
-
-            <div class="row">
-              <div class=" col-sm-8 col-md-8">
-              </div>
-              <div class=" col-sm-4 col-md-4">
-                <button type="submit" class="sw-button sw-btn-ghost1" [disabled]="!raiseForm.form.valid">Sell asset</button>
-              </div>
-            </div>
-          </form>
-         </div>
-        </div>
-
-      </div>
-      </div> <!-- END  -->
-
+  
+  <div class="row">
+    <div class="col-xs-2 col-xs-offset-3 col-sm-2 col-sm-offset-3 col-md-2 col-md-offset-3">
+      <p class="sw-title-outside-box">Manage</p>
     </div>
-  </div><!-- END MAIN Content  -->
+    <div class="col-xs-2 col-sm-2 col-md-2">
+      <p class="sw-description-outside-box">Set selling price to your assets</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 center sw-top-bar-info">
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Total invested <p class="sw-value-font ">USD550,000</p></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Expected gross return <p class="sw-value-font sw-blue1">USD550,000</p></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-inline-left-border"> Received gross return <p class="sw-value-font sw-green">USD550,000</p></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Assets <p class="sw-value-font sw-blue1">7</p></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-inline-left-border"> Next return on <p class="sw-value-font sw-blue1">11 jul 2018</p></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Expected <p class="sw-value-font ">USD550,000</p></div>
+    </div>      
+  </div>
+
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 sw-bottom-border center">
+      <div class="col-xs-1 col-sm-1 col-md-1">Amount invested</div>
+      <div class="col-xs-1 col-sm-1 col-md-1">Expected gross return</div>
+      <div class="col-xs-1 col-sm-1 col-md-1">Gross return</div>
+      <div class="col-xs-1 col-sm-1 col-md-1">Terms (Months)</div>
+      <div class="col-xs-1 col-sm-1 col-md-1">Collateral (SWAPY)</div>
+      <div class="col-xs-1 col-sm-1 col-md-1">Return on</div>
+      <div class="col-xs-2 col-sm-2 col-md-2">Asset progress</div>
+      <div class="col-xs-3 col-sm-3 col-md-3 sw-set-selling-price sw-blue1">Set selling price</div>
+    </div>
+  </div>
+
+  <div *ngFor="let asset of assets, let i = index">
+    <div class="row sw-assets">
+      <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
+        <div class="col-xs-1 col-sm-1 col-md-1">{{asset.value | currency:'USD':true:'.2' }}</div>
+        <div class="col-xs-1 col-sm-1 col-md-1 sw-blue1">{{calculateReturnAmount(asset) | currency:'USD':true:'.2' }}</div>
+        <div class="col-xs-1 col-sm-1 col-md-1 sw-blue1">{{asset.grossReturn | percent}}</div>
+        <div class="col-xs-1 col-sm-1 col-md-1" [ngClass]="{'sw-blue1': calculateAssetProgression(asset) != 0 }">{{calculateAssetProgression(asset)}}/{{asset.paybackMonths}}</div>
+        <div class="col-xs-1 col-sm-1 col-md-1 sw-blue1">{{asset.token || 'No collateral'}}</div>
+        <div class="col-xs-1 col-sm-1 col-md-1">{{calculatePaybackDate(asset) | date: 'dd MMMM yyyy'}}</div>
+        <div class="col-xs-2 col-sm-2 col-md-2">
+            <div class="progress sw-blue-bar">
+              <div class="progress-bar prog{{porcentageProgression(asset)}}"></div>
+            </div>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2">
+          <input type="tel" class="form-control" name="sellPrice[i]" [(ngModel)]="sellPrice[i]" [textMask]="{mask: amountMask}" #valueInput="ngModel" required>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 sw-suggested-price">< Suggested price</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-5 col-sm-offset-1 col-md-5 col-md-offset-1 sw-confirm-message">You are adding <span class="sw-blue1">{{assets.length}} asset(s) </span>for sale in the Marketplace.
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-2 col-sm-offset-7 col-md-2 col-md-offset-7" role="button">  
+      <a class="sw-button sw-btn-return" routerLink='/investor'>Return</a>
+    </div>
+    <div class="col-sm-2 col-md-2" role="button">   
+      <a class="sw-button sw-btn-blue" (click)="sellAssets()">Put on sale</a>      
+    </div>
+  </div>
+
 
 </div> <!-- END col 10  -->
 <!-- ///////////////////////////////////////////////////////////////////////////////// -->

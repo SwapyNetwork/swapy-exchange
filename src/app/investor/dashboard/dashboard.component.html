@@ -17,10 +17,10 @@
       </div>
       <div *ngIf="checkSelectedAssets().length">        
         <div *ngIf="handleButtons() == PENDING_OWNER_AGREEMENT" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/investor/cancel-asset']">
-          <a class="sw-button sw-btn-cancel">Cancel</a>
+          <a class="sw-button sw-btn-orange">Cancel</a>
         </div>
-        <div *ngIf="handleButtons() == INVESTED" class="col-xs-2 col-sm-2 col-md-2" role="button">
-          <a class="sw-button sw-btn-sell-assets">Sell assets</a>
+        <div *ngIf="handleButtons() == INVESTED" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/investor/sell']">
+          <a class="sw-button sw-btn-orange">Sell assets</a>
         </div>
       </div> 
     </div>
