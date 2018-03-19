@@ -21,13 +21,25 @@ export class AssetComponent implements OnInit {
   }
 
   public buy(asset) {
-    this.marketplaceService.cacheAsset(asset);
+    this.marketplaceService.cacheAsset(this.asset);
     this.router.navigate(['investor/marketplace/confirm-purchase']);
   }
 
   public calculateReturn() {
     const investedAt = new Date(this.asset.investedAt * 1000);
     this.asset.returnOn = investedAt.setMonth(investedAt.getMonth() + this.asset.paybackMonths)
+  }
+
+  public calculateAssetProgression() {
+    const paybackDate = new Date(this.asset.investedAt * 1000);
+    const now = new Date();
+    const monthsDiff = (now.getFullYear() * 12 + now.getMonth()) - (paybackDate.getFullYear() * 12 + paybackDate.getMonth());
+    return monthsDiff;
+  }
+
+  public porcentageProgression() {
+    const porcentage = this.calculateAssetProgression() * 100 / this.asset.paybackMonths;
+    return Math.floor(porcentage / 5) * 5;
   }
 
 }
