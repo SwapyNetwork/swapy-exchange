@@ -23,6 +23,7 @@ export class ConfirmPurchaseComponent implements OnInit {
 
   ngOnInit() {
     this.asset = this.marketplaceService.getCachedAsset();
+    console.log(this.asset);
   }
 
   public async confirmPurchase() {
@@ -36,6 +37,24 @@ export class ConfirmPurchaseComponent implements OnInit {
       this.successfulInvestmentService.setErrorMessage(error.message);
     }
 
+  }
+
+  public calculateAssetProgression() {
+    const paybackDate = new Date(this.asset.investedAt);
+    const now = new Date();
+    const monthsDiff = (now.getFullYear() * 12 + now.getMonth()) - (paybackDate.getFullYear() * 12 + paybackDate.getMonth());
+    return monthsDiff;
+  }
+
+  public calculatePaybackDate() {
+    const paybackDate = new Date(this.asset.investedAt);
+    paybackDate.setMonth(paybackDate.getMonth() + this.asset.paybackMonths);
+    return paybackDate;
+  }
+
+  public porcentageProgression() {
+    const porcentage = this.calculateAssetProgression() * 100 / this.asset.paybackMonths;
+    return Math.floor(porcentage / 5) * 5;
   }
 
 }

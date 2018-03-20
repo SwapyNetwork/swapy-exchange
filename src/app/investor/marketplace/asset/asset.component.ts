@@ -26,12 +26,12 @@ export class AssetComponent implements OnInit {
   }
 
   public calculateReturn() {
-    const investedAt = new Date(this.asset.investedAt * 1000);
+    const investedAt = new Date(this.asset.investedAt);
     this.asset.returnOn = investedAt.setMonth(investedAt.getMonth() + this.asset.paybackMonths)
   }
 
   public calculateAssetProgression() {
-    const paybackDate = new Date(this.asset.investedAt * 1000);
+    const paybackDate = new Date(this.asset.investedAt);
     const now = new Date();
     const monthsDiff = (now.getFullYear() * 12 + now.getMonth()) - (paybackDate.getFullYear() * 12 + paybackDate.getMonth());
     return monthsDiff;

@@ -15,11 +15,111 @@
       <div class="col-xs-4 col-sm-4 col-md-4">
          <p class="sw-description-outside-box">Buy asset</p>        
       </div>
+      <div class="col-xs-2 col-sm-2 col-md-2">
+         <p class="sw-button sw-btn-add-funds">Add funds</p>        
+      </div>
     </div>
 
     <div class="row"> <!-- //////////// MAIN Content //////////// -->
       <div class="col-sm-7 col-sm-offset-1 col-md-7 col-md-offset-1">
+        <div class="sw-box">
+          <div class="row">
+            <div class="col-sm-1 col-md-1">
+              <img src="assets/img/swapy-logo4.png" alt="Swapy logo">
+            </div>
+            <div class="col-xs-5 col-sm-5 col-md-5">
+              <div class="sw-box-title">You are buying an asset of <span class="sw-blue1">{{asset.value | currency:'USD':false:'.0-2'}}</span><p>Do you confirm the purchase ?</p>
+              </div>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
+              <p class="sw-box-text">Original price</p>
+              <p class="sw-box-title">{{asset.originalValue | currency:'USD':false:'.0-2'}}</p>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2">
+              <p class="sw-box-text">Gross return rate</p>
+              <p class="sw-box-title sw-blue1">{{asset.grossReturn | percent}}
+            </div>
+          </div>
 
+          <div class="row">
+            <div class="col-xs-5 col-sm-5 col-md-5 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
+              <div class="sw-info">This asset has achieved {{calculateAssetProgression()}} of {{asset.paybackMonths}} terms</div>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
+              <p class="sw-box-text sw-blue1">Selling price</p>
+              <p class="sw-box-title sw-blue1">{{asset.value | currency:'USD':false:'.0-2'}}</p>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2">
+              <p class="sw-box-text">Terms months</p>
+              <p class="sw-box-title">{{calculateAssetProgression()}}/{{asset.paybackMonths}}</p>
+            </div>            
+          </div>
+
+          <div class="row sw-info">
+            <div class="col-xs-5 col-sm-5 col-md-5 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
+              <p>Asset owner: <span class="sw-blue1">{{asset.investor}}</span></p>
+              <p>Asset issuer: <span class="sw-blue1">{{asset.companyAddress}}</span></p>
+              <p>Start date: <span class="sw-blue1">{{asset.investedAt | date: 'dd MMMM yyyy'}}</span></p>
+              <p>Return on: <span class="sw-blue1">{{calculatePaybackDate() | date: 'dd MMMM yyyy'}}</span></p>
+              <p>Collateral: <span class="sw-blue1">{{asset.token}} SWAPY</span></p>
+            </div>
+            <div class="sw-asset-progress col-xs-4 col-sm-4 col-md-4 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
+              <div class="progress sw-blue-bar">
+                <div class="progress-bar prog{{porcentageProgression(asset)}}"></div>
+              </div>  
+              Asset progress
+            </div>       
+          </div>
+          <div class="row sw-last-row">
+            <div class="col-xs-5 col-sm-5 col-md-5 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
+             <p class="sw-assets-total">TOTAL: {{asset.value | currency:'USD':false:'.0-2'}}</p>
+            </div>
+            <div class="col-sm-2 col-sm-offset-1 col-md-2 col-md-offset-1" role="button">  
+              <a class="sw-button sw-btn-return" routerLink='/investor/marketplace'>Return</a>
+            </div>
+            <div class="col-sm-2 col-md-2" role="button">   
+              <a class="sw-button sw-btn-buy-asset">Buy asset</a>      
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-3 col-md-3 sw-company-box">
+        <div class="row">
+          <div class="col-sm-12 col-md-12">
+            <span class="sw-box-title">Company Name, Inc</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-12">
+            <p class="sw-box-text sw-company-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, exercitationem doloremque atque dolor numquam perspiciatis consequuntur autem impedit porro doloribus nulla placeat quisquam cupiditate repellendus odio esse! Iure nostrum, quasi!</p>
+            <p class="sw-blue1">City, country</p>
+            <p class="sw-blue1">www.website.com</p>
+            <hr>
+          </div>
+        </div>
+        <div class="row sw-company-assets-details">
+          <div class="col-sm-8 col-md-8">
+            <span>Assets raised</span>
+          </div>
+          <div class="col-sm-4 col-md-4">
+            <div class="sw-number-details">7/10</div>
+          </div>
+        </div>
+        <div class="row sw-company-assets-details">
+          <div class="col-sm-8 col-md-8">
+            <span>Repayment rate</span>
+          </div>
+          <div class="col-sm-4 col-md-4">
+            <div class="sw-blue1 sw-number-details">99%</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-12">
+            <hr>
+            <span>Company's wallet address: <p class="sw-blue1">{{asset.companyAddress}}</p></span>
+          </div>
+        </div>
       </div>
     </div>
 

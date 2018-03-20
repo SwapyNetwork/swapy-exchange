@@ -50,18 +50,18 @@ export class MarketplaceComponent implements OnInit {
         const assetAddress = forSaleEvent.returnValues._asset;
         const assetValue = forSaleEvent.returnValues._value;
         const investor = forSaleEvent.returnValues._investor.toLowerCase();
-        const constants = ['grossReturn', 'paybackDays', 'status', 'value', 'investedAt', 'tokenFuel'];
+        const constants = ['grossReturn', 'paybackDays', 'status', 'value', 'investedAt', 'tokenFuel', 'owner'];
         const assetConstants = await this.swapyProtocol.getAssetConstants(assetAddress, constants);
         const asset = {
           address: assetAddress,
-          displayAddress: this.getDisplayWalletAddress(assetAddress),
+          companyAddress: assetConstants.owner,
           investor: investor,
           token: assetConstants.tokenFuel / Math.pow(10, 18),
           grossReturn: assetConstants.grossReturn / 10000,
           paybackMonths: assetConstants.paybackDays / 30,
           originalValue: assetConstants.value / 100,
           value: assetValue / 100,
-          investedAt: assetConstants.investedAt
+          investedAt: assetConstants.investedAt * 1000
         };
         if (Number(assetConstants.status) === FOR_SALE && investor !== this.walletService.getWallet().address.toLowerCase()) {
           this.assets.push(asset);
