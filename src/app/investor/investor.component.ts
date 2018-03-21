@@ -143,14 +143,12 @@ export class InvestorComponent implements OnInit {
       assets = assets.concat(investment.assets);
     });
 
-    console.log("Before:" + this.investedValue);
 
     this.investedValue += (assets.filter(asset => (
       Number(asset.status) >= PENDING_OWNER_AGREEMENT && Number(asset.status) <= DELAYED_RETURN))
       .map(asset => asset.currentValue)
       .reduce((total, current) => (total + current), 0));
 
-    console.log("After:" + this.investedValue);
     this.returnValue = assets.filter(asset => (
       Number(asset.status) >= PENDING_OWNER_AGREEMENT && Number(asset.status) <= PENDING_INVESTOR_AGREEMENT))
       .map(asset => asset.value + asset.value * asset.grossReturn)
