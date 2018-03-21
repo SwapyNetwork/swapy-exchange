@@ -19,12 +19,12 @@
 
     <div class="row">
       <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 center sw-top-bar-info">
-        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Total invested <p class="sw-value-font ">USD550,000</p></div>
-        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Expected gross return <p class="sw-value-font sw-blue1">USD550,000</p></div>
-        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-inline-left-border"> Received gross return <p class="sw-value-font sw-green">USD550,000</p></div>
-        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Assets <p class="sw-value-font sw-blue1">7</p></div>
-        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-inline-left-border"> Next return on <p class="sw-value-font sw-blue1">11 jul 2018</p></div>
-        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Expected <p class="sw-value-font ">USD550,000</p></div>
+        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Total invested <p class="sw-value-font ">{{investorComponent.getStatistics().investedValue | currency:'USD':true:'.2' }}</p></div>
+        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Expected gross return <p class="sw-value-font sw-blue1">{{investorComponent.getStatistics().returnValue | currency:'USD':true:'.2' }}</p></div>
+        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-inline-left-border"> Received gross return <p class="sw-value-font sw-green">{{investorComponent.getStatistics().returnedValue | currency:'USD':true:'.2' }}</p></div>
+        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Assets <p class="sw-value-font sw-blue1">{{investorComponent.getStatistics().assetsLength}}</p></div>
+        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-inline-left-border"> Next return on <p class="sw-value-font sw-blue1">{{investorComponent.getStatistics().nextReturnDate | date: 'dd MMMM yyyy'}}</p></div>
+        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Expected <p class="sw-value-font ">{{investorComponent.getStatistics().nextReturnValue | currency:'USD':true:'.2' }}</p></div>
       </div>      
     </div>
 

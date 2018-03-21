@@ -7,8 +7,8 @@
   "description": "Swapy Exchange Alpha Version",
   "homepage": "https://swapy.network",
   "author": {
-    "name" : "Swapy Network",
-    "email" : "contact@swapy.network"
+    "name": "Swapy Network",
+    "email": "contact@swapy.network"
   },
   "scripts": {
     "ng": "ng",

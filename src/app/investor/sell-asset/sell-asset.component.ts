@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { SellAssetService } from './sell-asset.service';
+import { InvestorComponent } from '../investor.component';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
 @Component({
@@ -26,6 +27,7 @@ export class SellAssetComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private investorComponent: InvestorComponent,
     private dashboardService: DashboardService
   ) { }
 

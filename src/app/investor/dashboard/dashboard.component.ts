@@ -11,7 +11,6 @@ import { InvestorComponent } from '../investor.component';
 import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT,
   RETURNED, DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -48,6 +47,8 @@ export class DashboardComponent implements OnInit {
       await this.updateInvestments();
       if (this.assets.length === 0) {
         this.router.navigate(['/investor/start-investing']);
+      } else {
+        this.investorComponent.refreshBalance();
       }
     }
   }
@@ -56,7 +57,7 @@ export class DashboardComponent implements OnInit {
     this.loadingService.show();
 
     this.assets = await this.dashboardService.getMyInvestmentsFromBlockchain();
-    this.investorComponent.refreshBalance();
+    // this.investorComponent.refreshBalance();
     this.loadingService.hide();
   }
 

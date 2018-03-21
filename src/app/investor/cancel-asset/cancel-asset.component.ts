@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT,
   RETURNED, DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
+import { InvestorComponent } from '../investor.component';
 
 
 @Component({
@@ -23,7 +24,9 @@ export class CancelAssetComponent implements OnInit {
   public PENDING_ETHEREUM_CONFIRMATION = PENDING_ETHEREUM_CONFIRMATION;
 
   constructor(
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    private investorComponent: InvestorComponent
+
   ) { }
 
   ngOnInit() {

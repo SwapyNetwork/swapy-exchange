@@ -21,10 +21,10 @@ export class InvestorComponent implements OnInit {
 
   public assetsLength;
   public investedValue;
-  public averageReturn;
   public returnValue;
   public returnedValue;
-  public averagePaybackPeriod;
+  public nextReturnDate;
+  public nextReturnValue;
   public ETHbalance;
   public tokenBalance;
   public ETHprice;
@@ -59,6 +59,17 @@ export class InvestorComponent implements OnInit {
     this.loadingService.hide();
   }
 
+  public getStatistics() {
+    return {
+      assetsLength: this.assetsLength,
+      investedValue: this.investedValue,
+      returnValue: this.returnValue,
+      returnedValue: this.returnedValue,
+      nextReturnDate: this.nextReturnDate,
+      nextReturnValue: this.nextReturnValue,
+    }
+  }
+
   public async refreshBalance() {
     this.loadingService.show();
 
@@ -68,7 +79,6 @@ export class InvestorComponent implements OnInit {
     this.USDbalance = this.ETHbalance * this.ETHprice;
     this.loadingService.hide();
 
-    /*
     this.investedValue = 0;
     this.returnedValue = 0;
     this.returnValue = 0;
@@ -121,7 +131,7 @@ export class InvestorComponent implements OnInit {
       }
     }
 
-    const investments = this.dashboardService.getCachedInvestments();
+    const investments = this.dashboardService.getCachedInvestments() || [];
     let assets = [];
     investments.forEach(investment => {
       investment.assets.forEach(asset => {
@@ -131,13 +141,16 @@ export class InvestorComponent implements OnInit {
         asset['currentValue'] = asset.boughtValue || asset.value;
       });
       assets = assets.concat(investment.assets);
-    })
+    });
+
+    console.log("Before:" + this.investedValue);
 
     this.investedValue += (assets.filter(asset => (
       Number(asset.status) >= PENDING_OWNER_AGREEMENT && Number(asset.status) <= DELAYED_RETURN))
       .map(asset => asset.currentValue)
       .reduce((total, current) => (total + current), 0));
 
+    console.log("After:" + this.investedValue);
     this.returnValue = assets.filter(asset => (
       Number(asset.status) >= PENDING_OWNER_AGREEMENT && Number(asset.status) <= PENDING_INVESTOR_AGREEMENT))
       .map(asset => asset.value + asset.value * asset.grossReturn)
@@ -150,26 +163,15 @@ export class InvestorComponent implements OnInit {
 
     const assetsLength = assets.filter(asset => Number(asset.status) >= PENDING_OWNER_AGREEMENT &&
       Number(asset.status) <= PENDING_INVESTOR_AGREEMENT).length;
-    this.averageReturn = assets.filter(asset => Number(asset.status) >= PENDING_OWNER_AGREEMENT &&
-      Number(asset.status) <= PENDING_INVESTOR_AGREEMENT)
-      .map(asset => Number(asset.grossReturn))
-      .reduce((total, current) => (total + current), 0);
 
-    this.averageReturn = this.averageReturn === 0 ? 0 : (this.averageReturn / assetsLength).toFixed(4);
-
-    const block = (await this.web3Service.getInstance().eth.getBlock('latest'));
-    const now = block.timestamp * 1000;
-    this.averagePaybackPeriod = assets.filter(asset =>
-      Number(asset.status) >= PENDING_OWNER_AGREEMENT && Number(asset.status) <= PENDING_INVESTOR_AGREEMENT)
-      .map(asset => {
-        const returnDate = asset.investedAt.setMonth(asset.investedAt.getMonth() + asset.paybackDays / 30)
-        return Math.floor((returnDate - now) / (24 * 3600 * 1000));
-      })
-      .reduce((total, current) => (total + current), 0);
-    this.averagePaybackPeriod = this.averagePaybackPeriod === 0 ? 0 : Math.round(this.averagePaybackPeriod  / assetsLength);
+    if (assets.length > 0) {
+      assets = assets.sort((a, b) => Number(a.investedAt) - Number(b.investedAt));
+      this.nextReturnDate = new Date(assets[0].investedAt);
+      this.nextReturnDate.setMonth(this.nextReturnDate.getMonth() + assets[0].paybackMonths);
+      this.nextReturnValue = assets[0].value * (1 + assets[0].grossReturn);
+    }
     this.loadingService.hide();
     this.assetsLength = assets.length;
-    */
   };
 
 }
