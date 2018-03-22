@@ -51,7 +51,8 @@ export class InvestComponent implements OnInit {
   async invest() {
     try {
       const assetsAddress = this.investment.assets.map(asset => asset.contractAddress);
-      await this.swapyProtocol.invest(assetsAddress, this.investment.totalAmount);
+      const assetsValues = this.investment.assets.map(asset => asset.value);
+      await this.swapyProtocol.invest(assetsAddress, assetsValues);
       this.toastrService.getInstance().success('Your investment was mined by the Ethereum blockchain.');
       this.successfulInvestmentService.setMessage('Your investment was mined by the Ethereum blockchain.');
     } catch (error) {

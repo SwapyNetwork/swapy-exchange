@@ -95,16 +95,19 @@ export class SwapyProtocolService {
       });
   }
 
-  public async invest(assetAddress: string[], value: number) {
+  public async invest(assetsAddress: string[], assetsValues: number[]) {
+    const BigNumber = this.web3.utils.BN;
     const ethPrice = await this.getEthPrice();
-    const ethValue = value / (ethPrice as number);
+    assetsValues = assetsValues.map(value => value / (ethPrice as number));
+    const assetValue = new BigNumber(this.web3.utils.toWei(Math.round(assetsValues[0])));
+    const value =  new BigNumber(this.web3.utils.toWei(Math.round(assetsValues[0] * assetsValues.length)));
     return this.SwapyExchangeContract.methods
-      .invest(assetAddress)
+      .invest(assetsAddress, assetValue)
       .send({
         from: this.walletService.getWallet().address,
         gas: 400000,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei'),
-        value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
+        value
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
       })
