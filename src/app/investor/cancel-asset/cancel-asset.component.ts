@@ -1,9 +1,14 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT,
   RETURNED, DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
 import { InvestorComponent } from '../investor.component';
+import { StorageService } from '../../common/services/storage.service';
+import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
+import { ToastrService } from '../../common/services/toastr.service';
 
+import * as sha1 from 'sha1';
 
 @Component({
   selector: 'app-cancel-asset',
@@ -25,7 +30,11 @@ export class CancelAssetComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
-    private investorComponent: InvestorComponent
+    private swapyProtocol: SwapyProtocol,
+    private toastrService: ToastrService,
+    private storageService: StorageService,
+    private investorComponent: InvestorComponent,
+    private router: Router
 
   ) { }
 
@@ -81,6 +90,36 @@ export class CancelAssetComponent implements OnInit {
 
     return statusString;
 
+  }
+
+  private onError(error, assets, status) {
+    assets.forEach(asset => {
+      this.storageService.remove(asset.contractAddress);
+    });
+    if (sha1(error.message) === '699e7c6d81ba58075ee84cf2a640c18a409efcba') { // 50 blocks later and transaction has not being mined yet.
+      this.toastrService.getInstance().error('Transaction is still being mined. Check it out later to see if the transaction was mined');
+    } else {
+      assets.forEach(asset => {
+        asset.status = status;
+      });
+      this.toastrService.getInstance().error(error.message);
+    }
+  }
+
+  public async cancelInvestment() {
+    this.assets.forEach(asset => {
+      const status = asset.status;
+      this.storageService.setItem(asset.contractAddress, status);
+      asset.status = PENDING_ETHEREUM_CONFIRMATION;
+    });
+    const contractAddresses = this.assets.map(asset => asset.contractAddress);
+    try {
+      await this.swapyProtocol.cancelInvestment(contractAddresses);
+      this.toastrService.getInstance().success('Investment(s) cancelled');
+      this.router.navigate(['/investor']);
+    } catch (error) {
+      this.onError(error, this.assets, status);
+    }
   }
 
 }
