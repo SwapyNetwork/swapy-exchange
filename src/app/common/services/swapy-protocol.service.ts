@@ -216,9 +216,9 @@ export class SwapyProtocolService {
       });
   }
 
-  public sellAsset(contractAddress: string, value: number) {
+  public sellAsset(contractAddresses: string[], values: number[]) {
     return this.SwapyExchangeContract.methods
-      .sellAsset(contractAddress, value)
+      .sellAsset(contractAddresses, values)
       .send({
         from: this.walletService.getWallet().address,
         gas: 150000,
