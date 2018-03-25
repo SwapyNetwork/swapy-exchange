@@ -107,9 +107,10 @@ export class CancelAssetComponent implements OnInit {
   }
 
   public async cancelInvestment() {
+    const status = []
     this.assets.forEach(asset => {
-      const status = asset.status;
-      this.storageService.setItem(asset.contractAddress, status);
+      status.push(asset.status);
+      this.storageService.setItem(asset.contractAddress, asset.status);
       asset.status = PENDING_ETHEREUM_CONFIRMATION;
     });
     const contractAddresses = this.assets.map(asset => asset.contractAddress);
@@ -118,6 +119,10 @@ export class CancelAssetComponent implements OnInit {
       this.toastrService.getInstance().success('Investment(s) cancelled');
       this.router.navigate(['/investor']);
     } catch (error) {
+      this.assets.forEach((asset, index) => {
+        asset.status = status[index];
+        this.storageService.remove(asset.contractAddress);
+      });
       this.onError(error, this.assets, status);
     }
   }
