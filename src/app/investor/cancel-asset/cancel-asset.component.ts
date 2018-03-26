@@ -7,6 +7,7 @@ import { InvestorComponent } from '../investor.component';
 import { StorageService } from '../../common/services/storage.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 import { ToastrService } from '../../common/services/toastr.service';
+import { WalletService } from '../../common/services/wallet.service';
 
 import * as sha1 from 'sha1';
 
@@ -18,6 +19,7 @@ import * as sha1 from 'sha1';
 export class CancelAssetComponent implements OnInit {
 
   public assets;
+  public walletAddress;
 
   public AVAILABLE = AVAILABLE;
   public PENDING_OWNER_AGREEMENT = PENDING_OWNER_AGREEMENT;
@@ -31,6 +33,7 @@ export class CancelAssetComponent implements OnInit {
   constructor(
     private dashboardService: DashboardService,
     private swapyProtocol: SwapyProtocol,
+    private walletService: WalletService,
     private toastrService: ToastrService,
     private storageService: StorageService,
     private investorComponent: InvestorComponent,
@@ -40,6 +43,7 @@ export class CancelAssetComponent implements OnInit {
 
   ngOnInit() {
     this.assets = this.dashboardService.getSelectedAssets();
+    this.walletAddress = this.walletService.getWallet().address.toLowerCase();    
   }
 
   public calculateReturnAmount(asset) {
@@ -106,6 +110,16 @@ export class CancelAssetComponent implements OnInit {
     }
   }
 
+  public async cancel() {
+    if (this.assets[0].status === PENDING_OWNER_AGREEMENT && this.assets[0].investor === this.walletAddress) {
+      this.cancelInvestment();
+    }
+    if (this.assets[0].status === FOR_SALE && this.assets[0].investor === this.walletAddress) {
+      this.cancelSellOrder();
+    }
+
+  }
+
   public async cancelInvestment() {
     const status = []
     this.assets.forEach(asset => {
@@ -117,6 +131,27 @@ export class CancelAssetComponent implements OnInit {
     try {
       await this.swapyProtocol.cancelInvestment(contractAddresses);
       this.toastrService.getInstance().success('Investment(s) cancelled');
+      this.router.navigate(['/investor']);
+    } catch (error) {
+      this.assets.forEach((asset, index) => {
+        asset.status = status[index];
+        this.storageService.remove(asset.contractAddress);
+      });
+      this.onError(error, this.assets, status);
+    }
+  }
+
+  public async cancelSellOrder() {
+    const status = []
+    this.assets.forEach(asset => {
+      status.push(asset.status);
+      this.storageService.setItem(asset.contractAddress, asset.status);
+      asset.status = PENDING_ETHEREUM_CONFIRMATION;
+    });
+    const contractAddresses = this.assets.map(asset => asset.contractAddress);
+    try {
+      await this.swapyProtocol.cancelSellOrder(contractAddresses);
+      this.toastrService.getInstance().success('Sell order(s) cancelled');
       this.router.navigate(['/investor']);
     } catch (error) {
       this.assets.forEach((asset, index) => {

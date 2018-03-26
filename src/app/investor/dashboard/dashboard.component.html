@@ -16,10 +16,10 @@
         <p class="sw-description-outside-box">Manage your investments</p>
       </div>
       <div *ngIf="checkSelectedAssets().length">        
-        <div *ngIf="handleButtons() == PENDING_OWNER_AGREEMENT" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/investor/cancel-asset']">
+        <div *ngIf="handleButtons().status == PENDING_OWNER_AGREEMENT || handleButtons().status == FOR_SALE || handleButtons().status == PENDING_INVESTOR_AGREEMENT" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/investor/cancel-asset']">
           <a class="sw-button sw-btn-orange">Cancel</a>
         </div>
-        <div *ngIf="handleButtons() == INVESTED" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/investor/sell']">
+        <div *ngIf="handleButtons().status == INVESTED" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/investor/sell']">
           <a class="sw-button sw-btn-orange">Sell assets</a>
         </div>
       </div> 

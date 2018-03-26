@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
 
   public assets;
   public selectedAssets;
+  public walletAddress;
 
   public AVAILABLE = AVAILABLE;
   public PENDING_OWNER_AGREEMENT = PENDING_OWNER_AGREEMENT;
@@ -39,6 +40,7 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.walletAddress = this.walletService.getWallet().address.toLowerCase();
     this.dashboardService.setSelectedAssets([]);
     const ethBalance = await this.walletService.getEthBalance();
     if (ethBalance === 0) {
@@ -63,7 +65,10 @@ export class DashboardComponent implements OnInit {
 
   public handleButtons() {
     this.selectedAssets = this.dashboardService.getSelectedAssets();
-    return this.selectedAssets[0].status;
+    return {
+      status: this.selectedAssets[0].status,
+      investor: this.selectedAssets[0].investor
+    }
   }
 
   public checkSelectedAssets() {
