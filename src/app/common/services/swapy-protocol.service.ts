@@ -100,7 +100,7 @@ export class SwapyProtocolService {
     const ethPrice = await this.getEthPrice();
     assetsValues = assetsValues.map(value => value / (ethPrice as number));
     const assetValue = (this.web3.utils.toWei(assetsValues[0]));
-    const value = assetValue * assetsValues.length;
+    const value = (this.web3.utils.toWei(assetsValues[0] * assetsValues.length));
     // console.log(assetValue === value / assetsValues.length);
     // value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
     return this.SwapyExchangeContract.methods
