@@ -265,10 +265,9 @@ export class SwapyProtocolService {
       });
   }
 
-  public cancelSale(contractAddress: string) {
-    this.AssetLibraryContract.options.address = contractAddress;
-    return this.AssetLibraryContract.methods
-      .cancelSale()
+  public cancelSale(contractAddresses: string) {
+    return this.SwapyExchangeContract.methods
+      .cancelSale(contractAddresses)
       .send({
         from: this.walletService.getWallet().address,
         gas: 150000,
