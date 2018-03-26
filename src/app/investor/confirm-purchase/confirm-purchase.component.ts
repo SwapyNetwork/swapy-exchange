@@ -23,7 +23,6 @@ export class ConfirmPurchaseComponent implements OnInit {
 
   ngOnInit() {
     this.asset = this.marketplaceService.getCachedAsset();
-    console.log(this.asset);
   }
 
   public async confirmPurchase() {

@@ -111,7 +111,6 @@ export class InvestmentComponent implements OnInit {
     }
 
     this.dashboardService.setSelectedAssets(this.assets.filter(asset => asset.selected === 1));
-
   }
 
   public statusToString(status) {

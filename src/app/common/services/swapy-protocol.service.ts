@@ -281,10 +281,9 @@ export class SwapyProtocolService {
       });
   }
 
-  public refuseSale(contractAddress: string) {
-    this.AssetLibraryContract.options.address = contractAddress;
-    return this.AssetLibraryContract.methods
-      .refuseSale()
+  public refuseSale(contractAddresses: string) {
+    return this.SwapyExchangeContract.methods
+      .refuseSale(contractAddresses)
       .send({
         from: this.walletService.getWallet().address,
         gas: 150000,

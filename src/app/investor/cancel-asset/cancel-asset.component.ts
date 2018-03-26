@@ -117,6 +117,9 @@ export class CancelAssetComponent implements OnInit {
     if (this.assets[0].status === FOR_SALE && this.assets[0].investor === this.walletAddress) {
       this.cancelSellOrder();
     }
+    if (this.assets[0].status === PENDING_INVESTOR_AGREEMENT && this.assets[0].investor === this.walletAddress) {
+      this.refuseSale();
+    }
 
   }
 
@@ -152,6 +155,27 @@ export class CancelAssetComponent implements OnInit {
     try {
       await this.swapyProtocol.cancelSellOrder(contractAddresses);
       this.toastrService.getInstance().success('Sell order(s) cancelled');
+      this.router.navigate(['/investor']);
+    } catch (error) {
+      this.assets.forEach((asset, index) => {
+        asset.status = status[index];
+        this.storageService.remove(asset.contractAddress);
+      });
+      this.onError(error, this.assets, status);
+    }
+  }
+
+  public async refuseSale() {
+    const status = []
+    this.assets.forEach(asset => {
+      status.push(asset.status);
+      this.storageService.setItem(asset.contractAddress, asset.status);
+      asset.status = PENDING_ETHEREUM_CONFIRMATION;
+    });
+    const contractAddresses = this.assets.map(asset => asset.contractAddress);
+    try {
+      await this.swapyProtocol.refuseSale(contractAddresses);
+      this.toastrService.getInstance().success('Asset(s) sale refused');
       this.router.navigate(['/investor']);
     } catch (error) {
       this.assets.forEach((asset, index) => {
