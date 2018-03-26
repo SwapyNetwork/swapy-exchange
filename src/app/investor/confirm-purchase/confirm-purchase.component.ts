@@ -27,7 +27,7 @@ export class ConfirmPurchaseComponent implements OnInit {
   }
 
   public async confirmPurchase() {
-    this.router.navigate(['investor/invest/success']);
+    // this.router.navigate(['investor/invest/success']);
     try {
       await this.swapyProtocol.buyAsset(this.asset.address, this.asset.value);
       this.toastrService.getInstance().success('Purchase requested');
