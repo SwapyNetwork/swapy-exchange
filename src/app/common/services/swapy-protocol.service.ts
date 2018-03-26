@@ -231,7 +231,7 @@ export class SwapyProtocolService {
       });
   }
 
-  public cancelSellOrder(contractAddresses: string) {
+  public cancelSellOrder(contractAddresses: string[]) {
     return this.SwapyExchangeContract.methods
       .cancelSellOrder(contractAddresses)
       .send({
@@ -265,7 +265,7 @@ export class SwapyProtocolService {
       });
   }
 
-  public cancelSale(contractAddresses: string) {
+  public cancelSale(contractAddresses: string[]) {
     return this.SwapyExchangeContract.methods
       .cancelSale(contractAddresses)
       .send({
@@ -280,7 +280,7 @@ export class SwapyProtocolService {
       });
   }
 
-  public refuseSale(contractAddresses: string) {
+  public refuseSale(contractAddresses: string[]) {
     return this.SwapyExchangeContract.methods
       .refuseSale(contractAddresses)
       .send({
@@ -295,13 +295,12 @@ export class SwapyProtocolService {
       });
   }
 
-  public acceptSale(contractAddress: string) {
-    this.AssetLibraryContract.options.address = contractAddress;
-    return this.AssetLibraryContract.methods
-      .acceptSale()
+  public acceptSale(contractAddresses: string[]) {
+    return this.SwapyExchangeContract.methods
+      .acceptSale(contractAddresses)
       .send({
         from: this.walletService.getWallet().address,
-        gas: 150000,
+        gas: 1500000,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);

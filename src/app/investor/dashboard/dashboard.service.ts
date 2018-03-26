@@ -84,6 +84,7 @@ export class DashboardService {
           value: asset[VALUE] / 100,
           boughtValue: asset[INVESTOR].toLowerCase() === this.walletService.getWallet().address.toLowerCase() ?
             asset[BOUGHTVALUE] / 100 : asset[SELLDATA_VALUE] / 100,
+          soldValue:  asset[SELLDATA_VALUE] / 100,
           investor: asset[INVESTOR].toLowerCase(),
           token: asset[TOKENFUEL] / Math.pow(10, 18),
           buyer: asset[SELLDATA_BUYER].toLowerCase(),

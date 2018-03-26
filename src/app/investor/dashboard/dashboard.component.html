@@ -22,6 +22,9 @@
         <div *ngIf="handleButtons().status == INVESTED" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/investor/sell']">
           <a class="sw-button sw-btn-orange">Sell assets</a>
         </div>
+        <div *ngIf="handleButtons().status == PENDING_INVESTOR_AGREEMENT && handleButtons().investor == walletAddress" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/investor/accept-sale']">
+          <a class="sw-button sw-btn-orange">Accept sale</a>
+        </div>
       </div> 
     </div>
 
