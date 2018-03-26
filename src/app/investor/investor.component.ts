@@ -84,27 +84,38 @@ export class InvestorComponent implements OnInit {
     this.returnValue = 0;
     const txInvested = [];
     const ForSale = await this.swapyProtocol.get('ForSale');
+    console.log(ForSale);
     let forSaleEvents = await this.swapyProtocol.get('ForSale');
     forSaleEvents = forSaleEvents.filter(event =>
       event.returnValues._investor.toLowerCase() === this.walletService.getWallet().address.toLowerCase());
+
+    const assetsInvested = [];
+    const assetsReceived = [];
 
     for (const forSaleEvent of forSaleEvents){
       const withdrawal = await this.swapyProtocol.getAssetEvent(forSaleEvent.returnValues._asset, 'Withdrawal');
       const events = [forSaleEvent].concat(withdrawal);
       events.sort((a, b) => (a.blockNumber < b.blockNumber) ? -1 : (a.blockNumber > b.blockNumber ? 1 : 0));
+      console.log(events);
       const indexFS = events.map(event => event.event).indexOf('ForSale');
       if (events.length > indexFS + 1) {
         if (events[indexFS + 1].event === 'Withdrawal') {
           const investor = events[indexFS].returnValues._investor.toLowerCase();
           const owner = events[indexFS + 1].returnValues._owner.toLowerCase();
           if (investor === owner) {
-            this.returnedValue += Number(events[indexFS].returnValues._value) / 100;
+            if(assetsReceived.indexOf(events[indexFS].returnValues._asset) == -1) {
+              this.returnedValue += Number(events[indexFS].returnValues._value) / 100;
+              assetsReceived.push(events[indexFS].returnValues._asset);
+            }
           }
         }
 
         if (indexFS === 1) {
           const value = (await this.swapyProtocol.getAssetConstants(events[indexFS].returnValues._asset, ['value'])).value;
-          this.investedValue += Number(value) / 100;
+          if(assetsInvested.indexOf(events[indexFS].returnValues._asset) == -1) {
+            this.investedValue += Number(value) / 100;
+            assetsInvested.push(events[indexFS].returnValues._asset);
+          }
         } else {
           let sliced = events.slice(1, indexFS);
           sliced = sliced.concat(ForSale.filter(forSale => forSale.returnValues._asset.toLowerCase() === forSaleEvent.returnValues._asset.toLowerCase()));
@@ -130,6 +141,8 @@ export class InvestorComponent implements OnInit {
         }
       }
     }
+
+    console.log(this.investedValue);
 
     const investments = this.dashboardService.getCachedInvestments() || [];
     let assets = [];
