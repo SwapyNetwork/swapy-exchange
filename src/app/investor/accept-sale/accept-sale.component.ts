@@ -38,7 +38,6 @@ export class AcceptSaleComponent implements OnInit {
 
   ngOnInit() {
     this.assets = this.dashboardService.getSelectedAssets();
-    console.log(this.assets);
   }
 
   public calculateAssetProgression(asset) {

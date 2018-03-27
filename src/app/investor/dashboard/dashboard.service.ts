@@ -150,7 +150,6 @@ export class DashboardService {
       this.assets = this.assets.concat(investment.assets);
     });
     await this.isReturnDelayed();
-    console.log(this.delayed);
     return this.assets;
   }
 
@@ -160,7 +159,7 @@ export class DashboardService {
     this.delayed = [];
     this.assets.forEach(asset => {
       const investedAt = new Date(asset.investedAt);
-      if (now.valueOf() < investedAt.setDate(investedAt.getDate() + asset.paybackMonths * 30).valueOf()) {
+      if (now.valueOf() > investedAt.setDate(investedAt.getDate() + asset.paybackMonths * 30).valueOf()) {
         this.delayed.push(asset);
       }
     });

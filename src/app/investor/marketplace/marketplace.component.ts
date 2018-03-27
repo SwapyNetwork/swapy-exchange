@@ -30,7 +30,6 @@ export class MarketplaceComponent implements OnInit {
 
   public async getAssetsForSale() {
     this.assets = await this.marketplaceService.getAssetsForSale();
-    console.log(this.assets);
   }
 
 }

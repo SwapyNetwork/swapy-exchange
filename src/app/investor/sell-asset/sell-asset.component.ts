@@ -46,7 +46,6 @@ export class SellAssetComponent implements OnInit {
 
   public sellAssets() {
     this.sellPrice = this.sellPrice.map(price => parseFloat(price.replace(/[^0-9.]/g, '')));
-    console.log(this.sellPrice);
     /*
     this.asset.sellValue = parseFloat(this.value.replace(/[^0-9.]/g, ''));
     this.sellAssetService.cacheAsset(this.asset);

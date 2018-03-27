@@ -315,9 +315,8 @@ export class SwapyProtocolService {
       });
   }
 
-  public requireToken(contractAddress: string) {
-    this.AssetLibraryContract.options.address = contractAddress;
-    return this.AssetLibraryContract.methods
+  public requireToken(contractAddresses: string) {
+    return this.SwapyExchangeContract.methods
       .requireTokenFuel()
       .send({
         from: this.walletService.getWallet().address,
