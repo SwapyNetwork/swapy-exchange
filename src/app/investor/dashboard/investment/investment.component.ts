@@ -81,17 +81,17 @@ export class InvestmentComponent implements OnInit {
     return Math.floor(porcentage / 5) * 5;
   }
 
-  // public async isReturnDelayed() {
-  //   const latestBlock = (await this.web3Service.getInstance().eth.getBlock('latest'));
-  //   const now = new Date(latestBlock.timestamp * 1000) as any;
-  //   this.delayed = [];
-  //   this.investment.assets.forEach(asset => {
-  //     const investedAt = new Date(asset.investedAt);
-  //     this.delayed.push(
-  //       now.valueOf() > investedAt.setDate(investedAt.getDate() + this.investment.paybackMonths * 30).valueOf() ? true : false
-  //     );
-  //   });
-  // }
+  public async isReturnDelayed() {
+    const latestBlock = (await this.web3Service.getInstance().eth.getBlock('latest'));
+    const now = new Date(latestBlock.timestamp * 1000) as any;
+    this.delayed = [];
+    this.assets.forEach(asset => {
+      const investedAt = new Date(asset.investedAt);
+      if (now.valueOf() > investedAt.setDate(investedAt.getDate() + asset.paybackMonths * 30).valueOf()) {
+        this.delayed.push(asset);
+      }
+    });
+  }
 
   public selectAsset(assetToSelect) {
     assetToSelect.selected = assetToSelect.selected === 0 ? 1 : 0;

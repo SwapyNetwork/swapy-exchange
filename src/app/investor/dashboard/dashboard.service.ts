@@ -14,6 +14,7 @@ export class DashboardService {
   public investments;
   public assets;
   public selectedAssets;
+  public delayed;
 
   constructor(
     private swapyProtocol: SwapyProtocol,
@@ -148,7 +149,21 @@ export class DashboardService {
     this.investments.forEach(investment => {
       this.assets = this.assets.concat(investment.assets);
     });
+    await this.isReturnDelayed();
+    console.log(this.delayed);
     return this.assets;
+  }
+
+  public async isReturnDelayed() {
+    const latestBlock = (await this.web3Service.getInstance().eth.getBlock('latest'));
+    const now = new Date(latestBlock.timestamp * 1000) as any;
+    this.delayed = [];
+    this.assets.forEach(asset => {
+      const investedAt = new Date(asset.investedAt);
+      if (now.valueOf() < investedAt.setDate(investedAt.getDate() + asset.paybackMonths * 30).valueOf()) {
+        this.delayed.push(asset);
+      }
+    });
   }
 
   public setSelectedAssets(assets) {
@@ -161,5 +176,9 @@ export class DashboardService {
 
   public getAssets() {
     return this.assets;
+  }
+
+  public getDelayed() {
+    return this.delayed || [];
   }
 }
