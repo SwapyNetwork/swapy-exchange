@@ -6,6 +6,7 @@ export class SuccessfulInvestmentService {
 
   private error: boolean;
   private message: string;
+  private headerMessage: string;
 
   constructor() { }
 
@@ -14,8 +15,21 @@ export class SuccessfulInvestmentService {
     this.message = message
   }
 
+  public setHeaderMessage(message) {
+    this.error = false;
+    this.headerMessage = message
+  }
+
   public getMessage(): string {
     return this.message;
+  }
+
+  public getHeaderMessage(): string {
+    if (!this.error) {
+      return this.headerMessage;
+    } else {
+      return undefined;
+    }
   }
 
   public getError(): boolean {
@@ -25,6 +39,7 @@ export class SuccessfulInvestmentService {
   public cleanMessages() {
     this.error = undefined;
     this.message = undefined;
+    this.headerMessage = undefined;
   }
 
   setErrorMessage(message) {
