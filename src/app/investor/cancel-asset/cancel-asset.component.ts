@@ -43,7 +43,7 @@ export class CancelAssetComponent implements OnInit {
 
   ngOnInit() {
     this.assets = this.dashboardService.getSelectedAssets();
-    this.walletAddress = this.walletService.getWallet().address.toLowerCase();    
+    this.walletAddress = this.walletService.getWallet().address.toLowerCase();   
   }
 
   public calculateReturnAmount(asset) {

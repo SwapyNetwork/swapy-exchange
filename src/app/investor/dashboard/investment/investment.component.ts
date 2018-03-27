@@ -55,7 +55,6 @@ export class InvestmentComponent implements OnInit {
     private walletService: WalletService) { }
 
   ngOnInit() {
-    // this.isReturnDelayed();
     // this.walletAddress = this.walletService.getWallet().address.toLowerCase();
   }
 
@@ -79,18 +78,6 @@ export class InvestmentComponent implements OnInit {
   public porcentageProgression(asset) {
     const porcentage = this.calculateAssetProgression(asset) * 100 / asset.paybackMonths;
     return Math.floor(porcentage / 5) * 5;
-  }
-
-  public async isReturnDelayed() {
-    const latestBlock = (await this.web3Service.getInstance().eth.getBlock('latest'));
-    const now = new Date(latestBlock.timestamp * 1000) as any;
-    this.delayed = [];
-    this.assets.forEach(asset => {
-      const investedAt = new Date(asset.investedAt);
-      if (now.valueOf() > investedAt.setDate(investedAt.getDate() + asset.paybackMonths * 30).valueOf()) {
-        this.delayed.push(asset);
-      }
-    });
   }
 
   public selectAsset(assetToSelect) {
