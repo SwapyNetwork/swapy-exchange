@@ -23,7 +23,7 @@
       </div> -->
     </div> <!-- END Page name, Search Bar  -->
 
-    <div *ngIf="offers" class="row">
+    <div *ngIf="offerService.getOffers()" class="row">
       <div class="col-xs-2 col-xs-offset-3 col-sm-2 col-sm-offset-3 col-md-2 col-md-offset-3">
          <p class="sw-title-outside-box">Invest</p>        
       </div>
@@ -36,13 +36,13 @@
     </div>
 
     <div class="row"><!-- //////////// MAIN Content //////////// -->
-      <div *ngIf="offers" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
+      <div *ngIf="offerService.getOffers()" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
 
-          <offer-card *ngFor="let offer of offers; let offerIndex = index" [offer]="offer" [offerIndex]="offerIndex" role="button"></offer-card>
+          <offer-card *ngFor="let offer of offerService.getOffers(); let offerIndex = index" [offer]="offer" [offerIndex]="offerIndex" role="button"></offer-card>
 
       </div>
 
-      <div *ngIf="offers.length == 0" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
+      <div *ngIf="offerService.getOffers().length == 0" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
          <p class="sw-no-offers">Sorry! No offers found.</p>
       </div>
     </div><!-- END MAIN Content  -->

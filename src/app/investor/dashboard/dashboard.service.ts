@@ -12,6 +12,7 @@ import { OWNER, VALUE, PAYBACKDAYS, GROSSRETURN, STATUS,
 @Injectable()
 export class DashboardService {
   public investments;
+  public assets;
   public selectedAssets;
 
   constructor(
@@ -143,11 +144,11 @@ export class DashboardService {
     });
     this.investments = await Promise.all(promises);
     this.investments = this.deleteDuplicatedAssets(this.investments);
-    let assets = [];
+    this.assets = [];
     this.investments.forEach(investment => {
-      assets = assets.concat(investment.assets);
+      this.assets = this.assets.concat(investment.assets);
     });
-    return assets;
+    return this.assets;
   }
 
   public setSelectedAssets(assets) {
@@ -156,5 +157,9 @@ export class DashboardService {
 
   public getSelectedAssets() {
     return this.selectedAssets;
+  }
+
+  public getAssets() {
+    return this.assets;
   }
 }

@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { WalletService } from '../common/services/wallet.service';
 import { Web3Service } from '../common/services/web3.service';
+import { OfferService } from './offers/offer.service';
 import { LoadingService } from '../common/services/loading.service';
+import { MarketplaceService } from './marketplace/marketplace.service';
 import { SwapyProtocolService as SwapyProtocol } from '../common/services/swapy-protocol.service';
 import { PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
   DELAYED_RETURN } from '../common/interfaces/offer-asset-status.interface';
 import { DashboardService } from './dashboard/dashboard.service';
-import { Router } from '@angular/router';
 
 
 
@@ -35,7 +37,9 @@ export class InvestorComponent implements OnInit {
     private web3Service: Web3Service,
     private loadingService: LoadingService,
     private swapyProtocol: SwapyProtocol,
+    private marketplaceService: MarketplaceService,
     private router: Router,
+    private offerService: OfferService,
     private dashboardService: DashboardService) {}
 
   ngOnInit() {
@@ -47,11 +51,11 @@ export class InvestorComponent implements OnInit {
     const url = this.router.url.split('/').slice(1);
     if (url[0] === 'investor') {
       if (url.length === 1) {
-        // update investor Manage page
+        await this.dashboardService.getMyInvestmentsFromBlockchain();
       } else if (url[url.length - 1] === 'marketplace') {
-        // update investor Marketplace page
+        await this.marketplaceService.getAssetsForSale();
       } else if (url[url.length - 1] === 'offers') {
-        // update investor Invest page
+        await this.offerService.getOffersFromBlockchain();
       }
     } else {
 

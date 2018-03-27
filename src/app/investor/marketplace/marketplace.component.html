@@ -9,7 +9,7 @@
       </div>
     </div> <!-- END Page name, Search Bar  -->
 
-    <div *ngIf="assets.length != 0" class="row">
+    <div *ngIf="marketplaceService.getAssets().length != 0" class="row">
       <div class="col-xs-2 col-xs-offset-3 col-sm-2 col-sm-offset-3 col-md-2 col-md-offset-3">
          <p class="sw-title-outside-box">Marketplace</p>        
       </div>
@@ -22,13 +22,13 @@
     </div>
 
     <div class="row"><!-- //////////// MAIN Content //////////// -->
-      <div *ngIf="assets.length != 0" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
+      <div *ngIf="marketplaceService.getAssets().length != 0" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
 
-          <asset-card *ngFor="let asset of assets; let assetIndex = index" [asset]="asset" [assetIndex]="assetIndex"></asset-card>
+          <asset-card *ngFor="let asset of marketplaceService.getAssets(); let assetIndex = index" [asset]="asset" [assetIndex]="assetIndex"></asset-card>
 
       </div>
 
-      <div *ngIf="assets.length === 0" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
+      <div *ngIf="marketplaceService.getAssets().length === 0" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
          <p class="sw-no-offers">Sorry! No assets found.</p>
       </div>
     </div><!-- END MAIN Content  -->
