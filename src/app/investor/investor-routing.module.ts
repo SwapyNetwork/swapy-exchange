@@ -19,6 +19,7 @@ import { AddFundsChildComponent } from './add-funds/add-funds-child/add-funds-ch
 import { StartInvestingComponent } from './start-investing/start-investing.component';
 import { CancelAssetComponent } from './cancel-asset/cancel-asset.component';
 import { AcceptSaleComponent } from './accept-sale/accept-sale.component';
+import { RequireTokenComponent } from './require-token/require-token.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,7 @@ const routes: Routes = [
       { path: 'sell/confirm-sale', component: ConfirmSaleComponent },
       { path: 'cancel-asset', component: CancelAssetComponent },
       { path: 'accept-sale', component: AcceptSaleComponent },
+      { path: 'require-token', component: RequireTokenComponent },
     ]
   }
 ];

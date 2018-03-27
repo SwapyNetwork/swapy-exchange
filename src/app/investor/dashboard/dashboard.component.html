@@ -17,7 +17,7 @@
         <div class="col-xs-2 col-sm-2 col-md-2">
           <p class="sw-description-outside-box">Manage your investments</p>
         </div>
-        <div *ngIf="dashboardService.getDelayed().length != 0" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/investor/accept-sale']">
+        <div *ngIf="dashboardService.getDelayed().length != 0" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/investor/require-token']">
           <a class="sw-button sw-btn-orange">Require tokens</a>
         </div>
         <div *ngIf="checkSelectedAssets().length">        
