@@ -20,7 +20,7 @@ export class MarketplaceComponent implements OnInit {
   constructor(
     private loadingService: LoadingService,
     private swapyProtocol: SwapyProtocol,
-    private marketplaceService: MarketplaceService,
+    public marketplaceService: MarketplaceService,
     private walletService: WalletService
   ) { }
 

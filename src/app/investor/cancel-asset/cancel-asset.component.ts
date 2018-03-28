@@ -36,14 +36,14 @@ export class CancelAssetComponent implements OnInit {
     private walletService: WalletService,
     private toastrService: ToastrService,
     private storageService: StorageService,
-    private investorComponent: InvestorComponent,
+    public investorComponent: InvestorComponent,
     private router: Router
 
   ) { }
 
   ngOnInit() {
     this.assets = this.dashboardService.getSelectedAssets();
-    this.walletAddress = this.walletService.getWallet().address.toLowerCase();   
+    this.walletAddress = this.walletService.getWallet().address.toLowerCase();
   }
 
   public calculateReturnAmount(asset) {

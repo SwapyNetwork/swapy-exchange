@@ -32,7 +32,7 @@ export class SellAssetComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private investorComponent: InvestorComponent,
+    public investorComponent: InvestorComponent,
     private toastrService: ToastrService,
     private swapyProtocol: SwapyProtocol,
     private storageService: StorageService,
@@ -100,7 +100,7 @@ export class SellAssetComponent implements OnInit {
       // this.storageService.remove(this.asset.contractAddress);
       // this.asset.status = status;
       // this.successfulInvestmentService.setErrorMessage(error.message);
-      
+
       this.assets.forEach((asset, index) => {
         asset.status = status[index];
         this.storageService.remove(asset.contractAddress);
