@@ -31,7 +31,7 @@ export class AcceptSaleComponent implements OnInit {
     private storageService: StorageService,
     private swapyProtocol: SwapyProtocol,
     private toastrService: ToastrService,
-    private investorComponent: InvestorComponent,
+    public investorComponent: InvestorComponent,
     private dashboardService: DashboardService,
     private router: Router
   ) { }

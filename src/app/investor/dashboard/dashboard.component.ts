@@ -32,10 +32,10 @@ export class DashboardComponent implements OnInit {
   public PENDING_ETHEREUM_CONFIRMATION = PENDING_ETHEREUM_CONFIRMATION;
 
   constructor(
-    private dashboardService: DashboardService,
+    public dashboardService: DashboardService,
     private loadingService: LoadingService,
     private walletService: WalletService,
-    private investorComponent: InvestorComponent,
+    public investorComponent: InvestorComponent,
     private router: Router
   ) { }
 

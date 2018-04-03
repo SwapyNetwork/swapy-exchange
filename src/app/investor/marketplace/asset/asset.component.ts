@@ -20,7 +20,7 @@ export class AssetComponent implements OnInit {
     this.calculateReturn();
   }
 
-  public buy(asset) {
+  public buy() {
     this.marketplaceService.cacheAsset(this.asset);
     this.router.navigate(['investor/marketplace/confirm-purchase']);
   }

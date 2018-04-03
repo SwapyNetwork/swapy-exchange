@@ -19,7 +19,7 @@ export class OffersComponent implements OnInit {
   mode = 'Observable';
 
   constructor(
-    private offerService: OfferService,
+    public offerService: OfferService,
     private web3Service: Web3Service,
     private loadingService: LoadingService,
     private swapyProtocol: SwapyProtocol
