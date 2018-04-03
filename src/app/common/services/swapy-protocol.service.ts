@@ -100,14 +100,10 @@ export class SwapyProtocolService {
   public async invest(assetsAddress: string[], assetsValues: number[]) {
     let ethPrice = await this.getEthPrice();
     ethPrice = (ethPrice as number).toFixed(2);
-    // ethPrice = ethPrice as number * 100;
 
     const assetValueBN = new BigNumber(assetsValues[0]).div(new BigNumber(ethPrice as number));
-    // assetValueBN = assetValueBN.div(new BigNumber(100));
     const assetValue = (this.web3.utils.toWei(assetValueBN));
     const value = (this.web3.utils.toWei(assetValueBN.times(new BigNumber(assetsValues.length))));
-    // console.log(assetValue === value / assetsValues.length);
-    // value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
     return this.SwapyExchangeContract.methods
       .invest(assetsAddress, assetValue)
       .send({

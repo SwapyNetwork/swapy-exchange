@@ -1,12 +1,10 @@
 <app-nav></app-nav>
-<!-- /////////////////////////  END Nav bar  ///////////////////////// -->
 
-
-<div class="container-fluid"> <!-- Container that enbrace all the rows -->
+<div class="container-fluid">
   <div class="row">
-    <div class="col-sm-12 col-md-12"> <!-- col 10  -->
+    <div class="col-sm-12 col-md-12">
 
-      <div class="row sw-top"> <!-- Top White Bar with  Swapy logo -->
+      <div class="row sw-top">
         <div class="col-xs-4 col-sm-4 col-md-4">
           <img class="sw-swapy-logo" src="assets/img/swapy-logo.jpg" alt="Swapy logo">
           <img class="sw-swapy-logo2" src="assets/img/swapy-logo2.jpg" alt="Swapy logo">
@@ -26,7 +24,6 @@
               </a>
             </span> SWAPY {{tokenBalance}}
           </p>
-          <!-- <a href="#"><p class="sw-funds-add">Add Funds +</p></a> -->
         </div>
         <div class="col-xs-1 col-sm-1 col-md-1 sw-funds">
           <p class="sw-fiat-value sw-usd-funds-value"> > &nbsp; {{USDbalance | currency:'USD':false:'.2'}}</p>
@@ -38,62 +35,13 @@
         <div class="col-xs-1 col-sm-1 col-md-1">
           <img src="assets/img/icon-32.png" alt="MetaMask logo" class="icon" />          
         </div>
-      </div> <!-- END Top White Bar with  Swapy logo -->
+      </div>
+
 
       <router-outlet></router-outlet>
 
     </div>
 
-<!-- 
-      <div class="col-sm-2 col-sm-offset-10 col-md-2 col-md-offset-10 sw-sidebar"> SIDEBAR
-         <div class="row sw-top-sidebar">
-          <div class="col-xs-6 col-sm-12 col-md-12">
-              <p class="sw-top-lable">Total spent</p>
-              <p class="sw-top-value">{{investedValue | currency:'USD':true:'.2'}}</p>
-          </div>
-          <div class="col-xs-6 col-sm-12 col-md-12">
-              <p class="sw-top-lable">Received gross return</p>
-              <p class="sw-top-value">{{returnedValue | currency:'USD':true:'.2'}}</p>
-
-          </div>
-          <div class="col-xs-6 col-sm-12 col-md-12">
-              <p class="sw-top-lable">Expected gross return</p>
-              <p class="sw-top-value">{{returnValue | currency:'USD':true:'.2'}}</p>
-
-          </div>
-          <div class="col-xs-6 col-sm-12 col-md-12">
-              <p class="sw-top-lable">Expected average return</p>
-              <p class="sw-top-value">{{averageReturn | percent}}</p>
-
-          </div>
-          <div class="col-xs-6 col-sm-12 col-md-12 sw-top-bottom">
-              <p class="sw-top-lable">Average portfolio term in days</p>
-              <p class="sw-top-value">{{averagePaybackPeriod}}</p>
-
-          </div>
-         </div>
-
-          <div class="sw-stripes">
-          </div>
-
-        <div class="sw-scrollbar">
-          <div class="sw-scrollbar">
-            <a href="javascript:void(0)"><div class="sw-sidebar-notifications"> Notification 1
-              <p class="sw-notfication-message">IMPORTANT! This alpha release works in a Ethereum testnet and the transactions are not valid in the Ethereum public blockchain. Please, do not transfer funds from your wallets.</p>max 48 caracteres
-              <p class="sw-notfication-time">a few seconds ago</p>
-            </div></a>
-            <a href="javascript:void(0)"><div class="sw-sidebar-notifications"> Notification 1
-              <p class="sw-notfication-message">Welcome to Swapy! Notifications regarding your operations in our platform will appear right here.</p>max 48 caracteres
-              <p class="sw-notfication-time">a few seconds ago</p>
-            </div></a>
-          </div>
-        </div>
-
-            <div class="sw-sidebar-bottom">
-              <i class="fa fa-lg fa-angle-up" aria-hidden="true"></i>
-            </div>
-
-      </div> END SIDEBAR
-       -->
-   </div>
+  </div>
 </div>
+<app-footer></app-footer>
