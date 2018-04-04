@@ -20,7 +20,6 @@ import { ToastOptions } from 'ng2-toastr';
 import { ToastrService } from './common/services/toastr.service';
 import { CustomToastOption } from './common/CustomToastOption';
 import { ErrorLogService } from './common/services/error-log.service';
-import { FooterComponent } from './common/footer/footer.component';
 
 
 @NgModule({
