@@ -31,6 +31,7 @@ export class InvestorComponent implements OnInit {
   public tokenBalance;
   public ETHprice;
   public USDbalance;
+  public isElectron;
 
   constructor(
     private walletService: WalletService,
@@ -40,10 +41,16 @@ export class InvestorComponent implements OnInit {
     private marketplaceService: MarketplaceService,
     private router: Router,
     private offerService: OfferService,
-    private dashboardService: DashboardService) {}
+    private dashboardService: DashboardService) {
+      this.isElectron = (window as any).isElectron;
+  }
 
   ngOnInit() {
     this.refreshBalance();
+  }
+
+  public triggerMetamaskPopup() {
+    (window as any).chrome.ipcRenderer.send('open-metamask-popup');
   }
 
   public async refresh() {

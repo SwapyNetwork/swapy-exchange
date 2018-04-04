@@ -33,7 +33,9 @@
           <a class="sw-button sw-btn-ghost1" (click)="refresh()" role="button">Refresh</a>
         </div>
         <div class="col-xs-1 col-sm-1 col-md-1">
-          <img src="assets/img/icon-32.png" alt="MetaMask logo" class="icon" />          
+          <div *ngIf="isElectron" (click)="triggerMetamaskPopup()" role="button">
+            <img src="assets/img/icon-32.png" alt="MetaMask logo" class="icon" />                      
+          </div>
         </div>
       </div>
 
