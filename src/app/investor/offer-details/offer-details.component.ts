@@ -28,7 +28,7 @@ export class OfferDetailsComponent implements OnInit {
   public PENDING_ETHEREUM_CONFIRMATION = PENDING_ETHEREUM_CONFIRMATION;
 
   public offer;
-
+  public error;
   public assets: boolean[] = [];
 
   public totalAssetsValue = 0;
@@ -43,6 +43,7 @@ export class OfferDetailsComponent implements OnInit {
     private loadingService: LoadingService) { }
 
   ngOnInit() {
+    this.error = false;
     this.loadingService.show();
     const offers = this.offerService.getCachedOffers();
     if (!offers) {
@@ -93,6 +94,8 @@ export class OfferDetailsComponent implements OnInit {
       this.offer.status[index] = status == AVAILABLE ? -2 : AVAILABLE;
       this.setTotalAssetsValue();
     }
+
+    this.validateInput();
   }
 
   getSelectedAssets() {
@@ -106,12 +109,12 @@ export class OfferDetailsComponent implements OnInit {
   }
 
   validateInput() {
-    this.errorMessages = [];
+    this.error = false;
     if (this.getSelectedAssets().length === 0) {
-      this.errorMessages.push('Please, select at least one asset.');
+      this.error = true;
     }
 
-    return this.errorMessages.length === 0;
+    return !this.error;
 
   }
 

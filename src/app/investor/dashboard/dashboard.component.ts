@@ -40,6 +40,7 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.loadingService.show();
     this.walletAddress = this.walletService.getWallet().address.toLowerCase();
     this.dashboardService.setSelectedAssets([]);
     const ethBalance = await this.walletService.getEthBalance();
@@ -53,6 +54,7 @@ export class DashboardComponent implements OnInit {
         this.investorComponent.refreshBalance();
       }
     }
+    this.loadingService.hide();
   }
 
   public async updateInvestments() {

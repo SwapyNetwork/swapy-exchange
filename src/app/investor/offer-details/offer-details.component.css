@@ -112,5 +112,10 @@ hr {
 .sw-number-details {
 	text-align: right;
 	font-weight: 500;
-	font-size: 22px;
+    font-size: 22px;
+}
+.sw-error {
+    color: red;
+    font-weight: 400;
+	font-size: 18px;
 }

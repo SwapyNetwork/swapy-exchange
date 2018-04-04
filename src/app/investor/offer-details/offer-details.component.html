@@ -84,11 +84,15 @@
               </div>
 
               <div class="row">
+                <div></div>
+              </div>
+
+              <div class="row">
                 <div class="col-sm-6 col-md-6 col-sm-offset-1 col-md-offset-1">
-                  <p class="sw-assets-total">TOTAL {{totalAssetsValue | currency}}</p> <!-- Total = n. of Assets selected above -->
+                  <p class="sw-assets-total">TOTAL {{totalAssetsValue | currency}}</p>
                 </div>
-                <div class=" col-sm-4 col-md-4">
-                  <!-- <a class="sw-button sw-btn-ghost1" href="javascript:void(0)">Invest</a> -->
+                <div class="col-sm-4 col-md-4">
+                  <div class="sw-error center" *ngIf="error">Please, select at least one asset.</div>
                   <button type="submit" class="sw-button sw-btn-ghost1" >Invest</button>
                 </div>
               </div>
