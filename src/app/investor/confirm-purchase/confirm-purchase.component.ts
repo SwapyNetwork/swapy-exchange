@@ -32,7 +32,7 @@ export class ConfirmPurchaseComponent implements OnInit {
       this.toastrService.getInstance().success('Purchase requested');
       this.successfulInvestmentService.setMessage('Your investment was mined by the Ethereum blockchain.');
     } catch (error) {
-      this.toastrService.getInstance().error(error.message);
+      this.toastrService.error(error.message);
       this.successfulInvestmentService.setErrorMessage(error.message);
     }
 

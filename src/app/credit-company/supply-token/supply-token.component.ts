@@ -48,7 +48,7 @@ export class SupplyTokenComponent implements OnInit {
       this.supplyTokenFuel();
       this.pendingOfferService.setMessage('You transfered the token, please supply it now.');
     } catch (error) {
-      this.toastrService.getInstance().error(error.message);
+      this.toastrService.error(error.message);
       this.pendingOfferService.setErrorMessage(error.message);
     }
   }
@@ -59,7 +59,7 @@ export class SupplyTokenComponent implements OnInit {
       this.toastrService.getInstance().success('Token succesfully supplied.');
       this.pendingOfferService.setMessage('Token succesfully supplied.');
     } catch (error) {
-      this.toastrService.getInstance().error(error.message);
+      this.toastrService.error(error.message);
       this.pendingOfferService.setErrorMessage(error.message);
     }
   }

@@ -105,7 +105,7 @@ export class SellAssetComponent implements OnInit {
         asset.status = status[index];
         this.storageService.remove(asset.contractAddress);
       });
-      this.toastrService.getInstance().error(error.message);
+      this.toastrService.error(error.message);
     }
   }
 

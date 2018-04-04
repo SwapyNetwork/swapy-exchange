@@ -64,7 +64,7 @@ export class ConfirmOfferComponent implements OnInit {
       });
       console.log(error);
       this.pendingOfferService.setErrorMessage(error.message);
-      this.toastrService.getInstance().error(this.pendingOfferService.getMessage());
+      this.toastrService.error(this.pendingOfferService.getMessage());
     }
     this.creditCompanyComponent.refreshStatusBar();
 

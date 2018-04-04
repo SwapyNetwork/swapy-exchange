@@ -136,10 +136,10 @@ export class InvestmentComponent implements OnInit {
   private onError(error, asset, status) {
     this.storageService.remove(asset.contractAddress);
     if (sha1(error.message) === '699e7c6d81ba58075ee84cf2a640c18a409efcba') { // 50 blocks later and transaction has not being mined yet.
-      this.toastrService.getInstance().error('Transaction is still being mined. Check it out later to see if the transaction was mined');
+      this.toastrService.error('Transaction is still being mined. Check it out later to see if the transaction was mined');
     } else {
       asset.status = status;
-      this.toastrService.getInstance().error(error.message);
+      this.toastrService.error(error.message);
     }
   }
 
@@ -229,10 +229,10 @@ export class InvestmentComponent implements OnInit {
     } catch (error) {
       this.storageService.remove(asset.contractAddress);
       if (error.message === '699e7c6d81ba58075ee84cf2a640c18a409efcba') { // 50 blocks later and transaction has not being mined yet.
-        this.toastrService.getInstance().error('Transaction is still being mined. Check it out later to see if the transaction was mined');
+        this.toastrService.error('Transaction is still being mined. Check it out later to see if the transaction was mined');
       } else {
         asset.status = status;
-        this.toastrService.getInstance().error('Not eligible to receive SWAPY Tokens. Investment return is not delayed yet.');
+        this.toastrService.error('Not eligible to receive SWAPY Tokens. Investment return is not delayed yet.');
       }
     }
   }

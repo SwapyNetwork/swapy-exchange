@@ -8,6 +8,8 @@ import { WalletService } from '../../common/services/wallet.service';
 import { ToastrService } from '../../common/services/toastr.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 
+import * as sha1 from 'sha1';
+
 @Component({
   selector: 'app-invest',
   templateUrl: './invest.component.html',
@@ -57,8 +59,9 @@ export class InvestComponent implements OnInit {
       this.successfulInvestmentService.setMessage('Your investment was mined by the Ethereum blockchain.');
       this.successfulInvestmentService.setHeaderMessage('Your transaction is completed');
     } catch (error) {
+      console.log(sha1(error.message));
       this.successfulInvestmentService.setErrorMessage(error.message);
-      this.toastrService.getInstance().error(this.successfulInvestmentService.getMessage());
+      this.toastrService.error(this.successfulInvestmentService.getMessage());
     }
   }
 

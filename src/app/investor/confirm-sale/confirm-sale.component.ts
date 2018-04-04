@@ -45,7 +45,7 @@ export class ConfirmSaleComponent implements OnInit {
       this.storageService.remove(this.asset.contractAddress);
       this.asset.status = status;
       this.successfulInvestmentService.setErrorMessage(error.message);
-      this.toastrService.getInstance().error(error.message);
+      this.toastrService.error(error.message);
     }
   }
 
