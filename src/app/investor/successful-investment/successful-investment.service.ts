@@ -67,6 +67,10 @@ export class SuccessfulInvestmentService {
         default:
           this.message = message;
       }
+
+      if (message.toLowerCase().indexOf('user denied transaction signature') !== - 1) {
+        this.message = 'User denied transaction signature';
+      }
     }
     this.error = true;
   }
