@@ -15,10 +15,15 @@ export class SuccessfulInvestmentComponent implements OnInit {
   private offerIndex: number;
   public walletAddress: string;
 
-  constructor(public successfulInvestmentService: SuccessfulInvestmentService, private investService: InvestService,
+  public investment;
+
+  constructor(
+    public successfulInvestmentService: SuccessfulInvestmentService,
+    private investService: InvestService,
     private walletService: WalletService) { }
 
   ngOnInit() {
+    this.investment = this.successfulInvestmentService.getCachedInvestment();
     this.offerIndex = this.investService.getCachedOfferIndex();
     this.walletAddress = this.walletService.getWallet().address;
     this.successfulInvestmentService.cleanMessages();

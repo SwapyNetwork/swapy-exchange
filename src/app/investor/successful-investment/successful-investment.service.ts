@@ -8,7 +8,17 @@ export class SuccessfulInvestmentService {
   private message: string;
   private headerMessage: string;
 
+  public investment;
+
   constructor() { }
+
+  public cacheInvestment(investment) {
+    this.investment = investment;
+  }
+
+  public getCachedInvestment() {
+    return this.investment;
+  }
 
   public setMessage(message) {
     this.error = false;

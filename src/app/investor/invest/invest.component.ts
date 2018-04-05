@@ -54,12 +54,12 @@ export class InvestComponent implements OnInit {
     try {
       const assetsAddress = this.investment.assets.map(asset => asset.contractAddress);
       const assetsValues = this.investment.assets.map(asset => asset.value);
+      this.successfulInvestmentService.cacheInvestment(this.investment);
       await this.swapyProtocol.invest(assetsAddress, assetsValues);
       this.toastrService.getInstance().success('Your investment was mined by the Ethereum blockchain.');
       this.successfulInvestmentService.setMessage('Your investment was mined by the Ethereum blockchain.');
       this.successfulInvestmentService.setHeaderMessage('Your transaction is completed');
     } catch (error) {
-      console.log(sha1(error.message));
       this.successfulInvestmentService.setErrorMessage(error.message);
       this.toastrService.error(this.successfulInvestmentService.getMessage());
     }
