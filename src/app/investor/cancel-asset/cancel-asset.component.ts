@@ -103,8 +103,8 @@ export class CancelAssetComponent implements OnInit {
     if (sha1(error.message) === '699e7c6d81ba58075ee84cf2a640c18a409efcba') { // 50 blocks later and transaction has not being mined yet.
       this.toastrService.error('Transaction is still being mined. Check it out later to see if the transaction was mined');
     } else {
-      assets.forEach(asset => {
-        asset.status = status;
+      assets.forEach((asset, index) => {
+        asset.status = status[index];
       });
       this.toastrService.error(error.message);
     }
@@ -139,10 +139,10 @@ export class CancelAssetComponent implements OnInit {
       this.toastrService.getInstance().success('Investment(s) cancelled');
       this.router.navigate(['/investor']);
     } catch (error) {
-      this.assets.forEach((asset, index) => {
-        asset.status = status[index];
-        this.storageService.remove(asset.contractAddress);
-      });
+      // this.assets.forEach((asset, index) => {
+      //   asset.status = status[index];
+      //   this.storageService.remove(asset.contractAddress);
+      // });
       this.onError(error, this.assets, status);
     }
   }
@@ -160,10 +160,10 @@ export class CancelAssetComponent implements OnInit {
       this.toastrService.getInstance().success('Sell order(s) cancelled');
       this.router.navigate(['/investor']);
     } catch (error) {
-      this.assets.forEach((asset, index) => {
-        asset.status = status[index];
-        this.storageService.remove(asset.contractAddress);
-      });
+      // this.assets.forEach((asset, index) => {
+      //   asset.status = status[index];
+      //   this.storageService.remove(asset.contractAddress);
+      // });
       this.onError(error, this.assets, status);
     }
   }
@@ -181,10 +181,10 @@ export class CancelAssetComponent implements OnInit {
       this.toastrService.getInstance().success('Asset(s) sale refused');
       this.router.navigate(['/investor']);
     } catch (error) {
-      this.assets.forEach((asset, index) => {
-        asset.status = status[index];
-        this.storageService.remove(asset.contractAddress);
-      });
+      // this.assets.forEach((asset, index) => {
+      //   asset.status = status[index];
+      //   this.storageService.remove(asset.contractAddress);
+      // });
       this.onError(error, this.assets, status);
     }
   }
@@ -202,10 +202,10 @@ export class CancelAssetComponent implements OnInit {
       this.toastrService.getInstance().success('Asset(s) sale refused');
       this.router.navigate(['/investor']);
     } catch (error) {
-      this.assets.forEach((asset, index) => {
-        asset.status = status[index];
-        this.storageService.remove(asset.contractAddress);
-      });
+      // this.assets.forEach((asset, index) => {
+      //   asset.status = status[index];
+      //   this.storageService.remove(asset.contractAddress);
+      // });
       this.onError(error, this.assets, status);
     }
   }
