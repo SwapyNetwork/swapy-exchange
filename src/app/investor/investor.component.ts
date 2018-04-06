@@ -103,7 +103,7 @@ export class InvestorComponent implements OnInit {
     const assetsInvested = [];
     const assetsReceived = [];
 
-    for (const forSaleEvent of forSaleEvents){
+    for (const forSaleEvent of forSaleEvents) {
       const withdrawal = await this.swapyProtocol.getAssetEvent(forSaleEvent.returnValues._asset, 'Withdrawal');
       const events = [forSaleEvent].concat(withdrawal);
       events.sort((a, b) => (a.blockNumber < b.blockNumber) ? -1 : (a.blockNumber > b.blockNumber ? 1 : 0));
@@ -122,7 +122,7 @@ export class InvestorComponent implements OnInit {
 
         if (indexFS === 1) {
           const value = (await this.swapyProtocol.getAssetConstants(events[indexFS].returnValues._asset, ['value'])).value;
-          if(assetsInvested.indexOf(events[indexFS].returnValues._asset) == -1) {
+          if (assetsInvested.indexOf(events[indexFS].returnValues._asset) == -1) {
             this.investedValue += Number(value) / 100;
             assetsInvested.push(events[indexFS].returnValues._asset);
           }
@@ -145,7 +145,7 @@ export class InvestorComponent implements OnInit {
               txInvested.push(sliced[index].transactionHash);
               this.investedValue += sliced[index].returnValues._value / 100;
             }
-            
+
             sliced = sliced.slice(indexW + 1);
           }
         }

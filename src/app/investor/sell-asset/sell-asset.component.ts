@@ -99,19 +99,20 @@ export class SellAssetComponent implements OnInit {
   }
 
   public async sellAsset() {
-    const status = []
+    const status = [];
     this.assets.forEach(asset => {
       status.push(asset.status);
       this.storageService.setItem(asset.contractAddress, asset.status);
       asset.status = PENDING_ETHEREUM_CONFIRMATION;
     });
-    const prices = this.sellPrice.map(price => parseFloat(price.replace(/[^0-9.]/g, '')) * 100);
+    const prices = this.sellPrice.map(price => parseFloat(String(price).replace(/[^0-9.]/g, '')) * 100);
     const contractAddresses = this.assets.map(asset => asset.contractAddress);
     try {
       await this.swapyProtocol.sellAssets(contractAddresses, prices);
       this.toastrService.getInstance().success('Asset inserted into the Marketplace');
       // this.successfulInvestmentService.setMessage('Your investment was mined by the Ethereum blockchain.');
       // this.storageService.getItem(this.asset.contractAddress);
+      this.router.navigate(['investor/']);
     } catch (error) {
       // this.storageService.remove(this.asset.contractAddress);
       // this.asset.status = status;
@@ -125,7 +126,6 @@ export class SellAssetComponent implements OnInit {
       // });
       // this.toastrService.error(error.message);
     }
-    this.router.navigate(['investor/']);
   }
 
 }
