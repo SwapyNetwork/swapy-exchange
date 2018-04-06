@@ -99,7 +99,6 @@ export class SellAssetComponent implements OnInit {
   }
 
   public async sellAsset() {
-    // this.router.navigate(['investor/invest/success']);
     const status = []
     this.assets.forEach(asset => {
       status.push(asset.status);
@@ -126,6 +125,7 @@ export class SellAssetComponent implements OnInit {
       // });
       // this.toastrService.error(error.message);
     }
+    this.router.navigate(['investor/']);
   }
 
 }

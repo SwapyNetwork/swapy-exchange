@@ -46,6 +46,8 @@ export class DashboardService {
     newInvestment.totalAmount = assetValues[VALUE] * newInvestment.assets.length / 100;
     newInvestment.grossReturn = assetValues[GROSSRETURN] / 10000;
     newInvestment.creditCompanyAddress = assetValues[OWNER];
+    newInvestment.investedAt = newInvestment.assets[0].investedAt;
+
   }
 
   private async buildNewInvestment(investment, assetValues) {

@@ -64,6 +64,7 @@ export class InvestorComponent implements OnInit {
       } else if (url[url.length - 1] === 'offers') {
         await this.offerService.getOffersFromBlockchain();
       }
+      await this.refreshBalance();
     } else {
 
     }
