@@ -20,6 +20,7 @@ import { StartInvestingComponent } from './start-investing/start-investing.compo
 import { CancelAssetComponent } from './cancel-asset/cancel-asset.component';
 import { AcceptSaleComponent } from './accept-sale/accept-sale.component';
 import { RequireTokenComponent } from './require-token/require-token.component';
+import { MessageComponent } from './message/message.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,7 @@ const routes: Routes = [
       { path: 'cancel-asset', component: CancelAssetComponent },
       { path: 'accept-sale', component: AcceptSaleComponent },
       { path: 'require-token', component: RequireTokenComponent },
+      { path: 'message', component: MessageComponent },
     ]
   }
 ];

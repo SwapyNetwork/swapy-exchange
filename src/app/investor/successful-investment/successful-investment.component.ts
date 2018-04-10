@@ -10,8 +10,6 @@ import { WalletService } from '../../common/services/wallet.service';
 })
 export class SuccessfulInvestmentComponent implements OnInit {
 
-  public successfulMessage: string;
-  public errorsMessages: string;
   private offerIndex: number;
   public walletAddress: string;
 

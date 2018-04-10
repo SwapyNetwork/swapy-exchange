@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MarketplaceService } from '../marketplace/marketplace.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 import { ToastrService } from '../../common/services/toastr.service';
-import { SuccessfulInvestmentService } from './../successful-investment/successful-investment.service';
+import { MessageService } from '../message/message.service';
 
 @Component({
   selector: 'app-confirm-purchase',
@@ -17,7 +17,7 @@ export class ConfirmPurchaseComponent implements OnInit {
     private marketplaceService: MarketplaceService,
     private swapyProtocol: SwapyProtocol,
     private toastrService: ToastrService,
-    private successfulInvestmentService: SuccessfulInvestmentService,
+    private messageService: MessageService,
     private router: Router
   ) { }
 
@@ -26,14 +26,16 @@ export class ConfirmPurchaseComponent implements OnInit {
   }
 
   public async confirmPurchase() {
-    // this.router.navigate(['investor/invest/success']);
+    this.messageService.cacheInvestment(this.asset);
+    this.router.navigate(['investor/message']);
     try {
       await this.swapyProtocol.buyAsset(this.asset.address, this.asset.value);
       this.toastrService.getInstance().success('Purchase requested');
-      this.successfulInvestmentService.setMessage('Your investment was mined by the Ethereum blockchain.');
+      this.messageService.setMessage('Purchase requested');
+      this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
       this.toastrService.error(error.message);
-      this.successfulInvestmentService.setErrorMessage(error.message);
+      this.messageService.setErrorMessage(error.message);
     }
 
   }

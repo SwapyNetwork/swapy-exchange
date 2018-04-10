@@ -39,6 +39,7 @@ import { CancelAssetComponent } from './cancel-asset/cancel-asset.component';
 import { AcceptSaleComponent } from './accept-sale/accept-sale.component';
 import { RequireTokenComponent } from './require-token/require-token.component';
 import { MessageComponent } from './message/message.component';
+import { MessageService } from './message/message.service';
 
 @NgModule({
   imports: [
@@ -56,7 +57,7 @@ import { MessageComponent } from './message/message.component';
     ConfirmPurchaseComponent, SellAssetComponent, ConfirmSaleComponent, AddFundsComponent, AddFundsChildComponent,
     StartInvestingComponent, CancelAssetComponent, AcceptSaleComponent, RequireTokenComponent, FooterComponent, MessageComponent],
   providers: [LogoutService, OfferService, InvestService, SuccessfulInvestmentService, DashboardService,
-    MarketplaceService, SellAssetService],
+    MarketplaceService, SellAssetService, MessageService],
   bootstrap: [InvestorComponent]
 })
 export class InvestorModule { }
