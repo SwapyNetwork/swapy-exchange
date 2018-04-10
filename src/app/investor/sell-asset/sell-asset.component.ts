@@ -9,6 +9,7 @@ import { InvestorComponent } from '../investor.component';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT,
   RETURNED, DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
+import { MessageService } from '../message/message.service';
 
 import * as sha1 from 'sha1';
 
@@ -37,6 +38,7 @@ export class SellAssetComponent implements OnInit {
     public investorComponent: InvestorComponent,
     private toastrService: ToastrService,
     private swapyProtocol: SwapyProtocol,
+    private messageService: MessageService,
     private storageService: StorageService,
     private dashboardService: DashboardService
   ) { }
@@ -44,15 +46,6 @@ export class SellAssetComponent implements OnInit {
   ngOnInit() {
     this.assets = this.dashboardService.getSelectedAssets();
     this.setSellPrice();
-  }
-
-  public sellAssets() {
-    this.sellPrice = this.sellPrice.map(price => parseFloat(price.replace(/[^0-9.]/g, '')));
-    /*
-    this.asset.sellValue = parseFloat(this.value.replace(/[^0-9.]/g, ''));
-    this.sellAssetService.cacheAsset(this.asset);
-    this.router.navigate(['investor/sell/confirm-sale'])
-    */
   }
 
   public setSellPrice() {
@@ -88,17 +81,20 @@ export class SellAssetComponent implements OnInit {
     assets.forEach(asset => {
       this.storageService.remove(asset.contractAddress);
     });
-    if (sha1(error.message) === '699e7c6d81ba58075ee84cf2a640c18a409efcba') { // 50 blocks later and transaction has not being mined yet.
-      this.toastrService.error('Transaction is still being mined. Check it out later to see if the transaction was mined');
-    } else {
-      assets.forEach((asset, index) => {
-        asset.status = status[index];
-      });
-      this.toastrService.error(error.message);
-    }
+    this.toastrService.error(error.message);
+    this.messageService.setErrorMessage(error.message);
+    // if (sha1(error.message) === '699e7c6d81ba58075ee84cf2a640c18a409efcba') { // 50 blocks later and transaction has not being mined yet.
+    //   this.toastrService.error('Transaction is still being mined. Check it out later to see if the transaction was mined');
+    // } else {
+    //   assets.forEach((asset, index) => {
+    //     asset.status = status[index];
+    //   });
+    //   this.toastrService.error(error.message);
+    // }
   }
 
   public async sellAsset() {
+    this.router.navigate(['investor/message']);
     const status = [];
     this.assets.forEach(asset => {
       status.push(asset.status);
@@ -110,21 +106,11 @@ export class SellAssetComponent implements OnInit {
     try {
       await this.swapyProtocol.sellAssets(contractAddresses, prices);
       this.toastrService.getInstance().success('Asset inserted into the Marketplace');
-      // this.successfulInvestmentService.setMessage('Your investment was mined by the Ethereum blockchain.');
-      // this.storageService.getItem(this.asset.contractAddress);
-      this.router.navigate(['investor/']);
+      this.messageService.setMessage('Asset inserted into the Marketplace');
+      this.messageService.setHeaderMessage('Asset inserted into the Marketplace');
     } catch (error) {
-      // this.storageService.remove(this.asset.contractAddress);
-      // this.asset.status = status;
-      // this.successfulInvestmentService.setErrorMessage(error.message);
 
       this.onError(error, this.assets, status);
-   
-      // this.assets.forEach((asset, index) => {
-      //   asset.status = status[index];
-      //   this.storageService.remove(asset.contractAddress);
-      // });
-      // this.toastrService.error(error.message);
     }
   }
 
