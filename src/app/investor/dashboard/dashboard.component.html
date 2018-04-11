@@ -46,7 +46,7 @@
       </div>      
     </div>
 
-    <div *ngIf="this.dashboardService.getAssets().length != 0" class="row"> <!-- //////////// MAIN Content //////////// -->
+    <div *ngIf="this.dashboardService.getAssets().length != 0" class="row">
       <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 sw-bottom-border center">
         <div class="col-xs-1 col-sm-1 col-md-1">Amount invested</div>
         <div class="col-xs-1 col-sm-1 col-md-1">Expected gross return</div>
@@ -62,7 +62,25 @@
 
         <app-dashboard-investment [assets]="this.dashboardService.getAssets()"></app-dashboard-investment>
 
-    </div><!-- END MAIN Content  -->
+    </div>
+  
+    <div *ngIf="this.dashboardService.getAssets().length == 0">      
+      <div class="row">
+        <div class="col-xs-6 col-xs-offset-3 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
+          <p class="sw-welcome-title sw-blue1 center">You don't have investments!</p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-xs-2 col-xs-offset-4 col-sm-2 col-sm-offset-4 col-md-2 col-md-offset-4">
+          <img src="assets/img/invest.svg" alt="Invest image">
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2">
+          <p class="sw-start-investing-description">We have plenty of offers waiting for investment</p>
+          <p class="sw-button sw-btn-ghost1" role="button" [routerLink]="['/investor/offers']">Start investing now</p>
+        </div>    
+      </div>
+    </div>
 
   </div>
 <!-- ///////////////////////////////////////////////////////////////////////////////// -->
