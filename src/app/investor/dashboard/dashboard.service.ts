@@ -12,7 +12,7 @@ import { OWNER, VALUE, PAYBACKDAYS, GROSSRETURN, STATUS,
 @Injectable()
 export class DashboardService {
   public investments;
-  public assets;
+  public assets = [];
   public selectedAssets;
   public delayed;
 

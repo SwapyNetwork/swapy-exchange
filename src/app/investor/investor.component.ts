@@ -94,6 +94,9 @@ export class InvestorComponent implements OnInit {
     this.investedValue = 0;
     this.returnedValue = 0;
     this.returnValue = 0;
+    this.nextReturnDate = null;
+    this.nextReturnValue = null;
+
     const txInvested = [];
     const ForSale = await this.swapyProtocol.get('ForSale');
     let forSaleEvents = await this.swapyProtocol.get('ForSale');

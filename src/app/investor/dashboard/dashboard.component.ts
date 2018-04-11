@@ -48,11 +48,7 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['/investor/add-funds']);
     } else {
       await this.updateInvestments();
-      if (this.assets.length === 0) {
-        this.router.navigate(['/investor/start-investing']);
-      } else {
-        this.investorComponent.refreshBalance();
-      }
+      this.investorComponent.refreshBalance();
     }
     this.loadingService.hide();
   }
