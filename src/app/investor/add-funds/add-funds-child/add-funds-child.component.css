@@ -40,8 +40,9 @@ img {
     font-weight: 500;        
 }
 .sw-wallet-address {
-    font-size: 12px;
+    font-size: 22px;
     font-weight: 500;    
+    word-wrap: break-word;
 }
 .sw-side-borders {
     border-right: 1px solid;
