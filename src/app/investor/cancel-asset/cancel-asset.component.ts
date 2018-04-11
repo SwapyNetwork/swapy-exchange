@@ -142,7 +142,7 @@ export class CancelAssetComponent implements OnInit {
       await this.swapyProtocol.cancelInvestment(contractAddresses);
       this.toastrService.getInstance().success('Investment(s) cancelled');
       this.messageService.setMessage('Investment(s) cancelled');
-      this.messageService.setHeaderMessage('Investment(s) cancelled');
+      this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
       // this.assets.forEach((asset, index) => {
       //   asset.status = status[index];
@@ -164,7 +164,7 @@ export class CancelAssetComponent implements OnInit {
       await this.swapyProtocol.cancelSellOrder(contractAddresses);
       this.toastrService.getInstance().success('Sell order(s) cancelled');
       this.messageService.setMessage('Sell order(s) cancelled');
-      this.messageService.setHeaderMessage('Sell order(s) cancelled');
+      this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
       // this.assets.forEach((asset, index) => {
       //   asset.status = status[index];
@@ -186,7 +186,7 @@ export class CancelAssetComponent implements OnInit {
       await this.swapyProtocol.refuseSale(contractAddresses);
       this.toastrService.getInstance().success('Asset(s) sale refused');
       this.messageService.setMessage('Asset(s) sale refused');
-      this.messageService.setHeaderMessage('Asset(s) sale refused');
+      this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
       // this.assets.forEach((asset, index) => {
       //   asset.status = status[index];
@@ -208,7 +208,7 @@ export class CancelAssetComponent implements OnInit {
       await this.swapyProtocol.cancelSale(contractAddresses);
       this.toastrService.getInstance().success('Asset(s) sale refused');
       this.messageService.setMessage('Asset(s) sale refused');
-      this.messageService.setHeaderMessage('Asset(s) sale refused');
+      this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
       // this.assets.forEach((asset, index) => {
       //   asset.status = status[index];

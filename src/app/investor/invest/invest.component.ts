@@ -58,7 +58,7 @@ export class InvestComponent implements OnInit {
       await this.swapyProtocol.invest(assetsAddress, assetsValues);
       this.toastrService.getInstance().success('Your investment was mined by the Ethereum blockchain.');
       this.successfulInvestmentService.setMessage('Your investment was mined by the Ethereum blockchain.');
-      this.successfulInvestmentService.setHeaderMessage('Your transaction is completed');
+      this.successfulInvestmentService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
       this.successfulInvestmentService.setErrorMessage(error.message);
       this.toastrService.error(this.successfulInvestmentService.getMessage());

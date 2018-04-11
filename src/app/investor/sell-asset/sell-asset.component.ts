@@ -107,7 +107,7 @@ export class SellAssetComponent implements OnInit {
       await this.swapyProtocol.sellAssets(contractAddresses, prices);
       this.toastrService.getInstance().success('Asset inserted into the Marketplace');
       this.messageService.setMessage('Asset inserted into the Marketplace');
-      this.messageService.setHeaderMessage('Asset inserted into the Marketplace');
+      this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
 
       this.onError(error, this.assets, status);
