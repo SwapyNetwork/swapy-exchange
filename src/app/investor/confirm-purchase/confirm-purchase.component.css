@@ -39,7 +39,7 @@
     width: 90%;
 }
 .sw-btn-buy-asset {
-    font-weight: 500;
+    font-weight: 400;
     background-color: #00aeef;
     border: 1px solid #00aeef;
     color: #fff;
@@ -54,7 +54,7 @@
     text-decoration: none;
 }
 .sw-btn-return {
-    font-weight: 500;
+    font-weight: 400;
     background-color: #fff;
     border: 1px solid #00baef;
     color: #00baef;
@@ -97,6 +97,9 @@ hr {
 }
 .sw-company-assets-details {
 	font-size: 18px;
+}
+.sw-wallet-address {
+    word-wrap: break-word;    
 }
 .sw-number-details {
 	text-align: right;
