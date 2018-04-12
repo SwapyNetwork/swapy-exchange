@@ -12,7 +12,7 @@
       <div class="col-xs-2 col-xs-offset-3 col-sm-2 col-sm-offset-3 col-md-2 col-md-offset-3">
         <p class="sw-title-outside-box">Manage</p>
       </div>
-      <div class="col-xs-2 col-sm-2 col-md-2">
+      <div class="col-xs-4 col-sm-4 col-md-4">
         <p class="sw-description-outside-box">Confirm asset cancelation</p>
       </div>
     </div>
@@ -30,12 +30,12 @@
 
     <div class="row">
       <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 sw-bottom-border center">
-        <div class="col-xs-1 col-sm-1 col-md-1">Amount invested</div>
-        <div class="col-xs-1 col-sm-1 col-md-1">Expected gross return</div>
+        <div class="col-xs-2 col-sm-2 col-md-2">Amount invested</div>
+        <div class="col-xs-2 col-sm-2 col-md-2">Expected gross return</div>
         <div class="col-xs-1 col-sm-1 col-md-1">Gross return</div>
         <div class="col-xs-1 col-sm-1 col-md-1">Terms (Months)</div>
         <div class="col-xs-1 col-sm-1 col-md-1">Collateral (SWAPY)</div>
-        <div class="col-xs-1 col-sm-1 col-md-1">Return on</div>
+        <div class="col-xs-2 col-sm-2 col-md-2">Return on</div>
         <!-- <div class="col-xs-2 col-sm-2 col-md-2">Credit Company (Issuer)</div> -->
         <div class="col-xs-1 col-sm-1 col-md-1">Status</div>
       </div>
@@ -44,12 +44,12 @@
     <div *ngFor="let asset of assets;">
   	  <div class="row sw-assets">
   	    <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
-  	      <div class="col-xs-1 col-sm-1 col-md-1">{{asset.currentValue | currency:'USD':true:'.2' }}</div>
-  	      <div class="col-xs-1 col-sm-1 col-md-1 sw-blue1">{{calculateReturnAmount(asset) | currency:'USD':true:'.2' }}</div>
+  	      <div class="col-xs-2 col-sm-2 col-md-2">{{asset.currentValue | currency:'USD':true:'.2' }}</div>
+  	      <div class="col-xs-2 col-sm-2 col-md-2 sw-blue1">{{calculateReturnAmount(asset) | currency:'USD':true:'.2' }}</div>
   	      <div class="col-xs-1 col-sm-1 col-md-1 sw-blue1">{{asset.grossReturn | percent}}</div>
   	      <div class="col-xs-1 col-sm-1 col-md-1" [ngClass]="{'sw-blue1': calculateAssetProgression(asset) != 0 }">{{calculateAssetProgression(asset)}}/{{asset.paybackMonths}}</div>
   	      <div class="col-xs-1 col-sm-1 col-md-1 sw-blue1">{{asset.token || 'No collateral'}}</div>
-  	      <div class="col-xs-1 col-sm-1 col-md-1">{{calculatePaybackDate(asset) | date: 'dd MMMM yyyy'}}</div>
+  	      <div class="col-xs-2 col-sm-2 col-md-2">{{calculatePaybackDate(asset) | date: 'dd MMMM yyyy'}}</div>
   	      <!-- <div class="col-xs-2 col-sm-2 col-md-2">asset.creditCompanyAddress</div> -->
   	      <div class="col-xs-1 col-sm-1 col-md-1" [ngClass]="{'sw-blue1': asset.status == INVESTED, 'sw-orange': asset.status == PENDING_OWNER_AGREEMENT || asset.status == PENDING_INVESTOR_AGREEMENT, 'sw-green': asset.status >= RETURNED}">{{statusToString(asset.status)}}</div>
   	    </div>
@@ -57,7 +57,7 @@
   	</div>
 	
   	<div class="row">
-  		<div class="col-sm-3 col-sm-offset-1 col-md-3 col-md-offset-1 sw-confirm-message">You are canceling the investment on <span class="sw-blue1">{{assets.length}} asset(s).</span>
+  		<div class="col-sm-4 col-sm-offset-1 col-md-4 col-md-offset-1 sw-confirm-message">You are canceling the investment on <span class="sw-blue1">{{assets.length}} asset(s).</span>
   			<p class="sw-blue1">Do you confirm that ?</p>
   		</div>
   	</div>
