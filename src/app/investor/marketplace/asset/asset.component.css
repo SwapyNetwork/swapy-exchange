@@ -1,3 +1,7 @@
+img {
+    height: 150%;
+    margin-left: -10px
+}
 .sw-box:hover {
     background-color: #FFF;
     border: 1px solid #adb4bc;
