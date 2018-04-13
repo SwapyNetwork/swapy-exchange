@@ -13,7 +13,7 @@
           <div *ngIf="asset.status >= RETURNED" class="sw-full-bar"> <!-- ////// Full green bar ////// -->
             <div class="progress-bar prog100"></div>
           </div>
-          <div *ngIf="asset.status >= INVESTED && asset.status < RETURNED" class="progress sw-blue-bar"> <!-- ////// Blue progress bar ////// -->
+          <div *ngIf="(asset.status >= INVESTED && asset.status < RETURNED) || asset.status == PENDING_ETHEREUM_CONFIRMATION" class="progress sw-blue-bar"> <!-- ////// Blue progress bar ////// -->
             <div class="progress-bar prog{{porcentageProgression(asset)}}"></div>
           </div>
           <div *ngIf="asset.status == PENDING_OWNER_AGREEMENT" class="progress"> <!-- ////// 0% progress bar ////// -->

@@ -62,7 +62,6 @@ export class ConfirmOfferComponent implements OnInit {
         this.errorLogService.setAfterETHbalance(currentBalance);
         this.errorLogService.setError(error);
       });
-      console.log(error);
       this.pendingOfferService.setErrorMessage(error.message);
       this.toastrService.error(this.pendingOfferService.getMessage());
     }

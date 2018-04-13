@@ -72,15 +72,23 @@ export class DashboardService {
     const timestamp = await this.getBlockTimestamp(investment.blockHash);
 
     let myAsset;
-    assets.forEach(async (asset, index) => {
+    for (let index = 0; index < assets.length; ++index) {
+      const asset = assets[index];
       if (asset[INVESTOR].toLowerCase() === this.walletService.getWallet().address.toLowerCase() ||
           asset[SELLDATA_BUYER].toLowerCase() === this.walletService.getWallet().address.toLowerCase()) {
-        const storedStatus = this.storageService.getItem(investment.returnValues._assets[index]);
-        let status;
-        if (storedStatus === null || storedStatus !== Number(asset[STATUS])) {
-          status = Number(asset[STATUS]);
-        } else {
-          status = PENDING_ETHEREUM_CONFIRMATION;
+
+        let status = Number(asset[STATUS]);
+        const assetAddress = investment.returnValues._assets[index];
+        const transactionHash = this.storageService.getItem(assetAddress);
+        let receipt = null;
+        if (transactionHash != null) {
+          receipt = await this.web3Service.getInstance().eth.getTransactionReceipt(transactionHash);
+          if (receipt != null) {
+            status = Number(asset[STATUS]);
+            this.storageService.remove(assetAddress);
+          } else {
+            status = PENDING_ETHEREUM_CONFIRMATION;
+          }
         }
         newInvestment.assets.push({
           contractAddress: investment.returnValues._assets[index],
@@ -101,12 +109,11 @@ export class DashboardService {
           investedAt: (new Date(asset[INVESTEDAT] * 1000)).toISOString(),
           type: investment.event,
           selected: 0
-
         });
 
         myAsset = asset;
       }
-    });
+    }
 
     if (myAsset) {
       this.setInvestmentDetails(newInvestment, myAsset);

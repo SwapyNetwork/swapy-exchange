@@ -61,7 +61,7 @@ export class MarketplaceService {
           value: assetValue / 100,
           investedAt: assetConstants.investedAt * 1000
         };
-        if (Number(assetConstants.status) === FOR_SALE && investor !== this.walletService.getWallet().address.toLowerCase()) {
+        if (Number(assetConstants.status) === FOR_SALE && investor.toLowerCase() !== this.walletService.getWallet().address.toLowerCase()) {
           this.assets.push(asset);
           this.assets = this.deleteDuplicatedAssets(this.assets);
         }

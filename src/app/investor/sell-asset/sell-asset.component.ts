@@ -77,30 +77,13 @@ export class SellAssetComponent implements OnInit {
     return Math.floor(porcentage / 5) * 5;
   }
 
-  private onError(error, assets, status) {
-    assets.forEach(asset => {
-      this.storageService.remove(asset.contractAddress);
-    });
+  private onError(error) {
     this.toastrService.error(error.message);
     this.messageService.setErrorMessage(error.message);
-    // if (sha1(error.message) === '699e7c6d81ba58075ee84cf2a640c18a409efcba') { // 50 blocks later and transaction has not being mined yet.
-    //   this.toastrService.error('Transaction is still being mined. Check it out later to see if the transaction was mined');
-    // } else {
-    //   assets.forEach((asset, index) => {
-    //     asset.status = status[index];
-    //   });
-    //   this.toastrService.error(error.message);
-    // }
   }
 
   public async sellAsset() {
     this.router.navigate(['investor/message']);
-    const status = [];
-    this.assets.forEach(asset => {
-      status.push(asset.status);
-      this.storageService.setItem(asset.contractAddress, asset.status);
-      asset.status = PENDING_ETHEREUM_CONFIRMATION;
-    });
     const prices = this.sellPrice.map(price => parseFloat(String(price).replace(/[^0-9.]/g, '')) * 100);
     const contractAddresses = this.assets.map(asset => asset.contractAddress);
     try {
@@ -109,8 +92,7 @@ export class SellAssetComponent implements OnInit {
       this.messageService.setMessage('Asset inserted into the Marketplace');
       this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
-
-      this.onError(error, this.assets, status);
+      this.onError(error);
     }
   }
 

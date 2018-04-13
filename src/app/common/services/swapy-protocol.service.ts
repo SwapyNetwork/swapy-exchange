@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Web3Service } from './web3.service';
 import { WalletService } from './wallet.service';
 import { ErrorLogService } from './error-log.service';
+import { StorageService } from './storage.service';
 import { BigNumber } from 'bignumber.js';
 
 const env = require('../../../../env.json');
@@ -25,8 +26,13 @@ export class SwapyProtocolService {
   private InvestmentAssetContract;
   private Token;
 
-  constructor(protected web3Service: Web3Service, protected walletService: WalletService,
-    public errorLogService: ErrorLogService, public http: HttpClient) {
+  constructor(
+    protected web3Service: Web3Service,
+    protected walletService: WalletService,
+    public errorLogService: ErrorLogService,
+    public http: HttpClient,
+    public storageService: StorageService
+  ) {
     this.web3 = this.web3Service.getInstance();
     BigNumber.config({ DECIMAL_PLACES: 18 });
 
@@ -49,6 +55,11 @@ export class SwapyProtocolService {
       }
       return origCall.apply(this, arguments);
     };
+  }
+  private storeTransactionHash(addresses: string[], hash: string) {
+    addresses.forEach(address => {
+      this.storageService.setItem(address, hash);
+    });
   }
 
   private handleOnTransactionHash(hash: string) {
@@ -180,6 +191,7 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -226,6 +238,7 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -241,6 +254,7 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -275,6 +289,7 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -290,6 +305,7 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -305,6 +321,7 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
       })
       .on('error', (error) => {
         this.handleOnError(error);
