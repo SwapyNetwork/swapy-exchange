@@ -5,6 +5,7 @@ import * as sha1 from 'sha1';
 export class SuccessfulInvestmentService {
 
   private error: boolean;
+  private loadingLogo;
   private message: string;
   private headerMessage: string;
 
@@ -22,7 +23,8 @@ export class SuccessfulInvestmentService {
 
   public setMessage(message) {
     this.error = false;
-    this.message = message
+    this.message = message;
+    // this.loadingLogo = false;
   }
 
   public setHeaderMessage(message) {
@@ -46,13 +48,25 @@ export class SuccessfulInvestmentService {
     return this.error;
   }
 
+  public setLoadingState(state) {
+    this.loadingLogo = true;
+  }
+
+  public getLoadingState() {
+    if (this.loadingLogo == true) {
+      console.log("Get => " + this.loadingLogo);
+    }
+    return this.loadingLogo;
+  }
+
   public cleanMessages() {
     this.error = undefined;
     this.message = undefined;
     this.headerMessage = undefined;
+    // this.loadingLogo = false;
   }
 
-  setErrorMessage(message) {
+  public setErrorMessage(message) {
     if (message !== null) {
       switch (sha1(message)) {
         case '81c8e9b1e558f0a68e4667560d89a47e7356b593': // Cant pay for gas

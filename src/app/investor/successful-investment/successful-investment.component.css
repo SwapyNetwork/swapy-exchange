@@ -1,5 +1,8 @@
-img {
+.swapy-logo {
     margin-left: -20px;
+}
+.loading {
+    padding: 30px 0 30px 0;
 }
 .sw-successful-address {
     font-weight: 500;

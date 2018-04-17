@@ -5,6 +5,7 @@ import * as sha1 from 'sha1';
 export class MessageService {
 
   private error: boolean;
+  private loading: boolean;
   private message: string;
   private headerMessage: string;
 
@@ -46,10 +47,24 @@ export class MessageService {
     return this.error;
   }
 
+  public setLoadingState() {
+   this.loading = true;
+   this.getLoadingState();
+   console.log(this.loading)
+  }
+
+  public getLoadingState() {
+    if (this.loading == true) {
+      console.log("Get => " + this.loading);
+    }
+    return this.loading;
+  }
+
   public cleanMessages() {
     this.error = undefined;
     this.message = undefined;
     this.headerMessage = undefined;
+    this.loading = true;
   }
 
   setErrorMessage(message) {

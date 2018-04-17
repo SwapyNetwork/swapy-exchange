@@ -29,7 +29,7 @@
 
               <div class="row">
                 <div class="col-sm-1 col-md-1">
-                  <img src="assets/img/swapy-logo4.png" alt="Swapy logo">
+                  <img src="assets/img/swapy-logo4.png" alt="Swapy logo" class="swapy-logo">
                 </div>
                 <div class="col-sm-11 col-md-11">
                   <p class="sw-box-title" [ngClass]="{'sw-box-title': true, 'sw-error-message': successfulInvestmentService.getError()}">{{successfulInvestmentService.getMessage() || 'Confirm your transaction through your Metamask wallet and wait it to be confirmed by the system.'}} </p>
@@ -38,7 +38,8 @@
 
               <div class="row">
                 <div class="col-sm-4 col-md-4 col-sm-offset-1 col-md-offset-1">
-                  <!-- <img src="assets/img/grid.svg" alt="Loading logo"> -->
+                  <div>{{successfulInvestmentService.getLoadingState()}}</div>
+                  <img *ngIf="successfulInvestmentService.getLoadingState()" src="assets/img/grid.svg" alt="Loading logo" class="loading">
                 </div>
                 <div class=" col-sm-7 col-md-7" *ngIf='successfulInvestmentService.getError() === false'>
                     <p class="sw-box-text sw-blue1">Your wallet address: {{walletAddress}}</p>
