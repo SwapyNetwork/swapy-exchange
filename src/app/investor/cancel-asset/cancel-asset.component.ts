@@ -124,7 +124,7 @@ export class CancelAssetComponent implements OnInit {
     try {
       await this.swapyProtocol.cancelInvestment(contractAddresses);
       this.toastrService.getInstance().success('Investment(s) cancelled');
-      this.messageService.setMessage('Investment(s) cancelled');
+      this.messageService.setLastMessage('Investment(s) cancelled');
       this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
       this.onError(error);
@@ -136,7 +136,7 @@ export class CancelAssetComponent implements OnInit {
     try {
       await this.swapyProtocol.cancelSellOrder(contractAddresses);
       this.toastrService.getInstance().success('Sell order(s) cancelled');
-      this.messageService.setMessage('Sell order(s) cancelled');
+      this.messageService.setLastMessage('Sell order(s) cancelled');
       this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
       this.onError(error);
@@ -148,7 +148,7 @@ export class CancelAssetComponent implements OnInit {
     try {
       await this.swapyProtocol.refuseSale(contractAddresses);
       this.toastrService.getInstance().success('Asset(s) sale refused');
-      this.messageService.setMessage('Asset(s) sale refused');
+      this.messageService.setLastMessage('Asset(s) sale refused');
       this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
       this.onError(error);
@@ -160,7 +160,7 @@ export class CancelAssetComponent implements OnInit {
     try {
       await this.swapyProtocol.cancelSale(contractAddresses);
       this.toastrService.getInstance().success('Asset(s) sale refused');
-      this.messageService.setMessage('Asset(s) sale refused');
+      this.messageService.setLastMessage('Asset(s) sale refused');
       this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
       this.onError(error);

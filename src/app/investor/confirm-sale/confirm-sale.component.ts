@@ -39,7 +39,7 @@ export class ConfirmSaleComponent implements OnInit {
       const value = this.asset.sellValue * 100;
       // await this.swapyProtocol.sellAsset(this.asset.contractAddress, value);
       this.toastrService.getInstance().success('Asset inserted into the Marketplace');
-      this.successfulInvestmentService.setMessage('Your investment was mined by the Ethereum blockchain.');
+      this.successfulInvestmentService.setLastMessage('Your investment was mined by the Ethereum blockchain.');
       this.storageService.getItem(this.asset.contractAddress);
     } catch (error) {
       this.storageService.remove(this.asset.contractAddress);

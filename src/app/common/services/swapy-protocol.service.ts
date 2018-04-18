@@ -129,6 +129,7 @@ export class SwapyProtocolService {
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
         this.successfulInvestmentService.setLoadingState(true);
+        this.successfulInvestmentService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -198,6 +199,8 @@ export class SwapyProtocolService {
         this.handleOnTransactionHash(hash);
         this.storeTransactionHash(contractAddresses, hash);
         this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
+
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -246,6 +249,8 @@ export class SwapyProtocolService {
         this.handleOnTransactionHash(hash);
         this.storeTransactionHash(contractAddresses, hash);
         this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
+
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -263,6 +268,8 @@ export class SwapyProtocolService {
         this.handleOnTransactionHash(hash);
         this.storeTransactionHash(contractAddresses, hash);
         this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
+
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -283,6 +290,8 @@ export class SwapyProtocolService {
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
         this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
+
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -300,6 +309,8 @@ export class SwapyProtocolService {
         this.handleOnTransactionHash(hash);
         this.storeTransactionHash(contractAddresses, hash);
         this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
+
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -317,6 +328,8 @@ export class SwapyProtocolService {
         this.handleOnTransactionHash(hash);
         this.storeTransactionHash(contractAddresses, hash);
         this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
+
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -334,6 +347,8 @@ export class SwapyProtocolService {
         this.handleOnTransactionHash(hash);
         this.storeTransactionHash(contractAddresses, hash);
         this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
+
       })
       .on('error', (error) => {
         this.handleOnError(error);

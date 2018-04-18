@@ -22,6 +22,10 @@ export class SuccessfulInvestmentService {
   }
 
   public setMessage(message) {
+    this.message = message;
+  }
+
+  public setLastMessage(message) {
     this.error = false;
     this.message = message;
     this.loadingLogo = false;

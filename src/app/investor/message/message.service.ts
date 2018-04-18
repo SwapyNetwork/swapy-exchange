@@ -21,10 +21,14 @@ export class MessageService {
     return this.investment;
   }
 
-  public setMessage(message) {
+  public setLastMessage(message) {
     this.error = false;
     this.message = message;
     this.loadingLogo = false;
+  }
+
+  public setMessage(message) {
+    this.message = message;
   }
 
   public setHeaderMessage(message) {

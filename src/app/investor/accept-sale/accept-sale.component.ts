@@ -98,7 +98,7 @@ export class AcceptSaleComponent implements OnInit {
     try {
       await this.swapyProtocol.acceptSale(contractAddresses);
       this.toastrService.getInstance().success('Asset(s) sold');
-      this.messageService.setMessage('Asset(s) sold');
+      this.messageService.setLastMessage('Asset(s) sold');
       this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
       this.onError(error);
