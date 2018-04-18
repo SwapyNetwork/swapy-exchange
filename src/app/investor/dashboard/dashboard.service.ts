@@ -168,7 +168,7 @@ export class DashboardService {
     this.delayed = [];
     this.assets.filter(asset => asset.status == INVESTED).forEach(asset => {
       const investedAt = new Date(asset.investedAt);
-      if (now.valueOf() < investedAt.setDate(investedAt.getDate() + asset.paybackMonths * 30).valueOf()) {
+      if (now.valueOf() > investedAt.setDate(investedAt.getDate() + asset.paybackMonths * 30).valueOf()) {
         this.delayed.push(asset);
       }
     });
