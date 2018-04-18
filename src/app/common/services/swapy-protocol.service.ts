@@ -197,7 +197,7 @@ export class SwapyProtocolService {
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
         this.storeTransactionHash(contractAddresses, hash);
-        this.messageService.setLoadingState();
+        this.messageService.setLoadingState(true);
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -245,6 +245,7 @@ export class SwapyProtocolService {
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
         this.storeTransactionHash(contractAddresses, hash);
+        this.messageService.setLoadingState(true);
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -261,8 +262,7 @@ export class SwapyProtocolService {
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
         this.storeTransactionHash(contractAddresses, hash);
-        this.messageService.setLoadingState();
-
+        this.messageService.setLoadingState(true);
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -282,6 +282,7 @@ export class SwapyProtocolService {
         value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.messageService.setLoadingState(true);
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -298,7 +299,7 @@ export class SwapyProtocolService {
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
         this.storeTransactionHash(contractAddresses, hash);
-        this.messageService.setLoadingState();
+        this.messageService.setLoadingState(true);
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -315,7 +316,7 @@ export class SwapyProtocolService {
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
         this.storeTransactionHash(contractAddresses, hash);
-        this.messageService.setLoadingState();
+        this.messageService.setLoadingState(true);
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -332,6 +333,7 @@ export class SwapyProtocolService {
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
         this.storeTransactionHash(contractAddresses, hash);
+        this.messageService.setLoadingState(true);
       })
       .on('error', (error) => {
         this.handleOnError(error);

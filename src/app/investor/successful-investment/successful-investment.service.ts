@@ -5,7 +5,7 @@ import * as sha1 from 'sha1';
 export class SuccessfulInvestmentService {
 
   private error: boolean;
-  private loadingLogo;
+  private loadingLogo: boolean;
   private message: string;
   private headerMessage: string;
 
@@ -24,12 +24,12 @@ export class SuccessfulInvestmentService {
   public setMessage(message) {
     this.error = false;
     this.message = message;
-    // this.loadingLogo = false;
+    this.loadingLogo = false;
   }
 
   public setHeaderMessage(message) {
     this.error = false;
-    this.headerMessage = message
+    this.headerMessage = message;
   }
 
   public getMessage(): string {
@@ -48,14 +48,11 @@ export class SuccessfulInvestmentService {
     return this.error;
   }
 
-  public setLoadingState(state) {
-    this.loadingLogo = true;
+  public setLoadingState(state: boolean) {
+    this.loadingLogo = state;
   }
 
-  public getLoadingState() {
-    if (this.loadingLogo == true) {
-      console.log("Get => " + this.loadingLogo);
-    }
+  public getLoadingState(): boolean {
     return this.loadingLogo;
   }
 
@@ -63,7 +60,7 @@ export class SuccessfulInvestmentService {
     this.error = undefined;
     this.message = undefined;
     this.headerMessage = undefined;
-    // this.loadingLogo = false;
+    this.loadingLogo = false;
   }
 
   public setErrorMessage(message) {

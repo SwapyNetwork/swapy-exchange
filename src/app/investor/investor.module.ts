@@ -56,8 +56,8 @@ import { MessageService } from './message/message.service';
     InvestComponent, SuccessfulInvestmentComponent, InvestmentComponent, MarketplaceComponent, AssetComponent,
     ConfirmPurchaseComponent, SellAssetComponent, ConfirmSaleComponent, AddFundsComponent, AddFundsChildComponent,
     StartInvestingComponent, CancelAssetComponent, AcceptSaleComponent, RequireTokenComponent, FooterComponent, MessageComponent],
-  providers: [LogoutService, OfferService, InvestService, SuccessfulInvestmentService, DashboardService,
-    MarketplaceService, SellAssetService, MessageService],
+  providers: [LogoutService, OfferService, InvestService, DashboardService,
+    MarketplaceService, SellAssetService],
   bootstrap: [InvestorComponent]
 })
 export class InvestorModule { }
