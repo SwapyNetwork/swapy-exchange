@@ -192,7 +192,7 @@ export class SwapyProtocolService {
       .cancelInvestment(contractAddresses)
       .send({
         from: this.walletService.getWallet().address,
-        gas: 150000,
+        gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
@@ -240,7 +240,7 @@ export class SwapyProtocolService {
       .sellAssets(contractAddresses, values)
       .send({
         from: this.walletService.getWallet().address,
-        gas: 150000,
+        gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
@@ -257,7 +257,7 @@ export class SwapyProtocolService {
       .cancelSellOrder(contractAddresses)
       .send({
         from: this.walletService.getWallet().address,
-        gas: 150000,
+        gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
@@ -294,7 +294,7 @@ export class SwapyProtocolService {
       .cancelSale(contractAddresses)
       .send({
         from: this.walletService.getWallet().address,
-        gas: 150000,
+        gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
@@ -311,7 +311,7 @@ export class SwapyProtocolService {
       .refuseSale(contractAddresses)
       .send({
         from: this.walletService.getWallet().address,
-        gas: 150000,
+        gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
@@ -328,7 +328,7 @@ export class SwapyProtocolService {
       .acceptSale(contractAddresses)
       .send({
         from: this.walletService.getWallet().address,
-        gas: 1500000,
+        gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
@@ -345,7 +345,7 @@ export class SwapyProtocolService {
       .requireTokenFuel()
       .send({
         from: this.walletService.getWallet().address,
-        gas: 150000,
+        gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
