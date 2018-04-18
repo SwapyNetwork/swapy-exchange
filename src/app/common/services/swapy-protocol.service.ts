@@ -329,7 +329,6 @@ export class SwapyProtocolService {
         this.storeTransactionHash(contractAddresses, hash);
         this.messageService.setLoadingState(true);
         this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
-
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -348,7 +347,6 @@ export class SwapyProtocolService {
         this.storeTransactionHash(contractAddresses, hash);
         this.messageService.setLoadingState(true);
         this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
-
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -357,13 +355,15 @@ export class SwapyProtocolService {
 
   public requireToken(contractAddresses: string) {
     return this.SwapyExchangeContract.methods
-      .requireTokenFuel()
+      .requireTokenFuel(contractAddresses)
       .send({
         from: this.walletService.getWallet().address,
         gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
       })
       .on('error', (error) => {
         this.handleOnError(error);

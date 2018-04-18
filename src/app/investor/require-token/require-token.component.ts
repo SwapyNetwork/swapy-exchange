@@ -6,7 +6,9 @@ import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTO
 import { InvestorComponent } from '../investor.component';
 import { ToastrService } from '../../common/services/toastr.service';
 import { StorageService } from '../../common/services/storage.service';
+import { MessageService } from '../message/message.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
+import { Web3Service } from '../../common/services/web3.service';
 
 import * as sha1 from 'sha1';
 
@@ -32,7 +34,9 @@ export class RequireTokenComponent implements OnInit {
     private storageService: StorageService,
     private swapyProtocol: SwapyProtocol,
     private toastrService: ToastrService,
+    private messageService: MessageService,
     public investorComponent: InvestorComponent,
+    private web3Service: Web3Service,
     private dashboardService: DashboardService,
     private router: Router
   ) { }
@@ -91,41 +95,35 @@ export class RequireTokenComponent implements OnInit {
 
   }
 
-  private onError(error, assets, status) {
-    assets.forEach(asset => {
-      this.storageService.remove(asset.contractAddress);
-    });
-    if (sha1(error.message) === '699e7c6d81ba58075ee84cf2a640c18a409efcba') { // 50 blocks later and transaction has not being mined yet.
-      this.toastrService.error('Transaction is still being mined. Check it out later to see if the transaction was mined');
-    } else {
-      assets.forEach(asset => {
-        asset.status = status;
-      });
-      this.toastrService.error(error.message);
-    }
-  }
-
   public async requireTokens() {
-    const status = []
-    this.assets.forEach(asset => {
-      status.push(asset.status);
-      this.storageService.setItem(asset.contractAddress, asset.status);
-      asset.status = PENDING_ETHEREUM_CONFIRMATION;
-    });
+    this.router.navigate(['investor/message']);
     const contractAddresses = this.assets.map(asset => asset.contractAddress);
     try {
-      await this.swapyProtocol.cancelSale(contractAddresses);
-      this.toastrService.getInstance().success('Asset(s) sale refused');
-      this.router.navigate(['/investor']);
+      await this.swapyProtocol.requireToken(contractAddresses);
+      
+      /* Maybe will need it in the future.
+      const transactionHash = this.storageService.getItem(contractAddresses[0]);
+      const receipt = await this.web3Service.getInstance().eth.getTransactionReceipt(transactionHash);
+      console.log(receipt);
+      */
+      
+      this.toastrService.getInstance().success('Token successfully required.');
+      this.messageService.setLastMessage('Token successfully required.');
+      this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
-      this.assets.forEach((asset, index) => {
-        asset.status = status[index];
-        this.storageService.remove(asset.contractAddress);
-      });
+      let errorMessage
       if (sha1(error.message) === '699e7c6d81ba58075ee84cf2a640c18a409efcba') { // 50 blocks later and transaction has not being mined yet.
-        this.toastrService.error('Transaction is still being mined. Check it out later to see if the transaction was mined');
+        errorMessage = 'Transaction is still being mined. Check it out later to see if the transaction was mined'
+        this.toastrService.getInstance().error(errorMessage);
+        this.messageService.setErrorMessage(errorMessage);
+      } else if (error.message.toLowerCase().indexOf('user denied transaction signature') !== - 1) {
+        errorMessage = 'User denied transaction signature';
+        this.toastrService.getInstance().error(errorMessage);
+        this.messageService.setErrorMessage(errorMessage);
       } else {
-        this.toastrService.error('Not eligible to receive SWAPY Tokens. Investment return is not delayed yet.');
+        errorMessage = 'Not eligible to receive SWAPY Tokens. Investment return is not delayed yet.';
+        this.toastrService.getInstance().error(errorMessage);
+        this.messageService.setErrorMessage(errorMessage);
       }
     }
   }

@@ -88,6 +88,7 @@ export class SuccessfulInvestmentService {
       }
     }
     this.error = true;
+    this.loadingLogo = false;
   }
 
 }

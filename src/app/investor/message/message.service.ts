@@ -67,7 +67,7 @@ export class MessageService {
     this.loadingLogo = false;
   }
 
-  setErrorMessage(message) {
+  public setErrorMessage(message) {
     if (message !== null) {
       switch (sha1(message)) {
         case '81c8e9b1e558f0a68e4667560d89a47e7356b593': // Cant pay for gas
@@ -88,6 +88,7 @@ export class MessageService {
       }
     }
     this.error = true;
+    this.loadingLogo = false;
   }
 
 }
