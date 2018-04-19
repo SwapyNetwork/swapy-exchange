@@ -90,7 +90,7 @@ export class SwapyProtocolService {
       this.http.get(this.ethPriceProvider).subscribe(data => {
         resolve((data as any).bid);
       }, error => {
-        reject(840);
+        reject(560); // On main net check if user has access to the internet. If not, do not log in.
       });
     });
   }
