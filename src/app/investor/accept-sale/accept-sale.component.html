@@ -46,7 +46,7 @@
         <div class="col-xs-1 col-sm-1 col-md-1" [ngClass]="{'sw-blue1': asset.status == INVESTED, 'sw-orange': asset.status == PENDING_OWNER_AGREEMENT || asset.status == PENDING_INVESTOR_AGREEMENT, 'sw-green': asset.status >= RETURNED}">{{statusToString(asset.status)}}</div>
         <div class="col-xs-2 col-sm-2 col-md-2">
             <div class="progress sw-blue-bar">
-              <div class="progress-bar prog{{porcentageProgression(asset)}}"></div>
+              <div class="progress-bar prog{{percentageProgression(asset)}}"></div>
             </div>
         </div>
       </div>

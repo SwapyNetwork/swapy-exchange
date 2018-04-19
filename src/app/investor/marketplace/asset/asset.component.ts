@@ -37,9 +37,9 @@ export class AssetComponent implements OnInit {
     return monthsDiff;
   }
 
-  public porcentageProgression() {
-    const porcentage = this.calculateAssetProgression() * 100 / this.asset.paybackMonths;
-    return Math.floor(porcentage / 5) * 5;
+  public percentageProgression() {
+    const percentage = this.calculateAssetProgression() * 100 / this.asset.paybackMonths;
+    return Math.floor(percentage / 5) * 5;
   }
 
 }

@@ -1,6 +1,4 @@
 <app-nav></app-nav>
-<!-- /////////////////////////  END Nav bar  ///////////////////////// -->
-
 
 <div class="container-fluid"> <!-- Container that enbrace all the rows -->
   <div class="row">
@@ -28,51 +26,7 @@
       </div> <!-- END Top White Bar with  Swapy logo -->
 
       <router-outlet></router-outlet>
-
+      <footer></footer>
     </div>
-
-
-      <div class="col-sm-2 col-sm-offset-10 col-md-2 col-md-offset-10 sw-sidebar"> <!-- SIDEBAR  -->
-         <div class="row sw-top-sidebar">
-          <div class="col-xs-6 col-sm-12 col-md-12">
-              <p class="sw-top-lable">Total Requested</p>
-              <p class="sw-top-value">{{amountRequested | currency:'USD':true:'.2'}}</p>
-          </div>
-          <div class="col-xs-6 col-sm-12 col-md-12">
-              <p class="sw-top-lable">Total Raised</p>
-              <p class="sw-top-value">{{amountRaised | currency:'USD':true:'.2'}}</p>
-
-          </div>
-          <div class="col-xs-6 col-sm-12 col-md-12">
-              <p class="sw-top-lable">Total Returned</p>
-              <p class="sw-top-value">{{amountReturned | currency:'USD':true:'.2'}}</p>
-
-          </div>
-          <div class="col-xs-6 col-sm-12 col-md-12 sw-top-bottom">
-              <p class="sw-top-lable">Total to be returned</p>
-              <p class="sw-top-value">{{amountToBeReturned | currency:'USD':true:'.2'}}</p>
-
-          </div>
-         </div>
-
-          <div class="sw-stripes">
-          </div>
-
-        <div class="sw-scrollbar">
-          <a href="javascript:void(0)"><div class="sw-sidebar-notifications"> <!-- Notification 1  -->
-            <p class="sw-notfication-message">IMPORTANT! This alpha release works in a Ethereum testnet and the transactions are not valid in the Ethereum public blockchain. Please, do not transfer funds from your wallets.</p><!-- max 48 caracteres  -->
-            <p class="sw-notfication-time">a few seconds ago</p>
-          </div></a>
-          <a href="javascript:void(0)"><div class="sw-sidebar-notifications"> <!-- Notification 1  -->
-            <p class="sw-notfication-message">Welcome to Swapy! Notifications regarding your operations in our platform will appear right here.</p><!-- max 48 caracteres  -->
-            <p class="sw-notfication-time">a few seconds ago</p>
-          </div></a>
-        </div>
-
-            <div class="sw-sidebar-bottom">
-              <i class="fa fa-lg fa-angle-up" aria-hidden="true"></i>
-            </div>
-
-      </div> <!-- END SIDEBAR  -->
    </div>
 </div>

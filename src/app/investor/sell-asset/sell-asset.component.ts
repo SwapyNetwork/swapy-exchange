@@ -72,9 +72,9 @@ export class SellAssetComponent implements OnInit {
     return monthsDiff;
   }
 
-  public porcentageProgression(asset) {
-    const porcentage = this.calculateAssetProgression(asset) * 100 / asset.paybackMonths;
-    return Math.floor(porcentage / 5) * 5;
+  public percentageProgression(asset) {
+    const percentage = this.calculateAssetProgression(asset) * 100 / asset.paybackMonths;
+    return Math.floor(percentage / 5) * 5;
   }
 
   private onError(error) {
