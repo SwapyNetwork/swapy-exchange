@@ -14,6 +14,13 @@ import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { ConfirmPurchaseComponent } from './confirm-purchase/confirm-purchase.component';
 import { SellAssetComponent } from './sell-asset/sell-asset.component';
 import { ConfirmSaleComponent } from './confirm-sale/confirm-sale.component';
+import { AddFundsComponent } from './add-funds/add-funds.component';
+import { AddFundsChildComponent } from './add-funds/add-funds-child/add-funds-child.component';
+import { StartInvestingComponent } from './start-investing/start-investing.component';
+import { CancelAssetComponent } from './cancel-asset/cancel-asset.component';
+import { AcceptSaleComponent } from './accept-sale/accept-sale.component';
+import { RequireTokenComponent } from './require-token/require-token.component';
+import { MessageComponent } from './message/message.component';
 
 const routes: Routes = [
   {
@@ -21,6 +28,9 @@ const routes: Routes = [
     component: InvestorComponent,
     children: [
       { path: '', component: DashboardComponent },
+      { path: 'start-investing', component: StartInvestingComponent },
+      { path: 'add-funds', component: AddFundsComponent },
+      { path: 'add-funds/child', component: AddFundsChildComponent },
       { path: 'offer/:id', component: OfferDetailsComponent },
       { path: 'credit-company/:id', component: CreditCompanyComponent },
       { path: 'offers', component: OffersComponent },
@@ -31,7 +41,11 @@ const routes: Routes = [
       { path: 'marketplace', component: MarketplaceComponent },
       { path: 'marketplace/confirm-purchase', component: ConfirmPurchaseComponent },
       { path: 'sell', component: SellAssetComponent },
-      { path: 'sell/confirm-sale', component: ConfirmSaleComponent }
+      { path: 'sell/confirm-sale', component: ConfirmSaleComponent },
+      { path: 'cancel-asset', component: CancelAssetComponent },
+      { path: 'accept-sale', component: AcceptSaleComponent },
+      { path: 'require-token', component: RequireTokenComponent },
+      { path: 'message', component: MessageComponent },
     ]
   }
 ];

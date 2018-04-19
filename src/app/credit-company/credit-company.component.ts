@@ -31,12 +31,10 @@ export class CreditCompanyComponent implements OnInit {
     // this.refreshStatusBar();
   };
 
-  refreshStatusBar() { /**@todo Refresh via websocket when a investment is done */
+  async refreshStatusBar() { /**@todo Refresh via websocket when a investment is done */
     this.loadingService.show();
-    const offers = this.dashboardService.getCachedOffers()
-    this.walletService.getEthBalance().then((balance) => {
-      this.balance = balance;
-    });
+    const offers = this.dashboardService.getCachedOffers();
+    this.balance = await this.walletService.getEthBalance();
     let assets = [];
     offers.forEach(offer => {
       offer.assets.forEach(asset => {

@@ -1,0 +1,82 @@
+.sw-title-outside-box {
+    font-weight: 400;
+    font-size: 18px;
+    color: #4a4a4a;
+    padding: 0 0 15px 0;
+    border-bottom: 3px solid #b1d432
+}
+.sw-description-outside-box {
+    font-weight: 300;
+    font-size: 18px;
+    color: #4a4a4a;
+    padding: 0 0 15px 0;
+}
+.sw-btn-orange {
+    font-weight: 500;
+    background-color: #eebe4c;
+    border: 1px solid #eebe4c;
+    color: #fff;
+    padding: 10px 10px;
+
+}
+.sw-btn-orange:hover {
+    background-color: #ffcf5d;
+    border: 1px solid #ffcf5d;
+    color: #fff;
+    padding: 10px 10px;
+    text-decoration: none;
+}
+.sw-btn-white {
+    font-weight: 500;
+    background-color: #fff;
+    border: 1px solid #eebe4c;
+    color: #eebe4c;
+    padding: 10px 10px;
+
+}
+.sw-btn-white:hover {
+    background-color: #fff;
+    border: 1px solid #ffcf5d;
+    color: #eebe4c;
+    padding: 10px 10px;
+    text-decoration: none;
+}
+.sw-top-bar-info {
+	padding: 20px 0 20px 0; 
+	margin-top: 20px; 
+	margin-bottom: 50px; 
+    border: 1px solid #d8d8d8;
+    border-radius: 10px;
+}
+.sw-info-font {
+	font-size: 16px;
+	font-weight: 400;
+}
+.sw-value-font {
+	font-size: 22px;
+	font-weight: 500;
+}
+.sw-green {
+	color: #b1d432;
+}
+.sw-inline-left-border {
+    border-left: 2px solid #d8d8d8;
+}
+.sw-bottom-border {
+	padding-bottom: 10px;
+	margin-bottom: 20px;
+    border-bottom: 2px solid #d8d8d8;	
+}
+.sw-welcome-title {
+    padding-top: 30px;
+    font-size: 32px;
+    font-weight: 500;
+}
+img {
+    width: 100%;
+}
+.sw-start-investing-description {
+    padding: 30px 0 50px 0;
+    font-size: 26px;
+    font-weight: 500;
+}

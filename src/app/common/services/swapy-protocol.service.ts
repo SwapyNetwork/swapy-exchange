@@ -3,6 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Web3Service } from './web3.service';
 import { WalletService } from './wallet.service';
 import { ErrorLogService } from './error-log.service';
+import { StorageService } from './storage.service';
+import { SuccessfulInvestmentService } from '../../investor/successful-investment/successful-investment.service';
+import { MessageService } from '../../investor/message/message.service';
+import { BigNumber } from 'bignumber.js';
 
 const env = require('../../../../env.json');
 
@@ -24,9 +28,17 @@ export class SwapyProtocolService {
   private InvestmentAssetContract;
   private Token;
 
-  constructor(protected web3Service: Web3Service, protected walletService: WalletService,
-    public errorLogService: ErrorLogService, public http: HttpClient) {
+  constructor(
+    protected web3Service: Web3Service,
+    protected walletService: WalletService,
+    public errorLogService: ErrorLogService,
+    public http: HttpClient,
+    public successfulInvestmentService: SuccessfulInvestmentService,
+    public messageService: MessageService,
+    public storageService: StorageService
+  ) {
     this.web3 = this.web3Service.getInstance();
+    BigNumber.config({ DECIMAL_PLACES: 18 });
 
     if ((window as any).isElectron) {
       this.injectMetamaskPopupHandler(this.web3.eth.Contract);
@@ -48,6 +60,11 @@ export class SwapyProtocolService {
       return origCall.apply(this, arguments);
     };
   }
+  private storeTransactionHash(addresses: string[], hash: string) {
+    addresses.forEach(address => {
+      this.storageService.setItem(address, hash);
+    });
+  }
 
   private handleOnTransactionHash(hash: string) {
     if ((window as any).isElectron) {
@@ -68,12 +85,12 @@ export class SwapyProtocolService {
     return build.networks[networkId].address;
   }
 
-  private async getEthPrice() {
+  public async getEthPrice() {
     return new Promise((resolve, reject) => {
       this.http.get(this.ethPriceProvider).subscribe(data => {
         resolve((data as any).bid);
       }, error => {
-        resolve(440.0);
+        reject(560); // On main net check if user has access to the internet. If not, do not log in.
       });
     });
   }
@@ -95,18 +112,24 @@ export class SwapyProtocolService {
       });
   }
 
-  public async invest(assetAddress: string[], value: number) {
-    const ethPrice = await this.getEthPrice();
-    const ethValue = value / (ethPrice as number);
+  public async invest(assetsAddress: string[], assetsValues: number[]) {
+    let ethPrice = await this.getEthPrice();
+    ethPrice = (ethPrice as number).toFixed(2);
+
+    const assetValueBN = new BigNumber(assetsValues[0]).div(new BigNumber(ethPrice as number));
+    const assetValue = (this.web3.utils.toWei(assetValueBN));
+    const value = (this.web3.utils.toWei(assetValueBN.times(new BigNumber(assetsValues.length))));
     return this.SwapyExchangeContract.methods
-      .invest(assetAddress)
+      .invest(assetsAddress, assetValue)
       .send({
         from: this.walletService.getWallet().address,
         gas: 400000,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei'),
-        value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
+        value: value
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.successfulInvestmentService.setLoadingState(true);
+        this.successfulInvestmentService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -165,16 +188,19 @@ export class SwapyProtocolService {
       });
   }
 
-  public cancelInvestment(contractAddress: string) {
-    this.AssetLibraryContract.options.address = contractAddress;
-    return this.AssetLibraryContract.methods
-      .cancelInvestment()
+  public cancelInvestment(contractAddresses: string[]) {
+    return this.SwapyExchangeContract.methods
+      .cancelInvestment(contractAddresses)
       .send({
         from: this.walletService.getWallet().address,
-        gas: 150000,
+        gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
+        this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
+
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -212,31 +238,38 @@ export class SwapyProtocolService {
       });
   }
 
-  public sellAsset(contractAddress: string, value: number) {
+  public sellAssets(contractAddresses: string[], values: number[]) {
     return this.SwapyExchangeContract.methods
-      .sellAsset(contractAddress, value)
+      .sellAssets(contractAddresses, values)
       .send({
         from: this.walletService.getWallet().address,
-        gas: 150000,
+        gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
+        this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
+
       })
       .on('error', (error) => {
         this.handleOnError(error);
       });
   }
 
-  public cancelSellOrder(contractAddress: string) {
-    this.AssetLibraryContract.options.address = contractAddress;
-    return this.AssetLibraryContract.methods
-      .cancelSellOrder()
+  public cancelSellOrder(contractAddresses: string[]) {
+    return this.SwapyExchangeContract.methods
+      .cancelSellOrder(contractAddresses)
       .send({
         from: this.walletService.getWallet().address,
-        gas: 150000,
+        gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
+        this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
+
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -256,70 +289,81 @@ export class SwapyProtocolService {
         value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
+
       })
       .on('error', (error) => {
         this.handleOnError(error);
       });
   }
 
-  public cancelSale(contractAddress: string) {
-    this.AssetLibraryContract.options.address = contractAddress;
-    return this.AssetLibraryContract.methods
-      .cancelSale()
+  public cancelSale(contractAddresses: string[]) {
+    return this.SwapyExchangeContract.methods
+      .cancelSale(contractAddresses)
       .send({
         from: this.walletService.getWallet().address,
-        gas: 150000,
+        gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
+        this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
+
       })
       .on('error', (error) => {
         this.handleOnError(error);
       });
   }
 
-  public refuseSale(contractAddress: string) {
-    this.AssetLibraryContract.options.address = contractAddress;
-    return this.AssetLibraryContract.methods
-      .refuseSale()
+  public refuseSale(contractAddresses: string[]) {
+    return this.SwapyExchangeContract.methods
+      .refuseSale(contractAddresses)
       .send({
         from: this.walletService.getWallet().address,
-        gas: 150000,
+        gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
+        this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
       })
       .on('error', (error) => {
         this.handleOnError(error);
       });
   }
 
-  public acceptSale(contractAddress: string) {
-    this.AssetLibraryContract.options.address = contractAddress;
-    return this.AssetLibraryContract.methods
-      .acceptSale()
+  public acceptSale(contractAddresses: string[]) {
+    return this.SwapyExchangeContract.methods
+      .acceptSale(contractAddresses)
       .send({
         from: this.walletService.getWallet().address,
-        gas: 150000,
+        gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
+        this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
       })
       .on('error', (error) => {
         this.handleOnError(error);
       });
   }
 
-  public requireToken(contractAddress: string) {
-    this.AssetLibraryContract.options.address = contractAddress;
-    return this.AssetLibraryContract.methods
-      .requireTokenFuel()
+  public requireToken(contractAddresses: string) {
+    return this.SwapyExchangeContract.methods
+      .requireTokenFuel(contractAddresses)
       .send({
         from: this.walletService.getWallet().address,
-        gas: 150000,
+        gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -359,5 +403,11 @@ export class SwapyProtocolService {
     })
 
     return Promise.all(promises).then(resolved => (contractObj as any));
+  }
+
+  public async getTokenBalance() {
+    return this.Token.methods
+    .balanceOf(this.walletService.getWallet().address)
+    .call();
   }
 }

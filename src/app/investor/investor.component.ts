@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { WalletService } from '../common/services/wallet.service';
 import { Web3Service } from '../common/services/web3.service';
+import { OfferService } from './offers/offer.service';
 import { LoadingService } from '../common/services/loading.service';
+import { MarketplaceService } from './marketplace/marketplace.service';
 import { SwapyProtocolService as SwapyProtocol } from '../common/services/swapy-protocol.service';
 import { PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
   DELAYED_RETURN } from '../common/interfaces/offer-asset-status.interface';
@@ -20,40 +23,90 @@ export class InvestorComponent implements OnInit {
 
   public assetsLength;
   public investedValue;
-  public averageReturn;
   public returnValue;
   public returnedValue;
-  public averagePaybackPeriod;
-  public balance;
+  public nextReturnDate;
+  public nextReturnValue;
+  public ETHbalance;
+  public tokenBalance;
+  public ETHprice;
+  public USDbalance;
+  public isElectron;
 
   constructor(
     private walletService: WalletService,
     private web3Service: Web3Service,
     private loadingService: LoadingService,
     private swapyProtocol: SwapyProtocol,
-    private dashboardService: DashboardService) {}
-
-  ngOnInit() {
-    // this.refreshStatusBar();
+    private marketplaceService: MarketplaceService,
+    private router: Router,
+    private offerService: OfferService,
+    private dashboardService: DashboardService) {
+      this.isElectron = (window as any).isElectron;
   }
 
-  public async refreshStatusBar() {
+  ngOnInit() {
+    this.refreshBalance();
+  }
+
+  public triggerMetamaskPopup() {
+    (window as any).chrome.ipcRenderer.send('open-metamask-popup');
+  }
+
+  public async refresh() {
+    this.loadingService.show();
+    const url = this.router.url.split('/').slice(1);
+    if (url[0] === 'investor') {
+      if (url.length === 1) {
+        await this.dashboardService.getMyInvestmentsFromBlockchain();
+      } else if (url[url.length - 1] === 'marketplace') {
+        await this.marketplaceService.getAssetsForSale();
+      } else if (url[url.length - 1] === 'offers') {
+        await this.offerService.getOffersFromBlockchain();
+      }
+      await this.refreshBalance();
+    } else {
+
+    }
+    this.loadingService.hide();
+  }
+
+  public getStatistics() {
+    return {
+      assetsLength: this.assetsLength,
+      investedValue: this.investedValue,
+      returnValue: this.returnValue,
+      returnedValue: this.returnedValue,
+      nextReturnDate: this.nextReturnDate,
+      nextReturnValue: this.nextReturnValue,
+    }
+  }
+
+  public async refreshBalance() {
     this.loadingService.show();
 
-    this.walletService.getEthBalance().then((balance) => {
-      this.balance = balance;
-    });
+    this.tokenBalance = (await this.swapyProtocol.getTokenBalance()) / Math.pow(10, 18);
+    this.ETHbalance = await this.walletService.getEthBalance();
+    this.ETHprice = await this.swapyProtocol.getEthPrice();
+    this.USDbalance = this.ETHbalance * this.ETHprice;
+    this.loadingService.hide();
 
     this.investedValue = 0;
     this.returnedValue = 0;
     this.returnValue = 0;
+    this.nextReturnDate = null;
+    this.nextReturnValue = null;
+
     const txInvested = [];
     const ForSale = await this.swapyProtocol.get('ForSale');
     let forSaleEvents = await this.swapyProtocol.get('ForSale');
     forSaleEvents = forSaleEvents.filter(event =>
       event.returnValues._investor.toLowerCase() === this.walletService.getWallet().address.toLowerCase());
 
-    for (const forSaleEvent of forSaleEvents){
+    const assetsInvested = [];
+    const assetsReceived = [];
+
+    for (const forSaleEvent of forSaleEvents) {
       const withdrawal = await this.swapyProtocol.getAssetEvent(forSaleEvent.returnValues._asset, 'Withdrawal');
       const events = [forSaleEvent].concat(withdrawal);
       events.sort((a, b) => (a.blockNumber < b.blockNumber) ? -1 : (a.blockNumber > b.blockNumber ? 1 : 0));
@@ -63,13 +116,19 @@ export class InvestorComponent implements OnInit {
           const investor = events[indexFS].returnValues._investor.toLowerCase();
           const owner = events[indexFS + 1].returnValues._owner.toLowerCase();
           if (investor === owner) {
-            this.returnedValue += Number(events[indexFS].returnValues._value) / 100;
+            if (assetsReceived.indexOf(events[indexFS].returnValues._asset) == -1) {
+              this.returnedValue += Number(events[indexFS].returnValues._value) / 100;
+              assetsReceived.push(events[indexFS].returnValues._asset);
+            }
           }
         }
 
         if (indexFS === 1) {
           const value = (await this.swapyProtocol.getAssetConstants(events[indexFS].returnValues._asset, ['value'])).value;
-          this.investedValue += Number(value) / 100;
+          if (assetsInvested.indexOf(events[indexFS].returnValues._asset) == -1) {
+            this.investedValue += Number(value) / 100;
+            assetsInvested.push(events[indexFS].returnValues._asset);
+          }
         } else {
           let sliced = events.slice(1, indexFS);
           sliced = sliced.concat(ForSale.filter(forSale => forSale.returnValues._asset.toLowerCase() === forSaleEvent.returnValues._asset.toLowerCase()));
@@ -89,14 +148,15 @@ export class InvestorComponent implements OnInit {
               txInvested.push(sliced[index].transactionHash);
               this.investedValue += sliced[index].returnValues._value / 100;
             }
-            
+
             sliced = sliced.slice(indexW + 1);
           }
         }
       }
     }
 
-    const investments = this.dashboardService.getCachedInvestments();
+
+    const investments = this.dashboardService.getCachedInvestments() || [];
     let assets = [];
     investments.forEach(investment => {
       investment.assets.forEach(asset => {
@@ -106,7 +166,8 @@ export class InvestorComponent implements OnInit {
         asset['currentValue'] = asset.boughtValue || asset.value;
       });
       assets = assets.concat(investment.assets);
-    })
+    });
+
 
     this.investedValue += (assets.filter(asset => (
       Number(asset.status) >= PENDING_OWNER_AGREEMENT && Number(asset.status) <= DELAYED_RETURN))
@@ -125,24 +186,15 @@ export class InvestorComponent implements OnInit {
 
     const assetsLength = assets.filter(asset => Number(asset.status) >= PENDING_OWNER_AGREEMENT &&
       Number(asset.status) <= PENDING_INVESTOR_AGREEMENT).length;
-    this.averageReturn = assets.filter(asset => Number(asset.status) >= PENDING_OWNER_AGREEMENT &&
-      Number(asset.status) <= PENDING_INVESTOR_AGREEMENT)
-      .map(asset => Number(asset.grossReturn))
-      .reduce((total, current) => (total + current), 0);
 
-    this.averageReturn = this.averageReturn === 0 ? 0 : (this.averageReturn / assetsLength).toFixed(4);
-
-    const block = (await this.web3Service.getInstance().eth.getBlock('latest'));
-    const now = block.timestamp * 1000;
-    this.averagePaybackPeriod = assets.filter(asset =>
-      Number(asset.status) >= PENDING_OWNER_AGREEMENT && Number(asset.status) <= PENDING_INVESTOR_AGREEMENT)
-      .map(asset => {
-        const returnDate = asset.investedAt.setMonth(asset.investedAt.getMonth() + asset.paybackDays / 30)
-        return Math.floor((returnDate - now) / (24 * 3600 * 1000));
-      })
-      .reduce((total, current) => (total + current), 0);
-    this.averagePaybackPeriod = this.averagePaybackPeriod === 0 ? 0 : Math.round(this.averagePaybackPeriod  / assetsLength);
+    if (assets.length > 0) {
+      assets = assets.sort((a, b) => Number(a.investedAt) - Number(b.investedAt));
+      this.nextReturnDate = new Date(assets[0].investedAt);
+      this.nextReturnDate.setMonth(this.nextReturnDate.getMonth() + assets[0].paybackMonths);
+      this.nextReturnValue = assets[0].value * (1 + assets[0].grossReturn);
+    }
     this.loadingService.hide();
     this.assetsLength = assets.length;
   };
+
 }

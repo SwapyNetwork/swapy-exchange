@@ -9,6 +9,7 @@ import { InvestorComponent } from './investor.component';
 import { OffersComponent } from './offers/offers.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavModule } from '../common/nav/nav.module';
+import { FooterComponent } from '../common/footer/footer.component';
 import { OfferComponent } from './offers/offer/offer.component';
 import { OfferDetailsComponent } from './offer-details/offer-details.component';
 import { CreditCompanyComponent } from './credit-company/credit-company.component';
@@ -31,6 +32,14 @@ import { MarketplaceService } from './marketplace/marketplace.service';
 import { SellAssetComponent } from './sell-asset/sell-asset.component';
 import { SellAssetService } from './sell-asset/sell-asset.service';
 import { ConfirmSaleComponent } from './confirm-sale/confirm-sale.component';
+import { AddFundsComponent } from './add-funds/add-funds.component';
+import { AddFundsChildComponent } from './add-funds/add-funds-child/add-funds-child.component';
+import { StartInvestingComponent } from './start-investing/start-investing.component';
+import { CancelAssetComponent } from './cancel-asset/cancel-asset.component';
+import { AcceptSaleComponent } from './accept-sale/accept-sale.component';
+import { RequireTokenComponent } from './require-token/require-token.component';
+import { MessageComponent } from './message/message.component';
+import { MessageService } from './message/message.service';
 
 @NgModule({
   imports: [
@@ -45,8 +54,9 @@ import { ConfirmSaleComponent } from './confirm-sale/confirm-sale.component';
   declarations: [InvestorComponent, OffersComponent, DashboardComponent, OfferComponent,
     OfferDetailsComponent, CreditCompanyComponent, TermsPageComponent, PrivacyPageComponent, ProfileComponent,
     InvestComponent, SuccessfulInvestmentComponent, InvestmentComponent, MarketplaceComponent, AssetComponent,
-    ConfirmPurchaseComponent, SellAssetComponent, ConfirmSaleComponent],
-  providers: [LogoutService, OfferService, InvestService, SuccessfulInvestmentService, DashboardService,
+    ConfirmPurchaseComponent, SellAssetComponent, ConfirmSaleComponent, AddFundsComponent, AddFundsChildComponent,
+    StartInvestingComponent, CancelAssetComponent, AcceptSaleComponent, RequireTokenComponent, FooterComponent, MessageComponent],
+  providers: [LogoutService, OfferService, InvestService, DashboardService,
     MarketplaceService, SellAssetService],
   bootstrap: [InvestorComponent]
 })

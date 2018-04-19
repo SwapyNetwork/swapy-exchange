@@ -20,6 +20,7 @@ export class MarketplaceComponent implements OnInit {
   constructor(
     private loadingService: LoadingService,
     private swapyProtocol: SwapyProtocol,
+    public marketplaceService: MarketplaceService,
     private walletService: WalletService
   ) { }
 
@@ -27,55 +28,8 @@ export class MarketplaceComponent implements OnInit {
     this.getAssetsForSale();
   }
 
-  private getDisplayWalletAddress(address: string) {
-    return `${address.substring(0, 8)}...${address.substring(address.length - 8)}`
-  }
-
-  private deleteDuplicatedAssets(assets) {
-    for (let index = assets.length - 2; index >= 0; index--) {
-      if (assets[assets.length - 1].address === assets[index].address && assets.length !== 1) {
-        assets.splice(index, 1);
-      }
-    }
-
-    return assets;
-  }
-
   public async getAssetsForSale() {
-    this.loadingService.show();
-    try {
-      const forSaleEvents = await this.swapyProtocol.get('ForSale');
-
-      forSaleEvents.forEach(async forSaleEvent => {
-        const assetAddress = forSaleEvent.returnValues._asset;
-        const assetValue = forSaleEvent.returnValues._value;
-        const investor = forSaleEvent.returnValues._investor.toLowerCase();
-        const constants = ['grossReturn', 'paybackDays', 'status', 'value', 'investedAt'];
-        const assetConstants = await this.swapyProtocol.getAssetConstants(assetAddress, constants);
-        const asset = {
-          address: assetAddress,
-          displayAddress: this.getDisplayWalletAddress(assetAddress),
-          investor: investor,
-          grossReturn: assetConstants.grossReturn / 10000,
-          paybackMonths: assetConstants.paybackDays / 30,
-          originalValue: assetConstants.value / 100,
-          value: assetValue / 100,
-          investedAt: assetConstants.investedAt
-        };
-        if (Number(assetConstants.status) === FOR_SALE && investor !== this.walletService.getWallet().address.toLowerCase()) {
-          this.assets.push(asset);
-          this.assets = this.deleteDuplicatedAssets(this.assets);
-        }
-      });
-
-
-      this.loadingService.hide();
-
-    } catch (error) {
-      this.loadingService.hide();
-      console.error(error);
-
-    }
+    this.assets = await this.marketplaceService.getAssetsForSale();
   }
 
 }

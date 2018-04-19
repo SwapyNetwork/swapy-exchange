@@ -1,25 +1,33 @@
 <div class=" col-md-4"> <!-- Start Contract -->
-  <div class="sw-box">
+  <div class="sw-box" routerLink="/investor/offer/{{offerIndex}}">
     <div class="row">
-      <div class="col-xs-8 col-sm-8 col-md-8">
-        <p class="sw-wallet-number">{{offer.displayWalletAddress}}</p>
-      </div>
-      <div class="col-xs-4 col-sm-4 col-md-4">
+      <div class="col-xs-6 col-sm-6 col-md-6">
         <img src="assets/img/swapy-logo4.png" alt="Swapy logo">
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-6">
+        <p class="sw-box-text">Gross return rate</p>
+        <p class="sw-box-title sw-blue1">{{offer.grossReturn | percent}}</p>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6">
+        <p class="sw-box-text">Fundsraising</p>
+        <p class="sw-box-title">{{offer.raisingAmount | currency:'USD':false:'.0-2'}}</p>
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-6">
+        <p class="sw-box-text">Terms (months)</p>
+        <p class="sw-box-title">{{offer.paybackMonths}}</p>
       </div>
     </div>
 
-    <p class="sw-box-text">Fundraising</p>
-    <p class="sw-box-title">{{offer.raisingAmount | currency:'USD':false:'.0-2'}}</p>
-    <p class="sw-box-text">Gross return rate</p>
-    <p class="sw-box-title">{{offer.grossReturn | percent}}</p>
-    <p class="sw-box-text">Contract term</p>
-    <p class="sw-box-title">{{offer.paybackMonths}} months</p>
     <br>
-    <div class="sw-box-text">
-      <p>Available assets</p>
-      <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"> </i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i>
+    <div class="sw-box-text center">
+      <p>Average collateral: <span class="sw-blue1">{{offer.averageCollateral}} SWAPY</span></p>
+      <span *ngFor="let status of offer.status">
+        <i [ngClass]="{'fa fa-minus fa-2x': true, 'sw-blue1': status == AVAILABLE}" aria-hidden="true"></i>
+      </span>
+      <p> {{availableAssets()}} Asset(s) Available </p>
     </div>
-    <a class="sw-button sw-btn-ghost1" routerLink="/investor/offer/{{offerIndex}}">See details</a>
   </div>
 </div> <!-- END Contract -->

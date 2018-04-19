@@ -1,0 +1,87 @@
+.swapy-logo {
+    margin-left: -20px;
+}
+.metamask-logo {
+    height: 34px;
+}
+.loading {
+    padding: 30px 0 30px 0;
+}
+.sw-successful-address {
+    font-weight: 500;
+    font-size: 24px;
+    color: #00aeef;
+}
+.sw-successful-message {
+    padding: 18px 0 0 0;
+}
+.sw-successful-bold {
+    font-weight: 500;
+}
+
+.sw-error-message {
+  color: #C11B1B;
+}
+.sw-title-outside-box {
+    font-weight: 400;
+    font-size: 18px;
+    color: #4a4a4a;
+    padding: 0 0 15px 0;
+    border-bottom: 3px solid #c11b1b
+}
+.sw-description-outside-box {
+    font-weight: 300;
+    font-size: 18px;
+    color: #4a4a4a;
+    padding: 0 0 15px 0;
+}
+.sw-button-add-funds {
+    border-radius: 300px;
+    padding: 0 0 15px 0;
+    margin: -10px 20px 0 0;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+    width: 90%;
+}
+.sw-btn-add-funds {
+    font-weight: 500;
+    background-color: #eebe4c;
+    border: 1px solid #eebe4c;
+    color: #FFF;
+    padding: 10px 10px;
+
+}
+.sw-btn-add-funds:hover {
+    background-color: #ffcf5d;
+    border: 1px solid #ffcf5d;
+    color: #FFF;
+    padding: 10px 10px;
+    text-decoration: none;
+}
+.sw-asset-description {
+	margin-top: 15px;
+	color: #00aeef;
+}
+.sw-company-box {
+	margin: 10px 30px 0 30px;
+}
+.sw-company-description {
+	text-align: justify;
+	margin: 10px 0;
+}
+hr {
+	height: 1px;
+	margin: 10px 0;
+	background-color: #4a4a4a;
+}
+.sw-company-assets-details {
+	font-size: 18px;
+}
+.sw-number-details {
+	text-align: right;
+	font-weight: 500;
+	font-size: 22px;
+}

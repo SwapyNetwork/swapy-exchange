@@ -5,7 +5,8 @@ nav {
 body {
   padding-top: 0px;
   font-family: 'Roboto', sans-serif, helvetica;
-  background-color: #f2f2f2;
+  background-color: #fff !important;
+  color: #4a4a4a;
 }
 
 /* ////////////////////////////////  NAVBAR ////////////////////////////////*/
@@ -59,10 +60,13 @@ body {
 @media only screen and (max-width: 767px){ .sw-profile-email { color: #a5a5a5;} }
 
 /* //////////////////////////////// END NAVBAR ////////////////////////////////*/
+
 /* //////////////////////////////// TOP WHITE BAR ////////////////////////////////*/
+
+
 .sw-top {
   background-color: #fff;
-  height: 115px;
+  height: 125px;
   padding: 35px 0px 0px 0px;
   text-align: center;
 }
@@ -87,15 +91,16 @@ body {
 }
 .sw-funds {
     text-align: right;
-    padding: 0px 0px 0px 0px;
+    padding: 0px 10px 0px 0px;
+    color: #4a4a4a;
 
 }
 .sw-funds-value {
     font-weight: 400;
-    font-size: 24px;
-    margin: 13px 0px 0px 0px;
-    padding: 0px 50px 0px 0px;
-    border-right: 1px solid #888;
+    font-size: 16px;
+    margin: 0px 0px 0px 0px;
+    padding: 13px 5px 0px 0px;
+    border-right: 0px solid #888;
 }
 .sw-funds-add {
     font-weight: 400;
@@ -112,7 +117,7 @@ body {
   font-weight: 300;
     font-size: 14px;
     text-align: right;
-    padding: 30px 10px 0px 0px;
+    padding: 0px 10px 0px 0px;
 }
 
 @media only screen and (max-width: 1115px){ .sw-swapy-logo { display: none;} }
@@ -232,9 +237,9 @@ body {
 .sw-box {
     background-color: #FFF;
     border: 1px solid #d8d8d8;
-    border-radius: 3px;
-    padding: 15px 20px;
-    margin: 0 0 15px 0;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 15px 0;
     text-align: left;
     box-shadow: rgba(0,0,0,0.2) 0 5px 0px 0;
     -webkit-box-shadow: rgba(0,0,0,0.2) 0 5px 5px 0;
@@ -251,13 +256,17 @@ body {
     font-style: italic;
 }
 .sw-blue1 {
-    color: #00adef;
+    color: #00aeef;
 }
 .sw-scrollbar2 {
     height: calc(100vh - 115px) !important; /*Height value is defined by 100% of screen height size minus 235px*/
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.center {
+  text-align: center;
 }
 
 /* ////////////////////// Titles /////////////// */
@@ -276,14 +285,14 @@ body {
     padding: 0 0 10px 0;
     font-weight: 400;
     font-size: 18px;
-    color: #00adef;
+    color: #00aeef;
 }
 .panel-title a:focus, a:hover {
     text-decoration: none !important;
 }
 /* ////////////////////// Text styles /////////////// */
 .sw-box-text {
-    font-weight: 300 !important;
+    font-weight: 400 !important;
     font-size: 14px;
 }
 .sw-box-text a {
@@ -291,7 +300,7 @@ body {
     text-decoration: none;
 }
 .sw-box-text a:focus, a:hover {
-    color: #00adef;
+    color: #00aeef;
 }
 /* ////////////////////// STAR full & empty /////////////////////// */
 .sw-star-full {
@@ -302,7 +311,7 @@ body {
 }
 /* ////////////////////// Performance: High, Medium, Low - COLORS /////////////// */
 .sw-high {
-    color: #00adef;
+    color: #00aeef;
     font-weight: 500;
 }
 .sw-medium {
@@ -361,8 +370,8 @@ body {
     font-weight: 300;
 }
 .sw-btn-ghost1 {
-    background-color: #00adef;
-    border: 1px solid #00adef;
+    background-color: #00aeef;
+    border: 1px solid #00aeef;
     color: #FFF;
     padding: 10px 10px;
 

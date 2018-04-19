@@ -37,15 +37,15 @@ export class ConfirmSaleComponent implements OnInit {
     this.asset.status = PENDING_ETHEREUM_CONFIRMATION;
     try {
       const value = this.asset.sellValue * 100;
-      await this.swapyProtocol.sellAsset(this.asset.contractAddress, value);
+      // await this.swapyProtocol.sellAsset(this.asset.contractAddress, value);
       this.toastrService.getInstance().success('Asset inserted into the Marketplace');
-      this.successfulInvestmentService.setMessage('Your investment was mined by the Ethereum blockchain.');
+      this.successfulInvestmentService.setLastMessage('Your investment was mined by the Ethereum blockchain.');
       this.storageService.getItem(this.asset.contractAddress);
     } catch (error) {
       this.storageService.remove(this.asset.contractAddress);
       this.asset.status = status;
       this.successfulInvestmentService.setErrorMessage(error.message);
-      this.toastrService.getInstance().error(error.message);
+      this.toastrService.error(error.message);
     }
   }
 

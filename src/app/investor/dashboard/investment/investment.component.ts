@@ -12,6 +12,7 @@ import { ErrorLogService } from '../../../common/services/error-log.service';
 import { StorageService } from '../../../common/services/storage.service';
 import { Web3Service } from '../../../common/services/web3.service';
 import { SellAssetService } from '../../sell-asset/sell-asset.service';
+import { DashboardService } from '../dashboard.service';
 
 const env = require('../../../../../env.json');
 
@@ -24,7 +25,7 @@ import * as sha1 from 'sha1';
 })
 export class InvestmentComponent implements OnInit {
 
-  @Input() public investment: Invest;
+  @Input() public assets;
   @Input() public collapsed: boolean;
   //
   private walletAddress;
@@ -50,37 +51,53 @@ export class InvestmentComponent implements OnInit {
     private sellAssetService: SellAssetService,
     private router: Router,
     private web3Service: Web3Service,
+    private dashboardService: DashboardService,
     private walletService: WalletService) { }
 
   ngOnInit() {
-    this.isReturnDelayed();
-    this.walletAddress = this.walletService.getWallet().address.toLowerCase();
+    // this.walletAddress = this.walletService.getWallet().address.toLowerCase();
   }
 
-  public toggleCollapse() {
-    this.collapsed = !this.collapsed;
+  public calculateReturnAmount(asset) {
+    return asset.value * (1 + asset.grossReturn);
   }
 
-  public calculateReturnAmount() {
-    return this.investment.totalAmount * (1 + this.investment.grossReturn);
-  }
-
-  public calculatePaybackDate() {
-    const paybackDate = new Date(this.investment.investedAt);
-    paybackDate.setMonth(paybackDate.getMonth() + this.investment.paybackMonths);
+  public calculatePaybackDate(asset) {
+    const paybackDate = new Date(asset.investedAt);
+    paybackDate.setMonth(paybackDate.getMonth() + asset.paybackMonths);
     return paybackDate;
   }
 
-  public async isReturnDelayed() {
-    const latestBlock = (await this.web3Service.getInstance().eth.getBlock('latest'));
-    const now = new Date(latestBlock.timestamp * 1000) as any;
-    this.delayed = [];
-    this.investment.assets.forEach(asset => {
-      const investedAt = new Date(asset.investedAt);
-      this.delayed.push(
-        now.valueOf() > investedAt.setDate(investedAt.getDate() + this.investment.paybackMonths * 30).valueOf() ? true : false
-      );
-    });
+  public calculateAssetProgression(asset) {
+    const paybackDate = new Date(asset.investedAt);
+    const now = new Date();
+    const monthsDiff = (now.getFullYear() * 12 + now.getMonth()) - (paybackDate.getFullYear() * 12 + paybackDate.getMonth());
+    return monthsDiff;
+  }
+
+  public percentageProgression(asset) {
+    const percentage = this.calculateAssetProgression(asset) * 100 / asset.paybackMonths;
+    return Math.floor(percentage / 5) * 5;
+  }
+
+  public selectAsset(assetToSelect) {
+    assetToSelect.selected = assetToSelect.selected === 0 ? 1 : 0;
+    const count = this.assets.filter(asset => asset.selected === 1).length;
+    if (count === 1) {
+      this.assets.forEach(asset => {
+        if (asset.status !== assetToSelect.status) {
+          asset.selected = -1;
+        }
+      });
+    } else {
+      if (count === 0) {
+        this.assets.forEach(asset => {
+          asset.selected = 0;
+        });
+      }
+    }
+
+    this.dashboardService.setSelectedAssets(this.assets.filter(asset => asset.selected === 1));
   }
 
   public statusToString(status) {
@@ -90,19 +107,19 @@ export class InvestmentComponent implements OnInit {
         statusString = '';
         break;
       case this.PENDING_OWNER_AGREEMENT:
-        statusString = 'Pending credit company\'s confirmation';
+        statusString = 'Waiting';
         break;
       case this.INVESTED:
-        statusString = 'Succesfully invested';
+        statusString = 'Invested';
         break;
       case this.RETURNED:
-        statusString = 'Succesfully returned';
+        statusString = 'Returned';
         break;
       case this.FOR_SALE:
-        statusString = 'For sale';
+        statusString = 'On sale';
         break;
       case this.PENDING_INVESTOR_AGREEMENT:
-        statusString = 'Pending confirmation to sell';
+        statusString = 'Waiting';
         break;
       case this.DELAYED_RETURN:
         statusString = 'Delayed return';
@@ -119,10 +136,10 @@ export class InvestmentComponent implements OnInit {
   private onError(error, asset, status) {
     this.storageService.remove(asset.contractAddress);
     if (sha1(error.message) === '699e7c6d81ba58075ee84cf2a640c18a409efcba') { // 50 blocks later and transaction has not being mined yet.
-      this.toastrService.getInstance().error('Transaction is still being mined. Check it out later to see if the transaction was mined');
+      this.toastrService.error('Transaction is still being mined. Check it out later to see if the transaction was mined');
     } else {
       asset.status = status;
-      this.toastrService.getInstance().error(error.message);
+      this.toastrService.error(error.message);
     }
   }
 
@@ -212,10 +229,10 @@ export class InvestmentComponent implements OnInit {
     } catch (error) {
       this.storageService.remove(asset.contractAddress);
       if (error.message === '699e7c6d81ba58075ee84cf2a640c18a409efcba') { // 50 blocks later and transaction has not being mined yet.
-        this.toastrService.getInstance().error('Transaction is still being mined. Check it out later to see if the transaction was mined');
+        this.toastrService.error('Transaction is still being mined. Check it out later to see if the transaction was mined');
       } else {
         asset.status = status;
-        this.toastrService.getInstance().error('Not eligible to receive SWAPY Tokens. Investment return is not delayed yet.');
+        this.toastrService.error('Not eligible to receive SWAPY Tokens. Investment return is not delayed yet.');
       }
     }
   }

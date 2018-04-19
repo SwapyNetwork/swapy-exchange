@@ -28,7 +28,7 @@ export class OfferDetailsComponent implements OnInit {
   public PENDING_ETHEREUM_CONFIRMATION = PENDING_ETHEREUM_CONFIRMATION;
 
   public offer;
-
+  public error;
   public assets: boolean[] = [];
 
   public totalAssetsValue = 0;
@@ -36,19 +36,21 @@ export class OfferDetailsComponent implements OnInit {
 
   public errorMessages: string[] = [];
 
+  public collateral = 'Hover over an asset';
 
   constructor(private offerService: OfferService, private activatedRoute: ActivatedRoute,
     private router: Router, private investService: InvestService, private swapyProtocol: SwapyProtocol,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
+    this.error = false;
+    this.loadingService.show();
     const offers = this.offerService.getCachedOffers();
     if (!offers) {
       this.router.navigate(['/investor/offers']);
     }
     // subscribe to router event
     this.activatedRoute.params.subscribe(async (params: Params) => {
-      this.loadingService.show();
       this.offerIndex = params['id'];
       this.offer = offers[this.offerIndex];
       const assets = [];
@@ -62,13 +64,42 @@ export class OfferDetailsComponent implements OnInit {
         } as any;
         assets.push(asset);
       }
+      this.offer.status = assets.map(asset => asset.status);
       this.offer.assets = assets;
       this.loadingService.hide();
     });
   }
 
+  mouseEnter(index) {
+    // if (this.offer.assets[index].status == AVAILABLE) {
+    //   this.offer.status[index] = -2;
+    // }
+
+    const tokenCollateral = this.offer.assets[index].token;
+    if (Number(tokenCollateral) === 0) {
+      this.collateral = 'No collateral';
+    } else {
+      this.collateral = `Asset collateral ${tokenCollateral} SWAPY`;
+    }
+  }
+
+  mouseLeave(index) {
+    // this.offer.status[index] = AVAILABLE;
+    this.collateral = 'Hover over an asset';
+  }
+
+  selectAsset(index) {
+    const status = this.offer.status[index];
+    if (status == AVAILABLE || status == -2) {
+      this.offer.status[index] = status == AVAILABLE ? -2 : AVAILABLE;
+      this.setTotalAssetsValue();
+    }
+
+    this.validateInput();
+  }
+
   getSelectedAssets() {
-    return this.offer.assets.filter((asset, index) => this.assets[index] === true);
+    return this.offer.assets.filter((asset, index) => this.offer.status[index] === -2);
   }
 
   setTotalAssetsValue() {
@@ -78,12 +109,12 @@ export class OfferDetailsComponent implements OnInit {
   }
 
   validateInput() {
-    this.errorMessages = [];
+    this.error = false;
     if (this.getSelectedAssets().length === 0) {
-      this.errorMessages.push('Please, select at least one asset.');
+      this.error = true;
     }
 
-    return this.errorMessages.length === 0;
+    return !this.error;
 
   }
 
@@ -112,6 +143,7 @@ export class OfferDetailsComponent implements OnInit {
   }
 
   invest() {
+
     if (this.validateInput()) {
 
       const invest = {

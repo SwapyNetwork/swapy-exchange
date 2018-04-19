@@ -5,29 +5,69 @@ import * as sha1 from 'sha1';
 export class SuccessfulInvestmentService {
 
   private error: boolean;
+  private loadingLogo: boolean;
   private message: string;
+  private headerMessage: string;
+
+  public investment;
 
   constructor() { }
 
+  public cacheInvestment(investment) {
+    this.investment = investment;
+  }
+
+  public getCachedInvestment() {
+    return this.investment;
+  }
+
   public setMessage(message) {
+    this.message = message;
+  }
+
+  public setLastMessage(message) {
     this.error = false;
-    this.message = message
+    this.message = message;
+    this.loadingLogo = false;
+  }
+
+  public setHeaderMessage(message) {
+    this.error = false;
+    this.headerMessage = message;
   }
 
   public getMessage(): string {
     return this.message;
   }
 
+  public getHeaderMessage(): string {
+    if (!this.error) {
+      return this.headerMessage;
+    } else {
+      return undefined;
+    }
+  }
+
   public getError(): boolean {
     return this.error;
+  }
+
+  public setLoadingState(state: boolean) {
+    this.loadingLogo = state;
+  }
+
+  public getLoadingState(): boolean {
+    return this.loadingLogo;
   }
 
   public cleanMessages() {
     this.error = undefined;
     this.message = undefined;
+    this.headerMessage = undefined;
+    this.loadingLogo = false;
   }
 
-  setErrorMessage(message) {
+  public setErrorMessage(message) {
     if (message !== null) {
       switch (sha1(message)) {
         case '81c8e9b1e558f0a68e4667560d89a47e7356b593': // Cant pay for gas
@@ -42,8 +82,13 @@ export class SuccessfulInvestmentService {
         default:
           this.message = message;
       }
+
+      if (message.toLowerCase().indexOf('user denied transaction signature') !== - 1) {
+        this.message = 'User denied transaction signature';
+      }
     }
     this.error = true;
+    this.loadingLogo = false;
   }
 
 }

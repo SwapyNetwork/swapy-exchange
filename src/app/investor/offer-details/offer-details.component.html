@@ -1,82 +1,149 @@
-  <div class="sw-scrollbar2">
-    <div class="row"> <!--  Page name, Search Bar -->
-      <div class="col-xs-4 col-sm-4 col-md-4">
-        <p class="sw-page-name">Invest</p>
-      </div>
-    </div> <!-- END Page name, Search Bar  -->
-
-    <div class="row"> <!-- //////////// MAIN Content //////////// -->
-      <form (submit)="invest()">
-        <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
-
-            <div class=" col-md-12"> <!-- Start  -->
-              <div class="sw-box">
-              <div class="row sw-box-space">
-
-                <div class="col-sm-12 col-md-12">
-                  <div class="row">
-                    <div class="col-sm-10 col-md-10">
-                       <p class="sw-box-title">Fundraising Offer</p>
-                       <p class="sw-box-text">Company's wallet address - {{offer.walletAddress}}</p>
-
-                       <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"> </i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i>
-                    </div>
-
-                    <div class="col-sm-2 col-md-2 sw-company-logo-right">
-                       <a><img src="assets/img/noImage.png" alt="meu credito app logo"></a>
-                    </div>
-                  </div>
-                  <hr>
-
-                <div class="row">
-                 <div class="col-sm-6 col-md-6 sw-assets">
-                    <div *ngFor="let asset of offer.assets, let i = index" class="checkbox">
-                     <label>
-                      <input type="checkbox" name="assets_{{i}}" [(ngModel)]="assets[i]" [disabled]="asset.status != AVAILABLE" (change)="setTotalAssetsValue()">
-                      <p class="sw-box-text">Asset {{i + 1}} - <span [ngClass]="{'sw-box-title': true, 'sw-asset-sold-line': asset.status != AVAILABLE }">{{asset.value | currency}}</span><span *ngIf='asset.status != AVAILABLE'> {{' ' + statusToString(asset.status)}}</span><span *ngIf='asset.status == AVAILABLE'> {{' ' + asset.token + " SWAPY"}}</span></p>
-                     </label>
-                    </div>
+<div>
+  <div class="row"> <!--  Page name, Search Bar -->
+    <div class="col-xs-4 col-sm-4 col-md-4">
+      <p class="sw-page-name">Invest</p>
+    </div>
+  </div> <!-- END Page name, Search Bar  -->
+  
+  <div class="row">
+    <div class="col-xs-2 col-xs-offset-3 col-sm-2 col-sm-offset-3 col-md-2 col-md-offset-3">
+      <p class="sw-title-outside-box">Invest</p>
+    </div>
+    <div class="col-xs-3 col-sm-3 col-md-3">
+      <p class="sw-description-outside-box">Select the assets</p>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-2 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
+      <p class="sw-button-add-funds sw-btn-add-funds" role="button" [routerLink]="['/investor/add-funds/child']">Add funds</p>
+    </div>
+  </div>
+  
+  <div class="row" *ngIf="offer.assets"> <!-- //////////// MAIN Content //////////// -->
+    <form (submit)="invest()">
+      <div class="col-sm-7 col-sm-offset-1 col-md-7 col-md-offset-1">
+        <div class=" col-md-12"> <!-- Start  -->
+          <div class="sw-box">
+            <div class="row sw-box-space">
+              <div class="row">
+                <div class="col-sm-1 col-md-1">
+                  <img src="assets/img/swapy-logo4.png" alt="Swapy logo">
+                </div>
+              
+                <div class="col-sm-4 col-md-4">
+                  <span class="sw-box-title">Fundraising Offer</span>
                 </div>
 
-                <div class="col-sm-6 col-md-6 sw-details-right-col">
-                    <p class="sw-box-text">Fundraising</p>
-                    <p class="sw-box-title">{{offer.raisingAmount | currency}}</p>
-                    <p class="sw-box-text">Gross return rate</p>
-                    <p class="sw-box-title">{{offer.grossReturn | percent}}</p>
-                    <p class="sw-box-text">Contract term</p>
-                    <p class="sw-box-title">{{offer.paybackMonths}} months</p>
-                    <!-- <p class="sw-box-text">Installments</p>
-                    <p class="sw-box-title">8 x</p> -->
+                <div class="col-sm-2 col-sm-offset-4 col-md-2 col-md-offset-4">
+                  <p class="sw-box-text">Gross return rate</p>
+                  <p class="sw-box-title sw-blue1">{{offer.grossReturn | percent}}</p>
                 </div>
               </div>
 
-                <div class="row">
-                  <div *ngIf="errorMessages.length > 0">
-                    <div *ngFor="let message of errorMessages" class="alert alert-danger">
-                      {{message}}
-                    </div>
-                  </div>
+              <div class="row">
+                <div class="col-sm-4 col-md-4 col-sm-offset-1 col-md-offset-1">
+                  <span class="sw-box-text">How many assets from this offer do you want to invest?</span>
                 </div>
-
-                <div class="row">
-
-                  <div class=" col-sm-8 col-md-8">
-                    <p class="sw-assets-total">TOTAL {{totalAssetsValue | currency}}</p> <!-- Total = n. of Assets selected above -->
-                  </div>
-                  <div class=" col-sm-4 col-md-4">
-                    <!-- <a class="sw-button sw-btn-ghost1" href="javascript:void(0)">Invest</a> -->
-                    <button type="submit" class="sw-button sw-btn-ghost1" >Invest</button>
-                  </div>
+                <div class="col-sm-2 col-md-2 col-sm-offset-2 col-md-offset-2">
+                  <p class="sw-box-text">Fundsraising</p>
+                  <p class="sw-box-title">{{offer.raisingAmount | currency:'USD':false:'.0-2'}}</p>
                 </div>
-
-               </div>
+                <div class="col-sm-3 col-md-3">
+                  <p class="sw-box-text">Terms (months)</p>
+                  <p class="sw-box-title">{{offer.paybackMonths}}</p>
+                </div>
               </div>
 
+              <div class="row">
+                <div class="col-sm-4 col-md-4 col-sm-offset-1 col-md-offset-1">
+                  <span class="sw-box-text">Single asset price: <span class="sw-blue1">{{offer.raisingAmount / offer.assets.length | currency:'USD':false:'.0-2'}}</span></span>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-sm-5 col-md-5 col-sm-offset-1 col-md-offset-1">
+                  <span *ngFor = "let status of this.offer.status; let assetIndex = index">
+                    <span (click)="selectAsset(assetIndex)"(mouseenter)="mouseEnter(assetIndex)" (mouseleave)="mouseLeave(assetIndex)" *ngIf="status == -2" class="sw-circle sw-circle-selected" role="button">
+                      <span><i class="fa fa-check"></i></span>
+                    </span>
+                    <span (click)="selectAsset(assetIndex)" (mouseenter)="mouseEnter(assetIndex)" (mouseleave)="mouseLeave(assetIndex)" *ngIf="status == AVAILABLE" class="sw-circle sw-circle-available" role="button">
+                      <span>0</span>
+                    </span>
+                    <span (click)="selectAsset(assetIndex)" (mouseenter)="mouseEnter(assetIndex)" (mouseleave)="mouseLeave(assetIndex)" *ngIf="status != AVAILABLE && status != -2" class="sw-circle sw-circle-unavailable" role="button">
+                      <span>X</span>
+                    </span>
+                  </span>
+                  <p class="sw-asset-description">{{collateral}}</p>
+                </div>
+                
+                <div class="col-sm-6 col-md-6 center"> 
+                  <span *ngFor="let asset of offer.assets">
+                    <i [ngClass]="{'fa fa-minus fa-2x': true, 'sw-blue1': asset.status == AVAILABLE}" aria-hidden="true"></i>
+                  </span>
+                  <p>Assets Available</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div></div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-6 col-md-6 col-sm-offset-1 col-md-offset-1">
+                  <p class="sw-assets-total">TOTAL {{totalAssetsValue | currency}}</p>
+                </div>
+                <div class="col-sm-4 col-md-4">
+                  <div class="sw-error center" *ngIf="error">Please, select at least one asset.</div>
+                  <button type="submit" class="sw-button sw-btn-ghost1" >Invest</button>
+                </div>
+              </div>
             </div>
-            </div> <!-- END  -->
-
+          </div>
+        </div> <!-- END  -->
+      </div>
+      <div class="col-sm-3 col-md-3 sw-company-box">
+        <div class="row">
+          <div class="col-sm-12 col-md-12">
+            <span>Company's wallet address: <p class="sw-blue1">{{offer.walletAddress}}</p></span>
+          </div>
         </div>
-      </form>
-    </div><!-- END MAIN Content  -->
-
-</div> <!-- END col 10  -->
+        <!--   
+        <div class="row">
+          <div class="col-sm-12 col-md-12">
+            <span class="sw-box-title">Company Name, Inc</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-12">
+            <p class="sw-box-text sw-company-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, exercitationem doloremque atque dolor numquam perspiciatis consequuntur autem impedit porro doloribus nulla placeat quisquam cupiditate repellendus odio esse! Iure nostrum, quasi!</p>
+            <p class="sw-blue1">City, country</p>
+            <p class="sw-blue1">www.website.com</p>
+            <hr>
+          </div>
+        </div>
+        <div class="row sw-company-assets-details">
+          <div class="col-sm-8 col-md-8">
+            <span>Assets raised</span>
+          </div>
+          <div class="col-sm-4 col-md-4">
+            <div class="sw-number-details">7/10</div>
+          </div>
+        </div>
+        <div class="row sw-company-assets-details">
+          <div class="col-sm-8 col-md-8">
+            <span>Repayment rate</span>
+          </div>
+          <div class="col-sm-4 col-md-4">
+            <div class="sw-blue1 sw-number-details">99%</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-12">
+            <hr>
+            <span>Company's wallet address: <p class="sw-blue1">{{offer.walletAddress}}</p></span>
+          </div>
+        </div>
+       -->
+      </div>
+    </form>
+  </div><!-- END MAIN Content  -->
+</div>  

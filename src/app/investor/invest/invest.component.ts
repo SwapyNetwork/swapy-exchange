@@ -8,6 +8,8 @@ import { WalletService } from '../../common/services/wallet.service';
 import { ToastrService } from '../../common/services/toastr.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 
+import * as sha1 from 'sha1';
+
 @Component({
   selector: 'app-invest',
   templateUrl: './invest.component.html',
@@ -35,6 +37,13 @@ export class InvestComponent implements OnInit {
     this.assetIndex = 0;
     this.offerIndex = this.investService.getCachedOfferIndex();
   }
+  collateralToString(index) {
+    const token = this.investment.assets[index].token;
+    if (token > 0) {
+      return `Collateral ${token} SWAPY`;
+    }
+    return 'No collateral;'
+  }
 
   confirmInvestment() {
     this.invest();
@@ -44,12 +53,15 @@ export class InvestComponent implements OnInit {
   async invest() {
     try {
       const assetsAddress = this.investment.assets.map(asset => asset.contractAddress);
-      await this.swapyProtocol.invest(assetsAddress, this.investment.totalAmount);
+      const assetsValues = this.investment.assets.map(asset => asset.value);
+      this.successfulInvestmentService.cacheInvestment(this.investment);
+      await this.swapyProtocol.invest(assetsAddress, assetsValues);
       this.toastrService.getInstance().success('Your investment was mined by the Ethereum blockchain.');
-      this.successfulInvestmentService.setMessage('Your investment was mined by the Ethereum blockchain.');
+      this.successfulInvestmentService.setLastMessage('Your investment was mined by the Ethereum blockchain.');
+      this.successfulInvestmentService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
       this.successfulInvestmentService.setErrorMessage(error.message);
-      this.toastrService.getInstance().error(this.successfulInvestmentService.getMessage());
+      this.toastrService.error(this.successfulInvestmentService.getMessage());
     }
   }
 

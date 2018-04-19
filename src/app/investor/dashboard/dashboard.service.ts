@@ -12,6 +12,9 @@ import { OWNER, VALUE, PAYBACKDAYS, GROSSRETURN, STATUS,
 @Injectable()
 export class DashboardService {
   public investments;
+  public assets = [];
+  public selectedAssets;
+  public delayed;
 
   constructor(
     private swapyProtocol: SwapyProtocol,
@@ -43,6 +46,8 @@ export class DashboardService {
     newInvestment.totalAmount = assetValues[VALUE] * newInvestment.assets.length / 100;
     newInvestment.grossReturn = assetValues[GROSSRETURN] / 10000;
     newInvestment.creditCompanyAddress = assetValues[OWNER];
+    newInvestment.investedAt = newInvestment.assets[0].investedAt;
+
   }
 
   private async buildNewInvestment(investment, assetValues) {
@@ -64,32 +69,51 @@ export class DashboardService {
     const assets = await this.getAssetValues(investment.returnValues._assets);
 
     const newInvestment = await this.buildNewInvestment(investment, assets);
+    const timestamp = await this.getBlockTimestamp(investment.blockHash);
 
     let myAsset;
-    assets.forEach(async (asset, index) => {
+    for (let index = 0; index < assets.length; ++index) {
+      const asset = assets[index];
       if (asset[INVESTOR].toLowerCase() === this.walletService.getWallet().address.toLowerCase() ||
           asset[SELLDATA_BUYER].toLowerCase() === this.walletService.getWallet().address.toLowerCase()) {
-        const storedStatus = this.storageService.getItem(investment.returnValues._assets[index]);
-        let status;
-        if (storedStatus === null || storedStatus !== Number(asset[STATUS])) {
-          status = Number(asset[STATUS]);
-        } else {
-          status = PENDING_ETHEREUM_CONFIRMATION;
+
+        let status = Number(asset[STATUS]);
+        const assetAddress = investment.returnValues._assets[index];
+        const transactionHash = this.storageService.getItem(assetAddress);
+        let receipt = null;
+        if (transactionHash != null) {
+          receipt = await this.web3Service.getInstance().eth.getTransactionReceipt(transactionHash);
+          if (receipt != null) {
+            status = Number(asset[STATUS]);
+            this.storageService.remove(assetAddress);
+          } else {
+            status = PENDING_ETHEREUM_CONFIRMATION;
+          }
         }
         newInvestment.assets.push({
           contractAddress: investment.returnValues._assets[index],
           status,
           value: asset[VALUE] / 100,
           boughtValue: asset[INVESTOR].toLowerCase() === this.walletService.getWallet().address.toLowerCase() ?
-            asset[BOUGHTVALUE] / 100 : asset[SELLDATA_VALUE] / 100 ,
+            asset[BOUGHTVALUE] / 100 : asset[SELLDATA_VALUE] / 100,
+          soldValue:  asset[SELLDATA_VALUE] / 100,
           investor: asset[INVESTOR].toLowerCase(),
           token: asset[TOKENFUEL] / Math.pow(10, 18),
-          buyer: asset[SELLDATA_BUYER].toLowerCase()
+          buyer: asset[SELLDATA_BUYER].toLowerCase(),
+
+
+          paybackMonths: asset[PAYBACKDAYS] / 30,
+          grossReturn: asset[GROSSRETURN] / 10000,
+          creditCompanyAddress: asset[OWNER],
+          boughtAt: (new Date(timestamp * 1000)).toISOString(),
+          investedAt: (new Date(asset[INVESTEDAT] * 1000)).toISOString(),
+          type: investment.event,
+          selected: 0
         });
 
         myAsset = asset;
       }
-    });
+    }
 
     if (myAsset) {
       this.setInvestmentDetails(newInvestment, myAsset);
@@ -130,6 +154,39 @@ export class DashboardService {
     });
     this.investments = await Promise.all(promises);
     this.investments = this.deleteDuplicatedAssets(this.investments);
-    return this.investments;
+    this.assets = [];
+    this.investments.forEach(investment => {
+      this.assets = this.assets.concat(investment.assets);
+    });
+    await this.isReturnDelayed();
+    return this.assets;
+  }
+
+  public async isReturnDelayed() {
+    const latestBlock = (await this.web3Service.getInstance().eth.getBlock('latest'));
+    const now = new Date(latestBlock.timestamp * 1000) as any;
+    this.delayed = [];
+    this.assets.filter(asset => asset.status == INVESTED).forEach(asset => {
+      const investedAt = new Date(asset.investedAt);
+      if (now.valueOf() > investedAt.setDate(investedAt.getDate() + asset.paybackMonths * 30).valueOf()) {
+        this.delayed.push(asset);
+      }
+    });
+  }
+
+  public setSelectedAssets(assets) {
+    this.selectedAssets = assets;
+  }
+
+  public getSelectedAssets() {
+    return this.selectedAssets;
+  }
+
+  public getAssets() {
+    return this.assets;
+  }
+
+  public getDelayed() {
+    return this.delayed || [];
   }
 }

@@ -103,7 +103,7 @@ export class LoginComponent implements OnInit {
   private solveRoute(userType: number) {
     switch (userType) {
       case INVESTOR:
-        return '/investor';
+        return '/investor/start-investing';
       case CREDIT_COMPANY:
         return '/credit-company';
       default:
