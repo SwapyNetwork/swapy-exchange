@@ -9,7 +9,7 @@ import { InvestorComponent } from './investor.component';
 import { OffersComponent } from './offers/offers.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavModule } from '../common/nav/nav.module';
-import { FooterComponent } from '../common/footer/footer.component';
+import { FooterModule } from '../common/footer/footer.module';
 import { OfferComponent } from './offers/offer/offer.component';
 import { OfferDetailsComponent } from './offer-details/offer-details.component';
 import { CreditCompanyComponent } from './credit-company/credit-company.component';
@@ -48,6 +48,7 @@ import { MessageService } from './message/message.service';
     HttpModule,
     JsonpModule,
     NavModule,
+    FooterModule,
     FormsModule,
     TextMaskModule
   ],
@@ -55,7 +56,7 @@ import { MessageService } from './message/message.service';
     OfferDetailsComponent, CreditCompanyComponent, TermsPageComponent, PrivacyPageComponent, ProfileComponent,
     InvestComponent, SuccessfulInvestmentComponent, InvestmentComponent, MarketplaceComponent, AssetComponent,
     ConfirmPurchaseComponent, SellAssetComponent, ConfirmSaleComponent, AddFundsComponent, AddFundsChildComponent,
-    StartInvestingComponent, CancelAssetComponent, AcceptSaleComponent, RequireTokenComponent, FooterComponent, MessageComponent],
+    StartInvestingComponent, CancelAssetComponent, AcceptSaleComponent, RequireTokenComponent, MessageComponent],
   providers: [LogoutService, OfferService, InvestService, DashboardService,
     MarketplaceService, SellAssetService],
   bootstrap: [InvestorComponent]

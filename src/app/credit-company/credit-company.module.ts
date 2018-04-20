@@ -6,6 +6,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 
 import { CreditCompanyRoutingModule } from './credit-company-routing.module';
 import { NavModule } from '../common/nav/nav.module';
+import { FooterModule } from '../common/footer/footer.module';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddOfferComponent } from './add-offer/add-offer.component';
@@ -33,6 +34,7 @@ import { SupplyTokenService } from './supply-token/supply-token.service';
     HttpModule,
     JsonpModule,
     NavModule,
+    FooterModule,
     FormsModule,
     TextMaskModule
   ],

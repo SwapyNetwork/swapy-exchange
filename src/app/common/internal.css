@@ -120,6 +120,30 @@ body {
     padding: 0px 10px 0px 0px;
 }
 
+.sw-fiat-value {
+    font-size: 14px;
+    margin: 13px 0px 0px 0px;
+    padding: 0px 10px 0px 0px;
+    border-right: 0px solid #888;
+}
+
+.sw-usd-funds-value {
+    font-weight: 300;
+}
+
+.sw-index-value {
+    font-weight: 400;
+}
+
+.left-border {
+    margin: 10px 0px;
+    border-left: 1px solid #888;
+}
+
+.right-top-image {
+  width: 60px;
+}
+
 @media only screen and (max-width: 1115px){ .sw-swapy-logo { display: none;} }
 @media only screen and (max-width: 830px){ .sw-available-lable { display: none;} }
 @media only screen and (min-width: 1115px){ .sw-swapy-logo2 { display: none;} }
