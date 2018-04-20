@@ -42,6 +42,10 @@ export class CreditCompanyComponent implements OnInit {
     this.refreshBalance();
   };
 
+  public triggerMetamaskPopup() {
+    (window as any).chrome.ipcRenderer.send('open-metamask-popup');
+  }
+
   public async refresh() {
   }
 
