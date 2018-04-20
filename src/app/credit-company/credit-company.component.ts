@@ -5,6 +5,7 @@ import { LoadingService } from '../common/services/loading.service';
 import { INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
   DELAYED_RETURN } from '../common/interfaces/offer-asset-status.interface';
 import { DashboardService } from './dashboard/dashboard.service';
+import { SwapyProtocolService as SwapyProtocol } from '../common/services/swapy-protocol.service';
 
 
 @Component({
@@ -21,20 +22,38 @@ export class CreditCompanyComponent implements OnInit {
   public amountReturned;
   public amountToBeReturned;
   public offersLength;
-  public balance;
 
+  public ETHbalance;
+  public tokenBalance;
+  public ETHprice;
+  public USDbalance;
 
-  constructor(private walletService: WalletService,
-    private loadingService: LoadingService, private dashboardService: DashboardService) {};
+  public isElectron;
+
+  constructor(
+    private walletService: WalletService,
+    private loadingService: LoadingService,
+    private swapyProtocol: SwapyProtocol,
+    private dashboardService: DashboardService) {
+      this.isElectron = (window as any).isElectron;
+    };
 
   ngOnInit() {
-    // this.refreshStatusBar();
+    this.refreshBalance();
   };
 
-  async refreshStatusBar() { /**@todo Refresh via websocket when a investment is done */
+  public async refresh() {
+  }
+
+  public async refreshBalance() {
     this.loadingService.show();
+
+    this.tokenBalance = (await this.swapyProtocol.getTokenBalance()) / Math.pow(10, 18);
+    this.ETHbalance = await this.walletService.getEthBalance();
+    this.ETHprice = await this.swapyProtocol.getEthPrice();
+    this.USDbalance = this.ETHbalance * this.ETHprice;
+    /*
     const offers = this.dashboardService.getCachedOffers();
-    this.balance = await this.walletService.getEthBalance();
     let assets = [];
     offers.forEach(offer => {
       offer.assets.forEach(asset => {
@@ -61,6 +80,8 @@ export class CreditCompanyComponent implements OnInit {
       .map(values => values.value + values.value * values.grossReturn)
       .reduce((total: number, current: number) => (total + current), 0));
     this.offersLength = offers.length;
+    */
+
     this.loadingService.hide();
   }
 }

@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
   public async updateOffers() {
     this.loadingService.show();
     this.offers = await this.dashboardService.updateOffers();
-    this.creditCompanyComponent.refreshStatusBar();
+    this.creditCompanyComponent.refreshBalance();
     this.loadingService.hide();
   }
 }

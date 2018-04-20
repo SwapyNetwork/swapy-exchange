@@ -27,10 +27,12 @@ export class InvestorComponent implements OnInit {
   public returnedValue;
   public nextReturnDate;
   public nextReturnValue;
+
   public ETHbalance;
   public tokenBalance;
   public ETHprice;
   public USDbalance;
+
   public isElectron;
 
   constructor(
@@ -89,7 +91,6 @@ export class InvestorComponent implements OnInit {
     this.ETHbalance = await this.walletService.getEthBalance();
     this.ETHprice = await this.swapyProtocol.getEthPrice();
     this.USDbalance = this.ETHbalance * this.ETHprice;
-    this.loadingService.hide();
 
     this.investedValue = 0;
     this.returnedValue = 0;
