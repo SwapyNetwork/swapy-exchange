@@ -22,6 +22,8 @@ import { CustomToastOption } from './common/CustomToastOption';
 import { ErrorLogService } from './common/services/error-log.service';
 import { SuccessfulInvestmentService } from './investor/successful-investment/successful-investment.service';
 import { MessageService } from './investor/message/message.service';
+import { AddFundsComponent } from './common/add-funds/add-funds.component';
+import { AddFundsChildComponent } from './common/add-funds/add-funds-child/add-funds-child.component';
 
 
 @NgModule({
@@ -38,7 +40,7 @@ import { MessageService } from './investor/message/message.service';
   ],
   providers: [StorageService, HttpService, I18nService, LoadingService, LinkService, Web3Service,
     WalletService, SwapyProtocolService, LogoutService, SuccessfulInvestmentService, MessageService,
-    ToastrService, ErrorLogService, { provide: ToastOptions, useClass: CustomToastOption }],
+    ToastrService, ErrorLogService, AddFundsComponent, AddFundsChildComponent, { provide: ToastOptions, useClass: CustomToastOption }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

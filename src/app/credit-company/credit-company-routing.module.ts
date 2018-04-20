@@ -12,6 +12,8 @@ import { TermsPageComponent } from './terms-page/terms-page.component';
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SupplyTokenComponent } from './supply-token/supply-token.component';
+import { AddFundsComponent } from '../common/add-funds/add-funds.component';
+import { AddFundsChildComponent } from '../common/add-funds/add-funds-child/add-funds-child.component';
 
 const routes: Routes = [
   {
@@ -20,6 +22,8 @@ const routes: Routes = [
     children: [
       { path: '', component: DashboardComponent },
       { path: 'start', component: StartComponent },
+      { path: 'add-funds', component: AddFundsComponent },
+      { path: 'add-funds/child', component: AddFundsChildComponent },
       { path: 'raise', component: AddOfferComponent },
       { path: 'raise/confirm', component: ConfirmOfferComponent },
       { path: 'raise/success', component: SuccessfulOfferComponent },
