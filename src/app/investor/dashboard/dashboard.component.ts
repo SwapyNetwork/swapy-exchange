@@ -44,12 +44,8 @@ export class DashboardComponent implements OnInit {
     this.walletAddress = this.walletService.getWallet().address.toLowerCase();
     this.dashboardService.setSelectedAssets([]);
     const ethBalance = await this.walletService.getEthBalance();
-    if (ethBalance === 0) {
-      this.router.navigate(['/investor/add-funds']);
-    } else {
-      await this.updateInvestments();
-      this.investorComponent.refreshBalance();
-    }
+    await this.updateInvestments();
+    this.investorComponent.refreshBalance();
     this.loadingService.hide();
   }
 

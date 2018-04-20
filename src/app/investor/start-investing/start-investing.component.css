@@ -6,21 +6,6 @@
     margin-left: 20px;
     width: 100%;
 }
-.sw-border-dark-orange {
-    border-bottom: 3px solid #eb9739;
-}
-.sw-border-light-orange {
-    border-bottom: 3px solid #eebe4c;
-}
-.sw-border-light-green {
-    border-bottom: 3px solid #b1d432;
-}
-.sw-border-light-blue {
-    border-bottom: 3px solid #00aeef;
-}
-.sw-fade-color {
-    opacity: 0.6;
-}
 .sw-welcome-title {
     padding-top: 30px;
     font-size: 32px;

@@ -26,6 +26,7 @@ import { OfferComponent } from './dashboard/offer/offer.component';
 import { DashboardService } from './dashboard/dashboard.service';
 import { SupplyTokenComponent } from './supply-token/supply-token.component';
 import { SupplyTokenService } from './supply-token/supply-token.service';
+import { StartComponent } from './start/start.component';
 
 @NgModule({
   imports: [
@@ -40,7 +41,7 @@ import { SupplyTokenService } from './supply-token/supply-token.service';
   ],
   declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent, ConfirmOfferComponent,
     SuccessfulOfferComponent, PendingOfferComponent, ProfileComponent, TermsPageComponent, PrivacyPageComponent,
-    OfferComponent, SupplyTokenComponent],
+    OfferComponent, SupplyTokenComponent, StartComponent],
   providers: [LogoutService, AddOfferService, PendingOfferService, DashboardService, SupplyTokenService],
   bootstrap: [CreditCompanyComponent]
 })

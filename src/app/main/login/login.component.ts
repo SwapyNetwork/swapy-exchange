@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit {
       case INVESTOR:
         return '/investor/start-investing';
       case CREDIT_COMPANY:
-        return '/credit-company';
+        return '/credit-company/start';
       default:
         return '/';
     }

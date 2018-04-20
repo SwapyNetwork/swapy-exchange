@@ -549,6 +549,42 @@ input.cmn-toggle-round:checked + label:after {
     color:rgba(0, 0, 0, 0.4);
 }
 /* ////////////////////// END Progress Bar //////////////////////////////// */
+/* ////////////////////// START Colored Border Bottom //////////////////////////////// */
+
+.sw-title-outside-box {
+    font-weight: 400;
+    font-size: 16px;
+    color: #4a4a4a;
+    padding: 0 0 15px 5px;
+    margin-left: 20px;
+    width: 100%;
+    text-align: left;
+}
+.sw-border-dark-orange {
+    border-bottom: 3px solid #eb9739;
+}
+.sw-border-light-orange {
+    border-bottom: 3px solid #eebe4c;
+}
+.sw-border-light-green {
+    border-bottom: 3px solid #b1d432;
+}
+.sw-border-light-blue {
+    border-bottom: 3px solid #00aeef;
+}
+.sw-border-dark-red {
+    border-bottom: 3px solid #c11b1b;
+}
+.sw-fade-color {
+    opacity: 0.6;
+}
+.sw-welcome-title {
+    padding-top: 30px;
+    font-size: 32px;
+    font-weight: 500;
+}
+
+/* ////////////////////// END Colored Border Bottom //////////////////////////////// */
 /* ////////////////////// START Circular CHART //////////////////////////////// */
 .sw-progress-circle {
    font-size: 20px;
