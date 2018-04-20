@@ -19,7 +19,7 @@ export class StartComponent implements OnInit {
   public async ngOnInit() {
     const ethBalance = await this.walletService.getEthBalance();
     if (Number(ethBalance) === 0) {
-      this.router.navigate(['/add-funds']);
+      this.router.navigate(['credit-company/add-funds']);
     }
   }
 
