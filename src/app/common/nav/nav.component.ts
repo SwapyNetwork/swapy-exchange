@@ -47,6 +47,7 @@ export class NavComponent implements OnInit {
         break;
       case CREDIT_COMPANY:
         this.menu = [
+          {url: '/credit-company/add-funds/child', label: 'Add funds'},
           {url: '/credit-company/raise', label: 'Raise'},
           {url: '/credit-company', label: 'Manage'}
         ];

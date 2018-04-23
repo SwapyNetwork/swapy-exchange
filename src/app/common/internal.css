@@ -549,7 +549,7 @@ input.cmn-toggle-round:checked + label:after {
     color:rgba(0, 0, 0, 0.4);
 }
 /* ////////////////////// END Progress Bar //////////////////////////////// */
-/* ////////////////////// START Colored Border Bottom //////////////////////////////// */
+/* ////////////////////// START Instructions bar //////////////////////////////// */
 
 .sw-title-outside-box {
     font-weight: 400;
@@ -559,6 +559,12 @@ input.cmn-toggle-round:checked + label:after {
     margin-left: 20px;
     width: 100%;
     text-align: left;
+}
+.sw-description-outside-box {
+    font-weight: 300;
+    font-size: 18px;
+    color: #4a4a4a;
+    padding: 0 0 15px 0;
 }
 .sw-border-dark-orange {
     border-bottom: 3px solid #eb9739;
@@ -583,8 +589,34 @@ input.cmn-toggle-round:checked + label:after {
     font-size: 32px;
     font-weight: 500;
 }
+.sw-button-add-funds {
+    border-radius: 300px;
+    padding: 0 0 15px 0;
+    margin: -10px 20px 0 0;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+    width: 90%;
+}
+.sw-btn-add-funds {
+    font-weight: 500;
+    background-color: #eebe4c;
+    border: 1px solid #eebe4c;
+    color: #FFF;
+    padding: 10px 10px;
 
-/* ////////////////////// END Colored Border Bottom //////////////////////////////// */
+}
+.sw-btn-add-funds:hover {
+    background-color: #ffcf5d;
+    border: 1px solid #ffcf5d;
+    color: #FFF;
+    padding: 10px 10px;
+    text-decoration: none;
+}
+
+/* ////////////////////// END Instructions bar //////////////////////////////// */
 /* ////////////////////// START Circular CHART //////////////////////////////// */
 .sw-progress-circle {
    font-size: 20px;
