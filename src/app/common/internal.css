@@ -617,6 +617,30 @@ input.cmn-toggle-round:checked + label:after {
 }
 
 /* ////////////////////// END Instructions bar //////////////////////////////// */
+/* ////////////////////// START Company Box //////////////////////////////// */
+
+.sw-company-box {
+  margin: 10px 30px 0 30px;
+}
+.sw-company-description {
+  text-align: justify;
+  margin: 10px 0;
+}
+.sw-asset-description {
+    margin-top: 15px;
+    color: #00aeef;
+}
+
+.sw-company-assets-details {
+  font-size: 18px;
+}
+
+.sw-number-details {
+  text-align: right;
+  font-weight: 500;
+    font-size: 22px;
+}
+/* ////////////////////// END Company Box //////////////////////////////// */
 /* ////////////////////// START Circular CHART //////////////////////////////// */
 .sw-progress-circle {
    font-size: 20px;

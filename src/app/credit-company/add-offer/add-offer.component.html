@@ -16,6 +16,7 @@
       <p class="sw-button-add-funds sw-btn-add-funds" role="button" [routerLink]="['/credit-company/add-funds/child']">Add funds</p>
     </div>
   </div>
+
   <div class="row">
     <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
       <div class=" col-md-12">
@@ -84,7 +85,7 @@
                       Number of assets is required.
                     </div>
                     <div [hidden]="!assetsNumberInput.errors.pattern">
-                      Number of assets should between 1 and 5.
+                      Number of assets must be between 1 and 5.
                     </div>
                   </div>
 
