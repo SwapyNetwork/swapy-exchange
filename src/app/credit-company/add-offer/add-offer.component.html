@@ -58,27 +58,39 @@
                   <div class="col-sm-3 col-md-3">
                     <div class="form-group">
                       <label for="inputAssetsNumber"><span class="sw-box-text">Number of assets</span></label>
-                      <input type="tel" class="form-control" placeholder="Add number of assets 1-5"  name="assetsNumber" [(ngModel)]="assetsNumber" maxlength="2" #assetsNumberInput="ngModel" pattern="[1-5]{1}" required>
+                      <input type="tel" class="form-control" placeholder="Add number of assets 1-5"  name="assetsNumber" [(ngModel)]="assetsNumber" maxlength="1" #assetsNumberInput="ngModel" pattern="[1-5]{1}" required>
                     </div>
                   </div>
                 </div>
+                
+                <div *ngIf="(!raiseForm.form.valid)">  
 
-                <div *ngIf="fundraisingInput.errors && (fundraisingInput.touched || fundraisingInput.dirty)" class="alert alert-danger">
-                  Fundraising amount is required.
-                </div>
-                <div *ngIf="grossReturnInput.errors && (grossReturnInput.touched || grossReturnInput.dirty)" class="alert alert-danger">
-                  Gross return rate is required.
-                </div>
-                <div *ngIf="paybackMonthsInput.errors && (paybackMonthsInput.touched || paybackMonthsInput.dirty)" class="alert alert-danger">
-                  <div [hidden]="!paybackMonthsInput.errors.required">
-                    Contract term is required.
+                  <div *ngIf="(fundraisingInput.errors) && (fundraisingInput.touched || fundraisingInput.dirty)" class="alert alert-danger">
+                    Fundraising amount is required.
                   </div>
-                  <div [hidden]="!paybackMonthsInput.errors.pattern">
-                    Contract term format is invalid.
+                  <div *ngIf="(grossReturnInput.errors) && (grossReturnInput.touched || grossReturnInput.dirty)" class="alert alert-danger">
+                    Gross return rate is required.
                   </div>
+                  <div *ngIf="(paybackMonthsInput.errors) && (paybackMonthsInput.touched || paybackMonthsInput.dirty)" class="alert alert-danger">
+                    <div [hidden]="!paybackMonthsInput.errors.required">
+                      Contract term is required.
+                    </div>
+                    <div [hidden]="!paybackMonthsInput.errors.pattern">
+                      Contract term format is invalid.
+                    </div>
+                  </div>
+                  <div *ngIf="(assetsNumberInput.errors) && (assetsNumberInput.touched || assetsNumberInput.dirty)" class="alert alert-danger">
+                    <div [hidden]="!assetsNumberInput.errors.required">
+                      Number of assets is required.
+                    </div>
+                    <div [hidden]="!assetsNumberInput.errors.pattern">
+                      Number of assets should between 1 and 5.
+                    </div>
+                  </div>
+
                 </div>
                 <div class="row">
-                  <div class="col-sm-offset-9 col-md-offset-9 col-sm-3 col-md-3">
+                  <div class="col-sm-offset-9 col-md-offset-9 col-sm-2 col-md-2">
                     <button type="submit" class="sw-button sw-btn-ghost1" [disabled]="!raiseForm.form.valid">Add Offer</button>
                   </div>
                 </div>

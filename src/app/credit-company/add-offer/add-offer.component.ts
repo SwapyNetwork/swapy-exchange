@@ -14,6 +14,7 @@ export class AddOfferComponent implements OnInit {
   public amount: string;
   public paybackMonths: string;
   public grossReturn: string;
+  public assetsNumber: number;
   public errorMessages: string[] = [];
 
   public paybackMonthsMask = [/\d/, /\d/];
@@ -41,19 +42,17 @@ export class AddOfferComponent implements OnInit {
   constructor(private addOfferService: AddOfferService, private router: Router) {}
 
   ngOnInit() {
-    this.paybackMonths = '12'; // Temporary setting default value
+    this.paybackMonths = '12'; // Temporary default value
   }
 
   addOffer() {
-    /** @todo frontend validations */
     this.errorMessages = [];
-    /** todo text-mask maintains the mask on the model value. When it got fixed, remove the replacing */
     const raisingAmount = parseFloat(this.amount.replace(/[^0-9.]/g, ''));
     const assets = [];
 
     // For now it's fixed in 5 assets of the same value. Later on, the company will be able to choose the assets' values
-    for (let i = 0; i < 5; i++) {
-      assets.push({value: parseFloat((raisingAmount / 5).toFixed(2))});
+    for (let i = 0; i < this.assetsNumber; i++) {
+      assets.push({value: parseFloat((raisingAmount / this.assetsNumber).toFixed(2))});
     }
 
     const offer = {
@@ -62,7 +61,6 @@ export class AddOfferComponent implements OnInit {
       paybackMonths: parseInt(this.paybackMonths, 10),
       assets
     }
-    /** @todo In the HTML months input, add a mask to only accept input from numbers*/
 
     this.addOfferService.cacheOffer(offer);
     this.router.navigate(['credit-company/raise/confirm']);
