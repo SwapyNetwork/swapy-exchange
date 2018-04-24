@@ -314,6 +314,9 @@ body {
 .panel-title a:focus, a:hover {
     text-decoration: none !important;
 }
+.sw-last-row {
+  padding-top: 25px;
+}
 /* ////////////////////// Text styles /////////////// */
 .sw-box-text {
     font-weight: 400 !important;
@@ -621,6 +624,7 @@ input.cmn-toggle-round:checked + label:after {
 
 .sw-company-box {
   margin: 10px 30px 0 30px;
+  text-align: left;
 }
 .sw-company-description {
   text-align: justify;
@@ -638,7 +642,10 @@ input.cmn-toggle-round:checked + label:after {
 .sw-number-details {
   text-align: right;
   font-weight: 500;
-    font-size: 22px;
+  font-size: 22px;
+}
+.sw-break-word {
+  word-wrap: break-word;
 }
 /* ////////////////////// END Company Box //////////////////////////////// */
 /* ////////////////////// START Circular CHART //////////////////////////////// */

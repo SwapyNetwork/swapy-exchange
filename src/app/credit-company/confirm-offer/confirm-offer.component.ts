@@ -18,9 +18,11 @@ import { WalletService } from '../../common/services/wallet.service';
 })
 export class ConfirmOfferComponent implements OnInit {
 
+  public walletAddress: string;
   public offer: any;
   public errorMessages: string[] = [];
   private toastr;
+  private defaultAssets = [0, 0, 0, 0, 0];
 
   constructor(private addOfferService: AddOfferService,
     private router: Router,
@@ -32,6 +34,7 @@ export class ConfirmOfferComponent implements OnInit {
     private errorLogService: ErrorLogService,
     private walletService: WalletService,
   ) {
+    this.walletAddress = this.walletService.getWallet().address;
   }
 
   ngOnInit() {
