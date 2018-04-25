@@ -7,6 +7,8 @@ import { ErrorLogService } from '../../common/services/error-log.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { DashboardService } from './dashboard.service';
 import { CreditCompanyComponent } from '../credit-company.component';
+import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT,
+  RETURNED, DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +18,16 @@ import { CreditCompanyComponent } from '../credit-company.component';
 export class DashboardComponent implements OnInit {
 
   public offers;
+  public selectedAssets;
+
+  public AVAILABLE = AVAILABLE;
+  public PENDING_OWNER_AGREEMENT = PENDING_OWNER_AGREEMENT;
+  public INVESTED = INVESTED;
+  public RETURNED = RETURNED;
+  public DELAYED_RETURN = DELAYED_RETURN;
+  public FOR_SALE = FOR_SALE;
+  public PENDING_INVESTOR_AGREEMENT = PENDING_INVESTOR_AGREEMENT;
+  public PENDING_ETHEREUM_CONFIRMATION = PENDING_ETHEREUM_CONFIRMATION;
 
   constructor(
     private walletService: WalletService,
@@ -36,5 +48,20 @@ export class DashboardComponent implements OnInit {
     this.offers = await this.dashboardService.updateOffers();
     this.creditCompanyComponent.refreshBalance();
     this.loadingService.hide();
+  }
+
+  public handleButtons() {
+    this.selectedAssets = this.dashboardService.getSelectedAssets();
+    return {
+      status: this.selectedAssets[0].status,
+      investor: this.selectedAssets[0].investor
+    }
+  }
+
+  public checkSelectedAssets() {
+    if (this.dashboardService.getSelectedAssets() === undefined) {
+      return 0;
+    }
+    return this.dashboardService.getSelectedAssets();
   }
 }

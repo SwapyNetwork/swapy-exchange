@@ -120,4 +120,8 @@ export class DashboardService {
   public setSelectedAssets(assets) {
     this.selectedAssets = assets;
   }
+
+  public getSelectedAssets() {
+    return this.selectedAssets;
+  }
 }

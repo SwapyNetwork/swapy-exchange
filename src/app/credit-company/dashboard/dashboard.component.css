@@ -1,4 +1,33 @@
+.sw-btn-white {
+    font-weight: 500;
+    background-color: #fff;
+    border: 1px solid #eebe4c;
+    color: #eebe4c;
+    padding: 10px 10px;
 
+}
+.sw-btn-white:hover {
+    background-color: #fff;
+    border: 1px solid #ffcf5d;
+    color: #eebe4c;
+    padding: 10px 10px;
+    text-decoration: none;
+}
+.sw-btn-orange {
+    font-weight: 500;
+    background-color: #eebe4c;
+    border: 1px solid #eebe4c;
+    color: #fff;
+    padding: 10px 10px;
+
+}
+.sw-btn-orange:hover {
+    background-color: #ffcf5d;
+    border: 1px solid #ffcf5d;
+    color: #fff;
+    padding: 10px 10px;
+    text-decoration: none;
+}
 .sw-top-bar-info {
 	padding: 20px 0 20px 0; 
 	margin-top: 20px; 
