@@ -6,6 +6,8 @@ import { ToastrService } from '../../../common/services/toastr.service';
 import { LinkService } from '../../../common/services/link.service';
 import { WalletService } from '../../../common/services/wallet.service';
 import { ErrorLogService } from '../../../common/services/error-log.service';
+import { DashboardService } from '../dashboard.service';
+import { AssetMathService as AssetMath } from '../../../common/services/asset-math.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../../common/services/swapy-protocol.service';
 import {
   AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
@@ -50,25 +52,30 @@ export class OfferComponent implements OnInit {
     private storageService: StorageService,
     private supplyTokenService: SupplyTokenService,
     private router: Router,
+    private assetMath: AssetMath,
+    private dashboardService: DashboardService,
     private errorLogService: ErrorLogService) { }
 
-  ngOnInit() { 
-    console.log(this.assets);
-  };
+  ngOnInit() {};
 
-  public calculatePaybackDate(asset) {
-    const paybackDate = new Date(asset.investedAt);
-    paybackDate.setMonth(paybackDate.getMonth() + this.offer.paybackMonths);
-    return paybackDate;
-  }
+  public selectAsset(assetToSelect) {
+    assetToSelect.selected = assetToSelect.selected === 0 ? 1 : 0;
+    const count = this.assets.filter(asset => asset.selected === 1).length;
+    if (count === 1) {
+      this.assets.forEach(asset => {
+        if (asset.status !== assetToSelect.status) {
+          asset.selected = -1;
+        }
+      });
+    } else {
+      if (count === 0) {
+        this.assets.forEach(asset => {
+          asset.selected = 0;
+        });
+      }
+    }
 
-  public toggleCollapse() {
-    this.collapsed = !this.collapsed;
-  }
-
-  public exploreContract(address: string) {
-    const url = this.explorerUrl + address;
-    this.linkService.openLink(url);
+    this.dashboardService.setSelectedAssets(this.assets.filter(asset => asset.selected === 1));
   }
 
   public async withdrawFunds(asset) {
@@ -130,7 +137,7 @@ export class OfferComponent implements OnInit {
         statusString = 'Pending transaction confirmation';
         break;
       case this.PENDING_OWNER_AGREEMENT:
-        statusString = 'Pending agreement';
+        statusString = 'Waiting';
         break;
       case this.AVAILABLE:
         statusString = 'Available';
@@ -138,10 +145,10 @@ export class OfferComponent implements OnInit {
       case this.INVESTED:
       case this.FOR_SALE:
       case this.PENDING_INVESTOR_AGREEMENT:
-        statusString = 'Successfully invested';
+        statusString = 'Invested';
         break;
       case this.RETURNED:
-        statusString = 'Successfully returned';
+        statusString = 'Returned';
         break;
       case this.DELAYED_RETURN:
         statusString = 'Delayed return';

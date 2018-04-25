@@ -13,6 +13,7 @@ export class DashboardService {
 
   public offers;
   public assets;
+  public selectedAssets;
 
   constructor(
     private walletService: WalletService,
@@ -76,7 +77,8 @@ export class DashboardService {
       investedAt: assetValues[INVESTEDAT] !== '0' ?
         (new Date(assetValues[INVESTEDAT] * 1000)).toISOString() : null,
       token: assetValues[TOKENFUEL] / Math.pow(10, 18),
-      paybackMonths: assetValues[PAYBACKDAYS] / 30
+      paybackMonths: assetValues[PAYBACKDAYS] / 30,
+      selected: 0      
     };
   }
 
@@ -113,5 +115,9 @@ export class DashboardService {
 
   public getAssets() {
     return this.assets;
+  }
+
+  public setSelectedAssets(assets) {
+    this.selectedAssets = assets;
   }
 }

@@ -288,9 +288,14 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
 }
-
 .center {
   text-align: center;
+}
+.sw-orange {
+    color: #eebe4c;
+}
+.sw-green {
+  color: #b1d432;
 }
 
 /* ////////////////////// Titles /////////////// */
@@ -648,6 +653,74 @@ input.cmn-toggle-round:checked + label:after {
   word-wrap: break-word;
 }
 /* ////////////////////// END Company Box //////////////////////////////// */
+/* ////////////////////// START Asset progress //////////////////////////////// */
+.progress{
+    height: 3px;
+    background: #e3e3e3;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 12px 0;
+    overflow: visible;
+}
+
+.progress .progress-bar{
+    background:#00aeef; /*  blue color of bar */
+    box-shadow: none;
+    position: relative;
+    -webkit-animation: animate-positive 2s;
+    animation: animate-positive 2s;
+}
+.progress .progress-bar:after{
+    content: "";
+    border-radius: 30px;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    top: -5px;
+    right: -4px;
+}
+.progress.sw-blue-bar .progress-bar:after{
+    background: #00aeef;  /*  blue color of circle */
+}
+
+.sw-full-bar{
+    height: 3px;
+    background: #b1d432;
+    border-radius: 0;
+    box-shadow: none !important;
+    margin: 20px 0;
+    overflow: visible;
+}
+
+.prog0 { width:0%; }
+.prog5 { width:5%; }
+.prog10 { width:10%; }
+.prog15 { width:15%; }
+.prog20 { width:20%; }
+.prog25 { width:25%; }
+.prog30 { width:30%; }
+.prog35 { width:35%; }
+.prog40 { width:40%; }
+.prog45 { width:45%; }
+.prog50 { width:50%; }
+.prog55 { width:55%; }
+.prog60 { width:60%; }
+.prog65 { width:65%; }
+.prog70 { width:70%; }
+.prog75 { width:75%; }
+.prog80 { width:80%; }
+.prog85 { width:85%; }
+.prog90 { width:90%; }
+.prog95 { width:95%; }
+.prog100 { background: #b1d432; }
+@-webkit-keyframes animate-positive {
+    0% { width: 0; }
+}
+@keyframes animate-positive {
+    0% { width: 0; }
+}
+
+/* ////////////////////// END Asset progress //////////////////////////////// */
 /* ////////////////////// START Circular CHART //////////////////////////////// */
 .sw-progress-circle {
    font-size: 20px;
