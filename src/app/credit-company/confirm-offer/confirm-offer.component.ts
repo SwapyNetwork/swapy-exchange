@@ -46,25 +46,19 @@ export class ConfirmOfferComponent implements OnInit {
   }
 
   async confirmOffer() {
-    const offerTermsHash = '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed';
-
-    const a = Math.ceil(this.offer.raisingAmount / 5 * 100);
-    const assetValues = [a, a, a, a, a];
-
-    this.errorLogService.setClassName('ConfirmOfferComponent');
-    this.errorLogService.setFunctionName('confirmOffer');
+    const assetValues = this.offer.assets.map(asset => asset.value * 100);
     this.router.navigate(['/credit-company/raise/pending']);
-    // Improve this call
     try {
-      const offerTx = await this.swapyProtocol
-        .createOffer(this.offer.paybackMonths * 30, this.offer.grossReturn, 'USD', this.offer.raisingAmount, offerTermsHash, assetValues);
+      await this.swapyProtocol.createOffer(
+        this.offer.paybackMonths * 30,
+        this.offer.grossReturn,
+        'USD',
+        this.offer.raisingAmount,
+        assetValues
+      );
       this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
       this.pendingOfferService.setMessage('Your offer was mined by the Ethereum blockchain.');
     } catch (error) {
-      this.walletService.getEthBalance().then((currentBalance) => {
-        this.errorLogService.setAfterETHbalance(currentBalance);
-        this.errorLogService.setError(error);
-      });
       this.pendingOfferService.setErrorMessage(error.message);
       this.toastrService.error(this.pendingOfferService.getMessage());
     }

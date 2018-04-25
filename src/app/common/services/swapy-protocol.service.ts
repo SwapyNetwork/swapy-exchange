@@ -95,7 +95,7 @@ export class SwapyProtocolService {
     });
   }
 
-  public createOffer(payback: number, grossReturn: number, currency: string, value: number, offerTermsHash: string, assets: number[]) {
+  public createOffer(payback: number, grossReturn: number, currency: string, value: number, assets: number[]) {
     return this.SwapyExchangeContract.methods
       .createOffer(
         payback,
