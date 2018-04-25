@@ -13,6 +13,7 @@ import { LinkService } from './common/services/link.service';
 import { Web3Service } from './common/services/web3.service';
 import { WalletService } from './common/services/wallet.service';
 import { SwapyProtocolService } from './common/services/swapy-protocol.service';
+import { AssetMathService } from './common/services/asset-math.service';
 import { LogoutService } from './common/services/logout.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
@@ -40,7 +41,7 @@ import { AddFundsChildComponent } from './common/add-funds/add-funds-child/add-f
   ],
   providers: [StorageService, HttpService, I18nService, LoadingService, LinkService, Web3Service,
     WalletService, SwapyProtocolService, LogoutService, SuccessfulInvestmentService, MessageService,
-    ToastrService, ErrorLogService, AddFundsComponent, AddFundsChildComponent, { provide: ToastOptions, useClass: CustomToastOption }],
+    ToastrService, ErrorLogService, AssetMathService, { provide: ToastOptions, useClass: CustomToastOption }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,12 +5,14 @@ import { WalletService } from '../../common/services/wallet.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 import { StorageService } from '../../common/services/storage.service';
 import { PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
-import { VALUE, PAYBACKDAYS, GROSSRETURN, STATUS, INVESTOR, TOKENFUEL } from '../../common/interfaces/asset-parameters.interface';
+import { VALUE, PAYBACKDAYS, GROSSRETURN, STATUS,
+  INVESTOR, TOKENFUEL, INVESTEDAT } from '../../common/interfaces/asset-parameters.interface';
 
 @Injectable()
 export class DashboardService {
 
   public offers;
+  public assets;
 
   constructor(
     private walletService: WalletService,
@@ -67,9 +69,12 @@ export class DashboardService {
     }
     return {
       contractAddress: offer.returnValues._assets[index],
-      investorWallet: assetValues[INVESTOR],
+      investorAddress: assetValues[INVESTOR],
       status,
       value: assetValues[VALUE] / 100,
+      grossReturn: assetValues[GROSSRETURN] / 10000,
+      investedAt: assetValues[INVESTEDAT] !== '0' ?
+        (new Date(assetValues[INVESTEDAT] * 1000)).toISOString() : null,
       token: assetValues[TOKENFUEL] / Math.pow(10, 18),
       paybackMonths: assetValues[PAYBACKDAYS] / 30
     };
@@ -99,6 +104,14 @@ export class DashboardService {
       promises.push(this.factoryOffer(offer));
     });
     this.offers = await Promise.all(promises);
+    this.assets = [];
+    this.offers.forEach(offer => {
+      this.assets = this.assets.concat(offer.assets);
+    });
     return this.offers;
+  }
+
+  public getAssets() {
+    return this.assets;
   }
 }

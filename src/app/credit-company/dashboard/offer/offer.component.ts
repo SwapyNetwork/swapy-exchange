@@ -35,6 +35,7 @@ export class OfferComponent implements OnInit {
 
   public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
 
+  @Input() public assets;
   @Input() public offer: Offer;
   @Input() public collapsed: boolean;
 
@@ -51,7 +52,9 @@ export class OfferComponent implements OnInit {
     private router: Router,
     private errorLogService: ErrorLogService) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    console.log(this.assets);
+  };
 
   public calculatePaybackDate(asset) {
     const paybackDate = new Date(asset.investedAt);

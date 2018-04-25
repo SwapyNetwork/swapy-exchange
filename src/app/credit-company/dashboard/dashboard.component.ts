@@ -23,8 +23,7 @@ export class DashboardComponent implements OnInit {
     private loadingService: LoadingService,
     private dashboardService: DashboardService,
     private creditCompanyComponent: CreditCompanyComponent,
-    private toastr: ToastsManager, vcr: ViewContainerRef,
-    private errorLogService: ErrorLogService) {
+    private toastr: ToastsManager, vcr: ViewContainerRef) {
       this.toastr.setRootViewContainerRef(vcr);
     }
 

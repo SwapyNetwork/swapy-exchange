@@ -1,68 +1,48 @@
-<!-- ///////////////////////////////////////////////////////////////////////////////// -->
-<!-- //////////////////////////   MAIN Content  ////////////////////////////////////// -->
-<!-- ///////////////////////////////////////////////////////////////////////////////// -->
-<div class="sw-scrollbar2">
-  <div class="row"> <!--  Page name, Search Bar -->
+<div>
+  <div class="row">
     <div class="col-xs-4 col-sm-4 col-md-4">
       <p class="sw-page-name">Manage</p>
     </div>
-    <div class="col-xs-4 col-sm-4 col-md-4">
-      <a class="sw-button sw-btn-ghost1" (click)="updateOffers()">Refresh</a>
+  </div>
+  
+  <div class="row">
+    <div class="col-xs-10 col-xs-offset-2 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2">
+      
+      <div class="col-xs-2 col-sm-2 col-md-2">
+        <p class="sw-title-outside-box sw-border-light-green">Manage</p>
+      </div>
+      <div class="col-xs-2 col-sm-2 col-md-2">
+        <p class="sw-description-outside-box">Manage your offers</p>
+      </div>
     </div>
-  </div> <!-- END Page name, Search Bar  -->
+  </div>
 
-  <div class="row"> <!-- //////////// MAIN Content //////////// -->
-    <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
+  <div class="row">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 center sw-top-bar-info">
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Total requested <p class="sw-value-font ">{{5000 | currency:'USD':true:'.2' }}</p></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Total raised <p class="sw-value-font sw-blue1">{{4155 | currency:'USD':true:'.2' }}</p></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-inline-left-border"> Total to be returned <p class="sw-value-font sw-green">{{5789 | currency:'USD':true:'.2' }}</p></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Assets <p class="sw-value-font sw-blue1">{{6}}</p></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-inline-left-border"> Next return on <p class="sw-value-font sw-blue1">{{(56845454 | date: 'dd MMM yyyy') || '--' }}</p></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Due return <p class="sw-value-font ">{{(547 | currency:'USD':true:'.2') || '--' }}</p></div>
+    </div>      
+  </div>
 
-      <div class="col-md-12"> <!-- Start  -->
-        <div class="sw-box">
-          <div class="row">
-            <div class="col-sm-12 col-md-12">
-              <!-- <div class="row">
-                <br>
-                <div class="col-sm-12 col-md-12">
-                  <div class="sw-prog-bar clearfix " data-percent="70%">
-                    <div class="sw-prog-bar-title sw-bar-1"><span>$ 1.000.000,00</span></div>
-                    <div class="sw-prog-bar-bar sw-bar-1"></div>
-                    <div class="sw-prog-bar-percent">Total Requested</div>
-                  </div>
+  <div *ngIf="dashboardService.getAssets()" class="row">
+    <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 sw-bottom-border center">
+      <div class="col-xs-1 col-sm-1 col-md-1">Amount</div>
+      <div class="col-xs-1 col-sm-1 col-md-1">Amount to be returned</div>
+      <div class="col-xs-1 col-sm-1 col-md-1">Gross return</div>
+      <div class="col-xs-1 col-sm-1 col-md-1">Terms (Months)</div>
+      <div class="col-xs-1 col-sm-1 col-md-1">Collateral (SWAPY)</div>
+      <div class="col-xs-1 col-sm-1 col-md-1">You will need to return on</div>
+      <!-- <div class="col-xs-2 col-sm-2 col-md-2">investor</div> -->
+      <div class="col-xs-4 col-sm-4 col-md-4">Asset progress</div>
+      <div class="col-xs-1 col-sm-1 col-md-1">Status</div>
+      <div class="col-xs-1 col-sm-1 col-md-1">Action</div>
+    </div>
 
-                   <div class="sw-prog-bar clearfix " data-percent="35%">
-                     <div class="sw-prog-bar-title sw-bar-2"><span>$ 500.000,00</span></div>
-                     <div class="sw-prog-bar-bar sw-bar-2"></div>
-                     <div class="sw-prog-bar-percent">Total Raised</div>
-                   </div>
-                </div>
+      <app-dashboard-offer [assets]="this.dashboardService.getAssets()"></app-dashboard-offer>
 
-              </div>
-              <hr> -->
-
-
-              <div class="row" *ngIf="offers">
-                <div class="col-sm-12 col-md-12">
-                  <p class="sw-title-blue-right">Fundraising Offers</p>
-
-                  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"> <!-- Accordion-->
-                    <app-dashboard-offer *ngFor="let offer of offers; let collapsed = first" [offer]="offer" [collapsed]="collapsed"></app-dashboard-offer>
-                    <div *ngIf="offers?.length === 0" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
-                      <hr>
-                      <p class="sw-title-outside-box">You do not have any fundraising offer. Start one now by selecting the 'Raise' option on menu bar.</p>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div><!-- END Accordion-->
-
-
-          </div>
-        </div>
-
-       </div>
-     </div>
-
-   </div>
-</div> <!-- END  -->
-<!-- ///////////////////////////////////////////////////////////////////////////////// -->
-<!-- //////////////////////////  END MAIN Content  /////////////////////////////////// -->
-<!-- ///////////////////////////////////////////////////////////////////////////////// -->
+  </div>
+</div>

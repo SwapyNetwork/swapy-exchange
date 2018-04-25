@@ -1,6 +1,6 @@
 interface OfferAsset {
   value: number;
-  investorWallet: string;
+  investorAddress: string;
   contractAddress: string;
   status: string | number;
   investedAt: Date;
