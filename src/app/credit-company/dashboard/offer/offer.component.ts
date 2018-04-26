@@ -9,8 +9,7 @@ import { ErrorLogService } from '../../../common/services/error-log.service';
 import { DashboardService } from '../dashboard.service';
 import { AssetMathService as AssetMath } from '../../../common/services/asset-math.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../../common/services/swapy-protocol.service';
-import {
-  AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
+import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
   DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../../common/interfaces/offer-asset-status.interface';
 import { StorageService } from '../../../common/services/storage.service';
 import { SupplyTokenService } from '../../supply-token/supply-token.service';

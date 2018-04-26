@@ -8,12 +8,14 @@
       </div>
     </div> <!-- END Page name, Search Bar  -->
   
-    <div class="row">
-      <div class="col-xs-2 col-xs-offset-3 col-sm-2 col-sm-offset-3 col-md-2 col-md-offset-3">
-        <p class="sw-title-outside-box sw-border-light-green">Manage</p>
-      </div>
-      <div class="col-xs-4 col-sm-4 col-md-4">
-        <p class="sw-description-outside-box">Confirm asset cancelation</p>
+    <div class="row sw-top-row">
+      <div class="col-xs-10 col-xs-offset-2 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2">        
+        <div class="col-xs-2 col-xs-offset-2 col-sm-2 col-sm-offset-2 col-md-2 col-md-offset-2">
+          <p class="sw-title-outside-box sw-border-light-green">Manage</p>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4">
+          <p class="sw-description-outside-box">Confirm asset cancelation</p>
+        </div>
       </div>
     </div>
 
@@ -23,7 +25,7 @@
         <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Expected gross return <p class="sw-value-font sw-blue1">{{investorComponent.getStatistics().returnValue | currency:'USD':true:'.2' }}</p></div>
         <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-inline-left-border"> Received gross return <p class="sw-value-font sw-green">{{investorComponent.getStatistics().returnedValue | currency:'USD':true:'.2' }}</p></div>
         <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Assets <p class="sw-value-font sw-blue1">{{investorComponent.getStatistics().assetsLength}}</p></div>
-        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-inline-left-border"> Next return on <p class="sw-value-font sw-blue1">{{investorComponent.getStatistics().nextReturnDate | date: 'dd MMMM yyyy'}}</p></div>
+        <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-inline-left-border"> Next return on <p class="sw-value-font sw-blue1">{{investorComponent.getStatistics().nextReturnDate | date: 'dd MMM yyyy'}}</p></div>
         <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Expected <p class="sw-value-font ">{{investorComponent.getStatistics().nextReturnValue | currency:'USD':true:'.2' }}</p></div>
       </div>      
     </div>
@@ -72,6 +74,3 @@
     </div>
 
   </div>
-<!-- ///////////////////////////////////////////////////////////////////////////////// -->
-<!-- //////////////////////////  END MAIN Content  /////////////////////////////////// -->
-<!-- ///////////////////////////////////////////////////////////////////////////////// -->
