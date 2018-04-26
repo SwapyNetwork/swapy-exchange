@@ -29,6 +29,7 @@ import { SupplyTokenComponent } from './supply-token/supply-token.component';
 import { SupplyTokenService } from './supply-token/supply-token.service';
 import { StartComponent } from './start/start.component';
 import { ApproveInvestmentComponent } from './approve-investment/approve-investment.component';
+import { ReturnInvestmentComponent } from './return-investment/return-investment.component';
 
 @NgModule({
   imports: [
@@ -44,7 +45,7 @@ import { ApproveInvestmentComponent } from './approve-investment/approve-investm
   ],
   declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent, ConfirmOfferComponent,
     SuccessfulOfferComponent, PendingOfferComponent, ProfileComponent, TermsPageComponent, PrivacyPageComponent,
-    OfferComponent, SupplyTokenComponent, StartComponent, ApproveInvestmentComponent],
+    OfferComponent, SupplyTokenComponent, StartComponent, ApproveInvestmentComponent, ReturnInvestmentComponent],
   providers: [LogoutService, AddOfferService, PendingOfferService, DashboardService, SupplyTokenService],
   bootstrap: [CreditCompanyComponent]
 })

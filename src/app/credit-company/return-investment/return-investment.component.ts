@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { AssetMathService as AssetMath } from '../../common/services/asset-math.service';
-import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
-  DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 import { ToastrService } from '../../common/services/toastr.service';
+import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
+  DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
 
 @Component({
-  selector: 'app-approve-investment',
-  templateUrl: './approve-investment.component.html',
-  styleUrls: ['./approve-investment.component.css']
+  selector: 'app-return-investment',
+  templateUrl: './return-investment.component.html',
+  styleUrls: ['./return-investment.component.css']
 })
-export class ApproveInvestmentComponent implements OnInit {
+export class ReturnInvestmentComponent implements OnInit {
 
   public AVAILABLE = AVAILABLE;
   public PENDING_OWNER_AGREEMENT = PENDING_OWNER_AGREEMENT;
@@ -23,6 +23,7 @@ export class ApproveInvestmentComponent implements OnInit {
   public PENDING_ETHEREUM_CONFIRMATION = PENDING_ETHEREUM_CONFIRMATION;
 
   public assets;
+  public total;
 
   constructor(
     private swapyProtocol: SwapyProtocol,
@@ -33,6 +34,7 @@ export class ApproveInvestmentComponent implements OnInit {
 
   ngOnInit() {
     this.assets = this.dashboardService.getSelectedAssets();
+    this.total = this.assets.map(asset => this.assetMath.calculateReturnAmount(asset)).reduce((last, current) => last += current);
   }
 
   private onError(error) {
@@ -40,16 +42,8 @@ export class ApproveInvestmentComponent implements OnInit {
     // this.messageService.setErrorMessage(error.message);
   }
 
-  public async approveAsset() {
-    const contractAddresses = this.assets.map(asset => asset.contractAddress);
-    try {
-      await this.swapyProtocol.withdrawFunds(contractAddresses);
-      this.toastrService.getInstance().success('Investment(s) approved');
-      // this.messageService.setLastMessage('Sell order(s) cancelled');
-      // this.messageService.setHeaderMessage('Transaction confirmed');
-    } catch (error) {
-      this.onError(error);
-    }
+  private returnInvestment() {
+
   }
 
   public statusToString(status) {

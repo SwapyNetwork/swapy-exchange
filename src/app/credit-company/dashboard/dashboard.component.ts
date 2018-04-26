@@ -41,6 +41,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.updateOffers();
+    this.dashboardService.setSelectedAssets([]);    
   }
 
   public async updateOffers() {

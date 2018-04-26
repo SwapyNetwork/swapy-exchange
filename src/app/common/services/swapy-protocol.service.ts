@@ -136,8 +136,8 @@ export class SwapyProtocolService {
       });
   }
 
-  public withdrawFunds(contractAddress: string) {
-    this.AssetLibraryContract.options.address = contractAddress;
+  public async withdrawFunds(contractAddresses: string[]) {
+    this.AssetLibraryContract.options.address = contractAddresses[0];
     return this.AssetLibraryContract.methods
       .withdrawFunds()
       .send({
@@ -145,6 +145,7 @@ export class SwapyProtocolService {
         gas: 150000,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
+        this.storeTransactionHash(contractAddresses, hash);
         this.handleOnTransactionHash(hash);
       })
       .on('error', (error) => {
