@@ -12,7 +12,7 @@ import { VALUE, PAYBACKDAYS, GROSSRETURN, STATUS,
 export class DashboardService {
 
   public offers;
-  public assets;
+  public assets = [];
   public selectedAssets;
 
   constructor(

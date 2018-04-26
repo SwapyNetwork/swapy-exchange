@@ -54,3 +54,16 @@
 	margin-bottom: 20px;
     border-bottom: 2px solid #d8d8d8;	
 }
+.sw-welcome-title {
+    padding-top: 30px;
+    font-size: 32px;
+    font-weight: 500;
+}
+img {
+    width: 100%;
+}
+.sw-page-description {
+    padding: 30px 0 50px 0;
+    font-size: 26px;
+    font-weight: 500;
+}

@@ -42,7 +42,7 @@
     </div>      
   </div>
 
-  <div *ngIf="dashboardService.getAssets()" class="row">
+  <div *ngIf="dashboardService.getAssets().length != 0" class="row">
     <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 sw-bottom-border center">
       <div class="col-xs-1 col-sm-1 col-md-1">Amount</div>
       <div class="col-xs-1 col-sm-1 col-md-1">Amount to be returned</div>
@@ -59,4 +59,22 @@
       <app-dashboard-offer [assets]="this.dashboardService.getAssets()"></app-dashboard-offer>
 
   </div>
+  
+    <div *ngIf="this.dashboardService.getAssets().length == 0">      
+      <div class="row">
+        <div class="col-xs-6 col-xs-offset-3 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
+          <p class="sw-welcome-title sw-blue1 center">You don't have fundraising offers!</p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-xs-2 col-xs-offset-3 col-sm-2 col-sm-offset-3 col-md-2 col-md-offset-3">
+          <img src="assets/img/add-offer.svg" alt="Add offer image">
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <p class="sw-page-description">We have plenty of investor looking for investment offers</p>
+          <p class="sw-button sw-btn-ghost1" role="button" [routerLink]="['/credit-company/raise']">Create a fundraising offer</p>
+        </div>    
+      </div>
+    </div>
 </div>
