@@ -21,7 +21,7 @@
         <div *ngIf="handleButtons().status == AVAILABLE" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/credit-company/add-collateral']">
           <a class="sw-button sw-btn-orange">Add collateral</a>
         </div>
-        <div *ngIf="handleButtons().status == PENDING_OWNER_AGREEMENT" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/credit-company/accept-investment']">
+        <div *ngIf="handleButtons().status == PENDING_OWNER_AGREEMENT" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/credit-company/approve-investment']">
           <a class="sw-button sw-btn-orange">Approve</a>
         </div>
         <div *ngIf="handleButtons().status == INVESTED" class="col-xs-2 col-sm-2 col-md-2 col-xs-offset-4 col-sm-offset-4 col-md-offset-4" role="button" [routerLink]="['/credit-company/return-investment']">
