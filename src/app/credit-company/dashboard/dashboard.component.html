@@ -5,7 +5,7 @@
     </div>
   </div>
   
-  <div class="row">
+  <div class="row sw-top-row">
     <div class="col-xs-10 col-xs-offset-2 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2">
       
       <div class="col-xs-2 col-sm-2 col-md-2">
@@ -14,20 +14,20 @@
       <div class="col-xs-3 col-sm-3 col-md-3">
         <p class="sw-description-outside-box">Manage your offers</p>
       </div>
-        <div *ngIf="checkSelectedAssets().length">
-          <div *ngIf="handleButtons().status == AVAILABLE || handleButtons().status == PENDING_OWNER_AGREEMENT" class="col-xs-2 col-sm-2 col-md-2 col-xs-offset-2 col-sm-offset-2 col-md-offset-2" role="button" [routerLink]="['/credit-company/cancel-asset']">
-            <a class="sw-button sw-btn-white">Cancel</a>
-          </div>        
-          <div *ngIf="handleButtons().status == AVAILABLE" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/credit-company/add-collateral']">
-            <a class="sw-button sw-btn-orange">Add collateral</a>
-          </div>
-          <div *ngIf="handleButtons().status == PENDING_OWNER_AGREEMENT" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/credit-company/accept-investment']">
-            <a class="sw-button sw-btn-orange">Approve</a>
-          </div>
-          <div *ngIf="handleButtons().status == INVESTED" class="col-xs-2 col-sm-2 col-md-2 col-xs-offset-4 col-sm-offset-4 col-md-offset-4" role="button" [routerLink]="['/credit-company/return-investment']">
-            <a class="sw-button sw-btn-orange">Return investment</a>
-          </div>
-        </div> 
+      <div *ngIf="checkSelectedAssets().length">
+        <div *ngIf="handleButtons().status == AVAILABLE || handleButtons().status == PENDING_OWNER_AGREEMENT" class="col-xs-2 col-sm-2 col-md-2 col-xs-offset-2 col-sm-offset-2 col-md-offset-2" role="button" [routerLink]="['/credit-company/cancel-asset']">
+          <a class="sw-button sw-btn-white">Cancel</a>
+        </div>        
+        <div *ngIf="handleButtons().status == AVAILABLE" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/credit-company/add-collateral']">
+          <a class="sw-button sw-btn-orange">Add collateral</a>
+        </div>
+        <div *ngIf="handleButtons().status == PENDING_OWNER_AGREEMENT" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/credit-company/accept-investment']">
+          <a class="sw-button sw-btn-orange">Approve</a>
+        </div>
+        <div *ngIf="handleButtons().status == INVESTED" class="col-xs-2 col-sm-2 col-md-2 col-xs-offset-4 col-sm-offset-4 col-md-offset-4" role="button" [routerLink]="['/credit-company/return-investment']">
+          <a class="sw-button sw-btn-orange">Return investment</a>
+        </div>
+      </div> 
     </div>
   </div>
 
