@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CreditCompanyComponent } from './credit-company.component';
 import { StartComponent } from './start/start.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AddCollateralComponent } from './add-collateral/add-collateral.component';
 import { ApproveInvestmentComponent } from './approve-investment/approve-investment.component';
 import { RefuseInvestmentComponent } from './refuse-investment/refuse-investment.component';
 import { ReturnInvestmentComponent } from './return-investment/return-investment.component';
@@ -31,6 +32,7 @@ const routes: Routes = [
       { path: 'raise/confirm', component: ConfirmOfferComponent },
       { path: 'raise/success', component: SuccessfulOfferComponent },
       { path: 'raise/pending', component: PendingOfferComponent },
+      { path: 'add-collateral', component: AddCollateralComponent },
       { path: 'approve-investment', component: ApproveInvestmentComponent },
       { path: 'refuse-investment', component: RefuseInvestmentComponent },
       { path: 'return-investment', component: ReturnInvestmentComponent },
