@@ -169,11 +169,12 @@ export class SwapyProtocolService {
       });
   }
 
-  public async returnInvestment(contractAddress: string, value: number) {
+  public async returnInvestment(contractAddresses: string[], values: number[]) {
     const ethPrice = await this.getEthPrice();
-    const ethValue = value / (ethPrice as number);
+    // const ethValue = values.reduce((last, current) => last += current / (ethPrice as number));
+    const ethValue = values[0] / (ethPrice as number);
 
-    this.AssetLibraryContract.options.address = contractAddress;
+    this.AssetLibraryContract.options.address = contractAddresses[0];
     return this.AssetLibraryContract.methods
       .returnInvestment()
       .send({

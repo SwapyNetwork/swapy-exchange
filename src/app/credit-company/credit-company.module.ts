@@ -31,6 +31,7 @@ import { StartComponent } from './start/start.component';
 import { ApproveInvestmentComponent } from './approve-investment/approve-investment.component';
 import { ReturnInvestmentComponent } from './return-investment/return-investment.component';
 import { RefuseInvestmentComponent } from './refuse-investment/refuse-investment.component';
+import { AddCollateralComponent } from './add-collateral/add-collateral.component';
 
 @NgModule({
   imports: [
@@ -46,7 +47,7 @@ import { RefuseInvestmentComponent } from './refuse-investment/refuse-investment
   ],
   declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent, ConfirmOfferComponent,
     SuccessfulOfferComponent, PendingOfferComponent, ProfileComponent, TermsPageComponent, PrivacyPageComponent,
-    OfferComponent, SupplyTokenComponent, StartComponent, ApproveInvestmentComponent, ReturnInvestmentComponent, RefuseInvestmentComponent],
+    OfferComponent, SupplyTokenComponent, StartComponent, ApproveInvestmentComponent, ReturnInvestmentComponent, RefuseInvestmentComponent, AddCollateralComponent],
   providers: [LogoutService, AddOfferService, PendingOfferService, DashboardService, SupplyTokenService],
   bootstrap: [CreditCompanyComponent]
 })

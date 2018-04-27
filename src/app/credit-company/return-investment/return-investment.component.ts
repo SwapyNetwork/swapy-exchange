@@ -42,8 +42,17 @@ export class ReturnInvestmentComponent implements OnInit {
     // this.messageService.setErrorMessage(error.message);
   }
 
-  private returnInvestment() {
-
+  public async returnInvestment() {
+    const contractAddresses = this.assets.map(asset => asset.contractAddress);
+    const values = this.assets.map(asset => asset.value * (1 + asset.grossReturn));
+    try {
+      await this.swapyProtocol.returnInvestment(contractAddresses, values);
+      this.toastrService.getInstance().success('Investment(s) returned');
+      // this.messageService.setLastMessage('Sell order(s) cancelled');
+      // this.messageService.setHeaderMessage('Transaction confirmed');
+    } catch (error) {
+      this.onError(error);
+    }
   }
 
   public statusToString(status) {
