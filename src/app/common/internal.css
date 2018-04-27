@@ -644,6 +644,11 @@ input.cmn-toggle-round:checked + label:after {
   .sw-inline-left-border {
       border-left: 2px solid #d8d8d8;
   }
+  .sw-bottom-border {
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+      border-bottom: 2px solid #d8d8d8; 
+  }
 
 /* ////////////////////// END Statistic bar //////////////////////////////// */
 /* ////////////////////// START Company Box //////////////////////////////// */

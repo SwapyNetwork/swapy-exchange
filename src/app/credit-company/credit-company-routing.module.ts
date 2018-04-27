@@ -5,6 +5,7 @@ import { CreditCompanyComponent } from './credit-company.component';
 import { StartComponent } from './start/start.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ApproveInvestmentComponent } from './approve-investment/approve-investment.component';
+import { RefuseInvestmentComponent } from './refuse-investment/refuse-investment.component';
 import { ReturnInvestmentComponent } from './return-investment/return-investment.component';
 import { AddOfferComponent } from './add-offer/add-offer.component';
 import { ConfirmOfferComponent } from './confirm-offer/confirm-offer.component';
@@ -31,6 +32,7 @@ const routes: Routes = [
       { path: 'raise/success', component: SuccessfulOfferComponent },
       { path: 'raise/pending', component: PendingOfferComponent },
       { path: 'approve-investment', component: ApproveInvestmentComponent },
+      { path: 'refuse-investment', component: RefuseInvestmentComponent },
       { path: 'return-investment', component: ReturnInvestmentComponent },
       { path: 'supply-token', component: SupplyTokenComponent },
       { path: 'terms-of-service', component: TermsPageComponent },

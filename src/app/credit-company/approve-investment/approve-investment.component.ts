@@ -40,7 +40,7 @@ export class ApproveInvestmentComponent implements OnInit {
     // this.messageService.setErrorMessage(error.message);
   }
 
-  public async approveAsset() {
+  public async approveInvestment() {
     const contractAddresses = this.assets.map(asset => asset.contractAddress);
     try {
       await this.swapyProtocol.withdrawFunds(contractAddresses);
