@@ -15,8 +15,11 @@
         <p class="sw-description-outside-box">Manage your offers</p>
       </div>
       <div *ngIf="checkSelectedAssets().length">
-        <div *ngIf="handleButtons().status == AVAILABLE || handleButtons().status == PENDING_OWNER_AGREEMENT" class="col-xs-2 col-sm-2 col-md-2 col-xs-offset-2 col-sm-offset-2 col-md-offset-2" role="button" [routerLink]="['/credit-company/cancel-asset']">
-          <a class="sw-button sw-btn-white">Cancel</a>
+        <div *ngIf="handleButtons().status == AVAILABLE" class="col-xs-2 col-sm-2 col-md-2 col-xs-offset-2 col-sm-offset-2 col-md-offset-2" role="button" [routerLink]="['/credit-company/cancel-offer']">
+          <a class="sw-button sw-btn-white">Cancel offer</a>
+        </div> 
+        <div *ngIf="handleButtons().status == PENDING_OWNER_AGREEMENT" class="col-xs-2 col-sm-2 col-md-2 col-xs-offset-2 col-sm-offset-2 col-md-offset-2" role="button" [routerLink]="['/credit-company/refuse-investment']">
+          <a class="sw-button sw-btn-white">Refuse</a>
         </div>        
         <div *ngIf="handleButtons().status == AVAILABLE" class="col-xs-2 col-sm-2 col-md-2" role="button" [routerLink]="['/credit-company/add-collateral']">
           <a class="sw-button sw-btn-orange">Add collateral</a>
