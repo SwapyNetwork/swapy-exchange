@@ -170,16 +170,21 @@ export class SwapyProtocolService {
   public async returnInvestment(contractAddresses: string[], values: number[]) {
     const ethPrice = await this.getEthPrice();
     // const ethValue = values.reduce((last, current) => last += current / (ethPrice as number));
-    const ethValue = values[0] / (ethPrice as number);
+    // const ethValue = values.reduce((last, current) => last = last.add(new BigNumber(current).div(new BigNumber(ethPrice as number))));
+    let total = new BigNumber(0);
+    values.forEach(value => {
+      total = total.plus(new BigNumber(value).div(new BigNumber(ethPrice as number)))
+    });
+    const ethValue = this.web3.utils.toWei(total);
+    const ethValues = values.map(value => this.web3.utils.toWei(new BigNumber(value).div(new BigNumber(ethPrice as number))));
 
-    this.AssetLibraryContract.options.address = contractAddresses[0];
-    return this.AssetLibraryContract.methods
-      .returnInvestment()
+    return this.SwapyExchangeContract.methods
+      .returnInvestment(contractAddresses, ethValues)
       .send({
         from: this.walletService.getWallet().address,
         gas: 100000,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei'),
-        value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
+        value: ethValue
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
       })
