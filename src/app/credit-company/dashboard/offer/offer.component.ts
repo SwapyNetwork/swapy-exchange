@@ -77,58 +77,6 @@ export class OfferComponent implements OnInit {
     this.dashboardService.setSelectedAssets(this.assets.filter(asset => asset.selected === 1));
   }
 
-  public async withdrawFunds(asset) {
-    const status = asset.status;
-    this.storageService.setItem(asset.contractAddress, status);
-    asset.status = PENDING_ETHEREUM_CONFIRMATION;
-    try {
-      await this.swapyProtocol.withdrawFunds(asset.contractAddress);
-      this.toastrService.getInstance().success('Transaction finished.');
-    } catch (error) {
-      this.onError(error, asset, status);
-    }
-  }
-
-  public async refuseInvestment(asset) {
-    const status = asset.status;
-    this.storageService.setItem(asset.contractAddress, status);
-    asset.status = PENDING_ETHEREUM_CONFIRMATION;
-    try {
-      await this.swapyProtocol.refuseInvestment(asset.contractAddress);
-      this.toastrService.getInstance().success('Investment refused.');
-    } catch (error) {
-      this.onError(error, asset, status);
-    }
-  }
-
-  public async returnInvestment(asset) {
-    const status = asset.status;
-    this.storageService.setItem(asset.contractAddress, status);
-    asset.status = PENDING_ETHEREUM_CONFIRMATION;
-    try {
-      const value = asset.value * (1 + this.offer.grossReturn);
-      await this.swapyProtocol.returnInvestment(asset.contractAddress, value);
-      this.toastrService.getInstance().success('Investment returned.');
-    } catch (error) {
-      this.onError(error, asset, status);
-    }
-  }
-
-  private onError(error, asset, status) {
-    this.storageService.remove(asset.contractAddress);
-    if (sha1(error.message) === '699e7c6d81ba58075ee84cf2a640c18a409efcba') { // 50 blocks later and transaction has not being mined yet.
-      this.toastrService.error('Transaction is still being mined. Check it out later to see if the transaction was mined');
-    } else {
-      asset.status = status;
-      this.toastrService.error(error.message);
-    }
-  }
-
-  public async transferToken(asset) {
-    this.supplyTokenService.cacheAsset(asset);
-    this.router.navigate(['credit-company/supply-token']);
-  }
-
   public statusToString(status) {
     let statusString;
     switch (parseInt(status, 10)) {

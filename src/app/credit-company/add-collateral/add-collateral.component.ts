@@ -45,7 +45,6 @@ export class AddCollateralComponent implements OnInit {
   ngOnInit() {
     this.assets = this.dashboardService.getSelectedAssets();
     this.assets.forEach(asset => {
-      asset.token = 784;
       this.collateral.push(0);
       this.token.push(0);
     });

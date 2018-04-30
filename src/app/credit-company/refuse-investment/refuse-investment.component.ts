@@ -46,7 +46,7 @@ export class RefuseInvestmentComponent implements OnInit {
     const contractAddresses = this.assets.map(asset => asset.contractAddress);
     try {
       await this.swapyProtocol.refuseInvestment(contractAddresses);
-      this.toastrService.getInstance().success('Investment(s) approved');
+      this.toastrService.getInstance().success('Investment(s) refused');
       // this.messageService.setLastMessage('Sell order(s) cancelled');
       // this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
