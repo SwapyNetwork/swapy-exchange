@@ -5,6 +5,7 @@ import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTO
   DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 import { ToastrService } from '../../common/services/toastr.service';
+import { CreditCompanyComponent } from '../credit-company.component';
 
 @Component({
   selector: 'app-approve-investment',
@@ -27,6 +28,7 @@ export class ApproveInvestmentComponent implements OnInit {
   constructor(
     private swapyProtocol: SwapyProtocol,
     private toastrService: ToastrService,
+    private creditCompanyComponent: CreditCompanyComponent,
     private dashboardService: DashboardService,
     private assetMath: AssetMath
   ) { }

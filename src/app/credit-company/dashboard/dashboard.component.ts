@@ -39,15 +39,18 @@ export class DashboardComponent implements OnInit {
       this.toastr.setRootViewContainerRef(vcr);
     }
 
-  ngOnInit() {
-    this.updateOffers();
-    this.dashboardService.setSelectedAssets([]);    
+  async ngOnInit() {
+    this.loadingService.show();
+    await this.updateOffers();
+    this.creditCompanyComponent.refreshBalance();
+    this.dashboardService.setSelectedAssets([]);
+    this.loadingService.hide();
   }
 
   public async updateOffers() {
     this.loadingService.show();
     this.offers = await this.dashboardService.updateOffers();
-    this.creditCompanyComponent.refreshBalance();
+    // this.creditCompanyComponent.refreshBalance();
     this.loadingService.hide();
   }
 

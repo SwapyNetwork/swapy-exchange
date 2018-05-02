@@ -18,13 +18,13 @@
 
   <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 center sw-top-bar-info">
-      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Total requested <p class="sw-value-font ">{{5000 | currency:'USD':true:'.2' }}</p></div>
-      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Total raised <p class="sw-value-font sw-blue1">{{4155 | currency:'USD':true:'.2' }}</p></div>
-      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-inline-left-border"> Total to be returned <p class="sw-value-font sw-green">{{5789 | currency:'USD':true:'.2' }}</p></div>
-      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Assets <p class="sw-value-font sw-blue1">{{6}}</p></div>
-      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-inline-left-border"> Next return on <p class="sw-value-font sw-blue1">{{(56845454 | date: 'dd MMM yyyy') || '--' }}</p></div>
-      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Due return <p class="sw-value-font ">{{(547 | currency:'USD':true:'.2') || '--' }}</p></div>
-    </div>      
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Total requested <p class="sw-value-font ">{{creditCompanyComponent.getStatistics().amountRequested | currency:'USD':true:'.2' }}</p></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Total raised <p class="sw-value-font sw-blue1">{{creditCompanyComponent.getStatistics().amountRaised | currency:'USD':true:'.2' }}</p></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-inline-left-border"> Total to be returned <p class="sw-value-font sw-green">{{creditCompanyComponent.getStatistics().amountToBeReturned | currency:'USD':true:'.2' }}</p></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Assets <p class="sw-value-font sw-blue1">{{creditCompanyComponent.getStatistics().assetsLength}}</p></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font sw-inline-left-border"> Next return on <p class="sw-value-font sw-blue1">{{(creditCompanyComponent.getStatistics().nextReturnDate | date: 'dd MMM yyyy') || '--' }}</p></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 sw-info-font"> Due return <p class="sw-value-font ">{{(creditCompanyComponent.getStatistics().nextReturnValue | currency:'USD':true:'.2') || '--' }}</p></div>
+    </div>     
   </div>
 
   <div class="row">
