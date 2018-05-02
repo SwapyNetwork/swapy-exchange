@@ -161,6 +161,7 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -169,8 +170,6 @@ export class SwapyProtocolService {
 
   public async returnInvestment(contractAddresses: string[], values: number[]) {
     const ethPrice = await this.getEthPrice();
-    // const ethValue = values.reduce((last, current) => last += current / (ethPrice as number));
-    // const ethValue = values.reduce((last, current) => last = last.add(new BigNumber(current).div(new BigNumber(ethPrice as number))));
     let total = new BigNumber(0);
     let eth;
     values.forEach(value => {
@@ -179,13 +178,6 @@ export class SwapyProtocolService {
     });
     const ethValue = this.web3.utils.toWei(total);
     const ethValues = values.map(value => this.web3.utils.toWei(new BigNumber(value).div(new BigNumber(ethPrice as number))));
-
-    let test = new BigNumber(0);
-    ethValues.forEach(value => {
-      test = test.plus(new BigNumber(value));
-    });
-
-    console.log(new BigNumber(ethValue).isEqualTo(test));
 
     return this.SwapyExchangeContract.methods
       .returnInvestment(contractAddresses, ethValues)
@@ -196,6 +188,7 @@ export class SwapyProtocolService {
         value: ethValue
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
       })
       .on('error', (error) => {
         this.handleOnError(error);
