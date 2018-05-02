@@ -44,7 +44,7 @@ export class ReturnInvestmentComponent implements OnInit {
 
   public async returnInvestment() {
     const contractAddresses = this.assets.map(asset => asset.contractAddress);
-    const values = this.assets.map(asset => asset.value * (1 + asset.grossReturn));
+    const values = this.assets.map(asset => (asset.value * (1 + asset.grossReturn)).toFixed(2));
     try {
       await this.swapyProtocol.returnInvestment(contractAddresses, values);
       this.toastrService.getInstance().success('Investment(s) returned');
