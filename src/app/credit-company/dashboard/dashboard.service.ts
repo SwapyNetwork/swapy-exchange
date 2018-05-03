@@ -60,13 +60,20 @@ export class DashboardService {
     };
   }
 
-  private buildNewAsset(offer, assetValues, index) {
-    const storedStatus = this.storageService.getItem(offer.returnValues._assets[index]);
-    let status;
-    if (storedStatus === null || storedStatus !== Number(assetValues[STATUS])) {
-      status = Number(assetValues[STATUS]);
-    } else {
-      status = PENDING_ETHEREUM_CONFIRMATION;
+  private async buildNewAsset(offer, assetValues, index) {
+
+    let status = Number(assetValues[STATUS]);
+    const assetAddress = offer.returnValues._assets[index];
+    const transactionHash = this.storageService.getItem(assetAddress);
+    let receipt = null;
+    if (transactionHash != null) {
+      receipt = await this.web3Service.getInstance().eth.getTransactionReceipt(transactionHash);
+      if (receipt != null) {
+        status = Number(assetValues[STATUS]);
+        this.storageService.remove(assetAddress);
+      } else {
+        status = PENDING_ETHEREUM_CONFIRMATION;
+      }
     }
     return {
       contractAddress: offer.returnValues._assets[index],
@@ -87,8 +94,9 @@ export class DashboardService {
 
     const assets = await this.getAssetValues(offer.returnValues._assets);
 
-    assets.forEach((assetValues, index) => {
-      newOffer.assets.push(this.buildNewAsset(offer, assetValues, index));
+    assets.forEach(async (assetValues, index) => {
+      let asset = await (this.buildNewAsset(offer, assetValues, index));
+      newOffer.assets.push(asset);
       if (!newOffer.raisingAmount) {
         this.setOfferDetails(newOffer, assetValues, offer.returnValues._assets.length);
       }

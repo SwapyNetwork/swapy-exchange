@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ViewEncapsulation } from '@angular/core';
 import { WalletService } from '../common/services/wallet.service';
 import { LoadingService } from '../common/services/loading.service';
@@ -35,6 +36,7 @@ export class CreditCompanyComponent implements OnInit {
   constructor(
     private walletService: WalletService,
     private loadingService: LoadingService,
+    private router: Router,
     private swapyProtocol: SwapyProtocol,
     private dashboardService: DashboardService) {
       this.isElectron = (window as any).isElectron;
@@ -49,6 +51,17 @@ export class CreditCompanyComponent implements OnInit {
   }
 
   public async refresh() {
+    this.loadingService.show();
+    const url = this.router.url.split('/').slice(1);
+    if (url[0] === 'credit-company') {
+      if (url.length === 1) {
+        await this.dashboardService.updateOffers();
+      }
+      await this.refreshBalance();
+    } else {
+
+    }
+    this.loadingService.hide();
   }
 
   public getStatistics() {
