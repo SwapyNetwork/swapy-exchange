@@ -7,7 +7,7 @@ import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swa
 import { ToastrService } from '../../common/services/toastr.service';
 import { StorageService } from '../../common/services/storage.service';
 import { InvestorComponent } from '../investor.component';
-import { MessageService } from '../message/message.service';
+import { MessageService } from '../../common/message/message.service';
 
 import * as sha1 from 'sha1';
 

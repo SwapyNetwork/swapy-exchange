@@ -5,7 +5,7 @@ import { WalletService } from './wallet.service';
 import { ErrorLogService } from './error-log.service';
 import { StorageService } from './storage.service';
 import { SuccessfulInvestmentService } from '../../investor/successful-investment/successful-investment.service';
-import { MessageService } from '../../investor/message/message.service';
+import { MessageService } from '../message/message.service';
 import { BigNumber } from 'bignumber.js';
 
 const env = require('../../../../env.json');

@@ -20,7 +20,7 @@ import { StartInvestingComponent } from './start-investing/start-investing.compo
 import { CancelAssetComponent } from './cancel-asset/cancel-asset.component';
 import { AcceptSaleComponent } from './accept-sale/accept-sale.component';
 import { RequireTokenComponent } from './require-token/require-token.component';
-import { MessageComponent } from './message/message.component';
+import { MessageComponent } from '../common/message/message.component';
 
 const routes: Routes = [
   {

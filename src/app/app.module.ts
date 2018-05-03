@@ -22,14 +22,12 @@ import { ToastrService } from './common/services/toastr.service';
 import { CustomToastOption } from './common/CustomToastOption';
 import { ErrorLogService } from './common/services/error-log.service';
 import { SuccessfulInvestmentService } from './investor/successful-investment/successful-investment.service';
-import { MessageService } from './investor/message/message.service';
-import { AddFundsComponent } from './common/add-funds/add-funds.component';
-import { AddFundsChildComponent } from './common/add-funds/add-funds-child/add-funds-child.component';
+import { MessageService } from './common/message/message.service';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,8 +38,8 @@ import { AddFundsChildComponent } from './common/add-funds/add-funds-child/add-f
     ToastModule.forRoot()
   ],
   providers: [StorageService, HttpService, I18nService, LoadingService, LinkService, Web3Service,
-    WalletService, SwapyProtocolService, LogoutService, SuccessfulInvestmentService, MessageService,
-    ToastrService, ErrorLogService, AssetMathService, { provide: ToastOptions, useClass: CustomToastOption }],
+    WalletService, SwapyProtocolService, LogoutService, SuccessfulInvestmentService, ToastrService,
+    ErrorLogService, AssetMathService, MessageService, { provide: ToastOptions, useClass: CustomToastOption }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

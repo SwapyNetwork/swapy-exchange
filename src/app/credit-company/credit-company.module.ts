@@ -8,6 +8,8 @@ import { CreditCompanyRoutingModule } from './credit-company-routing.module';
 import { NavModule } from '../common/nav/nav.module';
 import { FooterModule } from '../common/footer/footer.module';
 import { AddFundsModule } from '../common/add-funds/add-funds.module';
+import { MessageModule } from '../common/message/message.module';
+import { MessageService } from '../common/message/message.service';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddOfferComponent } from './add-offer/add-offer.component';
@@ -42,13 +44,14 @@ import { AddCollateralComponent } from './add-collateral/add-collateral.componen
     NavModule,
     FooterModule,
     AddFundsModule,
+    MessageModule,
     FormsModule,
     TextMaskModule
   ],
   declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent, ConfirmOfferComponent,
     SuccessfulOfferComponent, PendingOfferComponent, ProfileComponent, TermsPageComponent, PrivacyPageComponent,
     OfferComponent, SupplyTokenComponent, StartComponent, ApproveInvestmentComponent, ReturnInvestmentComponent, RefuseInvestmentComponent, AddCollateralComponent],
-  providers: [LogoutService, AddOfferService, PendingOfferService, DashboardService, SupplyTokenService],
+  providers: [LogoutService, AddOfferService, PendingOfferService, DashboardService, SupplyTokenService, MessageService],
   bootstrap: [CreditCompanyComponent]
 })
 export class CreditCompanyModule {}

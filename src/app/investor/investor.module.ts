@@ -8,6 +8,7 @@ import { InvestorRoutingModule } from './investor-routing.module';
 import { NavModule } from '../common/nav/nav.module';
 import { FooterModule } from '../common/footer/footer.module';
 import { AddFundsModule } from '../common/add-funds/add-funds.module';
+import { MessageModule } from '../common/message/message.module';
 
 import { InvestorComponent } from './investor.component';
 import { OffersComponent } from './offers/offers.component';
@@ -38,8 +39,7 @@ import { StartInvestingComponent } from './start-investing/start-investing.compo
 import { CancelAssetComponent } from './cancel-asset/cancel-asset.component';
 import { AcceptSaleComponent } from './accept-sale/accept-sale.component';
 import { RequireTokenComponent } from './require-token/require-token.component';
-import { MessageComponent } from './message/message.component';
-import { MessageService } from './message/message.service';
+import { MessageService } from '../common/message/message.service';
 
 @NgModule({
   imports: [
@@ -50,6 +50,7 @@ import { MessageService } from './message/message.service';
     NavModule,
     FooterModule,
     AddFundsModule,
+    MessageModule,
     FormsModule,
     TextMaskModule
   ],
@@ -57,9 +58,9 @@ import { MessageService } from './message/message.service';
     OfferDetailsComponent, CreditCompanyComponent, TermsPageComponent, PrivacyPageComponent, ProfileComponent,
     InvestComponent, SuccessfulInvestmentComponent, InvestmentComponent, MarketplaceComponent, AssetComponent,
     ConfirmPurchaseComponent, SellAssetComponent, ConfirmSaleComponent,
-    StartInvestingComponent, CancelAssetComponent, AcceptSaleComponent, RequireTokenComponent, MessageComponent],
+    StartInvestingComponent, CancelAssetComponent, AcceptSaleComponent, RequireTokenComponent],
   providers: [LogoutService, OfferService, InvestService, DashboardService,
-    MarketplaceService, SellAssetService],
+    MarketplaceService, SellAssetService, MessageService],
   bootstrap: [InvestorComponent]
 })
 export class InvestorModule { }

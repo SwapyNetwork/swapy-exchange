@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MarketplaceService } from '../marketplace/marketplace.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 import { ToastrService } from '../../common/services/toastr.service';
-import { MessageService } from '../message/message.service';
+import { MessageService } from '../../common/message/message.service';
 
 @Component({
   selector: 'app-confirm-purchase',
