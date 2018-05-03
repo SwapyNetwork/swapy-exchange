@@ -297,6 +297,13 @@ body {
 .sw-green {
   color: #b1d432;
 }
+.sw-arrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 15px 26.0px 15px 0;
+  border-color: transparent #00afef transparent transparent;
+}
 
 /* ////////////////////// Titles /////////////// */
 .sw-box-title {
