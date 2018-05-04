@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { AssetMathService as AssetMath } from '../../common/services/asset-math.service';
 import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
   DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 import { ToastrService } from '../../common/services/toastr.service';
+import { MessageService } from '../../common/message/message.service';
 import { CreditCompanyComponent } from '../credit-company.component';
 
 @Component({
@@ -26,10 +28,12 @@ export class ApproveInvestmentComponent implements OnInit {
   public assets;
 
   constructor(
+    private router: Router,
     private swapyProtocol: SwapyProtocol,
     private toastrService: ToastrService,
     private creditCompanyComponent: CreditCompanyComponent,
     private dashboardService: DashboardService,
+    private messageService: MessageService,
     private assetMath: AssetMath
   ) { }
 
@@ -39,16 +43,17 @@ export class ApproveInvestmentComponent implements OnInit {
 
   private onError(error) {
     this.toastrService.error(error.message);
-    // this.messageService.setErrorMessage(error.message);
+    this.messageService.setErrorMessage(error.message);
   }
 
   public async approveInvestment() {
+    this.router.navigate(['credit-company/message']);
     const contractAddresses = this.assets.map(asset => asset.contractAddress);
     try {
       await this.swapyProtocol.withdrawFunds(contractAddresses);
       this.toastrService.getInstance().success('Investment(s) approved');
-      // this.messageService.setLastMessage('Sell order(s) cancelled');
-      // this.messageService.setHeaderMessage('Transaction confirmed');
+      this.messageService.setLastMessage('Investment(s) approved');
+      this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
       this.onError(error);
     }

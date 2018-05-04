@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { AssetMathService as AssetMath } from '../../common/services/asset-math.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
@@ -6,6 +7,7 @@ import { ToastrService } from '../../common/services/toastr.service';
 import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
   DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
 import { CreditCompanyComponent } from '../credit-company.component';
+import { MessageService } from '../../common/message/message.service';
 
 @Component({
   selector: 'app-return-investment',
@@ -27,6 +29,8 @@ export class ReturnInvestmentComponent implements OnInit {
   public total;
 
   constructor(
+    private router: Router,
+    private messageService: MessageService,
     private swapyProtocol: SwapyProtocol,
     private toastrService: ToastrService,
     private creditCompanyComponent: CreditCompanyComponent,
@@ -41,17 +45,18 @@ export class ReturnInvestmentComponent implements OnInit {
 
   private onError(error) {
     this.toastrService.error(error.message);
-    // this.messageService.setErrorMessage(error.message);
+    this.messageService.setErrorMessage(error.message);
   }
 
   public async returnInvestment() {
+    this.router.navigate(['credit-company/message']);
     const contractAddresses = this.assets.map(asset => asset.contractAddress);
     const values = this.assets.map(asset => (asset.value * (1 + asset.grossReturn)).toFixed(2));
     try {
       await this.swapyProtocol.returnInvestment(contractAddresses, values);
       this.toastrService.getInstance().success('Investment(s) returned');
-      // this.messageService.setLastMessage('Sell order(s) cancelled');
-      // this.messageService.setHeaderMessage('Transaction confirmed');
+      this.messageService.setLastMessage('Investment(s) returned');
+      this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
       this.onError(error);
     }

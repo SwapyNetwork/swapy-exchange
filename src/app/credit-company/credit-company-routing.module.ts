@@ -18,6 +18,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { SupplyTokenComponent } from './supply-token/supply-token.component';
 import { AddFundsComponent } from '../common/add-funds/add-funds.component';
 import { AddFundsChildComponent } from '../common/add-funds/add-funds-child/add-funds-child.component';
+import { MessageComponent } from '../common/message/message.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,7 @@ const routes: Routes = [
       { path: 'terms-of-service', component: TermsPageComponent },
       { path: 'privacy-policy', component: PrivacyPageComponent },
       { path: 'profile', component: ProfileComponent },
+      { path: 'message', component: MessageComponent },
     ]
   }
 ];
