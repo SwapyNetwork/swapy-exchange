@@ -51,8 +51,8 @@ export class ApproveInvestmentComponent implements OnInit {
     const contractAddresses = this.assets.map(asset => asset.contractAddress);
     try {
       await this.swapyProtocol.withdrawFunds(contractAddresses);
-      this.toastrService.getInstance().success('Investment(s) approved');
-      this.messageService.setLastMessage('Investment(s) approved');
+      this.toastrService.getInstance().success('Investment(s) approved!');
+      this.messageService.setLastMessage('Investment(s) approved!');
       this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
       this.onError(error);

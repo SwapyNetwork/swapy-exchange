@@ -54,8 +54,8 @@ export class ReturnInvestmentComponent implements OnInit {
     const values = this.assets.map(asset => (asset.value * (1 + asset.grossReturn)).toFixed(2));
     try {
       await this.swapyProtocol.returnInvestment(contractAddresses, values);
-      this.toastrService.getInstance().success('Investment(s) returned');
-      this.messageService.setLastMessage('Investment(s) returned');
+      this.toastrService.getInstance().success('Investment(s) returned!');
+      this.messageService.setLastMessage('Investment(s) returned!');
       this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
       this.onError(error);

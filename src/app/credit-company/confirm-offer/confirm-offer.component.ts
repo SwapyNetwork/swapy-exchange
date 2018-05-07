@@ -8,6 +8,7 @@ import { CreditCompanyComponent } from '../credit-company.component';
 import { ToastrService } from '../../common/services/toastr.service';
 import { PendingOfferService } from './../pending-offer/pending-offer.service';
 import { ErrorLogService } from '../../common/services/error-log.service';
+import { MessageService } from '../../common/message/message.service';
 import { WalletService } from '../../common/services/wallet.service';
 
 
@@ -29,6 +30,7 @@ export class ConfirmOfferComponent implements OnInit {
     private i18nService: I18nService,
     private creditCompanyComponent: CreditCompanyComponent,
     private swapyProtocol: SwapyProtocol,
+    private messageService: MessageService,
     private toastrService: ToastrService,
     private pendingOfferService: PendingOfferService,
     private errorLogService: ErrorLogService,
@@ -45,9 +47,14 @@ export class ConfirmOfferComponent implements OnInit {
     }
   }
 
+  private onError(error) {
+    this.toastrService.error(error.message);
+    this.messageService.setErrorMessage(error.message);
+  }
+
   async confirmOffer() {
     const assetValues = this.offer.assets.map(asset => asset.value * 100);
-    this.router.navigate(['/credit-company/raise/pending']);
+    this.router.navigate(['/credit-company/message']);
     try {
       await this.swapyProtocol.createOffer(
         this.offer.paybackMonths * 30,
@@ -56,11 +63,11 @@ export class ConfirmOfferComponent implements OnInit {
         this.offer.raisingAmount,
         assetValues
       );
-      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
-      this.pendingOfferService.setMessage('Your offer was mined by the Ethereum blockchain.');
+      this.toastrService.getInstance().success('Offer created!');
+      this.messageService.setLastMessage('Offer created!');
+      this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
-      this.pendingOfferService.setErrorMessage(error.message);
-      this.toastrService.error(this.pendingOfferService.getMessage());
+      this.onError(error);
     }
     this.creditCompanyComponent.refreshBalance();
 

@@ -106,6 +106,8 @@ export class SwapyProtocolService {
         from: this.walletService.getWallet().address, gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
       })
       .on('error', (error) => {
         this.handleOnError(error);
