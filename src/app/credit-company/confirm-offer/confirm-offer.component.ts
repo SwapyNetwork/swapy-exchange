@@ -6,7 +6,6 @@ import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swa
 import { AddOfferService } from '../add-offer/add-offer.service';
 import { CreditCompanyComponent } from '../credit-company.component';
 import { ToastrService } from '../../common/services/toastr.service';
-import { PendingOfferService } from './../pending-offer/pending-offer.service';
 import { ErrorLogService } from '../../common/services/error-log.service';
 import { MessageService } from '../../common/message/message.service';
 import { WalletService } from '../../common/services/wallet.service';
@@ -32,7 +31,6 @@ export class ConfirmOfferComponent implements OnInit {
     private swapyProtocol: SwapyProtocol,
     private messageService: MessageService,
     private toastrService: ToastrService,
-    private pendingOfferService: PendingOfferService,
     private errorLogService: ErrorLogService,
     private walletService: WalletService,
   ) {

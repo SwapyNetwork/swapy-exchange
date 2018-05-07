@@ -12,7 +12,6 @@ import { SwapyProtocolService as SwapyProtocol } from '../../../common/services/
 import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
   DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../../common/interfaces/offer-asset-status.interface';
 import { StorageService } from '../../../common/services/storage.service';
-import { SupplyTokenService } from '../../supply-token/supply-token.service';
 
 const env = require('../../../../../env.json');
 import * as sha1 from 'sha1';
@@ -49,7 +48,6 @@ export class OfferComponent implements OnInit {
     private linkService: LinkService,
     private walletService: WalletService,
     private storageService: StorageService,
-    private supplyTokenService: SupplyTokenService,
     private router: Router,
     private assetMath: AssetMath,
     private dashboardService: DashboardService,

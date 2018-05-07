@@ -19,16 +19,12 @@ import { LogoutService } from '../common/services/logout.service';
 import { AddOfferService } from './add-offer/add-offer.service';
 import { ConfirmOfferComponent } from './confirm-offer/confirm-offer.component';
 import { SuccessfulOfferComponent } from './successful-offer/successful-offer.component';
-import { PendingOfferComponent } from './pending-offer/pending-offer.component';
-import { PendingOfferService } from './pending-offer/pending-offer.service';
 import { ProfileComponent } from './profile/profile.component';
 
 import { TermsPageComponent } from './terms-page/terms-page.component';
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 import { OfferComponent } from './dashboard/offer/offer.component';
 import { DashboardService } from './dashboard/dashboard.service';
-import { SupplyTokenComponent } from './supply-token/supply-token.component';
-import { SupplyTokenService } from './supply-token/supply-token.service';
 import { StartComponent } from './start/start.component';
 import { ApproveInvestmentComponent } from './approve-investment/approve-investment.component';
 import { ReturnInvestmentComponent } from './return-investment/return-investment.component';
@@ -49,9 +45,10 @@ import { AddCollateralComponent } from './add-collateral/add-collateral.componen
     TextMaskModule
   ],
   declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent, ConfirmOfferComponent,
-    SuccessfulOfferComponent, PendingOfferComponent, ProfileComponent, TermsPageComponent, PrivacyPageComponent,
-    OfferComponent, SupplyTokenComponent, StartComponent, ApproveInvestmentComponent, ReturnInvestmentComponent, RefuseInvestmentComponent, AddCollateralComponent],
-  providers: [LogoutService, AddOfferService, PendingOfferService, DashboardService, SupplyTokenService, MessageService],
+    SuccessfulOfferComponent, ProfileComponent, TermsPageComponent, PrivacyPageComponent,
+    OfferComponent, StartComponent, ApproveInvestmentComponent, ReturnInvestmentComponent,
+    RefuseInvestmentComponent, AddCollateralComponent],
+  providers: [LogoutService, AddOfferService, DashboardService, MessageService],
   bootstrap: [CreditCompanyComponent]
 })
 export class CreditCompanyModule {}
