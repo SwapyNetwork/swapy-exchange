@@ -7,6 +7,7 @@ import { InvestorComponent } from './../investor.component';
 import { WalletService } from '../../common/services/wallet.service';
 import { ToastrService } from '../../common/services/toastr.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
+import { MessageService } from '../../common/message/message.service';
 
 import * as sha1 from 'sha1';
 
@@ -22,10 +23,15 @@ export class InvestComponent implements OnInit {
   public wallet: any;
   private assetIndex: number;
 
-  constructor(private investService: InvestService, private router: Router,
-    private successfulInvestmentService: SuccessfulInvestmentService,
-    private investorComponent: InvestorComponent, private walletService: WalletService,
-    private toastrService: ToastrService, private swapyProtocol: SwapyProtocol) {
+  constructor(
+    private investService: InvestService,
+    private router: Router,
+    private investorComponent: InvestorComponent,
+    private messageService: MessageService,
+    private walletService: WalletService,
+    private toastrService: ToastrService,
+    private swapyProtocol: SwapyProtocol
+  ) {
     this.wallet = this.walletService.getWallet();
   }
 
@@ -37,6 +43,7 @@ export class InvestComponent implements OnInit {
     this.assetIndex = 0;
     this.offerIndex = this.investService.getCachedOfferIndex();
   }
+
   collateralToString(index) {
     const token = this.investment.assets[index].token;
     if (token > 0) {
@@ -45,24 +52,22 @@ export class InvestComponent implements OnInit {
     return 'No collateral;'
   }
 
-  confirmInvestment() {
-    this.invest();
-    this.router.navigate(['investor/invest/success']);
+  private onError(error) {
+    this.toastrService.error(error.message);
+    this.messageService.setErrorMessage(error.message);
   }
 
   async invest() {
+    this.router.navigate(['/investor/message']);
     try {
       const assetsAddress = this.investment.assets.map(asset => asset.contractAddress);
       const assetsValues = this.investment.assets.map(asset => asset.value);
-      this.successfulInvestmentService.cacheInvestment(this.investment);
       await this.swapyProtocol.invest(assetsAddress, assetsValues);
-      this.toastrService.getInstance().success('Your investment was mined by the Ethereum blockchain.');
-      this.successfulInvestmentService.setLastMessage('Your investment was mined by the Ethereum blockchain.');
-      this.successfulInvestmentService.setHeaderMessage('Transaction confirmed');
+      this.toastrService.getInstance().success('Your investment was mined by the Ethereum blockchain!');
+      this.messageService.setLastMessage('Your investment was mined by the Ethereum blockchain!');
+      this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
-      this.successfulInvestmentService.setErrorMessage(error.message);
-      this.toastrService.error(this.successfulInvestmentService.getMessage());
+      this.onError(error);
     }
   }
-
 }
