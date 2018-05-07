@@ -77,6 +77,7 @@ export class NavComponent implements OnInit {
   // store state
   isIn = false;
   isSettingsOpen = false;
+  isNotificationOpen = false;
 
   // click handler
   public toggleState() {
@@ -85,8 +86,13 @@ export class NavComponent implements OnInit {
   }
 
   public toggleSettingsDropdown() {
-    const bool = this.isSettingsOpen;
-    this.isSettingsOpen = bool === false ? true : false;
+    this.isSettingsOpen = !this.isSettingsOpen;
+    this.isNotificationOpen = false;
+  }
+
+  public toggleNotificationDropdown() {
+    this.isNotificationOpen = !this.isNotificationOpen;
+    this.isSettingsOpen = false;
   }
 
   public logout() {
