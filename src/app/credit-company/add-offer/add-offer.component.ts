@@ -15,7 +15,6 @@ export class AddOfferComponent implements OnInit {
   public paybackMonths: string;
   public grossReturn: string;
   public assetsNumber: number;
-  public errorMessages: string[] = [];
 
   public paybackMonthsMask = [/\d/, /\d/];
 
@@ -46,11 +45,11 @@ export class AddOfferComponent implements OnInit {
   }
 
   addOffer() {
-    this.errorMessages = [];
+    this.paybackMonths = '12'; // Making sure that this is going to be the default value even if a user edits the HTML.
     const raisingAmount = parseFloat(this.amount.replace(/[^0-9.]/g, ''));
     const assets = [];
 
-    // For now it's fixed in 5 assets of the same value. Later on, the company will be able to choose the assets' values
+    // For now it's fixed in assets of the same value. Later on, the company will be able to choose the assets' values
     for (let i = 0; i < this.assetsNumber; i++) {
       assets.push(
         {

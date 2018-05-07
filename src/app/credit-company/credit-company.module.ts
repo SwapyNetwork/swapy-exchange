@@ -18,7 +18,6 @@ import { CreditCompanyComponent } from './credit-company.component';
 import { LogoutService } from '../common/services/logout.service';
 import { AddOfferService } from './add-offer/add-offer.service';
 import { ConfirmOfferComponent } from './confirm-offer/confirm-offer.component';
-import { SuccessfulOfferComponent } from './successful-offer/successful-offer.component';
 import { ProfileComponent } from './profile/profile.component';
 
 import { TermsPageComponent } from './terms-page/terms-page.component';
@@ -45,7 +44,7 @@ import { AddCollateralComponent } from './add-collateral/add-collateral.componen
     TextMaskModule
   ],
   declarations: [CreditCompanyComponent, DashboardComponent, AddOfferComponent, ConfirmOfferComponent,
-    SuccessfulOfferComponent, ProfileComponent, TermsPageComponent, PrivacyPageComponent,
+    ProfileComponent, TermsPageComponent, PrivacyPageComponent,
     OfferComponent, StartComponent, ApproveInvestmentComponent, ReturnInvestmentComponent,
     RefuseInvestmentComponent, AddCollateralComponent],
   providers: [LogoutService, AddOfferService, DashboardService, MessageService],
