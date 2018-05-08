@@ -6,6 +6,7 @@ import { WalletService } from '../services/wallet.service';
 import { INVESTOR, CREDIT_COMPANY } from '../interfaces/user-type.interface';
 const env = require('../../../../env.json');
 import { LinkService } from '../services/link.service';
+import { NavService } from './nav.service';
 
 @Component({
   selector: 'app-nav',
@@ -25,8 +26,14 @@ export class NavComponent implements OnInit {
 
   public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
 
-  constructor(public logoutService: LogoutService, private storageService: StorageService,
-    private walletService: WalletService, private linkService: LinkService, private router: Router) {
+  constructor(
+    public logoutService: LogoutService,
+    private storageService: StorageService,
+    private walletService: WalletService,
+    private linkService: LinkService,
+    private router: Router,
+    private navService: NavService
+   ) {
     this.isElectron = (window as any).isElectron;
     const user = this.storageService.getItem('user');
     this.user = user ? user : {};
@@ -91,6 +98,7 @@ export class NavComponent implements OnInit {
   }
 
   public toggleNotificationDropdown() {
+    this.navService.getTransactionStatus();
     this.isNotificationOpen = !this.isNotificationOpen;
     this.isSettingsOpen = false;
   }
