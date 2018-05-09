@@ -70,7 +70,7 @@ export class SwapyProtocolService {
       this.storageService.setItem('notifications', {})
     }
     notifications = this.storageService.getItem('notifications');
-    notifications[hash] = 0;
+    notifications[hash] = (new Date()).valueOf();
     this.storageService.setItem('notifications', notifications);
   }
 
@@ -139,6 +139,7 @@ export class SwapyProtocolService {
         value: value
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash([], hash);
         this.messageService.setLoadingState(true);
         this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
       })
@@ -155,8 +156,8 @@ export class SwapyProtocolService {
         gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
-        this.storeTransactionHash(contractAddresses, hash);
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
         this.messageService.setLoadingState(true);
         this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
       })
@@ -235,6 +236,7 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash([], hash);
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -251,6 +253,7 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash([], hash);
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -269,7 +272,6 @@ export class SwapyProtocolService {
         this.storeTransactionHash(contractAddresses, hash);
         this.messageService.setLoadingState(true);
         this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
-
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -288,7 +290,6 @@ export class SwapyProtocolService {
         this.storeTransactionHash(contractAddresses, hash);
         this.messageService.setLoadingState(true);
         this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
-
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -308,9 +309,9 @@ export class SwapyProtocolService {
         value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash([], hash);
         this.messageService.setLoadingState(true);
         this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
-
       })
       .on('error', (error) => {
         this.handleOnError(error);
@@ -381,6 +382,7 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash([], hash);
         this.messageService.setLoadingState(true);
         this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
       })

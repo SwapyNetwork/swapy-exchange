@@ -74,7 +74,7 @@ export class MessageService {
           this.message = 'Your wallet does not have the necessary amount of ETH to pay for gas. Transaction will not be mined.'
           break;
         case '699e7c6d81ba58075ee84cf2a640c18a409efcba': // Transaction still being mined
-          this.message = 'Transaction is still being mined. Please go to the \'Manage\' page in a few minutes and check if your the transaction finished successfully.'
+          this.message = 'Transaction is still being mined. Please go to the \'Manage\' page in a few minutes and check if your transaction finished successfully.'
           break;
         case '447ac2569cfa905030dda6dd5ed1013f98f1a7b9': // RLP error: leading zero bytes
           this.message = 'Error while doing the transaction. Please invest again.'

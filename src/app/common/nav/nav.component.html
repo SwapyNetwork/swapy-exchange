@@ -29,10 +29,11 @@
         <li class="dropdown" [ngClass]="{ 'open': isNotificationOpen }" (click)="toggleNotificationDropdown()">
           <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true" title="Notifications"></i> <span class="sw-add-name-menu sw-box-text"> Notifications </span></a>
           <ul class="dropdown-menu col-md-12">
-            <li class="col-md-10 col-md-offset-1 sw-notification"> Your transaction is being processed in the Blockchain </li>
-            <li class="col-md-10 col-md-offset-1 sw-notification"> Your transaction is being processed in the Blockchain </li>
-            <li class="col-md-10 col-md-offset-1 sw-notification"> Your transaction is being processed in the Blockchain </li>
-            <li class="col-md-10 col-md-offset-1 sw-notification"> Your transaction is being processed in the Blockchain </li>
+            <li *ngFor="let notification of this.navService.getNotifications()" class="col-md-10 col-md-offset-1 sw-notification">
+              <div *ngIf="notification.status === 0">Your transaction is being processed in the Blockchain</div>
+              <div *ngIf="notification.status === 1">Your transaction was confirmed in the Blockchain</div>
+              <div *ngIf="notification.status === -1">There was an error in your transaction</div>
+            </li>
           </ul>
         </li>
 
