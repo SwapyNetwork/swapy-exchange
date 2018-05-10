@@ -69,8 +69,18 @@ export class SwapyProtocolService {
     if (notifications == null) {
       this.storageService.setItem('notifications', {})
     }
+    const walletAddress = this.walletService.getWallet().address;
+    const userType = this.storageService.getItem('user').type;
     notifications = this.storageService.getItem('notifications');
-    notifications[hash] = (new Date()).valueOf();
+
+    if (notifications[walletAddress] === undefined) {
+      notifications[walletAddress] = {};
+      notifications[walletAddress][userType] = {};
+    } else if (notifications[walletAddress][userType] === undefined) {
+      notifications[walletAddress][userType] = {};
+    }
+
+    notifications[walletAddress][userType][hash] = (new Date()).valueOf();
     this.storageService.setItem('notifications', notifications);
   }
 

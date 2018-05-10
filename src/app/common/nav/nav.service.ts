@@ -1,19 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Web3Service } from '../services/web3.service';
+import { WalletService } from '../services/wallet.service';
 import { StorageService } from '../services/storage.service';
 
 @Injectable()
 export class NavService {
 
   private notifications;
+  private walletAddress;
+  private userType;
 
   constructor(
+    protected walletService: WalletService,
     private web3Service: Web3Service,
     private storageService: StorageService
-  ) { }
+  ) {
+    this.walletAddress = this.walletService.getWallet().address;
+    this.userType = this.storageService.getItem('user').type;
+  }
 
   public async getTransactionStatus() {
-    const transactionsHashes = this.storageService.getItem('notifications') || {};
+    const transactionsHashes = this.storageService.getItem('notifications')[this.walletAddress][this.userType] || {};
     let status;
     let receipt;
     let notifications = [];
