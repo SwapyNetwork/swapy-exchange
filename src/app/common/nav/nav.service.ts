@@ -6,7 +6,7 @@ import { StorageService } from '../services/storage.service';
 @Injectable()
 export class NavService {
 
-  private notifications;
+  private notifications = [];
   private walletAddress;
   private userType;
 
@@ -20,29 +20,35 @@ export class NavService {
   }
 
   public async getTransactionStatus() {
-    const transactionsHashes = this.storageService.getItem('notifications')[this.walletAddress][this.userType] || {};
-    let status;
-    let receipt;
-    let notifications = [];
-    for (const key in transactionsHashes) {
-      receipt = await this.web3Service.getInstance().eth.getTransactionReceipt(key);
-      if (receipt == null) {
-        notifications.push({
-          date: transactionsHashes[key],
-          status: 0
-        });
-      } else {
-        status = Number(receipt.status);
-        notifications.push({
-          date: transactionsHashes[key],
-          status: status === 0 ? -1 : 1
-        });
+    const storagedHashes = this.storageService.getItem('notifications') || {};
+    if (storagedHashes[this.walletAddress] !== undefined && storagedHashes[this.walletAddress][this.userType] !== undefined) {
+
+      const transactionsHashes = storagedHashes[this.walletAddress][this.userType];
+      let status;
+      let receipt;
+      let notifications = [];
+      for (const key in transactionsHashes) {
+        receipt = await this.web3Service.getInstance().eth.getTransactionReceipt(key);
+        if (receipt == null) {
+          notifications.push({
+            date: transactionsHashes[key],
+            status: 0
+          });
+        } else {
+          status = Number(receipt.status);
+          notifications.push({
+            date: transactionsHashes[key],
+            status: status === 0 ? -1 : 1
+          });
+        }
       }
+
+      notifications = notifications.sort((a, b) => b.date - a.date);
+
+      this.setNotifications(notifications);
+    } else {
+      this.setNotifications([]);
     }
-
-    notifications = notifications.sort((a, b) => b.date - a.date);
-
-    this.setNotifications(notifications);
   }
 
   public setNotifications(notifications) {

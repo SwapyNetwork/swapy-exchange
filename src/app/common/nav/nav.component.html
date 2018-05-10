@@ -34,6 +34,7 @@
               <div *ngIf="notification.status === 1">Your transaction was confirmed in the Blockchain</div>
               <div *ngIf="notification.status === -1">There was an error in your transaction</div>
             </li>
+            <li *ngIf="this.navService.getNotifications().length === 0"> No notifications </li>
           </ul>
         </li>
 
