@@ -33,10 +33,19 @@
               <div class="col-md-6"><i class="fa fa-bell" aria-hidden="true"></i> Notifications</div>
               <div class="col-md-5 sw-history-label">History</div>
             </li>
-            <li *ngFor="let notification of this.navService.getNotifications()" class="col-md-10 col-md-offset-1 sw-notification">
-              <div *ngIf="notification.status === 0">Your transaction is being processed in the Blockchain</div>
-              <div *ngIf="notification.status === 1">Your transaction was confirmed in the Blockchain</div>
-              <div *ngIf="notification.status === -1">There was an error in your transaction</div>
+            <li *ngFor="let notification of this.navService.getNotifications()" class="col-md-11 sw-notification">
+              <div *ngIf="notification.status === 0">
+                <div class="col-md-11">Your transaction <span class="sw-blue1">is being processed</span> in the <span class="sw-blue1">Blockchain</span></div>
+                <div class="row col-md-12 sw-notification-time"><i class="fa fa-bell sw-orange" aria-hidden="true"></i><p>A few seconds ago</p></div>
+              </div>
+              <div *ngIf="notification.status === 1">
+                <div class="col-md-10">Your transaction <span class="sw-blue1">was confirmed</span> in the <span class="sw-blue1">Blockchain</span></div>
+                <div class="row col-md-12 sw-notification-time"><i class="fa fa-bell sw-blue1" aria-hidden="true"></i><p>A few seconds ago</p></div>
+              </div>
+              <div *ngIf="notification.status === -1">
+                <div class="col-md-10">There was an <span class="sw-red">error</span> in your <span class="sw-red">transaction</span></div>
+                <div class="row col-md-12 sw-notification-time"><i class="fa fa-bell sw-red" aria-hidden="true"></i><p>A few seconds ago</p></div>
+              </div>
             </li>
             <li *ngIf="this.navService.getNotifications().length === 0" class="col-md-10 col-md-offset-1">
               <div class="sw-no-notifications">No notifications</div>
