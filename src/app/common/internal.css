@@ -35,7 +35,8 @@ body {
 }
 .dropdown-menu {
     top: 34px;
-    border-top: 5px solid #f5c03a;
+    /*border-top: 5px solid #f5c03a;*/
+    padding: 0;
     min-width: 350px !important;
 }
 .sw-profile-name {

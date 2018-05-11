@@ -3,3 +3,17 @@
 	padding-bottom: 10px;
 	border-bottom: 1px solid #9d9d9d;
 }
+.sw-title {
+	background-color: #00aeef;
+	color: #FFF;
+	padding: 10px 5px;
+	font-weight: 500;
+}
+.sw-history-label {
+	text-align: right;
+	font-weight: 300;
+}
+.sw-no-notifications {
+	text-align: center;
+	padding: 20px;
+}
