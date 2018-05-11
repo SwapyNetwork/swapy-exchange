@@ -23,6 +23,7 @@ import { CustomToastOption } from './common/CustomToastOption';
 import { ErrorLogService } from './common/services/error-log.service';
 import { SuccessfulInvestmentService } from './investor/successful-investment/successful-investment.service';
 import { MessageService } from './common/message/message.service';
+import { NavService } from './common/nav/nav.service';
 
 
 @NgModule({
@@ -39,7 +40,7 @@ import { MessageService } from './common/message/message.service';
   ],
   providers: [StorageService, HttpService, I18nService, LoadingService, LinkService, Web3Service,
     WalletService, SwapyProtocolService, LogoutService, SuccessfulInvestmentService, ToastrService,
-    ErrorLogService, AssetMathService, MessageService, { provide: ToastOptions, useClass: CustomToastOption }],
+    ErrorLogService, AssetMathService, MessageService, NavService, { provide: ToastOptions, useClass: CustomToastOption }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -11,6 +11,6 @@ import { NavRoutingModule } from './nav-routing.module';
   declarations: [NavComponent, TermsOfServiceComponent, PrivacyPolicyComponent],
   imports: [CommonModule, NavRoutingModule],
   exports: [NavComponent, TermsOfServiceComponent, PrivacyPolicyComponent],
-  providers: [NavService]
+  providers: []
 })
 export class NavModule {}

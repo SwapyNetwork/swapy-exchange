@@ -27,7 +27,7 @@
         <!-- <li><a routerLink="/notifications"><i class="fa fa-lg fa-bell-o" aria-hidden="true" title="Notifications"></i><span class="badge sw-badge"></span></a></li> -->
 
         <li class="dropdown" [ngClass]="{ 'open': isNotificationOpen }" (click)="toggleNotificationDropdown()">
-          <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true" title="Notifications"></i> <span class="sw-add-name-menu sw-box-text"> Notifications </span></a>
+          <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true" title="Notifications" [ngClass]="{'fa fa-bell': true, 'sw-orange': this.navService.getNotificationFlag()}"></i> <span class="sw-add-name-menu sw-box-text"> Notifications </span></a>
           <ul class="dropdown-menu col-md-12">
             <li class="col-md-12 sw-title">
               <div class="col-md-6"><i class="fa fa-bell" aria-hidden="true"></i> Notifications</div>

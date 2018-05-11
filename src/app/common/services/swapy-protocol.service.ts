@@ -4,6 +4,7 @@ import { Web3Service } from './web3.service';
 import { WalletService } from './wallet.service';
 import { ErrorLogService } from './error-log.service';
 import { StorageService } from './storage.service';
+import { NavService } from '../nav/nav.service';
 import { SuccessfulInvestmentService } from '../../investor/successful-investment/successful-investment.service';
 import { MessageService } from '../message/message.service';
 import { BigNumber } from 'bignumber.js';
@@ -35,6 +36,7 @@ export class SwapyProtocolService {
     public http: HttpClient,
     public successfulInvestmentService: SuccessfulInvestmentService,
     public messageService: MessageService,
+    public navService: NavService,
     public storageService: StorageService
   ) {
     this.web3 = this.web3Service.getInstance();
@@ -82,6 +84,7 @@ export class SwapyProtocolService {
 
     notifications[walletAddress][userType][hash] = (new Date()).valueOf();
     this.storageService.setItem('notifications', notifications);
+    this.navService.setNewNotificationFlag();
   }
 
   private handleOnTransactionHash(hash: string) {

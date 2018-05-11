@@ -9,6 +9,7 @@ export class NavService {
   private notifications = [];
   private walletAddress;
   private userType;
+  private newNotification;
 
   constructor(
     protected walletService: WalletService,
@@ -45,6 +46,8 @@ export class NavService {
 
       notifications = notifications.sort((a, b) => b.date - a.date);
 
+      this.newNotification = false;
+
       this.setNotifications(notifications);
     } else {
       this.setNotifications([]);
@@ -57,6 +60,14 @@ export class NavService {
 
   public getNotifications() {
     return this.notifications;
+  }
+
+  public setNewNotificationFlag() {
+    this.newNotification = true;
+  }
+
+  public getNotificationFlag() {
+    return this.newNotification;
   }
 
 }

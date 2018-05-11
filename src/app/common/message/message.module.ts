@@ -9,6 +9,6 @@ import { MessageRoutingModule } from './message-routing.module';
   imports: [CommonModule, MessageRoutingModule],
   declarations: [MessageComponent],
   exports: [MessageComponent],
-  providers: [MessageService]
+  providers: []
 })
 export class MessageModule { }
