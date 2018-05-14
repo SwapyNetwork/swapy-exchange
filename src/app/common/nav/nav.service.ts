@@ -18,12 +18,12 @@ export class NavService {
     private loadingService: LoadingService,
     private storageService: StorageService
   ) {
-    this.walletAddress = this.walletService.getWallet().address;
-    this.userType = this.storageService.getItem('user').type;
   }
 
   public async getTransactionStatus() {
     this.loadingService.show();
+    this.walletAddress = this.walletService.getWallet().address;
+    this.userType = this.storageService.getItem('user').type;
     const storagedHashes = this.storageService.getItem('notifications') || {};
     if (storagedHashes[this.walletAddress] !== undefined && storagedHashes[this.walletAddress][this.userType] !== undefined) {
 

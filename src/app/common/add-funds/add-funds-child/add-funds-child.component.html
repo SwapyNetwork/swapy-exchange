@@ -50,7 +50,7 @@
     	<p id="qrcode"></p>
     </div>
     <div class="col-xs-3 col-sm-3 col-md-3 center" *ngIf="wallet">
-    	<p class="sw-add-funds-description">If you don't have Ethers or  Swapys, {{ wallet.network == 1 ? 'buy it from one of our partners' : 'get it from our test net faucet'}}</p>
+    	<p class="sw-add-funds-description">If you don't have Ethers, {{ wallet.network == 1 ? 'buy it from one of our partners' : 'get it from our test net faucet'}}</p>
       <a href="https://www.rinkeby.io/#faucet" target="_blank" *ngIf="wallet.network==4">
         <p class="sw-address-description sw-blue1">Buy ETH from Faucet Rinkeby</p>
       </a>

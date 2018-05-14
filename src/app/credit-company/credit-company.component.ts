@@ -112,7 +112,7 @@ export class CreditCompanyComponent implements OnInit {
       .map(values => values.value + values.value * values.grossReturn)
       .reduce((total: number, current: number) => (total + current), 0));
 
-    const investedAssets = assets.filter(asset => (
+    let investedAssets = assets.filter(asset => (
       asset.status === PENDING_OWNER_AGREEMENT ||
       asset.status === INVESTED ||
       asset.status === FOR_SALE ||
@@ -120,10 +120,10 @@ export class CreditCompanyComponent implements OnInit {
     );
 
     if (investedAssets.length > 0) {
-      assets = assets.sort((a, b) => Number(a.investedAt) - Number(b.investedAt));
-      this.nextReturnDate = new Date(assets[0].investedAt);
-      this.nextReturnDate.setMonth(this.nextReturnDate.getMonth() + assets[0].paybackMonths);
-      this.nextReturnValue = assets[0].value * (1 + assets[0].grossReturn);
+      investedAssets = investedAssets.sort((a, b) => Number(a.investedAt) - Number(b.investedAt));
+      this.nextReturnDate = new Date(investedAssets[0].investedAt);
+      this.nextReturnDate.setMonth(this.nextReturnDate.getMonth() + investedAssets[0].paybackMonths);
+      this.nextReturnValue = investedAssets[0].value * (1 + investedAssets[0].grossReturn);
     }
     // this.amountReturned = (assets.filter(asset => (asset.status === RETURNED || asset.status === DELAYED_RETURN))
     //   .map(values => values.value + values.value * values.grossReturn)
