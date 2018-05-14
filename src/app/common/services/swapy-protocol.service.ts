@@ -5,7 +5,6 @@ import { WalletService } from './wallet.service';
 import { ErrorLogService } from './error-log.service';
 import { StorageService } from './storage.service';
 import { NavService } from '../nav/nav.service';
-import { SuccessfulInvestmentService } from '../../investor/successful-investment/successful-investment.service';
 import { MessageService } from '../message/message.service';
 import { BigNumber } from 'bignumber.js';
 
@@ -34,7 +33,6 @@ export class SwapyProtocolService {
     protected walletService: WalletService,
     public errorLogService: ErrorLogService,
     public http: HttpClient,
-    public successfulInvestmentService: SuccessfulInvestmentService,
     public messageService: MessageService,
     public navService: NavService,
     public storageService: StorageService

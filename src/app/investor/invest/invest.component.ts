@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { InvestService } from './invest.service';
 import { Router } from '@angular/router';
 import { Invest } from './invest.interface';
-import { SuccessfulInvestmentService } from './../successful-investment/successful-investment.service';
 import { InvestorComponent } from './../investor.component';
 import { WalletService } from '../../common/services/wallet.service';
 import { ToastrService } from '../../common/services/toastr.service';

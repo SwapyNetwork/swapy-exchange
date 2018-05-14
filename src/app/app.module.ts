@@ -21,7 +21,6 @@ import { ToastOptions } from 'ng2-toastr';
 import { ToastrService } from './common/services/toastr.service';
 import { CustomToastOption } from './common/CustomToastOption';
 import { ErrorLogService } from './common/services/error-log.service';
-import { SuccessfulInvestmentService } from './investor/successful-investment/successful-investment.service';
 import { MessageService } from './common/message/message.service';
 import { NavService } from './common/nav/nav.service';
 
@@ -39,7 +38,7 @@ import { NavService } from './common/nav/nav.service';
     ToastModule.forRoot()
   ],
   providers: [StorageService, HttpService, I18nService, LoadingService, LinkService, Web3Service,
-    WalletService, SwapyProtocolService, LogoutService, SuccessfulInvestmentService, ToastrService,
+    WalletService, SwapyProtocolService, LogoutService, ToastrService,
     ErrorLogService, AssetMathService, MessageService, NavService, { provide: ToastOptions, useClass: CustomToastOption }],
   bootstrap: [AppComponent]
 })
