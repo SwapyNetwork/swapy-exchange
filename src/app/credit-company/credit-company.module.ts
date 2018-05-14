@@ -47,7 +47,7 @@ import { AddCollateralComponent } from './add-collateral/add-collateral.componen
     ProfileComponent, TermsPageComponent, PrivacyPageComponent,
     OfferComponent, StartComponent, ApproveInvestmentComponent, ReturnInvestmentComponent,
     RefuseInvestmentComponent, AddCollateralComponent],
-  providers: [LogoutService, AddOfferService, DashboardService, MessageService],
+  providers: [LogoutService, AddOfferService, DashboardService],
   bootstrap: [CreditCompanyComponent]
 })
 export class CreditCompanyModule {}

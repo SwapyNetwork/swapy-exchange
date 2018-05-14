@@ -98,9 +98,11 @@ export class NavComponent implements OnInit {
   }
 
   public toggleNotificationDropdown() {
-    this.navService.getTransactionStatus();
     this.isNotificationOpen = !this.isNotificationOpen;
     this.isSettingsOpen = false;
+    if (this.isNotificationOpen) {
+      this.navService.getTransactionStatus();     
+    }
   }
 
   public logout() {

@@ -27,6 +27,7 @@ export class NavService {
       const transactionsHashes = storagedHashes[this.walletAddress][this.userType];
       let status;
       let receipt;
+      let block;
       let notifications = [];
       for (const key in transactionsHashes) {
         receipt = await this.web3Service.getInstance().eth.getTransactionReceipt(key);
@@ -37,8 +38,9 @@ export class NavService {
           });
         } else {
           status = Number(receipt.status);
+          block = await this.web3Service.getInstance().eth.getBlock(receipt.blockNumber);
           notifications.push({
-            date: transactionsHashes[key],
+            date: block.timestamp * 1000,
             status: status === 0 ? -1 : 1
           });
         }

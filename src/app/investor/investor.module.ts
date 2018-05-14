@@ -60,7 +60,7 @@ import { MessageService } from '../common/message/message.service';
     ConfirmPurchaseComponent, SellAssetComponent, ConfirmSaleComponent,
     StartInvestingComponent, CancelAssetComponent, AcceptSaleComponent, RequireTokenComponent],
   providers: [LogoutService, OfferService, InvestService, DashboardService,
-    MarketplaceService, SellAssetService, MessageService],
+    MarketplaceService, SellAssetService],
   bootstrap: [InvestorComponent]
 })
 export class InvestorModule { }

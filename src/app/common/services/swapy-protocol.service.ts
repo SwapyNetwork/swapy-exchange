@@ -133,6 +133,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -158,6 +161,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -176,6 +182,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -192,6 +201,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -219,6 +231,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -237,6 +252,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -253,6 +271,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -270,6 +291,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -288,6 +312,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -306,6 +333,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -328,6 +358,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -347,6 +380,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -365,6 +401,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -383,6 +422,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -401,6 +443,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
