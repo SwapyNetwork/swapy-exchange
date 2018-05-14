@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Web3Service } from '../services/web3.service';
 import { WalletService } from '../services/wallet.service';
+import { LoadingService } from '../services/loading.service';
 import { StorageService } from '../services/storage.service';
 
 @Injectable()
@@ -14,6 +15,7 @@ export class NavService {
   constructor(
     protected walletService: WalletService,
     private web3Service: Web3Service,
+    private loadingService: LoadingService,
     private storageService: StorageService
   ) {
     this.walletAddress = this.walletService.getWallet().address;
@@ -21,6 +23,7 @@ export class NavService {
   }
 
   public async getTransactionStatus() {
+    this.loadingService.show();
     const storagedHashes = this.storageService.getItem('notifications') || {};
     if (storagedHashes[this.walletAddress] !== undefined && storagedHashes[this.walletAddress][this.userType] !== undefined) {
 
@@ -54,6 +57,7 @@ export class NavService {
     } else {
       this.setNotifications([]);
     }
+    this.loadingService.hide();
   }
 
   public setNotifications(notifications) {
