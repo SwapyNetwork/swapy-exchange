@@ -31,6 +31,7 @@
 </div>
 
 <div *ngIf="requireMetaMask === false && requireNetwork === false" class="signin-metamask">
+  <p><img *ngIf="isElectron" src="assets/img/icon-64.png" alt="MetaMask logo" (click)="triggerMetamaskPopup()" role="button"></p>
   <p>Found address <b>{{account.address}}</b> at network <b>{{getNetworkName(account.network)}}</b></p>
 
   <div class="checkbox">
