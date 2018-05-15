@@ -38,13 +38,13 @@
                 <div class="row">
                   <div class="col-sm-3 col-md-3 col-sm-offset-1 col-md-offset-1">
                     <div class="form-group">
-                      <label for="inputFundraising"><span class="sw-box-text">Fundraising</span></label>
+                      <label for="fundraisingInput"><span class="sw-box-text">Fundraising</span></label>
                       <input type="tel" class="form-control" placeholder="Add raising value (US$)" name="amount" [(ngModel)]="amount" [textMask]="{mask: amountMask}" #fundraisingInput="ngModel" required>
                     </div>
                   </div>
                   <div class="col-sm-3 col-md-3">
                     <div class="form-group">
-                      <label for="inputGrossReturn"><span class="sw-box-text">Gross return rate</span></label>
+                      <label for="grossReturnInput"><span class="sw-box-text">Gross return rate</span></label>
                       <input type="text" class="form-control" placeholder="Add gross return rate (%)" name="grossReturn" [(ngModel)]="grossReturn" [textMask]="{mask: percentMask}" #grossReturnInput="ngModel" required>
                     </div>
                   </div>
@@ -52,13 +52,13 @@
                 <div class="row">
                   <div class="col-sm-3 col-md-3 col-sm-offset-1 col-md-offset-1">
                     <div class="form-group">
-                      <label for="inputPayback"><span class="sw-box-text">Contract term (months)</span></label>
+                      <label for="paybackMonthsInput"><span class="sw-box-text">Contract term (months)</span></label>
                       <input type="tel" class="form-control" placeholder="x months"  name="paybackMonths" [(ngModel)]="paybackMonths" maxlength="2" #paybackMonthsInput="ngModel" pattern="[0-9]{1,2}" required [disabled]="true">
                     </div>
                   </div>
                   <div class="col-sm-3 col-md-3">
                     <div class="form-group">
-                      <label for="inputAssetsNumber"><span class="sw-box-text">Number of assets</span></label>
+                      <label for="assetsNumberInput"><span class="sw-box-text">Number of assets</span></label>
                       <input type="tel" class="form-control" placeholder="Add number of assets 1-5"  name="assetsNumber" [(ngModel)]="assetsNumber" maxlength="1" #assetsNumberInput="ngModel" pattern="[1-5]{1}" required>
                     </div>
                   </div>
