@@ -1,10 +1,10 @@
-.sw-title-outside-box {
+/*.sw-title-outside-box {
     font-weight: 400;
     font-size: 18px;
     color: #4a4a4a;
     padding: 0 0 15px 0;
     border-bottom: 3px solid #00aeef;
-}
+}*/
 .sw-description-outside-box {
     font-weight: 300;
     font-size: 18px;
@@ -23,9 +23,6 @@
     font-weight: 500;
     font-size: 22px;
     color: #00aeef; 
-}
-.sw-last-row {
-	padding-top: 25px;
 }
 .sw-button {
     border-radius: 300px;

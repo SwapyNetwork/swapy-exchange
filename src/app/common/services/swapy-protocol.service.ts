@@ -4,8 +4,8 @@ import { Web3Service } from './web3.service';
 import { WalletService } from './wallet.service';
 import { ErrorLogService } from './error-log.service';
 import { StorageService } from './storage.service';
-import { SuccessfulInvestmentService } from '../../investor/successful-investment/successful-investment.service';
-import { MessageService } from '../../investor/message/message.service';
+import { NavService } from '../nav/nav.service';
+import { MessageService } from '../message/message.service';
 import { BigNumber } from 'bignumber.js';
 
 const env = require('../../../../env.json');
@@ -33,8 +33,8 @@ export class SwapyProtocolService {
     protected walletService: WalletService,
     public errorLogService: ErrorLogService,
     public http: HttpClient,
-    public successfulInvestmentService: SuccessfulInvestmentService,
     public messageService: MessageService,
+    public navService: NavService,
     public storageService: StorageService
   ) {
     this.web3 = this.web3Service.getInstance();
@@ -64,6 +64,25 @@ export class SwapyProtocolService {
     addresses.forEach(address => {
       this.storageService.setItem(address, hash);
     });
+
+    let notifications = this.storageService.getItem('notifications');
+    if (notifications == null) {
+      this.storageService.setItem('notifications', {})
+    }
+    const walletAddress = this.walletService.getWallet().address;
+    const userType = this.storageService.getItem('user').type;
+    notifications = this.storageService.getItem('notifications');
+
+    if (notifications[walletAddress] === undefined) {
+      notifications[walletAddress] = {};
+      notifications[walletAddress][userType] = {};
+    } else if (notifications[walletAddress][userType] === undefined) {
+      notifications[walletAddress][userType] = {};
+    }
+
+    notifications[walletAddress][userType][hash] = (new Date()).valueOf();
+    this.storageService.setItem('notifications', notifications);
+    this.navService.setNewNotificationFlag();
   }
 
   private handleOnTransactionHash(hash: string) {
@@ -95,7 +114,7 @@ export class SwapyProtocolService {
     });
   }
 
-  public createOffer(payback: number, grossReturn: number, currency: string, value: number, offerTermsHash: string, assets: number[]) {
+  public createOffer(payback: number, grossReturn: number, currency: string, value: number, assets: number[]) {
     return this.SwapyExchangeContract.methods
       .createOffer(
         payback,
@@ -106,9 +125,15 @@ export class SwapyProtocolService {
         from: this.walletService.getWallet().address, gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash([], hash);
+        this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -128,63 +153,89 @@ export class SwapyProtocolService {
         value: value
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
-        this.successfulInvestmentService.setLoadingState(true);
-        this.successfulInvestmentService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
+        this.storeTransactionHash([], hash);
+        this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
-  public withdrawFunds(contractAddress: string) {
-    this.AssetLibraryContract.options.address = contractAddress;
-    return this.AssetLibraryContract.methods
-      .withdrawFunds()
+  public async withdrawFunds(contractAddresses: string[]) {
+    return this.SwapyExchangeContract.methods
+      .withdrawFunds(contractAddresses)
       .send({
         from: this.walletService.getWallet().address,
-        gas: 150000,
+        gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
+        this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
-  public refuseInvestment(contractAddress: string) {
-    this.AssetLibraryContract.options.address = contractAddress;
-    return this.AssetLibraryContract.methods
-      .refuseInvestment()
+  public refuseInvestment(contractAddresses: string[]) {
+    return this.SwapyExchangeContract.methods
+      .refuseInvestment(contractAddresses)
       .send({
         from: this.walletService.getWallet().address,
-        gas: 150000,
+        gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
+        this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
-  public async returnInvestment(contractAddress: string, value: number) {
+  public async returnInvestment(contractAddresses: string[], values: number[]) {
     const ethPrice = await this.getEthPrice();
-    const ethValue = value / (ethPrice as number);
+    let total = new BigNumber(0);
+    let eth;
+    values.forEach(value => {
+      eth = new BigNumber(value).div(new BigNumber(ethPrice as number));
+      total = total.plus(eth);
+    });
+    const ethValue = this.web3.utils.toWei(total);
+    const ethValues = values.map(value => this.web3.utils.toWei(new BigNumber(value).div(new BigNumber(ethPrice as number))));
 
-    this.AssetLibraryContract.options.address = contractAddress;
-    return this.AssetLibraryContract.methods
-      .returnInvestment()
+    return this.SwapyExchangeContract.methods
+      .returnInvestment(contractAddresses, ethValues)
       .send({
         from: this.walletService.getWallet().address,
-        gas: 100000,
+        gas: 150000 * contractAddresses.length,
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei'),
-        value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
+        value: ethValue
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash(contractAddresses, hash);
+        this.messageService.setLoadingState(true);
+        this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -200,10 +251,12 @@ export class SwapyProtocolService {
         this.storeTransactionHash(contractAddresses, hash);
         this.messageService.setLoadingState(true);
         this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
-
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -216,9 +269,13 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash([], hash);
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -232,9 +289,13 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash([], hash);
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -250,10 +311,12 @@ export class SwapyProtocolService {
         this.storeTransactionHash(contractAddresses, hash);
         this.messageService.setLoadingState(true);
         this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
-
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -269,10 +332,12 @@ export class SwapyProtocolService {
         this.storeTransactionHash(contractAddresses, hash);
         this.messageService.setLoadingState(true);
         this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
-
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -289,12 +354,15 @@ export class SwapyProtocolService {
         value: this.web3.utils.toWei(Math.round(ethValue * Math.pow(10, 18)) / Math.pow(10, 18))
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash([], hash);
         this.messageService.setLoadingState(true);
         this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
-
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -314,6 +382,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -332,6 +403,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -350,6 +424,9 @@ export class SwapyProtocolService {
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 
@@ -362,11 +439,15 @@ export class SwapyProtocolService {
         gasPrice: this.web3.utils.toWei(this.gasPrice, 'gwei')
       }).on('transactionHash', (hash) => {
         this.handleOnTransactionHash(hash);
+        this.storeTransactionHash([], hash);
         this.messageService.setLoadingState(true);
         this.messageService.setMessage('Your transaction is being processed. You will be notified when your transaction gets confirmed.');
       })
       .on('error', (error) => {
         this.handleOnError(error);
+      })
+      .on('receipt', (receipt) => {
+        this.navService.setNewNotificationFlag();
       });
   }
 

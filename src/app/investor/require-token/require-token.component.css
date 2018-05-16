@@ -1,14 +1,17 @@
-.sw-assets {
-    padding: 10px 0 0 0;
-    text-align: center;
-    font-weight: 500;
-}
-.sw-title-outside-box {
+/*.sw-title-outside-box {
     font-weight: 400;
     font-size: 18px;
     color: #4a4a4a;
     padding: 0 0 15px 0;
     border-bottom: 3px solid #b1d432
+}*/
+.sw-top-row {
+    height: 75px;
+}
+.sw-assets {
+    padding: 10px 0 0 0;
+    text-align: center;
+    font-weight: 500;
 }
 .sw-description-outside-box {
     font-weight: 300;

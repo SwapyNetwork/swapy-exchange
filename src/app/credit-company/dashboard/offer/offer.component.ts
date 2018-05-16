@@ -6,12 +6,12 @@ import { ToastrService } from '../../../common/services/toastr.service';
 import { LinkService } from '../../../common/services/link.service';
 import { WalletService } from '../../../common/services/wallet.service';
 import { ErrorLogService } from '../../../common/services/error-log.service';
+import { DashboardService } from '../dashboard.service';
+import { AssetMathService as AssetMath } from '../../../common/services/asset-math.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../../common/services/swapy-protocol.service';
-import {
-  AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
+import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
   DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../../common/interfaces/offer-asset-status.interface';
 import { StorageService } from '../../../common/services/storage.service';
-import { SupplyTokenService } from '../../supply-token/supply-token.service';
 
 const env = require('../../../../../env.json');
 import * as sha1 from 'sha1';
@@ -35,6 +35,7 @@ export class OfferComponent implements OnInit {
 
   public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
 
+  @Input() public assets;
   @Input() public offer: Offer;
   @Input() public collapsed: boolean;
 
@@ -47,77 +48,31 @@ export class OfferComponent implements OnInit {
     private linkService: LinkService,
     private walletService: WalletService,
     private storageService: StorageService,
-    private supplyTokenService: SupplyTokenService,
     private router: Router,
+    private assetMath: AssetMath,
+    private dashboardService: DashboardService,
     private errorLogService: ErrorLogService) { }
 
-  ngOnInit() { }
+  ngOnInit() {};
 
-  public calculatePaybackDate(asset) {
-    const paybackDate = new Date(asset.investedAt);
-    paybackDate.setMonth(paybackDate.getMonth() + this.offer.paybackMonths);
-    return paybackDate;
-  }
-
-  public toggleCollapse() {
-    this.collapsed = !this.collapsed;
-  }
-
-  public exploreContract(address: string) {
-    const url = this.explorerUrl + address;
-    this.linkService.openLink(url);
-  }
-
-  public async withdrawFunds(asset) {
-    const status = asset.status;
-    this.storageService.setItem(asset.contractAddress, status);
-    asset.status = PENDING_ETHEREUM_CONFIRMATION;
-    try {
-      await this.swapyProtocol.withdrawFunds(asset.contractAddress);
-      this.toastrService.getInstance().success('Transaction finished.');
-    } catch (error) {
-      this.onError(error, asset, status);
-    }
-  }
-
-  public async refuseInvestment(asset) {
-    const status = asset.status;
-    this.storageService.setItem(asset.contractAddress, status);
-    asset.status = PENDING_ETHEREUM_CONFIRMATION;
-    try {
-      await this.swapyProtocol.refuseInvestment(asset.contractAddress);
-      this.toastrService.getInstance().success('Investment refused.');
-    } catch (error) {
-      this.onError(error, asset, status);
-    }
-  }
-
-  public async returnInvestment(asset) {
-    const status = asset.status;
-    this.storageService.setItem(asset.contractAddress, status);
-    asset.status = PENDING_ETHEREUM_CONFIRMATION;
-    try {
-      const value = asset.value * (1 + this.offer.grossReturn);
-      await this.swapyProtocol.returnInvestment(asset.contractAddress, value);
-      this.toastrService.getInstance().success('Investment returned.');
-    } catch (error) {
-      this.onError(error, asset, status);
-    }
-  }
-
-  private onError(error, asset, status) {
-    this.storageService.remove(asset.contractAddress);
-    if (sha1(error.message) === '699e7c6d81ba58075ee84cf2a640c18a409efcba') { // 50 blocks later and transaction has not being mined yet.
-      this.toastrService.error('Transaction is still being mined. Check it out later to see if the transaction was mined');
+  public selectAsset(assetToSelect) {
+    assetToSelect.selected = assetToSelect.selected === 0 ? 1 : 0;
+    const count = this.assets.filter(asset => asset.selected === 1).length;
+    if (count === 1) {
+      this.assets.forEach(asset => {
+        if (asset.status !== assetToSelect.status) {
+          asset.selected = -1;
+        }
+      });
     } else {
-      asset.status = status;
-      this.toastrService.error(error.message);
+      if (count === 0) {
+        this.assets.forEach(asset => {
+          asset.selected = 0;
+        });
+      }
     }
-  }
 
-  public async transferToken(asset) {
-    this.supplyTokenService.cacheAsset(asset);
-    this.router.navigate(['credit-company/supply-token']);
+    this.dashboardService.setSelectedAssets(this.assets.filter(asset => asset.selected === 1));
   }
 
   public statusToString(status) {
@@ -127,7 +82,7 @@ export class OfferComponent implements OnInit {
         statusString = 'Pending transaction confirmation';
         break;
       case this.PENDING_OWNER_AGREEMENT:
-        statusString = 'Pending agreement';
+        statusString = 'Waiting';
         break;
       case this.AVAILABLE:
         statusString = 'Available';
@@ -135,10 +90,10 @@ export class OfferComponent implements OnInit {
       case this.INVESTED:
       case this.FOR_SALE:
       case this.PENDING_INVESTOR_AGREEMENT:
-        statusString = 'Successfully invested';
+        statusString = 'Invested';
         break;
       case this.RETURNED:
-        statusString = 'Successfully returned';
+        statusString = 'Returned';
         break;
       case this.DELAYED_RETURN:
         statusString = 'Delayed return';

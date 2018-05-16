@@ -9,7 +9,7 @@ import { InvestorComponent } from '../investor.component';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT,
   RETURNED, DELAYED_RETURN, PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
-import { MessageService } from '../message/message.service';
+import { MessageService } from '../../common/message/message.service';
 
 import * as sha1 from 'sha1';
 

@@ -16,30 +16,53 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" [ngClass]="{ 'in': isIn }">
       <img class="sw-swapy-logo3 visible-xs" src="assets/img/swapy-logo3.png" alt="Swapy logo" />
       <ul class="nav navbar-nav navbar-center" *ngIf="isWallet(wallet)">
-        <li><a (click)="openWalletInExplorer(wallet.address)" class="sw-box-text">{{wallet.address}}</a></li>
+        <li><a (click)="openWalletInExplorer(wallet.address)" class="sw-box-text" role="button">My wallet address: {{wallet.address}}</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
         <li *ngFor="let item of menu">
           <a [routerLink]="item.url" class="sw-box-text">{{item.label}}</a>
         </li>
-        <li *ngIf="isElectron" (click)="triggerMetamaskPopup()">
-          <img src="assets/img/icon-32.png" alt="MetaMask logo" />
-        </li>
         <!-- <li><a [routerLink]="['/investor']" class="sw-box-text">Manage</a></li> -->
         <!-- <li><a routerLink="/notifications"><i class="fa fa-lg fa-bell-o" aria-hidden="true" title="Notifications"></i><span class="badge sw-badge"></span></a></li> -->
+
+        <li class="dropdown" [ngClass]="{ 'open': isNotificationOpen }" (click)="toggleNotificationDropdown()">
+          <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true" title="Notifications" [ngClass]="{'fa fa-bell': true, 'sw-orange': this.navService.getNotificationFlag()}"></i> <span class="sw-add-name-menu sw-box-text"> Notifications </span></a>
+          <ul class="dropdown-menu col-md-12">
+            <li class="col-md-12 sw-title">
+              <div class="col-md-6"><i class="fa fa-bell" aria-hidden="true"></i> Notifications</div>
+              <div class="col-md-5 sw-history-label">History</div>
+            </li>
+            <li *ngFor="let notification of this.navService.getNotifications()" class="col-md-11 sw-notification">
+              <div *ngIf="notification.status === 0">
+                <div class="col-md-11">Your transaction <span class="sw-blue1">is being processed</span> in the <span class="sw-blue1">Blockchain</span></div>
+                <div class="row col-md-12 sw-notification-time"><i class="fa fa-bell sw-orange" aria-hidden="true"></i><p>{{notification.date | date: 'MMM d, h:mm:ss a'}}</p></div>
+              </div>
+              <div *ngIf="notification.status === 1">
+                <div class="col-md-10">Your transaction <span class="sw-blue1">was confirmed</span> in the <span class="sw-blue1">Blockchain</span></div>
+                <div class="row col-md-12 sw-notification-time"><i class="fa fa-bell sw-blue1" aria-hidden="true"></i><p>{{notification.date | date: 'MMM d, h:mm:ss a'}}</p></div>
+              </div>
+              <div *ngIf="notification.status === -1">
+                <div class="col-md-10">There was an <span class="sw-red">error</span> in your <span class="sw-red">transaction</span></div>
+                <div class="row col-md-12 sw-notification-time"><i class="fa fa-bell sw-red" aria-hidden="true"></i><p>{{notification.date | date: 'MMM d, h:mm:ss a'}}</p></div>
+              </div>
+            </li>
+            <li *ngIf="this.navService.getNotifications().length === 0" class="col-md-10 col-md-offset-1">
+              <div class="sw-no-notifications">No notifications</div>
+            </li>
+          </ul>
+        </li>
+
         <li class="dropdown" [ngClass]="{ 'open': isSettingsOpen }" (click)="toggleSettingsDropdown()">
-          <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-lg fa-cog" aria-hidden="true" title="Settings"></i> <span class="sw-add-name-menu sw-box-text"> Settings & Configuration</span></a>
+          <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-lg fa-cog" aria-hidden="true" title="Settings"></i> <span class="sw-add-name-menu sw-box-text"> Menu</span></a>
           <ul class="dropdown-menu">
-            <li class="sw-profile-name">{{user.firstName}} {{user.lastName}}</li>
-            <li class="sw-profile-email">{{user.email}}</li>
-            <li role="separator" class="divider"></li>
+            <li class="col-md-12 sw-title">
+              <div class="col-md-10"><i class="fa fa-cog" aria-hidden="true"></i> Menu</div>
+            </li>
             <!-- <li><a [routerLink]="profileUrl"><i class="fa fa-university" aria-hidden="true"></i><span class="sw-box-text"> Profile & Account</span></a></li> -->
             <!-- <li><a routerLink="/preferences"><i class="fa fa-cog" aria-hidden="true"></i><span class="sw-box-text"> Preferences</span></a></li> -->
             <li><a [routerLink]="termsUrl"><i class="fa fa-file-text-o" aria-hidden="true"></i><span class="sw-box-text"> Terms of Service</span></a></li>
             <li><a [routerLink]="privacyUrl"><i class="fa fa-file-text-o" aria-hidden="true"></i><span class="sw-box-text"> Privacy Policy</span></a></li>
-            <!-- <li role="separator" class="divider"></li>
-            <li><a [routerLink]="helpUrl"><i class="fa fa-question-circle" aria-hidden="true"></i><span class="sw-box-text"> Help</span></a></li> -->
           </ul>
         </li>
 

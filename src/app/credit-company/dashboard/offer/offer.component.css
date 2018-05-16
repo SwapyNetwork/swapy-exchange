@@ -1,4 +1,8 @@
-
+.sw-assets {
+	padding: 10px 0 0 0;
+	text-align: center;
+	font-weight: 500;
+}
 .sw-chart-installs {
     padding-left: 12px;
 }
@@ -10,4 +14,32 @@
 }
 .sw-float-right {
     float: right;
+}
+.sw-circle {
+    display: inline-block;
+    border-radius: 100px;
+    line-height: 0;
+    text-align: center;
+    font-size: 18px;
+    left: 50%;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+}
+.sw-circle-available {
+    background-color: #e3e3e3;
+    color: #e3e3e3; 
+    padding-top: 19px;
+}
+.sw-circle-selected {
+    background-color: #00aeef;
+    color: #FFF;
+    padding-top: 7px; 
+}
+.sw-circle-unavailable {
+    background-color: #e3e3e3;
+    color: #00aeef;
+    font-weight: 700;
+    padding-top: 16px;  
 }

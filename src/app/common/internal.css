@@ -35,7 +35,8 @@ body {
 }
 .dropdown-menu {
     top: 34px;
-    border-top: 5px solid #f5c03a;
+    /*border-top: 5px solid #f5c03a;*/
+    padding: 0;
     min-width: 350px !important;
 }
 .sw-profile-name {
@@ -118,6 +119,30 @@ body {
     font-size: 14px;
     text-align: right;
     padding: 0px 10px 0px 0px;
+}
+
+.sw-fiat-value {
+    font-size: 14px;
+    margin: 13px 0px 0px 0px;
+    padding: 0px 10px 0px 0px;
+    border-right: 0px solid #888;
+}
+
+.sw-usd-funds-value {
+    font-weight: 300;
+}
+
+.sw-index-value {
+    font-weight: 400;
+}
+
+.left-border {
+    margin: 10px 0px;
+    border-left: 1px solid #888;
+}
+
+.right-top-image {
+  width: 60px;
 }
 
 @media only screen and (max-width: 1115px){ .sw-swapy-logo { display: none;} }
@@ -264,9 +289,24 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
 }
-
 .center {
   text-align: center;
+}
+.sw-orange {
+    color: #eebe4c;
+}
+.sw-green {
+  color: #b1d432;
+}
+.sw-red {
+  color: #C11B1B;
+}
+.sw-arrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 15px 26.0px 15px 0;
+  border-color: transparent #00afef transparent transparent;
 }
 
 /* ////////////////////// Titles /////////////// */
@@ -289,6 +329,9 @@ body {
 }
 .panel-title a:focus, a:hover {
     text-decoration: none !important;
+}
+.sw-last-row {
+  padding-top: 25px;
 }
 /* ////////////////////// Text styles /////////////// */
 .sw-box-text {
@@ -525,6 +568,196 @@ input.cmn-toggle-round:checked + label:after {
     color:rgba(0, 0, 0, 0.4);
 }
 /* ////////////////////// END Progress Bar //////////////////////////////// */
+/* ////////////////////// START Instructions bar //////////////////////////////// */
+
+.sw-title-outside-box {
+    font-weight: 400;
+    font-size: 16px;
+    color: #4a4a4a;
+    padding: 0 0 15px 5px;
+    margin-left: 20px;
+    width: 100%;
+    text-align: left;
+}
+.sw-description-outside-box {
+    font-weight: 300;
+    font-size: 18px;
+    color: #4a4a4a;
+    padding: 0 0 15px 0;
+}
+.sw-border-dark-orange {
+    border-bottom: 3px solid #eb9739;
+}
+.sw-border-light-orange {
+    border-bottom: 3px solid #eebe4c;
+}
+.sw-border-light-green {
+    border-bottom: 3px solid #b1d432;
+}
+.sw-border-light-blue {
+    border-bottom: 3px solid #00aeef;
+}
+.sw-border-dark-red {
+    border-bottom: 3px solid #c11b1b;
+}
+.sw-fade-color {
+    opacity: 0.6;
+}
+.sw-welcome-title {
+    padding-top: 30px;
+    font-size: 32px;
+    font-weight: 500;
+}
+.sw-button-add-funds {
+    border-radius: 300px;
+    padding: 0 0 15px 0;
+    margin: -10px 20px 0 0;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+    width: 90%;
+}
+.sw-btn-add-funds {
+    font-weight: 500;
+    background-color: #eebe4c;
+    border: 1px solid #eebe4c;
+    color: #FFF;
+    padding: 10px 10px;
+
+}
+.sw-btn-add-funds:hover {
+    background-color: #ffcf5d;
+    border: 1px solid #ffcf5d;
+    color: #FFF;
+    padding: 10px 10px;
+    text-decoration: none;
+}
+
+/* ////////////////////// END Instructions bar //////////////////////////////// */
+/* ////////////////////// START Statistic bar //////////////////////////////// */
+  .sw-top-bar-info {
+    padding: 20px 0 20px 0; 
+    margin-top: 20px; 
+    margin-bottom: 50px; 
+      border: 1px solid #d8d8d8;
+      border-radius: 10px;
+  }
+  .sw-info-font {
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .sw-value-font {
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .sw-inline-left-border {
+      border-left: 2px solid #d8d8d8;
+  }
+  .sw-bottom-border {
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+      border-bottom: 2px solid #d8d8d8; 
+  }
+
+/* ////////////////////// END Statistic bar //////////////////////////////// */
+/* ////////////////////// START Company Box //////////////////////////////// */
+
+.sw-company-box {
+  margin: 10px 30px 0 30px;
+  text-align: left;
+}
+.sw-company-description {
+  text-align: justify;
+  margin: 10px 0;
+}
+.sw-asset-description {
+    margin-top: 15px;
+    color: #00aeef;
+}
+
+.sw-company-assets-details {
+  font-size: 18px;
+}
+
+.sw-number-details {
+  text-align: right;
+  font-weight: 500;
+  font-size: 22px;
+}
+.sw-break-word {
+  word-wrap: break-word;
+}
+/* ////////////////////// END Company Box //////////////////////////////// */
+/* ////////////////////// START Asset progress //////////////////////////////// */
+.progress{
+    height: 3px;
+    background: #e3e3e3;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 12px 0;
+    overflow: visible;
+}
+
+.progress .progress-bar{
+    background:#00aeef; /*  blue color of bar */
+    box-shadow: none;
+    position: relative;
+    -webkit-animation: animate-positive 2s;
+    animation: animate-positive 2s;
+}
+.progress .progress-bar:after{
+    content: "";
+    border-radius: 30px;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    top: -5px;
+    right: -4px;
+}
+.progress.sw-blue-bar .progress-bar:after{
+    background: #00aeef;  /*  blue color of circle */
+}
+
+.sw-full-bar{
+    height: 3px;
+    background: #b1d432;
+    border-radius: 0;
+    box-shadow: none !important;
+    margin: 20px 0;
+    overflow: visible;
+}
+
+.prog0 { width:0%; }
+.prog5 { width:5%; }
+.prog10 { width:10%; }
+.prog15 { width:15%; }
+.prog20 { width:20%; }
+.prog25 { width:25%; }
+.prog30 { width:30%; }
+.prog35 { width:35%; }
+.prog40 { width:40%; }
+.prog45 { width:45%; }
+.prog50 { width:50%; }
+.prog55 { width:55%; }
+.prog60 { width:60%; }
+.prog65 { width:65%; }
+.prog70 { width:70%; }
+.prog75 { width:75%; }
+.prog80 { width:80%; }
+.prog85 { width:85%; }
+.prog90 { width:90%; }
+.prog95 { width:95%; }
+.prog100 { background: #b1d432; }
+@-webkit-keyframes animate-positive {
+    0% { width: 0; }
+}
+@keyframes animate-positive {
+    0% { width: 0; }
+}
+
+/* ////////////////////// END Asset progress //////////////////////////////// */
 /* ////////////////////// START Circular CHART //////////////////////////////// */
 .sw-progress-circle {
    font-size: 20px;

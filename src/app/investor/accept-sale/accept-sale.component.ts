@@ -7,7 +7,7 @@ import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swa
 import { ToastrService } from '../../common/services/toastr.service';
 import { StorageService } from '../../common/services/storage.service';
 import { InvestorComponent } from '../investor.component';
-import { MessageService } from '../message/message.service';
+import { MessageService } from '../../common/message/message.service';
 
 import * as sha1 from 'sha1';
 
@@ -97,8 +97,8 @@ export class AcceptSaleComponent implements OnInit {
     const contractAddresses = this.assets.map(asset => asset.contractAddress);
     try {
       await this.swapyProtocol.acceptSale(contractAddresses);
-      this.toastrService.getInstance().success('Asset(s) sold');
-      this.messageService.setLastMessage('Asset(s) sold');
+      this.toastrService.getInstance().success('Asset(s) sold!');
+      this.messageService.setLastMessage('Asset(s) sold!');
       this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
       this.onError(error);

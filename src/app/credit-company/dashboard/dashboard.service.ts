@@ -5,12 +5,15 @@ import { WalletService } from '../../common/services/wallet.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 import { StorageService } from '../../common/services/storage.service';
 import { PENDING_ETHEREUM_CONFIRMATION } from '../../common/interfaces/offer-asset-status.interface';
-import { VALUE, PAYBACKDAYS, GROSSRETURN, STATUS, INVESTOR, TOKENFUEL } from '../../common/interfaces/asset-parameters.interface';
+import { VALUE, PAYBACKDAYS, GROSSRETURN, STATUS,
+  INVESTOR, TOKENFUEL, INVESTEDAT } from '../../common/interfaces/asset-parameters.interface';
 
 @Injectable()
 export class DashboardService {
 
   public offers;
+  public assets = [];
+  public selectedAssets;
 
   constructor(
     private walletService: WalletService,
@@ -57,21 +60,32 @@ export class DashboardService {
     };
   }
 
-  private buildNewAsset(offer, assetValues, index) {
-    const storedStatus = this.storageService.getItem(offer.returnValues._assets[index]);
-    let status;
-    if (storedStatus === null || storedStatus !== Number(assetValues[STATUS])) {
-      status = Number(assetValues[STATUS]);
-    } else {
-      status = PENDING_ETHEREUM_CONFIRMATION;
+  private async buildNewAsset(offer, assetValues, index) {
+
+    let status = Number(assetValues[STATUS]);
+    const assetAddress = offer.returnValues._assets[index];
+    const transactionHash = this.storageService.getItem(assetAddress);
+    let receipt = null;
+    if (transactionHash != null) {
+      receipt = await this.web3Service.getInstance().eth.getTransactionReceipt(transactionHash);
+      if (receipt != null) {
+        status = Number(assetValues[STATUS]);
+        this.storageService.remove(assetAddress);
+      } else {
+        status = PENDING_ETHEREUM_CONFIRMATION;
+      }
     }
     return {
       contractAddress: offer.returnValues._assets[index],
-      investorWallet: assetValues[INVESTOR],
+      investorAddress: assetValues[INVESTOR],
       status,
       value: assetValues[VALUE] / 100,
+      grossReturn: assetValues[GROSSRETURN] / 10000,
+      investedAt: assetValues[INVESTEDAT] !== '0' ?
+        (new Date(assetValues[INVESTEDAT] * 1000)).toISOString() : null,
       token: assetValues[TOKENFUEL] / Math.pow(10, 18),
-      paybackMonths: assetValues[PAYBACKDAYS] / 30
+      paybackMonths: assetValues[PAYBACKDAYS] / 30,
+      selected: 0      
     };
   }
 
@@ -80,8 +94,9 @@ export class DashboardService {
 
     const assets = await this.getAssetValues(offer.returnValues._assets);
 
-    assets.forEach((assetValues, index) => {
-      newOffer.assets.push(this.buildNewAsset(offer, assetValues, index));
+    assets.forEach(async (assetValues, index) => {
+      let asset = await (this.buildNewAsset(offer, assetValues, index));
+      newOffer.assets.push(asset);
       if (!newOffer.raisingAmount) {
         this.setOfferDetails(newOffer, assetValues, offer.returnValues._assets.length);
       }
@@ -99,6 +114,22 @@ export class DashboardService {
       promises.push(this.factoryOffer(offer));
     });
     this.offers = await Promise.all(promises);
+    this.assets = [];
+    this.offers.forEach(offer => {
+      this.assets = this.assets.concat(offer.assets);
+    });
     return this.offers;
+  }
+
+  public getAssets() {
+    return this.assets;
+  }
+
+  public setSelectedAssets(assets) {
+    this.selectedAssets = assets;
+  }
+
+  public getSelectedAssets() {
+    return this.selectedAssets;
   }
 }

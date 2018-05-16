@@ -6,8 +6,8 @@ import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swa
 import { AddOfferService } from '../add-offer/add-offer.service';
 import { CreditCompanyComponent } from '../credit-company.component';
 import { ToastrService } from '../../common/services/toastr.service';
-import { PendingOfferService } from './../pending-offer/pending-offer.service';
 import { ErrorLogService } from '../../common/services/error-log.service';
+import { MessageService } from '../../common/message/message.service';
 import { WalletService } from '../../common/services/wallet.service';
 
 
@@ -18,20 +18,23 @@ import { WalletService } from '../../common/services/wallet.service';
 })
 export class ConfirmOfferComponent implements OnInit {
 
+  public walletAddress: string;
   public offer: any;
   public errorMessages: string[] = [];
   private toastr;
+  private defaultAssets = [0, 0, 0, 0, 0];
 
   constructor(private addOfferService: AddOfferService,
     private router: Router,
     private i18nService: I18nService,
     private creditCompanyComponent: CreditCompanyComponent,
     private swapyProtocol: SwapyProtocol,
+    private messageService: MessageService,
     private toastrService: ToastrService,
-    private pendingOfferService: PendingOfferService,
     private errorLogService: ErrorLogService,
     private walletService: WalletService,
   ) {
+    this.walletAddress = this.walletService.getWallet().address;
   }
 
   ngOnInit() {
@@ -42,30 +45,29 @@ export class ConfirmOfferComponent implements OnInit {
     }
   }
 
+  private onError(error) {
+    this.toastrService.error(error.message);
+    this.messageService.setErrorMessage(error.message);
+  }
+
   async confirmOffer() {
-    const offerTermsHash = '67e49469e62a9805e43744ec4437a6dcf6c6bc36d6a33be837e95b8d325816ed';
-
-    const a = Math.ceil(this.offer.raisingAmount / 5 * 100);
-    const assetValues = [a, a, a, a, a];
-
-    this.errorLogService.setClassName('ConfirmOfferComponent');
-    this.errorLogService.setFunctionName('confirmOffer');
-    this.router.navigate(['/credit-company/raise/pending']);
-    // Improve this call
+    const assetValues = this.offer.assets.map(asset => asset.value * 100);
+    this.router.navigate(['/credit-company/message']);
     try {
-      const offerTx = await this.swapyProtocol
-        .createOffer(this.offer.paybackMonths * 30, this.offer.grossReturn, 'USD', this.offer.raisingAmount, offerTermsHash, assetValues);
-      this.toastrService.getInstance().success('Your offer was mined by the Ethereum blockchain.');
-      this.pendingOfferService.setMessage('Your offer was mined by the Ethereum blockchain.');
+      await this.swapyProtocol.createOffer(
+        this.offer.paybackMonths * 30,
+        this.offer.grossReturn,
+        'USD',
+        this.offer.raisingAmount,
+        assetValues
+      );
+      this.toastrService.getInstance().success('Offer created!');
+      this.messageService.setLastMessage('Offer created!');
+      this.messageService.setHeaderMessage('Transaction confirmed');
     } catch (error) {
-      this.walletService.getEthBalance().then((currentBalance) => {
-        this.errorLogService.setAfterETHbalance(currentBalance);
-        this.errorLogService.setError(error);
-      });
-      this.pendingOfferService.setErrorMessage(error.message);
-      this.toastrService.error(this.pendingOfferService.getMessage());
+      this.onError(error);
     }
-    this.creditCompanyComponent.refreshStatusBar();
+    this.creditCompanyComponent.refreshBalance();
 
   }
 

@@ -6,6 +6,7 @@ import { WalletService } from '../services/wallet.service';
 import { INVESTOR, CREDIT_COMPANY } from '../interfaces/user-type.interface';
 const env = require('../../../../env.json');
 import { LinkService } from '../services/link.service';
+import { NavService } from './nav.service';
 
 @Component({
   selector: 'app-nav',
@@ -25,8 +26,14 @@ export class NavComponent implements OnInit {
 
   public explorerUrl = (<any>env).BLOCK_EXPLORER_URL;
 
-  constructor(public logoutService: LogoutService, private storageService: StorageService,
-    private walletService: WalletService, private linkService: LinkService, private router: Router) {
+  constructor(
+    public logoutService: LogoutService,
+    private storageService: StorageService,
+    private walletService: WalletService,
+    private linkService: LinkService,
+    private router: Router,
+    private navService: NavService
+   ) {
     this.isElectron = (window as any).isElectron;
     const user = this.storageService.getItem('user');
     this.user = user ? user : {};
@@ -47,6 +54,7 @@ export class NavComponent implements OnInit {
         break;
       case CREDIT_COMPANY:
         this.menu = [
+          {url: '/credit-company/add-funds/child', label: 'Add funds'},
           {url: '/credit-company/raise', label: 'Raise'},
           {url: '/credit-company', label: 'Manage'}
         ];
@@ -76,6 +84,7 @@ export class NavComponent implements OnInit {
   // store state
   isIn = false;
   isSettingsOpen = false;
+  isNotificationOpen = false;
 
   // click handler
   public toggleState() {
@@ -84,8 +93,16 @@ export class NavComponent implements OnInit {
   }
 
   public toggleSettingsDropdown() {
-    const bool = this.isSettingsOpen;
-    this.isSettingsOpen = bool === false ? true : false;
+    this.isSettingsOpen = !this.isSettingsOpen;
+    this.isNotificationOpen = false;
+  }
+
+  public toggleNotificationDropdown() {
+    this.isNotificationOpen = !this.isNotificationOpen;
+    this.isSettingsOpen = false;
+    if (this.isNotificationOpen) {
+      this.navService.getTransactionStatus();     
+    }
   }
 
   public logout() {

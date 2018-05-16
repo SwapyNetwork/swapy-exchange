@@ -8,7 +8,7 @@ import { StorageService } from '../../common/services/storage.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 import { ToastrService } from '../../common/services/toastr.service';
 import { WalletService } from '../../common/services/wallet.service';
-import { MessageService } from '../message/message.service';
+import { MessageService } from '../../common/message/message.service';
 
 import * as sha1 from 'sha1';
 

@@ -6,7 +6,7 @@ import { AVAILABLE, PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTO
 import { InvestorComponent } from '../investor.component';
 import { ToastrService } from '../../common/services/toastr.service';
 import { StorageService } from '../../common/services/storage.service';
-import { MessageService } from '../message/message.service';
+import { MessageService } from '../../common/message/message.service';
 import { SwapyProtocolService as SwapyProtocol } from '../../common/services/swapy-protocol.service';
 import { Web3Service } from '../../common/services/web3.service';
 

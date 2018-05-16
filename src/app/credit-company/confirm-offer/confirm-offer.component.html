@@ -1,87 +1,131 @@
-<!-- ///////////////////////////////////////////////////////////////////////////////// -->
-<!-- //////////////////////////   MAIN Content  ////////////////////////////////////// -->
-<!-- ///////////////////////////////////////////////////////////////////////////////// -->
-  <div class="sw-scrollbar2">
-    <div class="row"> <!--  Page name, Search Bar -->
-      <div class="col-xs-4 col-sm-4 col-md-4">
-        <p class="sw-page-name">Raise</p>
-      </div>
-    </div> <!-- END Page name, Search Bar  -->
+<div class="sw-scrollbar2">
+  <div class="row">
+    <div class="col-xs-4 col-sm-4 col-md-4">
+      <p class="sw-page-name">Raise</p>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-xs-2 col-xs-offset-3 col-sm-2 col-sm-offset-3 col-md-2 col-md-offset-3">
+      <p class="sw-title-outside-box sw-border-light-orange">Raise</p>
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4">
+      <p class="sw-description-outside-box">Offer confirmation</p>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-2">
+      <p class="sw-button-add-funds sw-btn-add-funds" role="button" [routerLink]="['/credit-company/add-funds/child']">Add funds</p>
+    </div>
+  </div>
 
-    <div class="row"> <!-- //////////// MAIN Content //////////// -->
-      <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
-
-          <div class=" col-md-12"> <!-- Start  -->
-            <div class="sw-box">
-            <div class="row sw-box-space">
-
-              <div class="col-sm-12 col-md-12">
-                <div class="row">
-                  <div class="col-sm-10 col-md-10">
-                     <p class="sw-box-title">Do you confirm your offer?</p>
-                     <!-- <p class="sw-box-text sw-blue1"><a href="#">Contract &nbsp; <i class="fa fa-file-text-o" aria-hidden="true"></i></a></p> -->
-
-
-                  </div>
-
-                  <div class="col-sm-2 col-md-2 sw-company-logo-right">
-                     <a><img src="assets/img/noImage.png" alt="meu credito app logo"></a>
-                  </div>
-
-                </div>
-                <hr>
-
+  <div class="row">
+    <div class="col-sm-7 col-sm-offset-1 col-md-7 col-md-offset-1">
+      <div class=" col-md-12">
+        <div class="sw-box">
+          <div class="row sw-box-space">
+            <div class="col-sm-12 col-md-12">
+              
               <div class="row">
-              <div class="col-xs-4 col-sm-4 col-md-4">
-                  <p class="sw-box-text sw-confirmation-col-left">Fundraising:</p>
-                  <p class="sw-box-text sw-confirmation-col-left">Gross return rate:</p>
-                  <p class="sw-box-text sw-confirmation-col-left">Contract term:</p>
-                  <!-- <p class="sw-box-text sw-confirmation-col-left">Installments:</p> -->
-
+                <div class="col-sm-1 col-md-1">
+                  <img src="assets/img/swapy-logo4.png" alt="Swapy logo" class="swapy-logo">
+                </div>
+                <div class="col-sm-10 col-md-10">
+                  <p class="sw-box-title">Do you confirm your offer?</p>
+                </div>
               </div>
-              <div class="col-xs-4 col-sm-4 col-md-4">
-                  <p class="sw-box-text">{{offer.raisingAmount | currency}}</p>
-                  <p class="sw-box-text">{{offer.grossReturn | percent}}</p>
-                  <p class="sw-box-text">{{offer.paybackMonths}} months</p>
-                  <!-- <p class="sw-box-text">8 x</p> -->
-
+              
+              <div class="col-xs-6 col-sm-6 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
+                <div class="row">
+                  <div class="col-xs-6 col-sm-6 col-md-6 col-xs-offset-6 col-sm-offset-6 col-md-offset-6">
+                    <p class="sw-box-text">Gross return rate</p>
+                    <p class="sw-box-title sw-blue1">{{offer.grossReturn | percent}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-6 col-sm-6 col-md-6">
+                    <p class="sw-box-text">Fundsraising</p>
+                    <p class="sw-box-title">{{offer.raisingAmount | currency:'USD':false:'.0-2'}}</p>
+                  </div>
+                  <div class="col-xs-6 col-sm-6 col-md-6">
+                    <p class="sw-box-text">Terms months</p>
+                    <p class="sw-box-title">{{offer.paybackMonths}}</p>
+                  </div>
+                </div>
+                <div class="row sw-last-row">
+                  <div class="col-sm-10 col-md-10 center"> 
+                    <span *ngFor="let asset of defaultAssets; let assetIndex = index">
+                    <i [ngClass]="{'fa fa-minus fa-2x': true, 'sw-blue1': assetIndex < offer.assets.length}" aria-hidden="true"></i>                      
+                    </span>
+                    <p>Assets Available</p>
+                  </div>
+                </div>
               </div>
-              <div class="col-xs-4 col-sm-4 col-md-4">
-                  <p class="sw-box-text">5 Assets of</p>
-                  <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"> </i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i>
-                  <p class="sw-box-text">{{offer.raisingAmount/5 | currency}}</p>
-
+              
+              <div class="col-xs-5 col-sm-5 col-md-5">
+                <div class="row center">
+                  <div class="col-xs-12 col-sm-12 col-md-12">
+                    <p class="sw-box-text">Single asset price: <span class="sw-blue1">{{offer.assets[0].value | currency:'USD':false:'.0-2'}}</span></p>
+                    <br>
+                    <p *ngFor="let asset of offer.assets; let assetIndex = index" class="sw-box-text">
+                      Asset {{assetIndex + 1}}: <span class="sw-blue1">{{asset.collateral}} SWAPY collateral</span>
+                    </p>
+                  </div>
+                </div>
+                <div class="row sw-last-row">
+                  <div class="col-sm-6 col-md-6">
+                    <a class="sw-button sw-btn-ghost2" routerLink="/credit-company/raise">Back</a>
+                  </div>
+                  <div class=" col-sm-6 col-md-6">
+                    <a class="sw-button sw-btn-ghost1" (click)="confirmOffer()">Confirm</a>
+                  </div>
+                </div>
               </div>
-            </div>
-                  <br>
-
+              
               <div *ngIf="errorMessages.length > 0">
                 <div *ngFor="let message of errorMessages" class="alert alert-danger">
                   {{message}}
                 </div>
               </div>
-
-              <div class="row">
-                <div class=" col-sm-4 col-md-4">
-                </div>
-                <div class="col-sm-4 col-md-4">
-                  <a class="sw-button sw-btn-ghost2" routerLink="/credit-company/raise">Back</a>
-                </div>
-                <div class=" col-sm-4 col-md-4">
-                  <a class="sw-button sw-btn-ghost1" (click)="confirmOffer()">Confirm</a>
-                </div>
-              </div>
-
-             </div>
             </div>
-
           </div>
-          </div> <!-- END  -->
-
+        </div>
       </div>
-    </div><!-- END MAIN Content  -->
-
-</div> <!-- END col 10  -->
-<!-- ///////////////////////////////////////////////////////////////////////////////// -->
-<!-- //////////////////////////  END MAIN Content  /////////////////////////////////// -->
-<!-- ///////////////////////////////////////////////////////////////////////////////// -->
+    </div>
+    <div class="col-sm-3 col-md-3 sw-company-box">
+      <div class="row">
+        <div class="col-sm-12 col-md-12">
+          <span class="sw-box-title">Company Name, Inc</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-12">
+          <p class="sw-box-text sw-company-description">Description of the company will be included here in order to specify it's focus and market, as well as any relevant information</p>
+          <p class="sw-blue1">City, country</p>
+          <p class="sw-blue1">www.website.com</p>
+          <hr>
+        </div>
+      </div>
+      <div class="row sw-company-assets-details">
+        <div class="col-sm-8 col-md-8">
+          <span>Assets raised</span>
+        </div>
+        <div class="col-sm-4 col-md-4">
+          <div class="sw-number-details">0/0</div>
+        </div>
+      </div>
+      <div class="row sw-company-assets-details">
+        <div class="col-sm-8 col-md-8">
+          <span>Repayment rate</span>
+        </div>
+        <div class="col-sm-4 col-md-4">
+          <div class="sw-blue1 sw-number-details">-</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-12">
+          <hr>
+          <span>Company's wallet address: <p class="sw-blue1 sw-break-word">{{walletAddress}}</p></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

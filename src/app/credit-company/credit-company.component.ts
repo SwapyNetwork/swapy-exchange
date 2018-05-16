@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ViewEncapsulation } from '@angular/core';
 import { WalletService } from '../common/services/wallet.service';
 import { LoadingService } from '../common/services/loading.service';
-import { INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
+import { PENDING_OWNER_AGREEMENT, INVESTED, FOR_SALE, PENDING_INVESTOR_AGREEMENT, RETURNED,
   DELAYED_RETURN } from '../common/interfaces/offer-asset-status.interface';
 import { DashboardService } from './dashboard/dashboard.service';
+import { SwapyProtocolService as SwapyProtocol } from '../common/services/swapy-protocol.service';
 
 
 @Component({
@@ -20,21 +22,74 @@ export class CreditCompanyComponent implements OnInit {
   public amountRaised;
   public amountReturned;
   public amountToBeReturned;
-  public offersLength;
-  public balance;
+  public nextReturnDate;
+  public nextReturnValue;
+  public assetsLength;
 
+  public ETHbalance;
+  public tokenBalance;
+  public ETHprice;
+  public USDbalance;
 
-  constructor(private walletService: WalletService,
-    private loadingService: LoadingService, private dashboardService: DashboardService) {};
+  public isElectron;
+
+  constructor(
+    private walletService: WalletService,
+    private loadingService: LoadingService,
+    private router: Router,
+    private swapyProtocol: SwapyProtocol,
+    private dashboardService: DashboardService) {
+      this.isElectron = (window as any).isElectron;
+    };
 
   ngOnInit() {
-    // this.refreshStatusBar();
+    this.refreshBalance();
   };
 
-  async refreshStatusBar() { /**@todo Refresh via websocket when a investment is done */
+  public triggerMetamaskPopup() {
+    (window as any).chrome.ipcRenderer.send('open-metamask-popup');
+  }
+
+  public async refresh() {
     this.loadingService.show();
-    const offers = this.dashboardService.getCachedOffers();
-    this.balance = await this.walletService.getEthBalance();
+    const url = this.router.url.split('/').slice(1);
+    if (url[0] === 'credit-company') {
+      if (url.length === 1) {
+        await this.dashboardService.updateOffers();
+      }
+      await this.refreshBalance();
+    } else {
+
+    }
+    this.loadingService.hide();
+  }
+
+  public getStatistics() {
+    return {
+      assetsLength: this.assetsLength,
+      amountRequested: this.amountRequested,
+      amountRaised: this.amountRaised,
+      amountToBeReturned: this.amountToBeReturned,
+      nextReturnDate: this.nextReturnDate,
+      nextReturnValue: this.nextReturnValue,
+    }
+  }
+
+  public async refreshBalance() {
+    this.loadingService.show();
+
+    this.amountRequested = 0;
+    this.amountRaised = 0;
+    this.amountToBeReturned = 0;
+    this.nextReturnDate = null;
+    this.nextReturnValue = null;
+
+    this.tokenBalance = (await this.swapyProtocol.getTokenBalance()) / Math.pow(10, 18);
+    this.ETHbalance = await this.walletService.getEthBalance();
+    this.ETHprice = await this.swapyProtocol.getEthPrice();
+    this.USDbalance = this.ETHbalance * this.ETHprice;
+    
+    const offers = this.dashboardService.getCachedOffers() || [];
     let assets = [];
     offers.forEach(offer => {
       offer.assets.forEach(asset => {
@@ -43,7 +98,6 @@ export class CreditCompanyComponent implements OnInit {
       });
       assets = assets.concat(offer.assets);
     });
-    // const assets = assetValues.reduce((last, current) => (last.concat(current)), []);
     this.amountRequested = (assets.map(values => values.value)
       .reduce((total: number, current: number) => (total + current), 0));
     this.amountRaised = (assets.filter(asset => (asset.status === INVESTED ||
@@ -53,14 +107,29 @@ export class CreditCompanyComponent implements OnInit {
       asset.status === DELAYED_RETURN))
       .map(values => values.value)
       .reduce((total: number, current: number) => (total + current), 0));
-    this.amountReturned = (assets.filter(asset => (asset.status === RETURNED || asset.status === DELAYED_RETURN))
-      .map(values => values.value + values.value * values.grossReturn)
-      .reduce((total: number, current: number) => (total + current), 0));
     this.amountToBeReturned = (assets.filter(asset =>
       (asset.status === INVESTED || asset.status === FOR_SALE || asset.status === PENDING_INVESTOR_AGREEMENT))
       .map(values => values.value + values.value * values.grossReturn)
       .reduce((total: number, current: number) => (total + current), 0));
-    this.offersLength = offers.length;
+
+    let investedAssets = assets.filter(asset => (
+      asset.status === PENDING_OWNER_AGREEMENT ||
+      asset.status === INVESTED ||
+      asset.status === FOR_SALE ||
+      asset.status === PENDING_INVESTOR_AGREEMENT)
+    );
+
+    if (investedAssets.length > 0) {
+      investedAssets = investedAssets.sort((a, b) => Number(a.investedAt) - Number(b.investedAt));
+      this.nextReturnDate = new Date(investedAssets[0].investedAt);
+      this.nextReturnDate.setMonth(this.nextReturnDate.getMonth() + investedAssets[0].paybackMonths);
+      this.nextReturnValue = investedAssets[0].value * (1 + investedAssets[0].grossReturn);
+    }
+    // this.amountReturned = (assets.filter(asset => (asset.status === RETURNED || asset.status === DELAYED_RETURN))
+    //   .map(values => values.value + values.value * values.grossReturn)
+    //   .reduce((total: number, current: number) => (total + current), 0));
+    this.assetsLength = assets.length;    
+
     this.loadingService.hide();
   }
 }

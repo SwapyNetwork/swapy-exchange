@@ -13,6 +13,7 @@ import { LinkService } from './common/services/link.service';
 import { Web3Service } from './common/services/web3.service';
 import { WalletService } from './common/services/wallet.service';
 import { SwapyProtocolService } from './common/services/swapy-protocol.service';
+import { AssetMathService } from './common/services/asset-math.service';
 import { LogoutService } from './common/services/logout.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
@@ -20,13 +21,13 @@ import { ToastOptions } from 'ng2-toastr';
 import { ToastrService } from './common/services/toastr.service';
 import { CustomToastOption } from './common/CustomToastOption';
 import { ErrorLogService } from './common/services/error-log.service';
-import { SuccessfulInvestmentService } from './investor/successful-investment/successful-investment.service';
-import { MessageService } from './investor/message/message.service';
+import { MessageService } from './common/message/message.service';
+import { NavService } from './common/nav/nav.service';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,8 +38,8 @@ import { MessageService } from './investor/message/message.service';
     ToastModule.forRoot()
   ],
   providers: [StorageService, HttpService, I18nService, LoadingService, LinkService, Web3Service,
-    WalletService, SwapyProtocolService, LogoutService, SuccessfulInvestmentService, MessageService,
-    ToastrService, ErrorLogService, { provide: ToastOptions, useClass: CustomToastOption }],
+    WalletService, SwapyProtocolService, LogoutService, ToastrService,
+    ErrorLogService, AssetMathService, MessageService, NavService, { provide: ToastOptions, useClass: CustomToastOption }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,95 +1,38 @@
-<div class="panel panel-info">
-  <div class="panel-heading" role="tab" id="headingOne">
-   <div class="row">
-      <div class="col-sm-8 col-md-8">
-         <h4 class="panel-title">
-           <a role="button" data-toggle="collapse" data-parent="#accordion" (click)="toggleCollapse()" aria-expanded="true" aria-controls="collapseOne">
-             {{offer.raisingAmount | currency}}
-             <span class="sw-box-text">- {{offer.companyAddress}}
-               <div class="sw-box-text">
-                 {{offer.contractAddress}}
-               </div>
-             </span>
-           </a>
-         </h4>
-      </div>
-      <div class="col-sm-4 col-md-4">
-         <p class="sw-box-text sw-collapse-icons">
-           <i *ngFor="let asset of offer.assets" [ngClass]="{'fa fa-circle sw-blue1': true, 'sw-blue1': asset.status !== INVESTED}" aria-hidden="true">&nbsp;</i>
-         </p>
-      </div>
-   </div>
-  </div>
+<div *ngFor="let asset of assets;">
+  <div class="row sw-assets">
+    <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
+      <div class="col-xs-1 col-sm-1 col-md-1">{{asset.value | currency:'USD':true:'.2' }}</div>
+      <div class="col-xs-1 col-sm-1 col-md-1 sw-blue1">{{assetMath.calculateReturnAmount(asset) | currency:'USD':true:'.2' }}</div>
+      <div class="col-xs-1 col-sm-1 col-md-1 sw-blue1">{{asset.grossReturn | percent}}</div>
+      <div class="col-xs-1 col-sm-1 col-md-1" [ngClass]="{'sw-blue1': assetMath.calculateAssetProgression(asset) != 0 }">{{assetMath.calculateAssetProgression(asset)}}/{{asset.paybackMonths}}</div>
+      <div class="col-xs-1 col-sm-1 col-md-1 sw-blue1">{{asset.token || 'No collateral'}}</div>
+      <div class="col-xs-1 col-sm-1 col-md-1" *ngIf="asset.investedAt == null">--</div>
+      <div class="col-xs-1 col-sm-1 col-md-1" *ngIf="asset.investedAt != null">{{assetMath.calculatePaybackDate(asset) | date: 'dd MMM yyyy'}}</div>
+      <!-- <div class="col-xs-2 col-sm-2 col-md-2">asset.investorAddress</div> -->
+      <div class="col-xs-4 col-sm-4 col-md-4">
 
-  <div id="collapseOne" class="panel-collapse collapse" [ngClass]="{'in': collapsed}" role="tabpanel" aria-labelledby="headingOne">
-    <div class="panel-body">
-      <div class="col-sm-6 col-md-6">
-          <p class="sw-box-text">Fundraising: {{offer.raisingAmount | currency:'USD':true:'.2'}}</p>
-          <p class="sw-box-text">Contract term: {{offer.paybackMonths}} months</p>
-          <!-- <p class="sw-box-text">6 installments</p> -->
-          <p class="sw-box-text">Gross return rate: {{offer.grossReturn | percent}}</p><hr>
-          <p class="sw-box-text"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Launch: {{offer.createdOn | date: 'yyyy-MM-dd'}}</p>
-          <a *ngIf="offer.contractAddress" (click)="exploreContract(offer.contractAddress)"><b>Explore Ethereum contract</b></a>
-      </div>
-      <!-- <div class="col-sm-6 col-md-6"> -->
-          <!-- <p class="sw-box-text">Debt: {{offer.paybackMonths}}x {{(offer.raisingAmount*(1+offer.grossReturn))/offer.paybackMonths | currency:'USD':true:'.2'}}</p> -->
-          <!-- <p class="sw-box-text">Performance: <span class="sw-high">High / No Delay</span></p> -->
-          <!-- <p><i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i> <i class="fa fa-star sw-star-full" aria-hidden="true"></i></p> -->
-      <!-- </div> -->
-      <!-- <div class="col-sm-6 col-md-6"> -->
-          <!-- <p class="sw-box-text sw-chart-installs">Payback (months)</p> -->
-          <!-- <div class="sw-progress-circle p0">  -->
-            <!-- Start Circular chart-->
-            <!-- <span>0/{{offer.paybackMonths}}</span> -->
-            <!-- <div class="sw-left-half-clipper"> -->
-              <!-- <div class="sw-first50-bar"></div> -->
-               <!-- <div class="sw-value-bar"></div> -->
-           <!-- </div> -->
-          <!-- </div>  -->
-          <!-- End Circular chart-->
-      <!-- </div> -->
-      <div class="col-sm-6 col-md-6">
-          <p class="sw-box-text">Gross return rate</p>
-          <div class="sw-progress-circle p{{offer.grossReturn*100}}"> <!-- Start Circular chart-->
-            <span>{{offer.grossReturn | percent}}</span>
-            <div class="sw-left-half-clipper">
-               <div class="sw-first50-bar"></div>
-               <div class="sw-value-bar"></div>
-           </div>
-          </div> <!-- End Circular chart-->
-      </div>
+          <div *ngIf="asset.status >= RETURNED" class="sw-full-bar"> <!-- ////// Full green bar ////// -->
+            <div class="progress-bar prog100"></div>
+          </div>
+          <div *ngIf="(asset.status >= INVESTED && asset.status < RETURNED) || asset.status == PENDING_ETHEREUM_CONFIRMATION" class="progress sw-blue-bar"> <!-- ////// Blue progress bar ////// -->
+            <div class="progress-bar prog{{assetMath.percentageProgression(asset)}}"></div>
+          </div>
+          <div *ngIf="asset.status == AVAILABLE || asset.status == PENDING_OWNER_AGREEMENT" class="progress"> <!-- ////// 0% progress bar ////// -->
+            <div class="progress-bar prog0"></div>
+          </div>
 
-      <div class="col-sm-12 col-md-12 table-responsive">
-        <table class="table table-hover">
-           <tr class="active">
-              <th>Asset</th>
-              <th>Value</th>
-              <th>Token</th>
-              <th>Status</th>
-              <th>Investor</th>
-              <th>Contract</th>
-              <!-- <th>Return date</th> -->
-              <th>Agree</th>
-              <th>Return investment</th>
-           </tr>
-           <tr *ngFor="let asset of offer.assets, let i = index">
-              <td>{{i + 1}}</td>
-              <td>{{asset.value | currency:'USD':true:'.2'}}</td>
-              <td>{{asset.token}} <button *ngIf="asset.status == AVAILABLE" class="btn sw-accept-decline sw-btn-ghost1 sw-float-right" (click)="transferToken(asset)"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></td>
-              <td>{{statusToString(asset.status)}}</td>
-              <td>{{asset.investorWallet ? '-' : asset.investorWallet }}</td>
-              <td><span *ngIf="!asset.contractAddress">-</span><a *ngIf="asset.contractAddress" (click)="exploreContract(asset.contractAddress)">Explore</a></td>
-              <!-- <td>{{asset.status == INVESTED ? '-' : (calculatePaybackDate(asset) | date: 'yyyy-MM-dd') }}</td> -->
-              <td>
-                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="asset.status == PENDING_OWNER_AGREEMENT" (click)="withdrawFunds(asset)"><i class="fa fa-check" aria-hidden="true"></i></button>
-                <button class="btn sw-accept-decline sw-btn-danger" *ngIf="asset.status == PENDING_OWNER_AGREEMENT" (click)="refuseInvestment(asset)"><i class="fa fa-times" aria-hidden="true"></i></button>
-              </td>
-              <td>
-                <button class="btn sw-accept-decline sw-btn-ghost1" *ngIf="(asset.status == INVESTED || asset.status == FOR_SALE || asset.status == PENDING_INVESTOR_AGREEMENT)" (click)="returnInvestment(asset)"><i class="fa fa-check" aria-hidden="true"></i></button>
-              </td>
-           </tr>
-        </table>
-
+      </div>
+      <div class="col-xs-1 col-sm-1 col-md-1" [ngClass]="{'sw-blue1': asset.status == INVESTED, 'sw-orange': asset.status == PENDING_OWNER_AGREEMENT || asset.status == PENDING_INVESTOR_AGREEMENT, 'sw-green': asset.status >= RETURNED}">{{statusToString(asset.status)}}</div>
+      <div class="col-xs-1 col-sm-1 col-md-1">
+        <span (click)="selectAsset(asset)" *ngIf="asset.selected == 0" class="sw-circle sw-circle-available" role="button">
+          <span>0</span>
+        </span>
+        <span (click)="selectAsset(asset)" *ngIf="asset.selected == 1" class="sw-circle sw-circle-selected" role="button">
+          <span><i class="fa fa-check"></i></span>
+        </span>
+        <span *ngIf="asset.selected == -1" class="sw-circle sw-circle-unavailable" role="button">
+          <span>X</span>
+        </span>
       </div>
     </div>
   </div>

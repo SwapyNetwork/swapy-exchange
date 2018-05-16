@@ -1,99 +1,105 @@
 <div class="sw-scrollbar2">
-  <div class="row"> <!--  Page name -->
+  <div class="row">
     <div class="col-xs-4 col-sm-4 col-md-4">
       <p class="sw-page-name">Raise</p>
     </div>
-  </div> <!-- END Page name  -->
+  </div>
+  
+  <div class="row">
+    <div class="col-xs-2 col-xs-offset-3 col-sm-2 col-sm-offset-3 col-md-2 col-md-offset-3">
+      <p class="sw-title-outside-box sw-border-light-orange">Raise</p>
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4">
+      <p class="sw-description-outside-box">Add fundsraising offer</p>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-2">
+      <p class="sw-button-add-funds sw-btn-add-funds" role="button" [routerLink]="['/credit-company/add-funds/child']">Add funds</p>
+    </div>
+  </div>
 
-
-  <div class="row"> <!-- //////////// MAIN Content //////////// -->
+  <div class="row">
     <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
-
-        <div class=" col-md-12"> <!-- Start  -->
-          <div class="sw-box">
+      <div class=" col-md-12">
+        <div class="sw-box">
           <div class="row sw-box-space">
-
             <div class="col-sm-12 col-md-12">
+
               <form #raiseForm="ngForm" (submit)="addOffer()">
-              `<div class="row">
-                <div class="col-sm-10 col-md-10">
-                   <p class="sw-box-title">Add Fundraising Offer</p>
-                   <!-- <p class="sw-box-text sw-blue1"><a href="javascript:void(0);">+ Add Contract &nbsp; <i class="fa fa-file-text-o" aria-hidden="true"></i></a></p> -->
 
-                   <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"> </i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i> <i class="fa fa-circle sw-blue1" aria-hidden="true"></i>
+                <div class="row">
+                  <div class="col-sm-1 col-md-1">
+                    <img src="assets/img/swapy-logo4.png" alt="Swapy logo">
+                  </div>
+                  <div class="col-sm-10 col-md-10">
+                    <p class="sw-box-title">Add Fundraising Offer</p>
+                  </div>
                 </div>
 
-                <div class="col-sm-2 col-md-2 sw-company-logo-right">
-                   <a><img src="assets/img/noImage.png" alt="meu credito app logo"></a>
+                <div class="row">
+                  <div class="col-sm-3 col-md-3 col-sm-offset-1 col-md-offset-1">
+                    <div class="form-group">
+                      <label for="fundraisingInput"><span class="sw-box-text">Fundraising</span></label>
+                      <input type="tel" class="form-control" placeholder="Add raising value (US$)" name="amount" [(ngModel)]="amount" [textMask]="{mask: amountMask}" #fundraisingInput="ngModel" required>
+                    </div>
+                  </div>
+                  <div class="col-sm-3 col-md-3">
+                    <div class="form-group">
+                      <label for="grossReturnInput"><span class="sw-box-text">Gross return rate</span></label>
+                      <input type="text" class="form-control" placeholder="Add gross return rate (%)" name="grossReturn" [(ngModel)]="grossReturn" [textMask]="{mask: percentMask}" #grossReturnInput="ngModel" required>
+                    </div>
+                  </div>
                 </div>
+                <div class="row">
+                  <div class="col-sm-3 col-md-3 col-sm-offset-1 col-md-offset-1">
+                    <div class="form-group">
+                      <label for="paybackMonthsInput"><span class="sw-box-text">Contract term (months)</span></label>
+                      <input type="tel" class="form-control" placeholder="x months"  name="paybackMonths" [(ngModel)]="paybackMonths" maxlength="2" #paybackMonthsInput="ngModel" pattern="[0-9]{1,2}" required [disabled]="true">
+                    </div>
+                  </div>
+                  <div class="col-sm-3 col-md-3">
+                    <div class="form-group">
+                      <label for="assetsNumberInput"><span class="sw-box-text">Number of assets</span></label>
+                      <input type="tel" class="form-control" placeholder="Add number of assets 1-5"  name="assetsNumber" [(ngModel)]="assetsNumber" maxlength="1" #assetsNumberInput="ngModel" pattern="[1-5]{1}" required>
+                    </div>
+                  </div>
+                </div>
+                
+                <div *ngIf="(!raiseForm.form.valid)">  
 
-              </div>
-              <hr>
+                  <div *ngIf="(fundraisingInput.errors) && (fundraisingInput.touched || fundraisingInput.dirty)" class="alert alert-danger">
+                    Fundraising amount is required.
+                  </div>
+                  <div *ngIf="(grossReturnInput.errors) && (grossReturnInput.touched || grossReturnInput.dirty)" class="alert alert-danger">
+                    Gross return rate is required.
+                  </div>
+                  <div *ngIf="(paybackMonthsInput.errors) && (paybackMonthsInput.touched || paybackMonthsInput.dirty)" class="alert alert-danger">
+                    <div [hidden]="!paybackMonthsInput.errors.required">
+                      Contract term is required.
+                    </div>
+                    <div [hidden]="!paybackMonthsInput.errors.pattern">
+                      Contract term format is invalid.
+                    </div>
+                  </div>
+                  <div *ngIf="(assetsNumberInput.errors) && (assetsNumberInput.touched || assetsNumberInput.dirty)" class="alert alert-danger">
+                    <div [hidden]="!assetsNumberInput.errors.required">
+                      Number of assets is required.
+                    </div>
+                    <div [hidden]="!assetsNumberInput.errors.pattern">
+                      Number of assets must be between 1 and 5.
+                    </div>
+                  </div>
 
-            <div class="row">
-            <div class="col-sm-4 col-md-4">
-
-               <div class="form-group">
-                  <label for="inputFundraising"><span class="sw-box-text">Fundraising</span></label>
-                  <input type="tel" class="form-control" placeholder="Add raising value (US$)" value="10" name="amount" [(ngModel)]="amount" [textMask]="{mask: amountMask}" #fundraisingInput="ngModel" required>
-               </div>
-
-               <div class="form-group">
-                  <label for="inputGrossReturn"><span class="sw-box-text">Gross return rate</span></label>
-                  <input type="text" class="form-control" placeholder="Add gross return rate (%)" name="grossReturn" [(ngModel)]="grossReturn" [textMask]="{mask: percentMask}" #grossReturnInput="ngModel" required>
-               </div>
-
-            </div>
-
-            <div class="col-sm-4 col-md-4">
-               <div class="form-group">
-                  <label for="inputPayback"><span class="sw-box-text">Contract term (months)</span></label>
-                  <input type="tel" class="form-control" placeholder="x months"  name="paybackMonths" [(ngModel)]="paybackMonths" maxlength="2" #paybackMonthsInput="ngModel" pattern="[0-9]{1,2}" required [disabled]="true">
-               </div>
-
-               <!-- <div class="form-group">
-                  <label for="inputEmail3"><span class="sw-box-text">Installments</span></label>
-                  <input type="text" class="form-control" placeholder="x" name="installments" [(ngModel)]="installments">
-               </div> -->
-            </div>
-
-            <div class="col-sm-4 col-md-4">
+                </div>
+                <div class="row">
+                  <div class="col-sm-offset-9 col-md-offset-9 col-sm-2 col-md-2">
+                    <button type="submit" class="sw-button sw-btn-ghost1" [disabled]="!raiseForm.form.valid">Add Offer</button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
-            <div *ngIf="fundraisingInput.errors && (fundraisingInput.touched || fundraisingInput.dirty)" class="alert alert-danger">
-                Fundraising amount is required.
-            </div>
-            <div *ngIf="grossReturnInput.errors && (grossReturnInput.touched || grossReturnInput.dirty)" class="alert alert-danger">
-                Gross return rate is required.
-            </div>
-            <div *ngIf="paybackMonthsInput.errors && (paybackMonthsInput.touched || paybackMonthsInput.dirty)" class="alert alert-danger">
-              <div [hidden]="!paybackMonthsInput.errors.required">
-                Contract term is required.
-              </div>
-              <div [hidden]="!paybackMonthsInput.errors.pattern">
-                Contract term format is invalid.
-              </div>
-            </div>
-
-
-            <div class="row">
-              <div class=" col-sm-8 col-md-8">
-              </div>
-              <div class=" col-sm-4 col-md-4">
-                <button type="submit" class="sw-button sw-btn-ghost1" [disabled]="!raiseForm.form.valid">Add Offer</button>
-              </div>
-            </div>
-          </form>
-         </div>
         </div>
-
       </div>
-      </div> <!-- END  -->
-
     </div>
-  </div><!-- END MAIN Content  -->
-
-</div> <!-- END col 10  -->
-<!-- ///////////////////////////////////////////////////////////////////////////////// -->
-<!-- //////////////////////////  END MAIN Content  /////////////////////////////////// -->
-<!-- ///////////////////////////////////////////////////////////////////////////////// -->
+  </div>
+</div>
